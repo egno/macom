@@ -26,13 +26,17 @@ type
     ActionPanel2: TPanel;
     BuildingWorksSaveBtn: TBitBtn;
     BaseCB: TComboBox;
+    BuildingPropertiesVST: TDBVST;
     IniPropStorage: TIniPropStorage;
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
     Label8: TLabel;
+    TabSheet2: TTabSheet;
+    WorkNameEdit: TMemo;
     WorkLabel: TLabel;
+    WorkCondEdit: TMemo;
     WorkNote: TMemo;
     PageControl1: TPageControl;
     PairSplitter3: TPairSplitter;
@@ -43,8 +47,7 @@ type
     PairSplitterSide13: TPairSplitterSide;
     Panel1: TPanel;
     WorkCodeEdit: TEdit;
-    WorkNameEdit3: TEdit;
-    WorkNameEdit4: TEdit;
+    WorkFactorEdit: TEdit;
     WorkResourcesVST: TDBVST;
     ServicesWorkNote: TMemo;
     PairSplitter2: TPairSplitter;
@@ -62,7 +65,6 @@ type
     ScrollBox3: TScrollBox;
     ServiceCompaniesVST: TDBVST;
     MainTabSheet: TTabSheet;
-    WorkNameEdit: TEdit;
     WorkTabSheet: TTabSheet;
     TreeFilterEdit3: TTreeFilterEdit;
     WorkMainSaveBtn: TBitBtn;
@@ -156,6 +158,7 @@ type
     procedure ExecSQL(SQL: String);
     function ReturnStringSQL(SQL: String): String;
     procedure FillListFromSQL(Items:TStrings ; SQL: String);
+    procedure WorkFactorEditChange(Sender: TObject);
     procedure WorksTreeViewEnter(Sender: TObject);
   protected
   private
@@ -201,6 +204,8 @@ end;
 procedure TMainForm.DataSave(Sender: TObject);
 var
   i:Integer;
+  wid: String;
+  sql: String;
 //  ServiceVSTNodeData: PDBTreeData;
 begin
   case (Sender as TComponent).Name of
@@ -222,6 +227,38 @@ begin
             + '''' + TKeyValue(ServicesTreeView.Selected.Data).Code + ''', '
             + '''' + TKeyValue(ServiceWorksList.Items[i].Data).Code + ''''
             + ');'  );
+      end;
+    end;
+    'WorkMainSaveBtn': begin
+      wid := '';
+      sql := '';
+      if (WorksMainTreeView.SelectionCount > 0) then begin
+        wid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
+        sql := sql + 'update s_uk.works set ';
+        if WorkCodeEdit.Text > '' then
+          sql := sql + ' code = ' + '''' + WorkCodeEdit.Text + '''::ltree, '
+        else
+          sql := sql + ' code = NULL::ltree, ';
+        if WorkNameEdit.Text > '' then
+          sql := sql + ' disp = ' + '''' + WorkNameEdit.Text + ''', '
+        else
+          sql := sql + ' disp = NULL, ';
+        if BaseCB.Text > '' then
+          sql := sql + ' base = ' + '''' + BaseCB.Text + '''::ltree, '
+        else
+          sql := sql + ' base = NULL::ltree, ';
+        if WorkFactorEdit.Text > '' then
+          sql := sql + ' factor = ' + '''' + WorkFactorEdit.Text + '''::numeric, '
+        else
+          sql := sql + ' factor = NULL, ';
+        if WorkCondEdit.Text > '' then
+          sql := sql + ' condition = ' + '''' + WorkCondEdit.Text + ''' '
+        else
+          sql := sql + ' condition = NULL ';
+        sql := sql + ' where uuid = '
+            + '''' + wid + '''  '
+            + ';';
+        ExecSQL(sql);
       end;
     end;
   end;
@@ -285,6 +322,17 @@ begin
       end
       else
         Clear;
+      'BuildingPropertiesVST': with (p as TDBVST) do
+        if (BuildingsTreeView.SelectionCount > 0) then begin
+          FillFromQuery(conn,
+            'select code::text, false, code::text, val from s_uk.r_building_props where building = '''
+            + TKeyValue(BuildingsTreeView.Selected.Data).Code
+            + ''' ',
+            'null', '2', 1);
+          Refresh;
+        end
+        else
+          Clear;
     'ServiceWorksList': with (p as TDBDynTreeView) do
       if (ServicesTreeView.SelectionCount > 0) then begin
           FillFromQuery(conn,
@@ -378,7 +426,7 @@ begin
       else
         Text:='';
       end;
-    'WorkNameEdit': with (p as TEdit) do begin
+    'WorkNameEdit': with (p as TMemo) do begin
       tid := ''; if (WorksMainTreeView.SelectionCount > 0) then
           tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
       if tid > '' then begin
@@ -396,6 +444,42 @@ begin
       if tid > '' then begin
         Text:= ReturnStringSQL(
           'select code::text from s_uk.dic_works where uuid = '''
+          + tid
+          +'''');
+      end
+      else
+        Text:='';
+      end;
+    'BaseCB': with (p as TComboBox) do begin
+      tid := ''; if (WorksMainTreeView.SelectionCount > 0) then
+          tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
+      if tid > '' then begin
+        Text:= ReturnStringSQL(
+          'select base::text from s_uk.dic_works where uuid = '''
+          + tid
+          +'''');
+      end
+      else
+        Text:='';
+      end;
+    'WorkFactorEdit': with (p as TEdit) do begin
+      tid := ''; if (WorksMainTreeView.SelectionCount > 0) then
+          tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
+      if tid > '' then begin
+        Text:= ReturnStringSQL(
+          'select factor::text from s_uk.dic_works where uuid = '''
+          + tid
+          +'''');
+      end
+      else
+        Text:='';
+      end;
+    'WorkCondEdit': with (p as TMemo) do begin
+      tid := ''; if (WorksMainTreeView.SelectionCount > 0) then
+          tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
+      if tid > '' then begin
+        Text:= ReturnStringSQL(
+          'select condition::text from s_uk.dic_works where uuid = '''
           + tid
           +'''');
       end
@@ -447,6 +531,9 @@ begin
       RefreshControl('WorkNote');
       RefreshControl('WorkNameEdit');
       RefreshControl('WorkCodeEdit');
+      RefreshControl('BaseCB');
+      RefreshControl('WorkFactorEdit');
+      RefreshControl('WorkCondEdit');
       RefreshControl('WorkResourcesVST');
     end;
     'ServiceWorksList': begin
@@ -455,6 +542,7 @@ begin
     'BuildingsTreeView': begin
       BuildingDetailsMemo.Clear;
       RefreshControl('ServiceCompaniesVST');
+      RefreshControl('BuildingPropertiesVST');
       RefreshControl('BuildingBox');
       RefreshControl('BuildingServiceBox');
       RefreshControl('BuildingServiceWorksList');
@@ -548,6 +636,11 @@ begin
       Log(E.Message);
   end;
   Query.Free;
+end;
+
+procedure TMainForm.WorkFactorEditChange(Sender: TObject);
+begin
+
 end;
 
 procedure TMainForm.WorksTreeViewEnter(Sender: TObject);
