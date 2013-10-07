@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 502
+  Left = -2690
   Height = 650
-  Top = 228
+  Top = 218
   Width = 766
   Caption = 'MaCom FLOSS'
   ClientHeight = 650

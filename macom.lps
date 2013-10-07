@@ -11,7 +11,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="38" Y="7"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="32"/>
       </Unit0>
       <Unit1>
         <Filename Value="main.pas"/>
@@ -25,7 +25,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="311"/>
         <CursorPos X="50" Y="328"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="32"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -36,7 +36,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="244"/>
         <CursorPos X="1" Y="257"/>
-        <UsageCount Value="14"/>
+        <UsageCount Value="16"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
@@ -46,7 +46,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="8" Y="14"/>
-        <UsageCount Value="14"/>
+        <UsageCount Value="16"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
@@ -56,7 +56,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="122"/>
         <CursorPos X="30" Y="137"/>
-        <UsageCount Value="14"/>
+        <UsageCount Value="16"/>
         <Loaded Value="True"/>
       </Unit4>
     </Units>
