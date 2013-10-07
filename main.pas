@@ -7,9 +7,9 @@ interface
 uses
   Classes, SysUtils, FileUtil, TreeFilterEdit, Forms, Controls, Graphics,
   Dialogs, Menus, ComCtrls, ActnList, PairSplitter, StdCtrls, ExtCtrls, Buttons,
-  StdActns, DBGrids, pqconnection, fpjson, jsonparser, sqldb, db, dbfunc,
-  ExpandPanels, Grids, CheckLst, DbCtrls, FileCtrl, keyvalue, DBDynTreeView,
-  ExtSQLQuery, DBVST, VirtualTrees;
+  StdActns, DBGrids, pqconnection, fpjson, jsonparser, XMLConf, sqldb, db,
+  dbfunc, ExpandPanels, Grids, CheckLst, DbCtrls, FileCtrl, IniPropStorage,
+  XMLPropStorage, keyvalue, DBDynTreeView, ExtSQLQuery, DBVST, VirtualTrees;
 
 type
 
@@ -26,11 +26,13 @@ type
     ActionPanel2: TPanel;
     BuildingWorksSaveBtn: TBitBtn;
     BaseCB: TComboBox;
+    IniPropStorage: TIniPropStorage;
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
     Label8: TLabel;
+    WorkLabel: TLabel;
     WorkNote: TMemo;
     PageControl1: TPageControl;
     PairSplitter3: TPairSplitter;
@@ -144,6 +146,7 @@ type
     procedure DataSave(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure RefreshControl(C:String);
+    procedure ServiceCompaniesVSTDblClick(Sender: TObject);
     procedure ServiceCompaniesVSTFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
     procedure ServicesTreeViewEnter(Sender: TObject);
@@ -207,17 +210,18 @@ begin
         + '''' + TKeyValue(ServicesTreeView.Selected.Data).Code + ''' '
         + ';'  );
       for i:=0 to ServiceWorksList.Items.Count-1 do begin
-        writeln(i);
-        writeln(TKeyValue(ServiceWorksList.Items[i].Data).Code);
+//        writeln(i);
+//        writeln(TKeyValue(ServiceWorksList.Items[i].Data).Code);
 //        ServiceVSTNodeData:=ServiceCompaniesVST.GetNodeData(
 //          ServiceCompaniesVST.FocusedNode);
-        ExecSQL('insert into s_uk.service_works '
-          + ' (service, work) '
-          + ' values ( '
+        if ServiceWorksList.Items[i].Data <> nil then
+          ExecSQL('insert into s_uk.service_works '
+            + ' (service, work) '
+            + ' values ( '
 //          + '''' + ServiceVSTNodeData^[0] + ''', '
-          + '''' + TKeyValue(ServicesTreeView.Selected.Data).Code + ''', '
-          + '''' + TKeyValue(ServiceWorksList.Items[i].Data).Code + ''''
-          + ');'  );
+            + '''' + TKeyValue(ServicesTreeView.Selected.Data).Code + ''', '
+            + '''' + TKeyValue(ServiceWorksList.Items[i].Data).Code + ''''
+            + ');'  );
       end;
     end;
   end;
@@ -362,6 +366,18 @@ begin
       else
         Text:='';
       end;
+    'WorkLabel': with (p as TLabel) do begin
+      tid := ''; if (WorksMainTreeView.SelectionCount > 0) then
+          tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
+      if tid > '' then begin
+        Caption:= ReturnStringSQL(
+          'select code::text from s_uk.dic_works where uuid = '''
+          + tid
+          +'''');
+      end
+      else
+        Text:='';
+      end;
     'WorkNameEdit': with (p as TEdit) do begin
       tid := ''; if (WorksMainTreeView.SelectionCount > 0) then
           tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
@@ -387,6 +403,12 @@ begin
         Text:='';
       end;
   end;
+end;
+
+procedure TMainForm.ServiceCompaniesVSTDblClick(Sender: TObject);
+begin
+  ServiceCompaniesVST.EditNode(ServiceCompaniesVST.FocusedNode,
+    ServiceCompaniesVST.FocusedColumn);
 end;
 
 
@@ -421,6 +443,7 @@ begin
       RefreshControl('ServicesWorkNote');
     end;
     'WorksMainTreeView': begin
+      RefreshControl('WorkLabel');
       RefreshControl('WorkNote');
       RefreshControl('WorkNameEdit');
       RefreshControl('WorkCodeEdit');

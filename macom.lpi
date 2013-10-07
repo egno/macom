@@ -30,22 +30,25 @@
         <LaunchingApplication PathPlusParams="/usr/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="5">
+    <RequiredPackages Count="6">
       <Item1>
-        <PackageName Value="SQLDBLaz"/>
+        <PackageName Value="FCL"/>
       </Item1>
       <Item2>
-        <PackageName Value="LazControls"/>
+        <PackageName Value="SQLDBLaz"/>
       </Item2>
       <Item3>
-        <PackageName Value="dbvcextended"/>
+        <PackageName Value="LazControls"/>
       </Item3>
       <Item4>
-        <PackageName Value="Pexpandpanels"/>
+        <PackageName Value="dbvcextended"/>
       </Item4>
       <Item5>
-        <PackageName Value="LCL"/>
+        <PackageName Value="Pexpandpanels"/>
       </Item5>
+      <Item6>
+        <PackageName Value="LCL"/>
+      </Item6>
     </RequiredPackages>
     <Units Count="2">
       <Unit0>

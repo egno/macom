@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <Package Version="4">
+    <Name Value="dbvcextended"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <SearchPaths>
+        <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerMessages>
+          <MsgFileName Value=""/>
+        </CompilerMessages>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Files Count="5">
+      <Item1>
+        <Filename Value="dbdyntreeview.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="DBDynTreeView"/>
+      </Item1>
+      <Item2>
+        <Filename Value="dbfunc.pas"/>
+        <UnitName Value="dbfunc"/>
+      </Item2>
+      <Item3>
+        <Filename Value="keyvalue.pas"/>
+        <UnitName Value="keyvalue"/>
+      </Item3>
+      <Item4>
+        <Filename Value="extsqlquery.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ExtSQLQuery"/>
+      </Item4>
+      <Item5>
+        <Filename Value="dbvst.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="DBVST"/>
+      </Item5>
+    </Files>
+    <Type Value="RunAndDesignTime"/>
+    <RequiredPkgs Count="4">
+      <Item1>
+        <PackageName Value="virtualtreeview_package"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="SQLDBLaz"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="LCL"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="FCL"/>
+      </Item4>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <CustomOptions Items="ExternHelp" Version="2">
+      <_ExternHelp Items="Count"/>
+    </CustomOptions>
+  </Package>
+</CONFIG>
