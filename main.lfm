@@ -1,0 +1,2467 @@
+object MainForm: TMainForm
+  Left = 374
+  Height = 650
+  Top = 179
+  Width = 766
+  Caption = 'MaCom FLOSS'
+  ClientHeight = 650
+  ClientWidth = 766
+  Menu = MainMenu
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '1.0.12.0'
+  object MainToolBar: TToolBar
+    Left = 0
+    Height = 24
+    Top = 0
+    Width = 766
+    AutoSize = True
+    ButtonWidth = 22
+    Caption = 'MainToolBar'
+    Color = clBtnFace
+    Images = MainIconList22
+    ParentColor = False
+    TabOrder = 1
+    object ToolButton1: TToolButton
+      Left = 1
+      Top = 2
+      Action = ActionConnect
+    end
+    object ToolButton2: TToolButton
+      Left = 27
+      Top = 2
+      Action = ActionDisconnect
+    end
+    object ToolButton3: TToolButton
+      Left = 53
+      Top = 2
+      Action = ActionSave
+    end
+  end
+  object MainStatusBar: TStatusBar
+    Left = 0
+    Height = 21
+    Top = 629
+    Width = 766
+    Panels = <    
+      item
+        Bevel = pbRaised
+        Width = 200
+      end    
+      item
+        Bevel = pbRaised
+        Width = 250
+      end>
+    SimplePanel = False
+  end
+  object MainPanel: TPanel
+    Left = 0
+    Height = 605
+    Top = 24
+    Width = 766
+    Align = alClient
+    Caption = 'MainPanel'
+    ClientHeight = 605
+    ClientWidth = 766
+    TabOrder = 2
+    object BottomRollOut: TMyRollOut
+      Left = 1
+      Height = 16
+      Top = 588
+      Width = 764
+      Align = alBottom
+      BevelOuter = bvNone
+      ClientHeight = 16
+      ClientWidth = 764
+      TabOrder = 0
+      ExpandedButtonColor = 16287767
+      CollapsedButtonColor = clSkyBlue
+      CollapseKind = akTop
+      ExpandedSize = 200
+      ButtonPosition = akLeft
+      ButtonSize = 16
+      Button.Left = 0
+      Button.Height = 16
+      Button.Top = 0
+      Button.Width = 16
+      Button.Anchors = [akTop, akLeft, akBottom]
+      Button.Caption = '+'
+      Button.Color = clSkyBlue
+      Button.TabOrder = 0
+      AnimationSpeed = 60
+      Collapsed = True
+      object LogView: TMemo
+        Left = 16
+        Height = 33
+        Top = 0
+        Width = 748
+        Align = alClient
+        Lines.Strings = (
+          'Программный продукт: MaCom FLOSS (Management Company. Free/Libre and Open-Source Software)'
+          'Предназначение: Ведение учёта в Управляющей компании ЖКХ'
+        )
+        ScrollBars = ssAutoBoth
+        TabOrder = 1
+      end
+    end
+    object LeftRollOut: TMyRollOut
+      Left = 1
+      Height = 587
+      Top = 1
+      Width = 16
+      Align = alLeft
+      BevelOuter = bvNone
+      Caption = 'LeftRollOut'
+      ClientHeight = 587
+      ClientWidth = 16
+      TabOrder = 1
+      ExpandedButtonColor = 16287767
+      CollapsedButtonColor = clSkyBlue
+      CollapseKind = akLeft
+      ExpandedSize = 200
+      ButtonPosition = akTop
+      ButtonSize = 16
+      Button.Left = 0
+      Button.Height = 16
+      Button.Top = 0
+      Button.Width = 16
+      Button.Anchors = [akTop, akLeft, akRight]
+      Button.Caption = '+'
+      Button.Color = clSkyBlue
+      Button.TabOrder = 0
+      AnimationSpeed = 60
+      Collapsed = True
+      object LeftPageControl: TPageControl
+        Left = 0
+        Height = 571
+        Top = 16
+        Width = 16
+        ActivePage = LeftAllSheet
+        Align = alClient
+        TabIndex = 0
+        TabOrder = 1
+        TabPosition = tpBottom
+        object LeftAllSheet: TTabSheet
+          Caption = 'Действия'
+          ClientHeight = 540
+          ClientWidth = 12
+          object LeftAllTreeView: TTreeView
+            Left = 0
+            Height = 540
+            Top = 0
+            Width = 12
+            Align = alClient
+            TabOrder = 0
+          end
+        end
+      end
+    end
+    object CenterPageControl: TPageControl
+      Left = 17
+      Height = 587
+      Top = 1
+      Width = 748
+      ActivePage = ConnectTabSheet
+      Align = alClient
+      TabIndex = 0
+      TabOrder = 2
+      TabPosition = tpBottom
+      object ConnectTabSheet: TTabSheet
+        Caption = 'Подключение'
+        ClientHeight = 556
+        ClientWidth = 744
+        object ConnScrollBox: TScrollBox
+          Left = 0
+          Height = 514
+          Top = 0
+          Width = 744
+          HorzScrollBar.Page = 742
+          VertScrollBar.Page = 512
+          Align = alClient
+          ClientHeight = 512
+          ClientWidth = 742
+          TabOrder = 0
+          object ConnUserLabel: TLabel
+            AnchorSideLeft.Control = ConnScrollBox
+            AnchorSideTop.Control = ConnScrollBox
+            Left = 3
+            Height = 18
+            Top = 3
+            Width = 132
+            BorderSpacing.Around = 3
+            Caption = 'Имя пользователя'
+            ParentColor = False
+          end
+          object ConnUserEdit: TEdit
+            AnchorSideLeft.Control = ConnScrollBox
+            AnchorSideTop.Control = ConnUserLabel
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 27
+            Top = 24
+            Width = 123
+            BorderSpacing.Around = 3
+            TabOrder = 0
+            Text = 'postgres'
+          end
+          object ConnPwdLabel: TLabel
+            AnchorSideLeft.Control = ConnScrollBox
+            AnchorSideTop.Control = ConnUserEdit
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 18
+            Top = 57
+            Width = 54
+            BorderSpacing.Top = 3
+            BorderSpacing.Around = 3
+            Caption = 'Пароль'
+            ParentColor = False
+          end
+          object ConnHostLabel: TLabel
+            AnchorSideLeft.Control = ConnScrollBox
+            AnchorSideTop.Control = ConnPwdEdit
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 18
+            Top = 111
+            Width = 52
+            BorderSpacing.Top = 3
+            BorderSpacing.Around = 3
+            Caption = 'Сервер'
+            ParentColor = False
+          end
+          object ConnHostEdit: TEdit
+            AnchorSideLeft.Control = ConnScrollBox
+            AnchorSideTop.Control = ConnHostLabel
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 27
+            Top = 132
+            Width = 123
+            BorderSpacing.Around = 3
+            TabOrder = 3
+            Text = 'localhost'
+          end
+          object ConnBaseEdit: TEdit
+            AnchorSideLeft.Control = ConnScrollBox
+            AnchorSideTop.Control = ConnBaseLabel
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 27
+            Top = 240
+            Width = 123
+            BorderSpacing.Around = 3
+            TabOrder = 5
+            Text = 'macom'
+          end
+          object ConnBaseLabel: TLabel
+            AnchorSideLeft.Control = ConnScrollBox
+            AnchorSideTop.Control = ConnPortEdit
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 18
+            Top = 219
+            Width = 90
+            BorderSpacing.Top = 3
+            BorderSpacing.Around = 3
+            Caption = 'База данных'
+            ParentColor = False
+          end
+          object ConnPwdEdit: TEdit
+            AnchorSideLeft.Control = ConnScrollBox
+            AnchorSideTop.Control = ConnPwdLabel
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 27
+            Top = 78
+            Width = 123
+            BorderSpacing.Around = 3
+            EchoMode = emPassword
+            PasswordChar = '*'
+            TabOrder = 1
+            Text = 'postgres'
+          end
+          object ShowPwdBtn: TBitBtn
+            AnchorSideLeft.Control = ConnPwdEdit
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = ConnPwdEdit
+            AnchorSideBottom.Control = ConnPwdEdit
+            AnchorSideBottom.Side = asrBottom
+            Left = 129
+            Height = 27
+            Top = 78
+            Width = 77
+            Anchors = [akTop, akLeft, akBottom]
+            AutoSize = True
+            Caption = 'Показать'
+            TabOrder = 2
+          end
+          object ConnPortLabel: TLabel
+            AnchorSideLeft.Control = ConnScrollBox
+            AnchorSideTop.Control = ConnHostEdit
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 18
+            Top = 165
+            Width = 36
+            BorderSpacing.Top = 3
+            BorderSpacing.Around = 3
+            Caption = 'Порт'
+            ParentColor = False
+          end
+          object ConnPortEdit: TEdit
+            AnchorSideLeft.Control = ConnScrollBox
+            AnchorSideTop.Control = ConnPortLabel
+            AnchorSideTop.Side = asrBottom
+            Left = 3
+            Height = 27
+            Top = 186
+            Width = 123
+            BorderSpacing.Around = 3
+            TabOrder = 4
+            Text = '5432'
+          end
+        end
+        object ActionPanel: TPanel
+          Left = 0
+          Height = 42
+          Top = 514
+          Width = 744
+          Align = alBottom
+          AutoSize = True
+          ClientHeight = 42
+          ClientWidth = 744
+          TabOrder = 1
+          object ConnBtn: TBitBtn
+            AnchorSideLeft.Control = ActionPanel
+            AnchorSideTop.Control = ActionPanel
+            AnchorSideBottom.Control = ActionPanel
+            AnchorSideBottom.Side = asrBottom
+            Left = 4
+            Height = 34
+            Top = 4
+            Width = 141
+            Action = ActionConnect
+            Anchors = [akLeft, akBottom]
+            AutoSize = True
+            BorderSpacing.Around = 3
+            Glyph.Data = {
+              C6070000424DC607000000000000360000002800000016000000160000000100
+              2000000000009007000064000000640000000000000000000000FFFFFF07FFFF
+              FF49FFFFFF53FFFFFF12FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1C2727276E2F2F2F71E1E1
+              E15DFFFFFF14FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF1C0505059A0000008F1C1C1C7BDFDFDF5EFFFF
+              FF14FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF098C8C8C36030303AC000000971A1A1A83DEDEDE5EFFFFFF14FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF0A8A8A8A37030303B0000000A019191989DFDFDF66FFFFFF60FFFFFF5CFFFF
+              FF33FFFFFF02FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0A8C8C
+              8C36030303B4000000A10404049D0909099A1111119474747474FFFFFF45FFFF
+              FF03FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0A8E8E8E370101
+              01A5000000A9000000A9000000A9000000A95858587EFFFFFF3FFFFFFF03FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF21010101AB000000B20000
+              00B2000000B2000000B2000000B249494970FFFFFF15FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF20010101BB000000BC000000BC000000BC0000
+              00BC000000BC020202B0FFFFFF1CFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF121414148A000000D3000000C5000000C5000000C5000000D11111
+              1192FFFFFF45FFFFFF5CFFFFFF32FFFFFF02FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFF
+              FF1E0D0D0D99000000DB000000D1000000DA0A0A0AA6F8F8F8526F6F6F691616
+              167591919167FFFFFF3EFFFFFF02FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFFFF1E1212
+              128F010101D80E0E0E97F4F4F44C4C4C4C710000008600000086000000867D7D
+              7D6BFFFFFF39FFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFFFF14FFFFFF21FFFF
+              FF244141416A0000008F0000008F0000008F0000008F0000008F7B7B7B62FFFF
+              FF10FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1E0202029B0000
+              0098000000980000009800000098000000980C0C0C82FFFFFF1DFFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1711111188000000B5000000A10000
+              00A1000000A1000000A10B0B0B91FFFFFF23FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF03FFFFFF200C0C0C95000000C1000000AE000000AD0000
+              00AB0A0A0AA2E5E5E55BFFFFFF0FFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF03FFFFFF1F13131386010101CC000000D1000000D0000000B81C1C
+              1C9AE3E3E35CFFFFFF0FFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF02FFFFFF12FFFFFF20FFFFFF216D6D6D42020202C8000000C01B1B1BA1E1E1
+              E15DFFFFFF10FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF0C6F6F6F41010101CC000000C9191919A9D9D9D953FFFF
+              FF08FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF0C6D6D6D42010101D0000000D40C0C0CA9FFFFFF1AFFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF0C6F6F6F41020202CF060606B2FFFFFF19FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0AFFFF
+              FF1CFFFFFF1AFFFFFF06
+            }
+            TabOrder = 0
+          end
+        end
+      end
+      object BuildingTabSheet: TTabSheet
+        Caption = 'Здания'
+        ClientHeight = 556
+        ClientWidth = 744
+        object PairSplitterSide3: TPairSplitterSide
+          Cursor = crArrow
+          Left = 255
+          Height = 468
+          Top = 0
+          Width = 465
+        end
+        object WorkPairSplitter: TPairSplitter
+          Left = 0
+          Height = 556
+          Top = 0
+          Width = 744
+          Align = alClient
+          Position = 200
+          object PairSplitterSide5: TPairSplitterSide
+            Cursor = crArrow
+            Left = 0
+            Height = 556
+            Top = 0
+            Width = 200
+            ClientWidth = 200
+            ClientHeight = 556
+            object BuildingsTreeView: TDBDynTreeView
+              AnchorSideLeft.Control = PairSplitterSide5
+              AnchorSideTop.Control = TreeFilterEdit2
+              AnchorSideTop.Side = asrBottom
+              AnchorSideRight.Control = PairSplitterSide5
+              AnchorSideRight.Side = asrBottom
+              AnchorSideBottom.Control = PairSplitterSide5
+              AnchorSideBottom.Side = asrBottom
+              Left = 0
+              Height = 529
+              Top = 27
+              Width = 200
+              Anchors = [akTop, akLeft, akRight, akBottom]
+              ReadOnly = True
+              ScrollBars = ssAutoBoth
+              SortType = stText
+              TabOrder = 0
+              OnSelectionChanged = TreeViewSelectionChanged
+              Options = [tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
+              Connection.Connected = False
+              Connection.LoginPrompt = False
+              Connection.KeepConnection = False
+              Connection.LogEvents = []
+            end
+            object TreeFilterEdit2: TTreeFilterEdit
+              AnchorSideLeft.Control = PairSplitterSide5
+              AnchorSideTop.Control = PairSplitterSide5
+              AnchorSideRight.Control = PairSplitterSide5
+              AnchorSideRight.Side = asrBottom
+              Left = 0
+              Height = 27
+              Top = 0
+              Width = 180
+              ButtonWidth = 23
+              NumGlyphs = 1
+              Anchors = [akTop, akLeft, akRight]
+              BorderSpacing.Right = 20
+              MaxLength = 0
+              TabOrder = 1
+              FilteredTreeview = BuildingsTreeView
+            end
+          end
+          object PairSplitterSide6: TPairSplitterSide
+            Cursor = crArrow
+            Left = 205
+            Height = 556
+            Top = 0
+            Width = 539
+            ClientWidth = 539
+            ClientHeight = 556
+            object BuildingPageControl: TPageControl
+              Left = 0
+              Height = 556
+              Top = 0
+              Width = 539
+              ActivePage = TabSheet3
+              Align = alClient
+              TabIndex = 1
+              TabOrder = 0
+              object TabSheet1: TTabSheet
+                Caption = 'Основное'
+                ClientHeight = 552
+                ClientWidth = 535
+                object ScrollBox2: TScrollBox
+                  Left = 0
+                  Height = 525
+                  Top = 0
+                  Width = 535
+                  HorzScrollBar.Page = 535
+                  VertScrollBar.Page = 525
+                  Align = alClient
+                  ChildSizing.LeftRightSpacing = 3
+                  ChildSizing.TopBottomSpacing = 3
+                  ChildSizing.HorizontalSpacing = 3
+                  ChildSizing.VerticalSpacing = 3
+                  ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+                  ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                  ChildSizing.ControlsPerLine = 2
+                  ClientHeight = 521
+                  ClientWidth = 531
+                  TabOrder = 0
+                  object BuildingDetailsMemo: TMemo
+                    AnchorSideLeft.Control = ScrollBox2
+                    AnchorSideTop.Control = ScrollBox2
+                    AnchorSideRight.Control = ScrollBox2
+                    AnchorSideRight.Side = asrBottom
+                    AnchorSideBottom.Control = ScrollBox2
+                    AnchorSideBottom.Side = asrBottom
+                    Left = 3
+                    Height = 517
+                    Top = 3
+                    Width = 527
+                    Anchors = [akTop, akLeft, akRight, akBottom]
+                    Lines.Strings = (
+                      ''
+                    )
+                    ScrollBars = ssAutoBoth
+                    TabOrder = 0
+                  end
+                  object ActionPanel3: TPanel
+                    Left = 3
+                    Height = 37
+                    Top = 483
+                    Width = 527
+                    Align = alBottom
+                    AutoSize = True
+                    ClientHeight = 33
+                    ClientWidth = 523
+                    TabOrder = 1
+                    object SrvMainSaveBtn1: TBitBtn
+                      AnchorSideLeft.Control = ActionPanel3
+                      AnchorSideTop.Control = ActionPanel3
+                      AnchorSideBottom.Control = ActionPanel3
+                      AnchorSideBottom.Side = asrBottom
+                      Left = 4
+                      Height = 29
+                      Top = 4
+                      Width = 88
+                      Anchors = [akLeft, akBottom]
+                      AutoSize = True
+                      BorderSpacing.Around = 3
+                      Caption = 'Сохранить'
+                      OnClick = DataSave
+                      TabOrder = 0
+                    end
+                  end
+                end
+              end
+              object TabSheet3: TTabSheet
+                Caption = 'Услуги'
+                ClientHeight = 552
+                ClientWidth = 535
+                object PairSplitter1: TPairSplitter
+                  Cursor = crVSplit
+                  Left = 0
+                  Height = 488
+                  Top = 0
+                  Width = 535
+                  Align = alClient
+                  Position = 400
+                  SplitterType = pstVertical
+                  object PairSplitterSide4: TPairSplitterSide
+                    Cursor = crArrow
+                    Left = 0
+                    Height = 400
+                    Top = 0
+                    Width = 535
+                    ClientWidth = 535
+                    ClientHeight = 400
+                    object ServiceCompaniesVST: TDBVST
+                      Left = 0
+                      Height = 400
+                      Top = 0
+                      Width = 535
+                      Align = alClient
+                      DefaultText = 'Node'
+                      Header.AutoSizeIndex = 0
+                      Header.Columns = <                      
+                        item
+                          Position = 0
+                          Text = 'Услуга'
+                          Width = 200
+                        end                      
+                        item
+                          Position = 1
+                          Text = 'Организация'
+                          Width = 200
+                        end>
+                      Header.DefaultHeight = 17
+                      Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
+                      Header.Style = hsFlatButtons
+                      ScrollBarOptions.ScrollBars = ssAutoBoth
+                      TabOrder = 0
+                      TreeOptions.AutoOptions = [toAutoDropExpand, toAutoExpand, toAutoScrollOnExpand, toAutoTristateTracking, toAutoDeleteMovedNodes]
+                      TreeOptions.MiscOptions = [toCheckSupport, toEditable, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
+                      TreeOptions.SelectionOptions = [toExtendedFocus]
+                      OnFocusChanged = ServiceCompaniesVSTFocusChanged
+                      Connection.Connected = False
+                      Connection.LoginPrompt = False
+                      Connection.KeepConnection = False
+                      Connection.LogEvents = []
+                    end
+                  end
+                  object PairSplitterSide7: TPairSplitterSide
+                    Cursor = crArrow
+                    Left = 0
+                    Height = 83
+                    Top = 405
+                    Width = 535
+                    ClientWidth = 535
+                    ClientHeight = 83
+                    object Memo1: TMemo
+                      Left = 0
+                      Height = 83
+                      Top = 0
+                      Width = 535
+                      Align = alClient
+                      Lines.Strings = (
+                        'Memo1'
+                      )
+                      TabOrder = 0
+                    end
+                  end
+                end
+                object ActionPanel5: TPanel
+                  Left = 0
+                  Height = 37
+                  Top = 488
+                  Width = 535
+                  Align = alBottom
+                  AutoSize = True
+                  ClientHeight = 33
+                  ClientWidth = 531
+                  TabOrder = 1
+                  object BuildingWorksSaveBtn: TBitBtn
+                    AnchorSideLeft.Control = ActionPanel5
+                    AnchorSideTop.Control = ActionPanel5
+                    AnchorSideBottom.Control = ActionPanel5
+                    AnchorSideBottom.Side = asrBottom
+                    Left = 4
+                    Height = 29
+                    Top = 4
+                    Width = 88
+                    Anchors = [akLeft, akBottom]
+                    AutoSize = True
+                    BorderSpacing.Around = 3
+                    Caption = 'Сохранить'
+                    OnClick = DataSave
+                    TabOrder = 0
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+      object ServiceTabSheet: TTabSheet
+        Caption = 'Услуги'
+        ClientHeight = 556
+        ClientWidth = 744
+        object ServicePairSplitter: TPairSplitter
+          Left = 0
+          Height = 556
+          Top = 0
+          Width = 744
+          Align = alClient
+          Position = 200
+          object PairSplitterSide1: TPairSplitterSide
+            Cursor = crArrow
+            Left = 0
+            Height = 556
+            Top = 0
+            Width = 200
+            ClientWidth = 200
+            ClientHeight = 556
+            object ServicesTreeView: TDBDynTreeView
+              AnchorSideLeft.Control = PairSplitterSide1
+              AnchorSideTop.Control = TreeFilterEdit1
+              AnchorSideTop.Side = asrBottom
+              AnchorSideRight.Control = PairSplitterSide1
+              AnchorSideRight.Side = asrBottom
+              AnchorSideBottom.Control = PairSplitterSide1
+              AnchorSideBottom.Side = asrBottom
+              Left = 0
+              Height = 529
+              Top = 27
+              Width = 200
+              Anchors = [akTop, akLeft, akRight, akBottom]
+              ReadOnly = True
+              ScrollBars = ssAutoBoth
+              TabOrder = 0
+              OnSelectionChanged = TreeViewSelectionChanged
+              Options = [tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
+              Connection.Connected = False
+              Connection.LoginPrompt = False
+              Connection.KeepConnection = False
+              Connection.LogEvents = []
+            end
+            object TreeFilterEdit1: TTreeFilterEdit
+              AnchorSideLeft.Control = PairSplitterSide1
+              AnchorSideTop.Control = PairSplitterSide1
+              AnchorSideRight.Control = PairSplitterSide1
+              AnchorSideRight.Side = asrBottom
+              Left = 0
+              Height = 27
+              Top = 0
+              Width = 180
+              ButtonWidth = 23
+              NumGlyphs = 1
+              Anchors = [akTop, akLeft, akRight]
+              BorderSpacing.Right = 20
+              MaxLength = 0
+              TabOrder = 1
+              Visible = False
+              FilteredTreeview = ServicesTreeView
+            end
+          end
+          object PairSplitterSide2: TPairSplitterSide
+            Cursor = crArrow
+            Left = 205
+            Height = 556
+            Top = 0
+            Width = 539
+            ClientWidth = 539
+            ClientHeight = 556
+            object ServicePageControl: TPageControl
+              AnchorSideLeft.Control = PairSplitterSide2
+              AnchorSideTop.Control = ServiceLabel
+              AnchorSideTop.Side = asrBottom
+              AnchorSideRight.Control = PairSplitterSide2
+              AnchorSideRight.Side = asrBottom
+              AnchorSideBottom.Control = PairSplitterSide2
+              AnchorSideBottom.Side = asrBottom
+              Left = 0
+              Height = 555
+              Top = 1
+              Width = 539
+              ActivePage = ServicePropMainTabSheet
+              Anchors = [akTop, akLeft, akRight, akBottom]
+              TabIndex = 0
+              TabOrder = 0
+              object ServicePropMainTabSheet: TTabSheet
+                Caption = 'Основное'
+                ClientHeight = 551
+                ClientWidth = 535
+                object ScrollBox1: TScrollBox
+                  Left = 0
+                  Height = 487
+                  Top = 0
+                  Width = 535
+                  HorzScrollBar.Page = 535
+                  VertScrollBar.Page = 487
+                  Align = alClient
+                  ChildSizing.LeftRightSpacing = 3
+                  ChildSizing.TopBottomSpacing = 3
+                  ChildSizing.HorizontalSpacing = 3
+                  ChildSizing.VerticalSpacing = 3
+                  ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+                  ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                  ChildSizing.ControlsPerLine = 2
+                  ClientHeight = 483
+                  ClientWidth = 531
+                  TabOrder = 0
+                  object Label1: TLabel
+                    Left = 3
+                    Height = 27
+                    Top = 3
+                    Width = 276
+                    Caption = 'Наименование'
+                    ParentColor = False
+                  end
+                  object SrvNameEdit: TEdit
+                    Left = 282
+                    Height = 27
+                    Top = 3
+                    Width = 248
+                    TabOrder = 0
+                  end
+                end
+                object ActionPanel1: TPanel
+                  Left = 0
+                  Height = 37
+                  Top = 487
+                  Width = 535
+                  Align = alBottom
+                  AutoSize = True
+                  ClientHeight = 33
+                  ClientWidth = 531
+                  TabOrder = 1
+                  object SrvMainSaveBtn: TBitBtn
+                    AnchorSideLeft.Control = ActionPanel1
+                    AnchorSideTop.Control = ActionPanel1
+                    AnchorSideBottom.Control = ActionPanel1
+                    AnchorSideBottom.Side = asrBottom
+                    Left = 4
+                    Height = 29
+                    Top = 4
+                    Width = 88
+                    Anchors = [akLeft, akBottom]
+                    AutoSize = True
+                    BorderSpacing.Around = 3
+                    Caption = 'Сохранить'
+                    OnClick = DataSave
+                    TabOrder = 0
+                  end
+                end
+              end
+              object SrvWorksTabSheet: TTabSheet
+                Caption = 'Работы'
+                ClientHeight = 551
+                ClientWidth = 535
+                object ActionPanel2: TPanel
+                  Left = 0
+                  Height = 37
+                  Top = 487
+                  Width = 535
+                  Align = alBottom
+                  AutoSize = True
+                  ClientHeight = 33
+                  ClientWidth = 531
+                  TabOrder = 0
+                  object SrvWorksSaveBtn: TBitBtn
+                    AnchorSideLeft.Control = ActionPanel2
+                    AnchorSideTop.Control = ActionPanel2
+                    AnchorSideBottom.Control = ActionPanel2
+                    AnchorSideBottom.Side = asrBottom
+                    Left = 4
+                    Height = 29
+                    Top = 4
+                    Width = 88
+                    Anchors = [akLeft, akBottom]
+                    AutoSize = True
+                    BorderSpacing.Around = 3
+                    Caption = 'Сохранить'
+                    OnClick = DataSave
+                    TabOrder = 0
+                  end
+                end
+                object PairSplitter2: TPairSplitter
+                  AnchorSideLeft.Control = SrvWorksTabSheet
+                  AnchorSideTop.Control = SrvWorksTabSheet
+                  AnchorSideRight.Control = SrvWorksTabSheet
+                  AnchorSideRight.Side = asrBottom
+                  AnchorSideBottom.Control = ActionPanel2
+                  Cursor = crVSplit
+                  Left = 0
+                  Height = 487
+                  Top = 0
+                  Width = 535
+                  Anchors = [akTop, akLeft, akRight, akBottom]
+                  Position = 400
+                  SplitterType = pstVertical
+                  object PairSplitterSide8: TPairSplitterSide
+                    Cursor = crArrow
+                    Left = 0
+                    Height = 400
+                    Top = 0
+                    Width = 535
+                    ClientWidth = 535
+                    ClientHeight = 400
+                    object Panel3: TPanel
+                      Left = 0
+                      Height = 400
+                      Top = 0
+                      Width = 535
+                      Align = alClient
+                      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+                      ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+                      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                      ClientHeight = 396
+                      ClientWidth = 531
+                      TabOrder = 0
+                      object WorksTreeView: TDBDynTreeView
+                        AnchorSideLeft.Control = Panel3
+                        AnchorSideTop.Control = WorksTreeFilter
+                        AnchorSideTop.Side = asrBottom
+                        AnchorSideRight.Control = ActPanel
+                        AnchorSideBottom.Control = Panel3
+                        AnchorSideBottom.Side = asrBottom
+                        Left = 1
+                        Height = 353
+                        Top = 46
+                        Width = 228
+                        Anchors = [akTop, akLeft, akRight, akBottom]
+                        MultiSelect = True
+                        TabOrder = 0
+                        OnEnter = TreeViewSelectionChanged
+                        OnSelectionChanged = TreeViewSelectionChanged
+                        Options = [tvoAllowMultiselect, tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
+                        Connection.Connected = False
+                        Connection.LoginPrompt = False
+                        Connection.KeepConnection = False
+                        Connection.LogEvents = []
+                      end
+                      object Label2: TLabel
+                        AnchorSideLeft.Control = Panel3
+                        AnchorSideTop.Control = Panel3
+                        AnchorSideRight.Control = Splitter2
+                        Left = 1
+                        Height = 18
+                        Top = 1
+                        Width = 262
+                        Anchors = [akTop, akLeft, akRight]
+                        Caption = 'Справочники работ'
+                        ParentColor = False
+                      end
+                      object Label3: TLabel
+                        AnchorSideLeft.Control = Splitter2
+                        AnchorSideLeft.Side = asrBottom
+                        AnchorSideTop.Control = Panel3
+                        AnchorSideRight.Control = Panel3
+                        AnchorSideRight.Side = asrBottom
+                        Left = 271
+                        Height = 18
+                        Top = 1
+                        Width = 263
+                        Anchors = [akTop, akLeft, akRight]
+                        Caption = 'Работы в услуге'
+                        ParentColor = False
+                      end
+                      object Splitter2: TSplitter
+                        AnchorSideLeft.Control = Panel3
+                        AnchorSideLeft.Side = asrBottom
+                        AnchorSideTop.Control = Panel3
+                        AnchorSideRight.Control = Panel3
+                        AnchorSideRight.Side = asrCenter
+                        AnchorSideBottom.Control = Panel3
+                        AnchorSideBottom.Side = asrBottom
+                        Left = 263
+                        Height = 398
+                        Top = 1
+                        Width = 8
+                        Align = alNone
+                        Anchors = [akTop, akBottom]
+                        ResizeAnchor = akRight
+                      end
+                      object WorksTreeFilter: TTreeFilterEdit
+                        AnchorSideLeft.Control = Label2
+                        AnchorSideTop.Control = Label2
+                        AnchorSideTop.Side = asrBottom
+                        AnchorSideRight.Control = WorksTreeView
+                        AnchorSideRight.Side = asrBottom
+                        Left = 1
+                        Height = 27
+                        Top = 19
+                        Width = 228
+                        ButtonWidth = 23
+                        NumGlyphs = 1
+                        Anchors = [akTop, akLeft, akRight]
+                        MaxLength = 0
+                        TabOrder = 2
+                        FilteredTreeview = WorksTreeView
+                      end
+                      object ServiceWorksList: TDBDynTreeView
+                        AnchorSideLeft.Control = Splitter2
+                        AnchorSideLeft.Side = asrBottom
+                        AnchorSideTop.Control = Label3
+                        AnchorSideTop.Side = asrBottom
+                        AnchorSideRight.Control = Panel3
+                        AnchorSideRight.Side = asrBottom
+                        AnchorSideBottom.Control = ActPanel
+                        AnchorSideBottom.Side = asrBottom
+                        Left = 271
+                        Height = 380
+                        Top = 19
+                        Width = 263
+                        Anchors = [akTop, akLeft, akRight, akBottom]
+                        MultiSelect = True
+                        MultiSelectStyle = [msControlSelect, msShiftSelect]
+                        TabOrder = 3
+                        OnSelectionChanged = TreeViewSelectionChanged
+                        Options = [tvoAllowMultiselect, tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
+                        Connection.Connected = False
+                        Connection.LoginPrompt = False
+                        Connection.KeepConnection = False
+                        Connection.LogEvents = []
+                      end
+                      object ActPanel: TPanel
+                        AnchorSideTop.Control = Label2
+                        AnchorSideTop.Side = asrBottom
+                        AnchorSideRight.Control = Splitter2
+                        AnchorSideBottom.Control = Panel3
+                        AnchorSideBottom.Side = asrBottom
+                        Left = 229
+                        Height = 380
+                        Top = 19
+                        Width = 34
+                        Anchors = [akTop, akRight, akBottom]
+                        AutoSize = True
+                        BevelOuter = bvNone
+                        ClientHeight = 376
+                        ClientWidth = 30
+                        TabOrder = 4
+                        object WorkAddBtn: TBitBtn
+                          AnchorSideLeft.Control = ActPanel
+                          AnchorSideRight.Control = ActPanel
+                          AnchorSideRight.Side = asrBottom
+                          Left = 3
+                          Height = 29
+                          Top = 3
+                          Width = 28
+                          Anchors = [akTop, akLeft, akRight]
+                          AutoSize = True
+                          BorderSpacing.Around = 3
+                          Caption = '>'
+                          OnClick = WorkAddBtnClick
+                          TabOrder = 0
+                        end
+                        object WorkAddAllBtn: TBitBtn
+                          AnchorSideLeft.Control = ActPanel
+                          AnchorSideTop.Control = WorkAddBtn
+                          AnchorSideTop.Side = asrBottom
+                          AnchorSideRight.Control = ActPanel
+                          AnchorSideRight.Side = asrBottom
+                          Left = 3
+                          Height = 29
+                          Top = 35
+                          Width = 28
+                          Anchors = [akTop, akLeft, akRight]
+                          AutoSize = True
+                          BorderSpacing.Around = 3
+                          Caption = '>>'
+                          TabOrder = 1
+                          Visible = False
+                        end
+                        object WorkDelBtn: TBitBtn
+                          AnchorSideLeft.Control = ActPanel
+                          AnchorSideTop.Control = WorkAddAllBtn
+                          AnchorSideTop.Side = asrBottom
+                          AnchorSideRight.Control = ActPanel
+                          AnchorSideRight.Side = asrBottom
+                          Left = 3
+                          Height = 29
+                          Top = 67
+                          Width = 28
+                          Anchors = [akTop, akLeft, akRight]
+                          AutoSize = True
+                          BorderSpacing.Around = 3
+                          Caption = '<'
+                          OnClick = WorkDelBtnClick
+                          TabOrder = 2
+                        end
+                        object WorkDelAllBtn: TBitBtn
+                          AnchorSideLeft.Control = ActPanel
+                          AnchorSideTop.Control = WorkDelBtn
+                          AnchorSideTop.Side = asrBottom
+                          AnchorSideRight.Control = ActPanel
+                          AnchorSideRight.Side = asrBottom
+                          Left = 3
+                          Height = 29
+                          Top = 99
+                          Width = 28
+                          Anchors = [akTop, akLeft, akRight]
+                          AutoSize = True
+                          BorderSpacing.Around = 3
+                          Caption = '<<'
+                          TabOrder = 3
+                          Visible = False
+                        end
+                      end
+                    end
+                  end
+                  object PairSplitterSide9: TPairSplitterSide
+                    Cursor = crArrow
+                    Left = 0
+                    Height = 82
+                    Top = 405
+                    Width = 535
+                    ClientWidth = 535
+                    ClientHeight = 82
+                    object ServicesWorkNote: TMemo
+                      Left = 0
+                      Height = 82
+                      Top = 0
+                      Width = 535
+                      Align = alClient
+                      ScrollBars = ssAutoBoth
+                      TabOrder = 0
+                    end
+                  end
+                end
+              end
+            end
+            object ServiceLabel: TLabel
+              AnchorSideLeft.Control = PairSplitterSide2
+              AnchorSideTop.Control = PairSplitterSide2
+              AnchorSideRight.Control = PairSplitterSide2
+              AnchorSideRight.Side = asrBottom
+              Left = 0
+              Height = 1
+              Top = 0
+              Width = 539
+              Anchors = [akTop, akLeft, akRight]
+              ParentColor = False
+              WordWrap = True
+            end
+          end
+        end
+      end
+      object WorksTabSheet: TTabSheet
+        Caption = 'Работы'
+        ClientHeight = 556
+        ClientWidth = 744
+        object PairSplitter3: TPairSplitter
+          Left = 0
+          Height = 556
+          Top = 0
+          Width = 744
+          Align = alClient
+          Position = 200
+          object PairSplitterSide10: TPairSplitterSide
+            Cursor = crArrow
+            Left = 0
+            Height = 556
+            Top = 0
+            Width = 200
+            ClientWidth = 200
+            ClientHeight = 556
+            object TreeFilterEdit3: TTreeFilterEdit
+              Left = 0
+              Height = 27
+              Top = 0
+              Width = 200
+              ButtonWidth = 23
+              NumGlyphs = 0
+              Align = alTop
+              MaxLength = 0
+              TabOrder = 0
+              FilteredTreeview = WorksMainTreeView
+            end
+            object WorksMainTreeView: TDBDynTreeView
+              Left = 0
+              Height = 529
+              Top = 27
+              Width = 200
+              Align = alClient
+              MultiSelect = True
+              TabOrder = 1
+              OnEnter = TreeViewSelectionChanged
+              OnSelectionChanged = TreeViewSelectionChanged
+              Options = [tvoAllowMultiselect, tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
+              Connection.Connected = False
+              Connection.LoginPrompt = False
+              Connection.KeepConnection = False
+              Connection.LogEvents = []
+            end
+          end
+          object PairSplitterSide11: TPairSplitterSide
+            Cursor = crArrow
+            Left = 205
+            Height = 556
+            Top = 0
+            Width = 539
+            ClientWidth = 539
+            ClientHeight = 556
+            object ActionPanel4: TPanel
+              Left = 0
+              Height = 37
+              Top = 519
+              Width = 539
+              Align = alBottom
+              AutoSize = True
+              ClientHeight = 33
+              ClientWidth = 535
+              TabOrder = 0
+              object WorkMainSaveBtn: TBitBtn
+                AnchorSideLeft.Control = ActionPanel4
+                AnchorSideTop.Control = ActionPanel4
+                AnchorSideBottom.Control = ActionPanel4
+                AnchorSideBottom.Side = asrBottom
+                Left = 4
+                Height = 29
+                Top = 4
+                Width = 88
+                Anchors = [akLeft, akBottom]
+                AutoSize = True
+                BorderSpacing.Around = 3
+                Caption = 'Сохранить'
+                OnClick = DataSave
+                TabOrder = 0
+              end
+            end
+            object Panel1: TPanel
+              Left = 0
+              Height = 519
+              Top = 0
+              Width = 539
+              Align = alClient
+              BevelOuter = bvNone
+              ClientHeight = 515
+              ClientWidth = 535
+              TabOrder = 1
+              object PageControl1: TPageControl
+                Left = 0
+                Height = 519
+                Top = 0
+                Width = 539
+                ActivePage = WorkTabSheet
+                Align = alClient
+                TabIndex = 1
+                TabOrder = 0
+                object MainTabSheet: TTabSheet
+                  Caption = 'Основное'
+                  ClientHeight = 515
+                  ClientWidth = 535
+                  object PairSplitter4: TPairSplitter
+                    Cursor = crVSplit
+                    Left = 0
+                    Height = 488
+                    Top = 0
+                    Width = 535
+                    Align = alClient
+                    Position = 300
+                    SplitterType = pstVertical
+                    object PairSplitterSide12: TPairSplitterSide
+                      Cursor = crArrow
+                      Left = 0
+                      Height = 300
+                      Top = 0
+                      Width = 535
+                      ClientWidth = 535
+                      ClientHeight = 300
+                      object ScrollBox3: TScrollBox
+                        Left = 0
+                        Height = 300
+                        Top = 0
+                        Width = 535
+                        HorzScrollBar.Page = 535
+                        VertScrollBar.Page = 300
+                        Align = alClient
+                        BorderStyle = bsNone
+                        ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+                        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                        ChildSizing.ControlsPerLine = 2
+                        ClientHeight = 300
+                        ClientWidth = 535
+                        TabOrder = 0
+                        object Label4: TLabel
+                          Left = 0
+                          Height = 27
+                          Top = 0
+                          Width = 271
+                          Caption = 'Наименование'
+                          ParentColor = False
+                        end
+                        object WorkNameEdit: TEdit
+                          Left = 271
+                          Height = 27
+                          Top = 0
+                          Width = 264
+                          TabOrder = 0
+                        end
+                        object Label5: TLabel
+                          Left = 0
+                          Height = 27
+                          Top = 27
+                          Width = 271
+                          Caption = 'Код'
+                          ParentColor = False
+                        end
+                        object WorkCodeEdit: TEdit
+                          Left = 271
+                          Height = 27
+                          Top = 27
+                          Width = 264
+                          TabOrder = 1
+                        end
+                        object Label6: TLabel
+                          Left = 0
+                          Height = 29
+                          Top = 54
+                          Width = 271
+                          Caption = 'База'
+                          ParentColor = False
+                        end
+                        object BaseCB: TComboBox
+                          Left = 271
+                          Height = 29
+                          Top = 54
+                          Width = 264
+                          AutoComplete = True
+                          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+                          ItemHeight = 0
+                          TabOrder = 4
+                        end
+                        object Label7: TLabel
+                          Left = 0
+                          Height = 27
+                          Top = 83
+                          Width = 271
+                          Caption = 'Множитель'
+                          ParentColor = False
+                        end
+                        object WorkNameEdit3: TEdit
+                          Left = 271
+                          Height = 27
+                          Top = 83
+                          Width = 264
+                          TabOrder = 2
+                        end
+                        object Label8: TLabel
+                          Left = 0
+                          Height = 27
+                          Top = 110
+                          Width = 271
+                          Caption = 'Условие'
+                          ParentColor = False
+                        end
+                        object WorkNameEdit4: TEdit
+                          Left = 271
+                          Height = 27
+                          Top = 110
+                          Width = 264
+                          TabOrder = 3
+                        end
+                      end
+                    end
+                    object PairSplitterSide13: TPairSplitterSide
+                      Cursor = crArrow
+                      Left = 0
+                      Height = 183
+                      Top = 305
+                      Width = 535
+                      ClientWidth = 535
+                      ClientHeight = 183
+                      object WorkNote: TMemo
+                        Left = 0
+                        Height = 183
+                        Top = 0
+                        Width = 535
+                        Align = alClient
+                        Lines.Strings = (
+                          'WorkNote'
+                        )
+                        ScrollBars = ssAutoBoth
+                        TabOrder = 0
+                      end
+                    end
+                  end
+                end
+                object WorkTabSheet: TTabSheet
+                  Caption = 'Ресурсы'
+                  ClientHeight = 515
+                  ClientWidth = 535
+                  object WorkResourcesVST: TDBVST
+                    Left = 0
+                    Height = 488
+                    Top = 0
+                    Width = 535
+                    Align = alClient
+                    DefaultText = 'Node'
+                    Header.AutoSizeIndex = 0
+                    Header.Columns = <                    
+                      item
+                        Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAllowFocus, coWrapCaption]
+                        Position = 0
+                        Text = 'Код'
+                        Width = 100
+                      end                    
+                      item
+                        Position = 1
+                        Text = 'Наименование'
+                        Width = 200
+                      end                    
+                      item
+                        Position = 2
+                        Text = 'Ед. изм.'
+                        Width = 100
+                      end                    
+                      item
+                        Position = 3
+                        Text = 'Норма'
+                        Width = 100
+                      end>
+                    Header.DefaultHeight = 17
+                    Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
+                    Header.Style = hsFlatButtons
+                    ScrollBarOptions.ScrollBars = ssAutoBoth
+                    TabOrder = 0
+                    TreeOptions.AutoOptions = [toAutoDropExpand, toAutoExpand, toAutoScrollOnExpand, toAutoTristateTracking, toAutoDeleteMovedNodes]
+                    TreeOptions.MiscOptions = [toEditable, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
+                    TreeOptions.SelectionOptions = [toExtendedFocus]
+                    OnFocusChanged = ServiceCompaniesVSTFocusChanged
+                    Connection.Connected = False
+                    Connection.LoginPrompt = False
+                    Connection.KeepConnection = False
+                    Connection.LogEvents = []
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  object MainMenu: TMainMenu
+    Images = MainIconList22
+    left = 136
+    object MenuItem1: TMenuItem
+      Caption = 'Приложение'
+      object MenuItem2: TMenuItem
+        Action = ActionConnect
+        Caption = 'Подклю&читься'
+        Bitmap.Data = {
+          C6070000424DC607000000000000360000002800000016000000160000000100
+          2000000000009007000064000000640000000000000000000000FFFFFF07FFFF
+          FF49FFFFFF53FFFFFF12FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1C2727276E2F2F2F71E1E1
+          E15DFFFFFF14FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF1C0505059A0000008F1C1C1C7BDFDFDF5EFFFF
+          FF14FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF098C8C8C36030303AC000000971A1A1A83DEDEDE5EFFFFFF14FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF0A8A8A8A37030303B0000000A019191989DFDFDF66FFFFFF60FFFFFF5CFFFF
+          FF33FFFFFF02FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0A8C8C
+          8C36030303B4000000A10404049D0909099A1111119474747474FFFFFF45FFFF
+          FF03FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0A8E8E8E370101
+          01A5000000A9000000A9000000A9000000A95858587EFFFFFF3FFFFFFF03FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF21010101AB000000B20000
+          00B2000000B2000000B2000000B249494970FFFFFF15FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF20010101BB000000BC000000BC000000BC0000
+          00BC000000BC020202B0FFFFFF1CFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF121414148A000000D3000000C5000000C5000000C5000000D11111
+          1192FFFFFF45FFFFFF5CFFFFFF32FFFFFF02FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFF
+          FF1E0D0D0D99000000DB000000D1000000DA0A0A0AA6F8F8F8526F6F6F691616
+          167591919167FFFFFF3EFFFFFF02FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFFFF1E1212
+          128F010101D80E0E0E97F4F4F44C4C4C4C710000008600000086000000867D7D
+          7D6BFFFFFF39FFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFFFF14FFFFFF21FFFF
+          FF244141416A0000008F0000008F0000008F0000008F0000008F7B7B7B62FFFF
+          FF10FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1E0202029B0000
+          0098000000980000009800000098000000980C0C0C82FFFFFF1DFFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1711111188000000B5000000A10000
+          00A1000000A1000000A10B0B0B91FFFFFF23FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF03FFFFFF200C0C0C95000000C1000000AE000000AD0000
+          00AB0A0A0AA2E5E5E55BFFFFFF0FFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF03FFFFFF1F13131386010101CC000000D1000000D0000000B81C1C
+          1C9AE3E3E35CFFFFFF0FFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF02FFFFFF12FFFFFF20FFFFFF216D6D6D42020202C8000000C01B1B1BA1E1E1
+          E15DFFFFFF10FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF0C6F6F6F41010101CC000000C9191919A9D9D9D953FFFF
+          FF08FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF0C6D6D6D42010101D0000000D40C0C0CA9FFFFFF1AFFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF0C6F6F6F41020202CF060606B2FFFFFF19FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0AFFFF
+          FF1CFFFFFF1AFFFFFF06
+        }
+      end
+      object MenuItem3: TMenuItem
+        Action = ActionDisconnect
+        Caption = '&Отключиться'
+        Bitmap.Data = {
+          C6070000424DC607000000000000360000002800000016000000160000000100
+          2000000000009007000064000000640000000000000000000000FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000002E000000330000
+          0007FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF0000000032000000400000003700000007FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF000000000600000035000000400000003E0000003C000000390000
+          001EFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00000000050000003E0000004000000040000000400000004000000024FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000
+          003C00000040000000400000004000000040000000400000001FFFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0000000039000000400000
+          004000000040000000400000004000000038FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF000000001D0000004000000040000000400000
+          00400000004000000021FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF000000002100000040000000400000004000000026FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF000000001D0000003700000020FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF000000000100000023000000390000001CFFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00000000010000002A0000004000000040000000400000001FFFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00000000250000
+          0040000000400000004000000040000000400000001AFFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000003A00000040000000400000
+          0040000000400000004000000035FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF0000000021000000400000004000000040000000400000
+          004000000038FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF0000000025000000400000004000000040000000400000003C0000
+          0005FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF000000001E0000003A0000003C0000003E000000400000003400000005FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF0000000008000000380000004000000030FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00000000070000003300000029FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00
+        }
+      end
+      object MenuItem4: TMenuItem
+        Action = FileExit
+        Bitmap.Data = {
+          C6070000424DC607000000000000360000002800000016000000160000000100
+          2000000000009007000064000000640000000000000000000000FFFFFF000000
+          002B0000007B000000A3000000A5000000A5000000A5000000A5000000A50000
+          00A5000000A5000000A5000000A5000000A5000000A5000000A5000000A50000
+          00A5000000A30000007B0000002BFFFFFF000000000802023FA10A0B92ED1415
+          AEFF1718AFFF1A1BB0FF1D1DB1FF2021B2FF2323B3FF2526B4FF2829B5FF2829
+          B5FF2526B4FF2323B3FF2021B2FF1D1DB1FF1A1BB0FF1718AFFF1415AEFF0A0B
+          92ED02023FA20000000800000020020592EB0307ABFF0408ABFF060AACFF080C
+          ADFF080CADFF090DADFF090DADFF090DADFF090DADFF090DADFF090DADFF090D
+          ADFF090DADFF080CADFF080CADFF060AACFF0408ABFF0307ABFF020592EB0000
+          0020000000220209ADFF040BAEFF080FB0FF0D14B1FF1017B2FF1118B2FF1118
+          B2FF1118B2FF1118B2FF1118B2FF1118B2FF1118B2FF1118B2FF1118B2FF1118
+          B2FF1017B2FF0D14B1FF080FB0FF040BAEFF0209ADFF0000002200000021020C
+          B2FF0610B3FF0D16B5FF131CB7FF161FB8FF151EAAFF4A4D8CFF151EAAFF1720
+          B8FF1720B8FF1720B8FF1720B8FF151EAAFF4A4D8CFF151EAAFF161FB8FF131C
+          B7FF0D16B5FF0610B3FF020CB2FF00000021000000200310B5FF0815B6FF101C
+          B9FF1622BAFF1722ADFF8689ACFFFFFFFFFF8689ACFF1823AEFF1A26BCFF1A26
+          BCFF1823AEFF8689ACFFFFFFFFFF8689ACFF1722ADFF1622BAFF101CB9FF0815
+          B6FF0310B5FF000000200000001E0514B9FF0917BAFF111FBCFF1522AFFF8689
+          ADFFFFFFFFFFFFFFFFFFFFFFFFFF8689ADFF1824B0FF1824B0FF8689ADFFFFFF
+          FFFFFFFFFFFFFFFFFFFF8689ADFF1522AFFF111FBCFF0917BAFF0514B9FF0000
+          001E0000001D0A1CBDFF091ABCFF1122BFFF505BC5FFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFF868AAEFF868AAEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFF505BC5FF1122BFFF091ABCFF0A1CBDFF0000001D0000001C1023
+          C2FF091DC0FF1125C2FF172AC4FF8C95DBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8C95DBFF172A
+          C4FF1125C2FF091DC0FF1023C2FF0000001C0000001B152BC6FF0A21C3FF1127
+          C5FF172DC7FF1A30C7FF8C96DCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFF8C96DCFF1A30C7FF172DC7FF1127C5FF0A21
+          C3FF152BC6FF0000001B0000001A1A32CAFF0A24C6FF112AC8FF1730C9FF1A32
+          CAFF1A32CAFF8B95D6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFF8B95D6FF1A32CAFF1A32CAFF1730C9FF112AC8FF0A24C6FF1A32CAFF0000
+          001A000000181F38CFFF0A26CAFF112CCCFF1731CDFF1A34CEFF1830BFFF868C
+          B1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF868CB1FF1830
+          BFFF1A34CEFF1731CDFF112CCCFF0A26CAFF1F38CFFF0000001800000017243F
+          D3FF0A29CDFF112FCEFF1734D0FF1833C1FF868DB1FFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF868DB1FF1833C1FF1734
+          D0FF112FCEFF0A29CDFF243FD3FF00000017000000162946D5FF0A2CD0FF1132
+          D1FF1533C2FF868DB2FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF868DB2FF1533C2FF1132D1FF0A2C
+          D0FF2946D5FF00000016000000152D4DDAFF0A2FD4FF1134D5FF5068D4FFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8C9CE3FF8C9CE3FFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFF5068D4FF1134D5FF0A2FD4FF2D4DDAFF0000
+          0015000000143254DDFF0A32D6FF1137D8FF173CD9FF8C9DE4FFFFFFFFFFFFFF
+          FFFFFFFFFFFF8C9DE4FF1A3FD9FF1A3FD9FF8C9DE4FFFFFFFFFFFFFFFFFFFFFF
+          FFFF8C9DE4FF173CD9FF1137D8FF0A32D6FF3254DDFF00000014000000123759
+          E0FF0A33D9FF1038DAFF163DDBFF1940DCFF8C9EE6FFFFFFFFFF8C9EE6FF1A41
+          DCFF1A41DCFF1A41DCFF1A41DCFF8C9EE6FFFFFFFFFF8C9EE6FF1940DCFF163D
+          DBFF1038DAFF0A33D9FF3759E0FF00000012000000113C5FE3FF0834DCFF0D39
+          DDFF133EDEFF1640DEFF1741DEFF5171E6FF1741DEFF1741DEFF1741DEFF1741
+          DEFF1741DEFF1741DEFF5171E6FF1741DEFF1640DEFF133EDEFF0D39DDFF0834
+          DCFF3C5FE3FF00000011000000104065E7FF0636E0FF0837E0FF0D3CE1FF103E
+          E1FF113FE1FF113FE1FF113FE1FF113FE1FF113FE1FF113FE1FF113FE1FF113F
+          E1FF113FE1FF113FE1FF103EE1FF0D3CE1FF0837E0FF0636E0FF4065E7FF0000
+          0010000000093F64E1DC1847E5FF0639E2FF083BE3FF0A3CE3FF0A3CE3FF0B3D
+          E3FF0B3DE3FF0B3DE3FF0B3DE3FF0B3DE3FF0B3DE3FF0B3DE3FF0B3DE3FF0A3C
+          E3FF0A3CE3FF083BE3FF0639E2FF1847E5FF3F64E1DC00000009FFFFFF003052
+          C15A446AE8DA4B72EDFF4B72EDFF4B72EDFF4B72EDFF4C73EDFF4C73EDFF4C73
+          EDFF4C73EDFF4C73EDFF4C73EDFF4C73EDFF4C73EDFF4B72EDFF4B72EDFF4B72
+          EDFF4B72EDFF446AE8DA3052C15AFFFFFF00FFFFFF00FFFFFF00000000070000
+          000D0000000D0000000D0000000D0000000D0000000D0000000D0000000D0000
+          000D0000000D0000000D0000000D0000000D0000000D0000000D0000000D0000
+          0007FFFFFF00FFFFFF00
+        }
+      end
+    end
+  end
+  object MainActionList: TActionList
+    Images = MainIconList22
+    left = 456
+    object ActionConnect: TAction
+      Category = 'File'
+      Caption = 'Подключиться'
+      ImageIndex = 10
+      OnExecute = ActionConnectExecute
+    end
+    object ActionDisconnect: TAction
+      Category = 'File'
+      Caption = 'Отключиться'
+      ImageIndex = 11
+      OnExecute = ActionDisconnectExecute
+    end
+    object FileExit: TFileExit
+      Category = 'File'
+      Caption = 'В&ыход'
+      Hint = 'Выход'
+      ImageIndex = 1
+    end
+    object ActionSave: TAction
+      Caption = 'Сохранить'
+      ImageIndex = 3
+      OnExecute = DataSave
+    end
+  end
+  object Conn: TPQConnection
+    Connected = False
+    LoginPrompt = False
+    DatabaseName = 'macom'
+    KeepConnection = False
+    Params.Strings = (
+      'port=5433'
+    )
+    Password = 'postgres'
+    UserName = 'postgres'
+    HostName = 'localhost'
+    LogEvents = []
+    left = 536
+  end
+  object MainIconList22: TImageList
+    Height = 22
+    Width = 22
+    left = 608
+    Bitmap = {
+      4C690D0000001600000016000000FFFFFF00FFFFFF00000000070000000D0000
+      000D0000000D0000000D0000000D0000000D0000000D0000000D0000000D0000
+      000D0000000D0000000D0000000D0000000D0000000D0000000D00000007FFFF
+      FF00FFFFFF00FFFFFF00A455A666C473C5E3CB7ECCFFCB7ECCFFCB7ECCFFCA7F
+      CCFDA48CE2EA9981E6FF9981E6FF9981E6FF9981E6FF988EEDE4817EFCFF817E
+      FCFF817EFCFF817EFCFF8B97F8EA7EB0FDFF73A9F9E35589D866FFFFFF000000
+      0009BD68BEE3B750B8FFB140B2FFB140B2FFB140B2FFB140B2FFA443AEF86847
+      CEF76946D8FF6946D8FF6946D8FF5B48CAEF4440F9FF4440F9FF4440F9FF4440
+      F9FF476BDAEB408AFAFF5093FAFF68A0F4E30000000900000010BF65BFFFAC37
+      ADFFAC35ACFFAC35ACFFAC35ACFFAC35ACFFAC35ACFF883AA2F05E3BD4FE5F3A
+      D5FF5F3AD5FF553BC6F43935F6FF3935F6FF3935F6FF3935F3FF377CE9F53582
+      F8FF3783F8FF659FF8FF0000001000000011AD5F9BF2933187EA9D2D9DF5A62B
+      A7FFA62BA7FFA62BA7FFA62BA7FFA52BA6FF5933B1ED5731D1FF5731D1FF4A31
+      C1F12F2BF4FF2F2BF4FF2F2BF4FF3045D5EE2B7BF6FF2B7BF6FF2D7CF6FF5997
+      F6FF0000001100000012B24F90FFA12476FF9F2375FF8D2577EE8C2589ECA222
+      A3FFA222A3FFA222A3FF752698EE5028CFFF5028CFFF3B27B9EC2622F3FF2622
+      F3FF2622EEFF2561D0EC2276F5FF2276F5FF2476F5FF4E90F5FF000000120000
+      0014AE448AFF9D1C72FF9D1B71FF9D1B71FF9B1B6FFF841D73EA9B1A9CFC9F1A
+      A0FF991A9AFF4620B6F44920CDFF2C1EB5EA1E1AF3FF1E1AF2FF1E3DC7EA1A71
+      F5FF1A71F5FF1A71F5FF1B72F5FF4389F2FD0000001400000015AA3A84FF9B15
+      6EFF9B146DFF9B146DFF9B146DFF9B146DFF851567F38C148CF39D139EFF4E18
+      96E94419CCFF1E15BCEB1713F4FF1723D0F31369F0FB136DF6FF136DF6FF136D
+      F6FF156DE4F63DA7DCF00000001500000016A8317FFF9A0F6BFF9A0E6AFF9A0E
+      6AFF9A0E6AFF9A0E6AFF9A0E6AFF8A0E65F98E0D8FF7591190EA3814C0FA120D
+      EBFB1216DBF90E5DDBF30D6AF8FF0D6AF8FF0D68F4FF0E6ACFED0EA0E5F630B7
+      F6FF00000016000000178F2A61EA810941EB85073CF383073EEF7C0841EA7608
+      43E878094BEA900862FB800862EF640985EE1C0AB0E90A1ECEEF075DE3F60767
+      FAFF0763EFFF0868CCEC0889CEEA07ABF6FE08ACF8FF26B6F8FF000000170000
+      0018A31E4EFF990339FF990238FF990238FF990238FF990238FF990238FF8D02
+      37FA75023EE8550352E7072C99E7025FC4ED026BC4E90273BFE70297DCF302AC
+      FBFF02ACFBFF02ACFBFF03ACFBFF1EB5FBFF000000180000001AA21849FF9902
+      39FF990138FF990138FF990138FF840230F3820D24E78F1520E9981F1BED723F
+      0DE7029781E701A6C1E901A4E9FA01ADFCFF01ADFCFF01ADFCFF01ADFCFF01AD
+      FCFF02ADFCFF18B4FCFF0000001A0000001B9E1445FF970339FF950237FE8207
+      2BEA9C1E1EECCE361AFFD5371BFFBF3319F6AC710AEF5F9204EA03C082EE03CE
+      BFEF03EBEEFB03B4C1EA02A7C0E902A4C8EA02A2D3EF02A1D8F203A5D0EB16B5
+      D0E90000001B0000001C9C1042FF8C0534F6A2241FEED2381DFFD4381DFFD438
+      1DFFB83419F3B78D0AF8BD9E08FB22CB04FA07BC71EB04E0A3F605DED9F805F7
+      F9FF05F7F9FF05F7F9FF05F7F9FF05F7F9FF05F7F9FF11F7F9FF0000001C0000
+      001D890F35EEBC311EF6D1381EFFD1381EFFD1381EFFCA361DFCAB790BF4C9A7
+      09FF838708EC1AD805FF0BB156E905F4B1FF05D69DF406CEC5F406F4F6FF06F4
+      F6FF06F4F6FF06F4F6FF06F4F6FF0DF4F6FF0000001D0000001ECA371EFDCE37
+      1DFFCE371DFFCE371DFFCE371DFF9F5710EBC5A409FFC5A409FF638B07EB19D4
+      05FF14BC1DF405E9A9FF05F0AEFF05E8A8FC06BEA4EB06ECEEFF06F0F2FF06F0
+      F2FF06F0F2FF08F0F2FF0000001E00000020CA361DFFCA361DFFCA361DFFCA36
+      1DFFA43717EDC09F09FFC2A109FFC2A109FF4F9606ED19D105FF19D105FF07BD
+      7FEF05ECABFF05ECABFF05ECABFF05C092ED06C5B4EF06E9EBFF06ECEEFF06EC
+      EEFF0000002000000021C7351CFFC7351CFFC7351CFFC7351CFFA0670EEFBF9F
+      09FFBF9F09FFBF9F09FF3AA306F219CD05FF19CD05FF0FAF38ED05E6A8FF05E8
+      A8FF05E8A8FF05E8A8FF05E8A8FF05D49BF406BD9EEA06C8B8EF000000210000
+      0022C3351CFFC3341BFFC3341BFFB03118F5B89908FFBB9B08FFBB9B08FFBB9B
+      08FF2FA605F417C904FF17C904FF17C605FE05B97EF004E3A5FF04E3A5FF04E3
+      A5FF04E3A5FF04E3A5FF04E3A5FF05E3A5FF0000002200000020A73019EDBE34
+      1CFFBD3119FF96470EECB59605FFB59605FFB59605FFB59605FF429103EF15C3
+      02FF15C302FF15C302FF12B512F702CB92F802DDA0FF02DDA0FF02DDA0FF02DD
+      A0FF06DDA1FF06C38EED00000020000000084E170CA5A63824EFBE4834FFA579
+      2FF3B9A02CFFBAA131FFBBA335FFBBA439FF7C9D3FF14DC63FFF4DC63FFF48C6
+      3BFF45C637FF3EB451F42ED5A6FD2AD8A8FF26D8A6FF21D8A5FF12C090EF035C
+      42A600000008FFFFFF000000002B0000007B000000A3000000A5000000A50000
+      00A5000000A5000000A5000000A5000000A5000000A5000000A5000000A50000
+      00A5000000A5000000A5000000A5000000A30000007B0000002BFFFFFF00FFFF
+      FF00FFFFFF00000000070000000D0000000D0000000D0000000D0000000D0000
+      000D0000000D0000000D0000000D0000000D0000000D0000000D0000000D0000
+      000D0000000D0000000D00000007FFFFFF00FFFFFF00FFFFFF003052C15A446A
+      E8DA4B72EDFF4B72EDFF4B72EDFF4B72EDFF4C73EDFF4C73EDFF4C73EDFF4C73
+      EDFF4C73EDFF4C73EDFF4C73EDFF4C73EDFF4B72EDFF4B72EDFF4B72EDFF4B72
+      EDFF446AE8DA3052C15AFFFFFF00000000093F64E1DC1847E5FF0639E2FF083B
+      E3FF0A3CE3FF0A3CE3FF0B3DE3FF0B3DE3FF0B3DE3FF0B3DE3FF0B3DE3FF0B3D
+      E3FF0B3DE3FF0B3DE3FF0A3CE3FF0A3CE3FF083BE3FF0639E2FF1847E5FF3F64
+      E1DC00000009000000104065E7FF0636E0FF0837E0FF0D3CE1FF103EE1FF113F
+      E1FF113FE1FF113FE1FF113FE1FF113FE1FF113FE1FF113FE1FF113FE1FF113F
+      E1FF113FE1FF103EE1FF0D3CE1FF0837E0FF0636E0FF4065E7FF000000100000
+      00113C5FE3FF0834DCFF0D39DDFF133EDEFF1640DEFF1741DEFF5171E6FF1741
+      DEFF1741DEFF1741DEFF1741DEFF1741DEFF1741DEFF5171E6FF1741DEFF1640
+      DEFF133EDEFF0D39DDFF0834DCFF3C5FE3FF00000011000000123759E0FF0A33
+      D9FF1038DAFF163DDBFF1940DCFF8C9EE6FFFFFFFFFF8C9EE6FF1A41DCFF1A41
+      DCFF1A41DCFF1A41DCFF8C9EE6FFFFFFFFFF8C9EE6FF1940DCFF163DDBFF1038
+      DAFF0A33D9FF3759E0FF00000012000000143254DDFF0A32D6FF1137D8FF173C
+      D9FF8C9DE4FFFFFFFFFFFFFFFFFFFFFFFFFF8C9DE4FF1A3FD9FF1A3FD9FF8C9D
+      E4FFFFFFFFFFFFFFFFFFFFFFFFFF8C9DE4FF173CD9FF1137D8FF0A32D6FF3254
+      DDFF00000014000000152D4DDAFF0A2FD4FF1134D5FF5068D4FFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFF8C9CE3FF8C9CE3FFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFF5068D4FF1134D5FF0A2FD4FF2D4DDAFF000000150000
+      00162946D5FF0A2CD0FF1132D1FF1533C2FF868DB2FFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF868D
+      B2FF1533C2FF1132D1FF0A2CD0FF2946D5FF0000001600000017243FD3FF0A29
+      CDFF112FCEFF1734D0FF1833C1FF868DB1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF868DB1FF1833C1FF1734D0FF112F
+      CEFF0A29CDFF243FD3FF00000017000000181F38CFFF0A26CAFF112CCCFF1731
+      CDFF1A34CEFF1830BFFF868CB1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFF868CB1FF1830BFFF1A34CEFF1731CDFF112CCCFF0A26CAFF1F38
+      CFFF000000180000001A1A32CAFF0A24C6FF112AC8FF1730C9FF1A32CAFF1A32
+      CAFF8B95D6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8B95
+      D6FF1A32CAFF1A32CAFF1730C9FF112AC8FF0A24C6FF1A32CAFF0000001A0000
+      001B152BC6FF0A21C3FF1127C5FF172DC7FF1A30C7FF8C96DCFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8C96DCFF1A30
+      C7FF172DC7FF1127C5FF0A21C3FF152BC6FF0000001B0000001C1023C2FF091D
+      C0FF1125C2FF172AC4FF8C95DBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8C95DBFF172AC4FF1125
+      C2FF091DC0FF1023C2FF0000001C0000001D0A1CBDFF091ABCFF1122BFFF505B
+      C5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF868AAEFF868AAEFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF505BC5FF1122BFFF091ABCFF0A1C
+      BDFF0000001D0000001E0514B9FF0917BAFF111FBCFF1522AFFF8689ADFFFFFF
+      FFFFFFFFFFFFFFFFFFFF8689ADFF1824B0FF1824B0FF8689ADFFFFFFFFFFFFFF
+      FFFFFFFFFFFF8689ADFF1522AFFF111FBCFF0917BAFF0514B9FF0000001E0000
+      00200310B5FF0815B6FF101CB9FF1622BAFF1722ADFF8689ACFFFFFFFFFF8689
+      ACFF1823AEFF1A26BCFF1A26BCFF1823AEFF8689ACFFFFFFFFFF8689ACFF1722
+      ADFF1622BAFF101CB9FF0815B6FF0310B5FF0000002000000021020CB2FF0610
+      B3FF0D16B5FF131CB7FF161FB8FF151EAAFF4A4D8CFF151EAAFF1720B8FF1720
+      B8FF1720B8FF1720B8FF151EAAFF4A4D8CFF151EAAFF161FB8FF131CB7FF0D16
+      B5FF0610B3FF020CB2FF00000021000000220209ADFF040BAEFF080FB0FF0D14
+      B1FF1017B2FF1118B2FF1118B2FF1118B2FF1118B2FF1118B2FF1118B2FF1118
+      B2FF1118B2FF1118B2FF1118B2FF1017B2FF0D14B1FF080FB0FF040BAEFF0209
+      ADFF0000002200000020020592EB0307ABFF0408ABFF060AACFF080CADFF080C
+      ADFF090DADFF090DADFF090DADFF090DADFF090DADFF090DADFF090DADFF090D
+      ADFF080CADFF080CADFF060AACFF0408ABFF0307ABFF020592EB000000200000
+      000802023FA10A0B92ED1415AEFF1718AFFF1A1BB0FF1D1DB1FF2021B2FF2323
+      B3FF2526B4FF2829B5FF2829B5FF2526B4FF2323B3FF2021B2FF1D1DB1FF1A1B
+      B0FF1718AFFF1415AEFF0A0B92ED02023FA200000008FFFFFF000000002B0000
+      007B000000A3000000A5000000A5000000A5000000A5000000A5000000A50000
+      00A5000000A5000000A5000000A5000000A5000000A5000000A5000000A50000
+      00A30000007B0000002BFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0BFFFF
+      FF15FFFFFF1DFFFFFF24FFFFFF24FFFFFF1DFFFFFF15FFFFFF0BFFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF03FFFFFF1A5457B24F0F0F8EA7070787D00405
+      82F1040582F1070787D00F0F8EA75457B24FFFFFFF1AFFFFFF03FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF0AF8F8FF2416179499060889FA080B9BFF090CA5FF0A0DAFFF0A0DAFFF090C
+      A5FF080B9BFF060889FA16179499F8F8FF24FFFFFF0AFFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF03F8F8FF240A0D8ED10A0E
+      9BFF0E13B7FF0E13B9FF0E13B9FF0E13B9FF0E13B9FF0E13B9FF0E13B9FF0E13
+      B7FF0A0E9BFF0A0D8ED1F8F8FF24FFFFFF03FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF1A191C99990E14ACFF1118BDFF292EC5C99397
+      E17F141BBEF31118BDFF1118BDFF141BBEF39397E17F292EC5C91118BDFF0E14
+      ACFF191C9999FFFFFF1AFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF0B5A61BB4F0E16A3F8141DC2FF2B33C7C9E6E9F75BFFFFFF30A3A5E7771721
+      C3F31721C3F3A3A5E777FFFFFF30E6E9F75B2B33C7C9141DC2FF0E16A3F85A61
+      BB4FFFFFFF0BFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF151C22A79D1722
+      C5FF1722C6FF8387DD77FFFFFF20FFFFFF01FFFFFF29A5A7EA77A5A7EA77FFFF
+      FF29FFFFFF01FFFFFF208387DD771722C6FF1722C5FF1C22A79DFFFFFF15FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1D1924B8BF1A27CBFF1A27CBFF121A
+      A1F73F44B266FFFFFF19FFFFFF01FFFFFF24FFFFFF24FFFFFF01FFFFFF193F44
+      B266121AA1F71A27CBFF1A27CBFF1924B8BFFFFFFF1DFFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF241B28C4E81D2CD0FF1D2CD0FF1C2BCDFF131CA0F74149
+      B466FFFFFF14FFFFFF00FFFFFF00FFFFFF144149B466131CA0F71C2BCDFF1D2C
+      D0FF1D2CD0FF1B28C4E8FFFFFF24FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF242132D4E61F30D4FF1F30D4FF1F30D4FF2232D2F35E66C66CFFFFFF14FFFF
+      FF00FFFFFF00FFFFFF145E66C66C2232D2F31F30D4FF1F30D4FF1F30D4FF2132
+      D4E6FFFFFF24FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1D3747DDBA2235
+      D9FF2235D9FF2539DAF3A7B0F077FFFFFF29FFFFFF01FFFFFF14FFFFFF14FFFF
+      FF01FFFFFF29A7B0F0772539DAF32235D9FF2235D9FF3747DDBAFFFFFF1DFFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF154D5DE591253ADEFF253ADEFF9AA5
+      F17CFFFFFF2DFFFFFF01FFFFFF194450BC664450BC66FFFFFF19FFFFFF01FFFF
+      FF2D9AA5F17C253ADEFF253ADEFF4D5DE591FFFFFF15FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF0BA8B1F3552B40E2F6283FE2FF1F2FB7D4AFB4E633FFFF
+      FF1D4653BE661927ABF71927ABF74653BE66FFFFFF1DAFB4E6331F2FB7D4283F
+      E2FF2B40E2F6A8B1F355FFFFFF0BFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF247486ED912B44E7FF263CD5FF1A29A7DA3C49BA731B2BB0F72A42
+      E3FF2A42E3FF1B2BB0F73C49BA731A29A7DA263CD5FF2B44E7FF7486ED91FFFF
+      FF24FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF03FBFB
+      FF414C63EEBF2E49EBFF2940D9FF1D2FB3FF2D47E7FF2E49EBFF2E49EBFF2D47
+      E7FF1D2FB3FF2940D9FF2E49EBFF4C63EEBFFBFBFF41FFFFFF03FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0AFCFCFF527A8D
+      F5923450F0F6314EF0FF314EF0FF314EF0FF314EF0FF314EF0FF314EF0FF3450
+      F0F67A8DF592FCFCFF52FFFFFF0AFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF03FFFFFF38CBD4FD717186
+      F89A506BF7BC3B58F5E73B58F5E7506BF7BC7186F89ACBD4FD71FFFFFF38FFFF
+      FF03FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF16FFFFFF38FFFFFF4CFFFF
+      FF5FFFFFFF5FFFFFFF4CFFFFFF38FFFFFF16FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF01FFFFFF19FFFFFF1BFFFFFF03FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF01FFFFFF1A1717
+      1786090909A9FFFFFF1FFFFFFF03FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF01FFFFFF1A17171783000000DE000000DB0909
+      09A5FFFFFF1FFFFFFF03FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF01FFFFFF1A1A1A1A81000000D9000000CA000000CA000000D50A0A0AA0FFFF
+      FF1BFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFFFF19FFFFFF15FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF01FFFFFF1A1B1B1B7D0000
+      00D4000000C3000000C3000000C3000000C36262628AFFFFFF18FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF02FFFFFF1E0E0E0E9221212173FFFFFF18FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF01FFFFFF1A1B1B1B7C000000CF000000BC000000BC0000
+      00BC000000BC7070707BFFFFFF39FFFFFF01FFFFFF00FFFFFF00FFFFFF02FFFF
+      FF1D0E0E0E90000000C7000000CB2525256FFFFFFF18FFFFFF00FFFFFF01FFFF
+      FF1A1E1E1E79000000CB000000B5000000B5000000B5000000B572727279FFFF
+      FF3AFFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFFFF1A1111118B000000C20000
+      00AE000000AE000000C72525256DFFFFFF18FFFFFF191F1F1F75000000C60000
+      00AE000000AE000000AE000000AE74747477FFFFFF3AFFFFFF01FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF1A57575789000000A7000000A7000000A70000
+      00A8000000C2292929691F1F1F73000000C1000000A7000000A7000000A70000
+      00A776767675FFFFFF3AFFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF02FFFFFF3F6A6A6A76000000A0000000A0000000A0000000A10000
+      00BE000000BC000000A0000000A0000000A0000000A078787873FFFFFF3BFFFF
+      FF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF02FFFFFF3F6A6A6A7300000098000000980000009800000099000000980000
+      009800000098000000987B7B7B70FFFFFF3BFFFFFF01FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFF
+      FF3F6E6E6E6F0000009100000091000000910000009100000091000000918080
+      806EFFFFFF3BFFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFFFF407070
+      706D0000008A0000008A0000008A0000008A7E7E7E6BFFFFFF3BFFFFFF01FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFFFF417171716A0000
+      00830000008382828268FFFFFF3BFFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFFFF417373736885858566FFFF
+      FF3CFFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF02FFFFFF3FFFFFFF39FFFFFF01FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF08FFFF
+      FF12FFFFFF1AFFFFFF22FFFFFF22FFFFFF1AFFFFFF12FFFFFF08FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF02FFFFFF185A5A5A4A0F0F0F9A040404BF0202
+      02DF020202DF040404BF0F0F0F9A5A5A5A4AFFFFFF18FFFFFF02FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF09F8F8F8231414148B020202E1010101DE010101DA000000D5000000D50101
+      01D9010101DE020202E11414148BF8F8F823FFFFFF09FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02F8F8F823070707BB0202
+      02DA000000CD000000CC000000CC000000CC000000CC000000CC000000CC0000
+      00CD020202DA070707BBF8F8F823FFFFFF02FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF1817171787010101CF000000C6000000C60000
+      00C6000000C6000000C6000000C6000000C6000000C6000000C6000000C60101
+      01CF17171787FFFFFF18FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF085C5C5C48040404CB000000C0000000C0000000C0000000C0000000C00000
+      00C0000000C0000000C03F3F3F8E56565685000000C0000000C0040404CB5C5C
+      5C48FFFFFF08FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF12171717830000
+      00BB000000BA000000BA000000BA000000BA000000BA000000BA000000BA2828
+      2898F5F5F54DFFFFFF4545454589000000BA000000BB17171783FFFFFF12FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1A0C0C0C92000000B3000000B30000
+      00B3000000B3000000B3000000B3000000B31717179EE5E5E557FFFFFF0CFFFF
+      FF1A6363636F000000B3000000B30C0C0C92FFFFFF1AFFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF22060606A7000000AD000000AD000000AD747474777C7C
+      7C75010101AC0D0D0DA1D1D1D15FFFFFFF13FFFFFF154545455C0E0E0EC40000
+      00AD000000AD060606A7FFFFFF22FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF220808089B000000A7000000A763636379FFFFFF3DFFFFFF399999996EB7B7
+      B766FFFFFF1DFFFFFF116464644A151515BF000000A8000000A7000000A70808
+      089BFFFFFF22FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1A2828287E0000
+      00A1000000A14646467BFFFFFF20FFFFFF05FFFFFF2CFFFFFF22FFFFFF0D8C8C
+      8C3C1D1D1DB9020202A4000000A1000000A1000000A12828287EFFFFFF1AFFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF124B4B4B660000009A0000009A1111
+      11B32E2E2E85FFFFFF20FFFFFF04FFFFFF09B6B6B631242424AF0505059F0000
+      009A0000009A0000009A0000009A4B4B4B66FFFFFF12FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF08B8B8B848040404900000009400000094161616AE3434
+      3484FFFFFF21DFDFDF282C2C2CA30A0A0A9D0000009400000094000000940000
+      009404040490B8B8B848FFFFFF08FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF228282826A0000008E0000008E0000008E1A1A1AA9383838843434
+      34941010109D0000008E0000008E0000008E0000008E0000008E8282826AFFFF
+      FF22FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFF
+      FF3F414141750000008800000088000000881E1E1EA41818189D000000880000
+      008800000088000000880000008841414175FFFFFF3FFFFFFF02FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF09FFFFFF508B8B
+      8B670808087F0000008100000081000000810000008100000081000000810808
+      087F8B8B8B67FFFFFF50FFFFFF09FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFFFF36DBDBDB647B7B
+      7B664444446C14141475141414754444446C7B7B7B66DBDBDB64FFFFFF36FFFF
+      FF02FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF13FFFFFF35FFFFFF4AFFFF
+      FF5DFFFFFF5DFFFFFF4AFFFFFF35FFFFFF13FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF0AFFFFFF14FFFFFF1CFFFFFF23FFFFFF23FFFF
+      FF1CFFFFFF14FFFFFF0AFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF03FFFF
+      FF185457B24F0F0F8EA7070787D0040582F1040582F1070787D00F0F8EA75457
+      B24FFFFFFF18FFFFFF03FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF09F8F8FF2316179499060889FA080B
+      9BFF090CA5FF0A0DAFFF0A0DAFFF090CA5FF080B9BFF060889FA16179499F8F8
+      FF23FFFFFF09FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF03F8F8FF230A0D8ED10A0E9BFF0E13B7FF0E13B9FF0E13B9FF1217
+      BBF21217BAF00E13B9FF0E13B9FF0E13B7FF0A0E9BFF0A0D8ED1F8F8FF23FFFF
+      FF03FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF18191C
+      99990E14ACFF1118BDFF1118BDFF1118B8FC797BCD8BFAFAFF62FFFFFF61C6C8
+      F170474BCCAA1118BDFF1118BDFF0E14ACFF191C9999FFFFFF18FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0A5A61BB4F0E16A3F8141DC2FF141D
+      C2FF141DC2FF131CBEFF0D1294EC6569C049FFFFFF11FFFFFF11FFFFFF45888C
+      DF89141DC2FF141DC2FF0E16A3F85A61BB4FFFFFFF0AFFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF141C22A79D1722C5FF1722C6FF1A25C7F31722C6FF1722
+      C6FF1620BFFF0E1596EC696CC449FFFFFF11FFFFFF01FFFFFF334A53D2AA1722
+      C6FF1722C5FF1C22A79DFFFFFF14FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF1C1924B8BF1A27CBFF1A27CBFF9BA1E87A303DD0C91A27CBFF1A27CBFF1825
+      C3FF0F1899EC6970C449FFFFFF11FFFFFF08A8AEEB581A27CBFF1A27CBFF1924
+      B8BFFFFFFF1CFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF231B28C4E81D2C
+      D0FF212FD1F3F5F5FF34E8E8F95A3341D5C91D2CD0FF1D2CD0FF1B29C8FF111A
+      9CEC6970C749FFFFFF11FAFAFF2F2131D1F01D2CD0FF1B28C4E8FFFFFF23FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF232636D4E71F30D4FF2132D3F0F8F8
+      FF25FFFFFF0EE8EBF95A3545D8C91F30D4FF1F30D4FF1D2DCCFF121D9FEC6C73
+      C749ECECF9282232D3F21F30D4FF2636D4E7FFFFFF23FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF1C3849DEBA2235D9FF2133D5FF6066C650FFFFFF08FFFF
+      FF0EE8EBFC5A384ADDC92235D9FF2235D9FF2032D0FF151FA1EC3540B7782134
+      D5FF2235D9FF3849DEBAFFFFFF1CFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF144A5AE390253ADEFF253ADEFF212EB6B2FFFFFF1EFFFFFF01FFFFFF0EE8EB
+      FC5A3A4DE2C9253ADEFF253ADEFF2336D5FF1926ADFD253ADEFF253ADEFF4A5A
+      E390FFFFFF14FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0AA8B4F3552B41
+      E2F6283FE2FF2032C4FF3341B881FFFFFF1EFFFFFF08FFFFFF0EE8EBFC5A3E51
+      E6C9283FE2FF283FE2FF283FE1FF283FE2FF2B41E2F6A8B4F355FFFFFF0AFFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF227585EF902B44E7FF2B44
+      E7FF1C2CB2FF202DABBA6A74D14DF8F8FF25EDF3FF2A8F99E17F2D44E0F42B44
+      E7FF2B44E7FF2B44E7FF7585EF90FFFFFF22FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF03FBFBFF404A61EEBE2E49EBFF2E49EBFF243A
+      CAFF1A2AA8FF1826A0F71927A3F81C2CAEFF2A43DDFF2E49EBFF2E49EBFF4A61
+      EEBEFBFBFF40FFFFFF03FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF09FCFCFF517A8DF5923350F0F6314EF0FF314EF0FF304C
+      EBFF304CECFF314EF0FF314EF0FF3350F0F67A8DF592FCFCFF51FFFFFF09FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF03FFFFFF36CAD3FD6F7287F79B506BF7BC3B58F5E73B58F5E7506B
+      F7BC7285F79BCAD3FD6FFFFFFF36FFFFFF03FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF15FFFFFF37FFFFFF4BFFFFFF5EFFFFFF5EFFFFFF4BFFFFFF37FFFF
+      FF15FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF17FFFFFF20FFFFFF07FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF07FFFFFF20FFFFFF17FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF182525256F060606B9CDCDCD29FFFFFF07FFFFFF00FFFFFF00FFFF
+      FF07CDCDCD29060606B92525256FFFFFFF18FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF182525256D0000
+      00DD000000D9040404B9CDCDCD29FFFFFF07FFFFFF07CDCDCD29040404B90000
+      00D9000000DD2525256DFFFFFF18FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF172828286C000000D9000000CB000000CA0000
+      00D2040404B7CDCDCD29CDCDCD29040404B7000000D2000000CA000000CB0000
+      00D92828286CFFFFFF17FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF202A2A2AAB000000C4000000C3000000C3000000C3000000CC0606
+      06B3060606B3000000CC000000C3000000C3000000C3000000C42A2A2AABFFFF
+      FF20FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF07F2F2
+      F25132323293000000BC000000BC000000BC000000BC000000C6000000C60000
+      00BC000000BC000000BC000000BC32323293F2F2F251FFFFFF07FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF09F2F2F2513434
+      348F000000B5000000B5000000B5000000B5000000B5000000B5000000B50000
+      00B53434348FF2F2F251FFFFFF09FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF09F2F2F2513535358B0000
+      00AE000000AE000000AE000000AE000000AE000000AE3535358BF2F2F251FFFF
+      FF09FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF07D5D5D52A232323A1000000A7000000A70000
+      00A7000000A7000000A7000000A7232323A1D5D5D52AFFFFFF07FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF07D9D9D928080808A3000000AE0000009F0000009F0000009F0000009F0000
+      009F0000009F000000AE080808A3D9D9D928FFFFFF07FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF07D9D9D928080808A10000
+      00A8000000980000009800000098000000980000009800000098000000980000
+      0098000000A8080808A1D9D9D928FFFFFF07FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF200C0C0C9B000000A200000091000000910000
+      0091000000913F3F3F793F3F3F79000000910000009100000091000000910000
+      00A20C0C0C9BFFFFFF20FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF179F9F9F6D040404880000008A0000008A0000008A41414175F6F6
+      F651F6F6F651414141750000008A0000008A0000008A040404889F9F9F6DFFFF
+      FF17FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF2DAEAEAE65040404810000008346464671F6F6F651FFFFFF09FFFFFF09F6F6
+      F651464646710000008304040481AEAEAE65FFFFFF2DFFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF2DB2B2
+      B2634E4E4E6CF6F6F651FFFFFF09FFFFFF00FFFFFF00FFFFFF09F6F6F6514E4E
+      4E6CB2B2B263FFFFFF2DFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF2CFFFFFF4DFFFF
+      FF09FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF09FFFFFF4DFFFFFF2CFFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF01FFFF
+      FF19FFFFFF21FFFFFF08FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF08FFFF
+      FF21FFFFFF18FFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF01FFFFFF1A26269B78090988CACACA
+      E12BFFFFFF08FFFFFF00FFFFFF00FFFFFF08CACAE12B090988CA26269B78FFFF
+      FF1AFFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF01FFFFFF1A28289D78080A92FB0A0DA4FF0A0B8CCECAD0E12BFFFF
+      FF08FFFFFF08CAD0E12B0A0B8CCE0A0DA4FF080A92FB28289D78FFFFFF1AFFFF
+      FF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF18282B
+      A2780A0E96FB0F15B9FF0F15BAFF0D12AAFF0B0F8ECED0D0E72BD0D0E72B0B0F
+      8ECE0D12AAFF0F15BAFF0F15B9FF0A0E96FB282BA278FFFFFF18FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF212D32AAC7131BBFFF131B
+      C0FF131BC0FF131BC0FF1017AFFF0E1392CE0E1392CE1017AFFF131BC0FF131B
+      C0FF131BC0FF131BBFFF2D32AAC7FFFFFF21FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF08F3F3FC533840CBBC1620C5FF1620C5FF1620
+      C5FF1620C5FF131BB3FF131BB3FF1620C5FF1620C5FF1620C5FF1620C5FF3840
+      CBBCF3F3FC53FFFFFF08FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF0AF3F3FC533945D1BC1926CAFF1926CAFF1926CAFF1926
+      CAFF1926CAFF1926CAFF1926CAFF1926CAFF3945D1BCF3F3FC53FFFFFF0AFFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF0AF3F3FC533C49D5BC1C2BCFFF1C2BCFFF1C2BCFFF1C2BCFFF1C2B
+      CFFF1C2BCFFF3C49D5BCF3F3FC53FFFFFF0AFFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF08D6D6
+      EE2C2D37B4CB2031D5FF2031D5FF2031D5FF2031D5FF2031D5FF2031D5FF2D37
+      B4CBD6D6EE2CFFFFFF08FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF08D0D0E72B1821A1CE1E2EC5FF2336
+      DAFF2336DAFF2336DAFF2336DAFF2336DAFF2336DAFF1E2EC5FF1821A1CED0D0
+      E72BFFFFFF08FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF08D0D5E72B1925A3CE2033C9FF263CDFFF263CDFFF263CDFFF263C
+      DFFF263CDFFF263CDFFF263CDFFF263CDFFF2033C9FF1925A3CED0D5E72BFFFF
+      FF08FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF211E2B
+      A9C92337CDFF2941E4FF2941E4FF2941E4FF2941E4FF475CE7BC475CE7BC2941
+      E4FF2941E4FF2941E4FF2941E4FF2337CDFF1E2BA9C9FFFFFF21FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF18929BEC852E48EBF92D47
+      EAFF2D47EAFF2D47EAFF4B60ECBCF3F6FF53F3F6FF534B60ECBC2D47EAFF2D47
+      EAFF2D47EAFF2E48EBF9929BEC85FFFFFF18FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF01FFFFFF2F99A9F780314EEFF9304DEFFF4D66
+      F1BCF3F6FF53FFFFFF0AFFFFFF0AF3F6FF534D66F1BC304DEFFF314EEFF999A9
+      F780FFFFFF2FFFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF01FFFFFF2F9BA9F980526DF7B7F3F6FF53FFFFFF0AFFFF
+      FF00FFFFFF00FFFFFF0AF3F6FF53526DF7B79BA9F980FFFFFF2FFFFFFF01FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF01FFFFFF2DFFFFFF4DFFFFFF0AFFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF0AFFFFFF4DFFFFFF2DFFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0BFFFF
+      FF15FFFFFF1DFFFFFF24FFFFFF24FFFFFF1DFFFFFF15FFFFFF0BFFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF03FFFFFF1A5457B24F0F0F8EA7070787D00405
+      82F1040582F1070787D00F0F8EA75457B24FFFFFFF1AFFFFFF03FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF0AF8F8FF2416179499060889FA080B9BFF090CA5FF0A0DAFFF0A0DAFFF090C
+      A5FF080B9BFF060889FA16179499F8F8FF24FFFFFF0AFFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF03F8F8FF240A0D8ED10A0E
+      9BFF0E13B7FF0E13B9FF0E13B9FF0E13B9FF0E13B9FF0E13B9FF0E13B9FF0E13
+      B7FF0A0E9BFF0A0D8ED1F8F8FF24FFFFFF03FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF1A191C99990E14ACFF1118BDFF292EC5C99397
+      E17F141BBEF31118BDFF1118BDFF141BBEF39397E17F292EC5C91118BDFF0E14
+      ACFF191C9999FFFFFF1AFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF0B5A61BB4F0E16A3F8141DC2FF2B33C7C9E6E9F75BFFFFFF30A3A5E7771721
+      C3F31721C3F3A3A5E777FFFFFF30E6E9F75B2B33C7C9141DC2FF0E16A3F85A61
+      BB4FFFFFFF0BFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF151C22A79D1722
+      C5FF1722C6FF8387DD77FFFFFF20FFFFFF01FFFFFF29A5A7EA77A5A7EA77FFFF
+      FF29FFFFFF01FFFFFF208387DD771722C6FF1722C5FF1C22A79DFFFFFF15FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1D1924B8BF1A27CBFF1A27CBFF121A
+      A1F73F44B266FFFFFF19FFFFFF01FFFFFF24FFFFFF24FFFFFF01FFFFFF193F44
+      B266121AA1F71A27CBFF1A27CBFF1924B8BFFFFFFF1DFFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF241B28C4E81D2CD0FF1D2CD0FF1C2BCDFF131CA0F74149
+      B466FFFFFF14FFFFFF00FFFFFF00FFFFFF144149B466131CA0F71C2BCDFF1D2C
+      D0FF1D2CD0FF1B28C4E8FFFFFF24FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF242132D4E61F30D4FF1F30D4FF1F30D4FF2232D2F35E66C66CFFFFFF14FFFF
+      FF00FFFFFF00FFFFFF145E66C66C2232D2F31F30D4FF1F30D4FF1F30D4FF2132
+      D4E6FFFFFF24FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1D3747DDBA2235
+      D9FF2235D9FF2539DAF3A7B0F077FFFFFF29FFFFFF01FFFFFF14FFFFFF14FFFF
+      FF01FFFFFF29A7B0F0772539DAF32235D9FF2235D9FF3747DDBAFFFFFF1DFFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF154D5DE591253ADEFF253ADEFF9AA5
+      F17CFFFFFF2DFFFFFF01FFFFFF194450BC664450BC66FFFFFF19FFFFFF01FFFF
+      FF2D9AA5F17C253ADEFF253ADEFF4D5DE591FFFFFF15FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF0BA8B1F3552B40E2F6283FE2FF1F2FB7D4AFB4E633FFFF
+      FF1D4653BE661927ABF71927ABF74653BE66FFFFFF1DAFB4E6331F2FB7D4283F
+      E2FF2B40E2F6A8B1F355FFFFFF0BFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF247486ED912B44E7FF263CD5FF1A29A7DA3C49BA731B2BB0F72A42
+      E3FF2A42E3FF1B2BB0F73C49BA731A29A7DA263CD5FF2B44E7FF7486ED91FFFF
+      FF24FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF03FBFB
+      FF414C63EEBF2E49EBFF2940D9FF1D2FB3FF2D47E7FF2E49EBFF2E49EBFF2D47
+      E7FF1D2FB3FF2940D9FF2E49EBFF4C63EEBFFBFBFF41FFFFFF03FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0AFCFCFF527A8D
+      F5923450F0F6314EF0FF314EF0FF314EF0FF314EF0FF314EF0FF314EF0FF3450
+      F0F67A8DF592FCFCFF52FFFFFF0AFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF03FFFFFF38CBD4FD717186
+      F89A506BF7BC3B58F5E73B58F5E7506BF7BC7186F89ACBD4FD71FFFFFF38FFFF
+      FF03FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF16FFFFFF38FFFFFF4CFFFF
+      FF5FFFFFFF5FFFFFFF4CFFFFFF38FFFFFF16FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0AFFFFFF1FFFFF
+      FF09FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1C11117FA3F1F1F824FFFFFF02FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF01FFFFFF0EFFFFFF1DFFFF
+      FF11FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF02A8AED631080A91FA1516869CFFFFFF19FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF02FFFFFF11F1F1F8242527907A1516849DFFFFFF1CFFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0B2D2E
+      9B730D12B5FF0A0E92FA4A4CA558FFFFFF0DFFFFFF04FFFFFF15C1C1E32C1B1E
+      8B8F080A77E90C1086F7A2A4D15EFFFFFF08FFFFFF00FFFFFF00FFFFFF13FFFF
+      FF22FFFFFF1CFFFFFF16FFFFFF10FFFFFF0AFFFFFF1814199FA91016BBFF1016
+      B9FF0B0F87E0CACFE72B9292C539161A87A1090C79F20B0F8FFF0F14AFFF6567
+      D490FFFFFF1DFFFFFF00FFFFFF00FFFFFF00FFFFFF191D218F930C107ED91116
+      85B91D218F93373B9D6A8787C63E1017A9E2131BC0FF131BC0FF1119B3FF0C11
+      80DC0A0F7CF80E1499FF121AB9FF131BC0FF272EC5CFF8F8FF3FFFFFFF02FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF03FFFFFF3B5157BCA51119A5FF0F1697FF0D13
+      8AFF0B117EFF141DB9FF151FC4FF151FC4FF151FC4FF131BB3FF151EC0FF151F
+      C4FF151FC4FF1620C4FCA9ADEA6BFFFFFF12FFFFFF01FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF03FFFFFF415E66D89B1823C8FF1823C8FF1823C8FF1823
+      C8FF1823C8FFFFFFFF68FFFFFF681823C8FF1823C8FF1823C8FF1823C8FF2E37
+      CBCC5055AD745E64B34EC3C3E42EFFFFFF0CFFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF06FFFFFF456069DB9B1A27CCFF1A27CCFF1A27CCFF1A27CCFFFFFF
+      FF25FFFFFF251A27CCFF1A27CCFF1A27CCFF1A27CCFF1723BAFF101890FF1921
+      8CD95760B357FFFFFF0EFFFFFF00FFFFFF00FFFFFF0AFFFFFF19A6ACD733242D
+      9890232CAADB1D2CD0FF1D2CD0FF1D2CD0FF1D2CD0FFFFFFFF25FFFFFF251D2C
+      D0FF1D2CD0FF1D2CD0FF1D2CD0FF2432D1EB878FE786FFFFFF53FFFFFF17FFFF
+      FF00FFFFFF00FFFFFF174A54AD5D18218FBC111A85F81622A2FF1C2BC3FF1F30
+      D4FF1F30D4FF1F30D4FF1F30D4FFFFFFFF26FFFFFF261F30D4FF1F30D4FF1F30
+      D4FF1F30D4FF1F2FCFFC3742ABA8DEE4EB26FFFFFF0AFFFFFF00FFFFFF00FFFF
+      FF17A5A8DB48848BCB837681E2925564E0A83A4BDDC62537D8F62235D8FF2235
+      D8FF2235D8FF111A82FF111A82FF2235D8FF2235D8FF2235D8FF2235D8FF2235
+      D6FF1928ADFF141F8CDC6A74BF4AFFFFFF14FFFFFF01FFFFFF00FFFFFF09FFFF
+      FF1BFFFFFF2DFFFFFF478D97DD7E2439D9FB2439DCFF2439DCFF2439DCFFFFFF
+      FF68FFFFFF682439DCFF2439DCFF2439DCFF2439DCFF2439DCFF2439DCFF2033
+      C9FF152192F72C38A385FFFFFF17FFFFFF00FFFFFF00FFFFFF00FFFFFF0D656F
+      C14D1928A1F4273DDEFF273DE0FF273DE0FF273DE0FFFFFFFF26FFFFFF26273D
+      E0FF273DE0FF273DE0FF2C41E1EC8C98EF87A2ACF17EBBC1F577D1D3F570D6D6
+      EF48FFFFFF14FFFFFF00FFFFFF00FFFFFF089FA3D5361A289CE6283FDDFF2941
+      E4FF2941E4FF2941E4FF2941E4FF142088FF142088FF2941E4FF2941E4FF2941
+      E4FF273EDDFDC6C8E64AFFFFFF1DFFFFFF14FFFFFF0BFFFFFF04FFFFFF00FFFF
+      FF00FFFFFF04DFDFF2271C2B9CD42941DBFF2E47E9F7475EEBC17788F1932E47
+      E9F72C46E9FF2C46E9FF2C46E9FF2C46E9FF2C46E9FF2C46E9FF2C46E8FF4655
+      BC68FFFFFF09FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1A2C3B
+      A7995463D1B2A2ACF780F3F4FD68FFFFFF4FFFFFFF3E475EEFC02F4AEDFF2F4A
+      EDFF6F81F29B9EABF7813952EEDF2F4AEDFF2F4AEDFF3448CA91FFFFFF11FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF13FFFFFF3EFFFFFF3FFFFF
+      FF21FFFFFF05FFFFFF00FFFFFF11647BF586314FF1FF7085F59BFFFFFF41FFFF
+      FF26F3F3FF5F6F84F59B3351F1F72D47D4BAFFFFFF19FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF06ABBAFC507287F89BFFFFFF41FFFFFF03FFFFFF00FFFFFF05FFFF
+      FF3AD1D8FD704D62DAB0FFFFFF21FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF22FFFFFF3EFFFFFF03FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF13FFFF
+      FF46FFFFFF14FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0AFFFFFF1CFFFF
+      FF1AFFFFFF06FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF0C6F6F6F41020202CF060606B2FFFFFF19FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF0C6D6D6D42010101D0000000D40C0C0CA9FFFFFF1AFFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0C6F6F6F41010101CC0000
+      00C9191919A9D9D9D953FFFFFF08FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFF
+      FF12FFFFFF20FFFFFF216D6D6D42020202C8000000C01B1B1BA1E1E1E15DFFFF
+      FF10FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF03FFFFFF1F13131386010101CC0000
+      00D1000000D0000000B81C1C1C9AE3E3E35CFFFFFF0FFFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF03FFFFFF200C0C0C95000000C1000000AE000000AD000000AB0A0A
+      0AA2E5E5E55BFFFFFF0FFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF171111
+      1188000000B5000000A1000000A1000000A1000000A10B0B0B91FFFFFF23FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1E0202029B000000980000
+      00980000009800000098000000980C0C0C82FFFFFF1DFFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF02FFFFFF14FFFFFF21FFFFFF244141416A0000008F0000008F0000008F0000
+      008F0000008F7B7B7B62FFFFFF10FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFFFF1E1212128F0101
+      01D80E0E0E97F4F4F44C4C4C4C710000008600000086000000867D7D7D6BFFFF
+      FF39FFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF02FFFFFF1E0D0D0D99000000DB000000D1000000DA0A0A
+      0AA6F8F8F8526F6F6F691616167591919167FFFFFF3EFFFFFF02FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF121414148A000000D3000000C5000000C5000000C5000000D111111192FFFF
+      FF45FFFFFF5CFFFFFF32FFFFFF02FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF20010101BB0000
+      00BC000000BC000000BC000000BC000000BC020202B0FFFFFF1CFFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF21010101AB000000B2000000B20000
+      00B2000000B2000000B249494970FFFFFF15FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF0A8E8E8E37010101A5000000A9000000A9000000A9000000A95858
+      587EFFFFFF3FFFFFFF03FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0A8C8C8C360303
+      03B4000000A10404049D0909099A1111119474747474FFFFFF45FFFFFF03FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF0A8A8A8A37030303B0000000A019191989DFDF
+      DF66FFFFFF60FFFFFF5CFFFFFF33FFFFFF02FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF098C8C8C36030303AC000000971A1A1A83DEDEDE5EFFFFFF14FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1C0505059A0000
+      008F1C1C1C7BDFDFDF5EFFFFFF14FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1C2727276E2F2F2F71E1E1E15DFFFF
+      FF14FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF07FFFFFF49FFFFFF53FFFFFF12FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000
+      00070000003300000029FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000000800000038000000400000
+      0030FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000
+      001E0000003A0000003C0000003E000000400000003400000005FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000002500000040000000400000
+      0040000000400000003C00000005FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF000000002100000040000000400000004000000040000000400000
+      0038FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000
+      003A000000400000004000000040000000400000004000000035FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0000000025000000400000
+      00400000004000000040000000400000001AFFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00000000010000002A00000040000000400000
+      00400000001FFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF000000000100000023000000390000001CFFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000001D0000003700000020FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF000000002100000040000000400000004000000026FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000001D0000
+      00400000004000000040000000400000004000000021FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000003900000040000000400000
+      0040000000400000004000000038FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF000000003C000000400000004000000040000000400000
+      00400000001FFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000
+      00050000003E0000004000000040000000400000004000000024FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000000600000035000000400000
+      003E0000003C000000390000001EFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF0000000032000000400000003700000007FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF000000002E0000003300000007FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00000000070000003300000029FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF0000000008000000380000004000000030FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF000000001E0000003A0000003C0000003E0000
+      00400000003400000005FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF0000000025000000400000004000000040000000400000003C00000005FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0000000021000000400000
+      004000000040000000400000004000000038FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF000000003A0000004000000040000000400000
+      00400000004000000035FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF000000002500000040000000400000004000000040000000400000
+      001AFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000
+      00010000002A0000004000000040000000400000001FFFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00000000010000
+      0023000000390000001CFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF000000001D0000003700000020FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0000000021000000400000
+      00400000004000000026FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF01FFFFFF06FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF000000001D000000400000004000000040000000400000
+      004000000021FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02E1E1F7222E2E
+      AF7AFFFFFF10FFFFFF112E2EAF7AFFFFFF1CFFFFFF01FFFFFF00FFFFFF00FFFF
+      FF0000000039000000400000004000000040000000400000004000000038FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF01E1E1F7220A0C98F4080A8EFF1D20A9A31A1D
+      A8A9080A8EFF0B0E9AEDFFFFFF1CFFFFFF00FFFFFF00FFFFFF000000003C0000
+      0040000000400000004000000040000000400000001FFFFFFF00FFFFFF00FFFF
+      FF00FFFFFF022B2FB7901118ABFF131CBEFF0D139AFF0D139AFF141CBFFF1017
+      A8FF2B2FB790FFFFFF00FFFFFF00000000050000003E00000040000000400000
+      00400000004000000024FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF21636DDBBE1D2ACCFF1A27C9FF1A27C9FF1D2ACCFF5E67DBC3FFFFFF22FFFF
+      FF000000000600000035000000400000003E0000003C000000390000001EFFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF133A49CAB82235
+      D5FF2134D7FF2134D7FF2235D5FF3B46CABEFFFFFF15FFFFFF00000000320000
+      00400000003700000007FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF02364ACF901A29B1FF273EDFFF2B42E2FF2A41
+      E2FF273EDFFF1B2AB3FF364ACF90FFFFFF000000002E0000003300000007FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF01DCECFA314860EDF3324DEDFF7A8CF5B37688F3B9324DEDFF4D64
+      EFEEFFFFFF2AFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF04EEF7FF4C98A8FC99FFFFFF23FFFFFF259AAAFC9BFFFFFF43FFFFFF02
+    }
+  end
+end
