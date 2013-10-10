@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 460
+  Left = 475
   Height = 650
-  Top = 189
+  Top = 181
   Width = 766
   Caption = 'MaCom FLOSS'
   ClientHeight = 650
@@ -162,9 +162,9 @@ object MainForm: TMainForm
       Height = 587
       Top = 1
       Width = 748
-      ActivePage = WorksTabSheet
+      ActivePage = BuildingTabSheet
       Align = alClient
-      TabIndex = 3
+      TabIndex = 1
       TabOrder = 2
       TabPosition = tpBottom
       object ConnectTabSheet: TTabSheet
@@ -176,11 +176,11 @@ object MainForm: TMainForm
           Height = 514
           Top = 0
           Width = 744
-          HorzScrollBar.Page = 742
-          VertScrollBar.Page = 512
+          HorzScrollBar.Page = 744
+          VertScrollBar.Page = 514
           Align = alClient
-          ClientHeight = 512
-          ClientWidth = 742
+          ClientHeight = 510
+          ClientWidth = 740
           TabOrder = 0
           object ConnUserLabel: TLabel
             AnchorSideLeft.Control = ConnScrollBox
@@ -497,9 +497,9 @@ object MainForm: TMainForm
               Height = 556
               Top = 0
               Width = 539
-              ActivePage = TabSheet1
+              ActivePage = TabSheet3
               Align = alClient
-              TabIndex = 0
+              TabIndex = 2
               TabOrder = 0
               object TabSheet1: TTabSheet
                 Caption = 'Основное'
@@ -510,8 +510,8 @@ object MainForm: TMainForm
                   Height = 525
                   Top = 0
                   Width = 535
-                  HorzScrollBar.Page = 533
-                  VertScrollBar.Page = 523
+                  HorzScrollBar.Page = 535
+                  VertScrollBar.Page = 525
                   Align = alClient
                   ChildSizing.LeftRightSpacing = 3
                   ChildSizing.TopBottomSpacing = 3
@@ -520,8 +520,8 @@ object MainForm: TMainForm
                   ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
                   ChildSizing.Layout = cclLeftToRightThenTopToBottom
                   ChildSizing.ControlsPerLine = 2
-                  ClientHeight = 523
-                  ClientWidth = 533
+                  ClientHeight = 521
+                  ClientWidth = 531
                   TabOrder = 0
                   object BuildingDetailsMemo: TMemo
                     AnchorSideLeft.Control = ScrollBox2
@@ -548,8 +548,8 @@ object MainForm: TMainForm
                     Width = 527
                     Align = alBottom
                     AutoSize = True
-                    ClientHeight = 37
-                    ClientWidth = 527
+                    ClientHeight = 33
+                    ClientWidth = 523
                     TabOrder = 1
                     object SrvMainSaveBtn1: TBitBtn
                       AnchorSideLeft.Control = ActionPanel3
@@ -666,16 +666,44 @@ object MainForm: TMainForm
                     Width = 535
                     ClientWidth = 535
                     ClientHeight = 83
-                    object Memo1: TMemo
+                    object BuildingContractWorksVST: TDBVST
                       Left = 0
                       Height = 83
                       Top = 0
                       Width = 535
                       Align = alClient
-                      Lines.Strings = (
-                        'Memo1'
-                      )
+                      DefaultText = 'Node'
+                      Header.AutoSizeIndex = 0
+                      Header.Columns = <                      
+                        item
+                          Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAllowFocus, coWrapCaption]
+                          Position = 0
+                          Text = 'Работа'
+                          Width = 300
+                        end                      
+                        item
+                          Position = 1
+                          Text = 'Периодичность'
+                          Width = 100
+                        end                      
+                        item
+                          Position = 2
+                          Text = 'Количество в период'
+                          Width = 100
+                        end>
+                      Header.DefaultHeight = 17
+                      Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
+                      Header.Style = hsFlatButtons
+                      ScrollBarOptions.ScrollBars = ssAutoBoth
                       TabOrder = 0
+                      TreeOptions.AutoOptions = [toAutoDropExpand, toAutoExpand, toAutoScrollOnExpand, toAutoTristateTracking, toAutoDeleteMovedNodes]
+                      TreeOptions.MiscOptions = [toEditable, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
+                      TreeOptions.SelectionOptions = [toExtendedFocus]
+                      OnFocusChanged = ServiceCompaniesVSTFocusChanged
+                      Connection.Connected = False
+                      Connection.LoginPrompt = False
+                      Connection.KeepConnection = False
+                      Connection.LogEvents = []
                     end
                   end
                 end
@@ -936,7 +964,7 @@ object MainForm: TMainForm
                         Left = 1
                         Height = 353
                         Top = 46
-                        Width = 230
+                        Width = 232
                         Anchors = [akTop, akLeft, akRight, akBottom]
                         MultiSelect = True
                         TabOrder = 0
@@ -955,7 +983,7 @@ object MainForm: TMainForm
                         Left = 1
                         Height = 18
                         Top = 1
-                        Width = 264
+                        Width = 266
                         Anchors = [akTop, akLeft, akRight]
                         Caption = 'Справочники работ'
                         ParentColor = False
@@ -966,10 +994,10 @@ object MainForm: TMainForm
                         AnchorSideTop.Control = Panel3
                         AnchorSideRight.Control = Panel3
                         AnchorSideRight.Side = asrBottom
-                        Left = 273
+                        Left = 275
                         Height = 18
                         Top = 1
-                        Width = 261
+                        Width = 259
                         Anchors = [akTop, akLeft, akRight]
                         Caption = 'Работы в услуге'
                         ParentColor = False
@@ -982,7 +1010,7 @@ object MainForm: TMainForm
                         AnchorSideRight.Side = asrCenter
                         AnchorSideBottom.Control = Panel3
                         AnchorSideBottom.Side = asrBottom
-                        Left = 265
+                        Left = 267
                         Height = 398
                         Top = 1
                         Width = 8
@@ -999,7 +1027,7 @@ object MainForm: TMainForm
                         Left = 1
                         Height = 27
                         Top = 19
-                        Width = 230
+                        Width = 232
                         ButtonWidth = 23
                         ButtonOnlyWhenFocused = True
                         NumGlyphs = 1
@@ -1018,10 +1046,10 @@ object MainForm: TMainForm
                         AnchorSideRight.Side = asrBottom
                         AnchorSideBottom.Control = ActPanel
                         AnchorSideBottom.Side = asrBottom
-                        Left = 273
+                        Left = 275
                         Height = 380
                         Top = 19
-                        Width = 261
+                        Width = 259
                         Anchors = [akTop, akLeft, akRight, akBottom]
                         MultiSelect = True
                         MultiSelectStyle = [msControlSelect, msShiftSelect]
@@ -1039,7 +1067,7 @@ object MainForm: TMainForm
                         AnchorSideRight.Control = Splitter2
                         AnchorSideBottom.Control = Panel3
                         AnchorSideBottom.Side = asrBottom
-                        Left = 231
+                        Left = 233
                         Height = 380
                         Top = 19
                         Width = 34
@@ -1219,8 +1247,8 @@ object MainForm: TMainForm
               Width = 539
               Align = alBottom
               AutoSize = True
-              ClientHeight = 37
-              ClientWidth = 539
+              ClientHeight = 33
+              ClientWidth = 535
               TabOrder = 0
               object WorkMainSaveBtn: TBitBtn
                 AnchorSideLeft.Control = ActionPanel4
@@ -1246,21 +1274,21 @@ object MainForm: TMainForm
               Width = 539
               Align = alClient
               BevelOuter = bvNone
-              ClientHeight = 519
-              ClientWidth = 539
+              ClientHeight = 515
+              ClientWidth = 535
               TabOrder = 1
               object PageControl1: TPageControl
                 Left = 0
                 Height = 518
                 Top = 1
                 Width = 539
-                ActivePage = MainTabSheet
+                ActivePage = WorkTabSheet
                 Align = alClient
-                TabIndex = 0
+                TabIndex = 1
                 TabOrder = 0
                 object MainTabSheet: TTabSheet
                   Caption = 'Основное'
-                  ClientHeight = 487
+                  ClientHeight = 514
                   ClientWidth = 535
                   object PairSplitter4: TPairSplitter
                     Cursor = crVSplit
@@ -1402,7 +1430,7 @@ object MainForm: TMainForm
                 end
                 object WorkTabSheet: TTabSheet
                   Caption = 'Ресурсы'
-                  ClientHeight = 487
+                  ClientHeight = 514
                   ClientWidth = 535
                   object WorkResourcesVST: TDBVST
                     Left = 0

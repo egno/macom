@@ -32,7 +32,8 @@ uses
   Dialogs, Menus, ComCtrls, ActnList, PairSplitter, StdCtrls, ExtCtrls, Buttons,
   StdActns, DBGrids, pqconnection, fpjson, jsonparser, XMLConf, sqldb, db,
   dbfunc, ExpandPanels, Grids, CheckLst, DbCtrls, FileCtrl, IniPropStorage,
-  XMLPropStorage, keyvalue, DBDynTreeView, ExtSQLQuery, DBVST, VirtualTrees;
+  XMLPropStorage, Calendar, EditBtn, keyvalue, DBDynTreeView, ExtSQLQuery,
+  DBVST, VirtualTrees;
 
 type
 
@@ -81,13 +82,13 @@ type
     MainIconList22: TImageList;
     BuildingDetailsMemo: TMemo;
     BuildingPageControl: TPageControl;
-    Memo1: TMemo;
     PairSplitter1: TPairSplitter;
     PairSplitterSide4: TPairSplitterSide;
     PairSplitterSide7: TPairSplitterSide;
     ScrollBox3: TScrollBox;
     ServiceCompaniesVST: TDBVST;
     MainTabSheet: TTabSheet;
+    BuildingContractWorksVST: TDBVST;
     WorkTabSheet: TTabSheet;
     TreeFilterEdit3: TTreeFilterEdit;
     WorkMainSaveBtn: TBitBtn;
@@ -336,7 +337,7 @@ begin
     'ServiceCompaniesVST': with (p as TDBVST) do
       if (BuildingsTreeView.SelectionCount > 0) then begin
         FillFromQuery(conn,
-          'select service, (substring(service_disp,2,1) = ''о''), service_disp, company_disp from building_service_companies_complete where building = '''
+          'select service, false, service_disp, company_disp from building_service_companies_complete where building = '''
           + TKeyValue(BuildingsTreeView.Selected.Data).Code
           + ''' ',
           'service_parent', '2', 1);
@@ -366,7 +367,16 @@ begin
         end
       else
         Items.Clear;
-    'BuildingServiceWorksList': with (p as TDBDynTreeView) do
+    'BuildingBox': with (p as TGroupBox) do
+      if (BuildingsTreeView.SelectionCount > 0) then begin
+          Visible:=True;
+          Caption:=TKeyValue(BuildingsTreeView.Selected.Data).Value;
+        end
+      else begin
+        Caption:=dspNotAssigned;
+        Visible:=False;
+      end;
+    'BuildingContractWorksVST': with (p as TDBVST) do
       if (BuildingsTreeView.SelectionCount > 0)
         and Assigned(ServiceCompaniesVST.FocusedNode) then begin
           VSTNodeData:=ServiceCompaniesVST.GetNodeData(
@@ -383,27 +393,6 @@ begin
         end
       else
         Items.Clear;
-    'BuildingBox': with (p as TGroupBox) do
-      if (BuildingsTreeView.SelectionCount > 0) then begin
-          Visible:=True;
-          Caption:=TKeyValue(BuildingsTreeView.Selected.Data).Value;
-        end
-      else begin
-        Caption:=dspNotAssigned;
-        Visible:=False;
-      end;
-    'BuildingServiceBox': with (p as TGroupBox) do
-      if (BuildingsTreeView.SelectionCount > 0)
-        and Assigned(ServiceCompaniesVST.FocusedNode) then begin
-          Visible:=True;
-          VSTNodeData:=ServiceCompaniesVST.GetNodeData(
-            ServiceCompaniesVST.FocusedNode);
-          Caption:=VSTNodeData^[1];
-        end
-      else begin
-        Caption:=dspNotAssigned;
-        Visible:=False;
-      end;
     'ServicesWorkNote': with (p as TMemo) do begin
       tid := '';
       if (ActiveControl.Name = 'WorksTreeView') and
@@ -523,8 +512,9 @@ procedure TMainForm.ServiceCompaniesVSTFocusChanged(Sender: TBaseVirtualTree;
 begin
   case (Sender as TComponent).Name of
     'ServiceCompaniesVST': begin
-      RefreshControl('BuildingServiceBox');
-      RefreshControl('BuildingServiceWorksList');
+//      RefreshControl('BuildingServiceBox');
+//      RefreshControl('BuildingServiceWorksList');
+      RefreshControl('BuildingContractWorksVST');
     end;
   end;
 end;
@@ -566,8 +556,9 @@ begin
       RefreshControl('ServiceCompaniesVST');
       RefreshControl('BuildingPropertiesVST');
       RefreshControl('BuildingBox');
-      RefreshControl('BuildingServiceBox');
-      RefreshControl('BuildingServiceWorksList');
+      RefreshControl('BuildingContractWorksVST');
+//      RefreshControl('BuildingServiceBox');
+//      RefreshControl('BuildingServiceWorksList');
       if (Sender as TDBDynTreeView).SelectionCount > 0 then begin
         Txt:=ReturnStringSQL(
           'select note from buildings where id = '''
