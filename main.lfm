@@ -162,9 +162,9 @@ object MainForm: TMainForm
       Height = 587
       Top = 1
       Width = 748
-      ActivePage = BuildingTabSheet
+      ActivePage = WorksTabSheet
       Align = alClient
-      TabIndex = 1
+      TabIndex = 3
       TabOrder = 2
       TabPosition = tpBottom
       object ConnectTabSheet: TTabSheet
@@ -176,11 +176,11 @@ object MainForm: TMainForm
           Height = 514
           Top = 0
           Width = 744
-          HorzScrollBar.Page = 744
-          VertScrollBar.Page = 514
+          HorzScrollBar.Page = 742
+          VertScrollBar.Page = 512
           Align = alClient
-          ClientHeight = 510
-          ClientWidth = 740
+          ClientHeight = 512
+          ClientWidth = 742
           TabOrder = 0
           object ConnUserLabel: TLabel
             AnchorSideLeft.Control = ConnScrollBox
@@ -203,7 +203,7 @@ object MainForm: TMainForm
             Width = 123
             BorderSpacing.Around = 3
             TabOrder = 0
-            Text = 'postgres'
+            Text = 'admin'
           end
           object ConnPwdLabel: TLabel
             AnchorSideLeft.Control = ConnScrollBox
@@ -251,9 +251,10 @@ object MainForm: TMainForm
             Height = 27
             Top = 240
             Width = 123
+            HelpType = htKeyword
             BorderSpacing.Around = 3
             TabOrder = 5
-            Text = 'macom'
+            Text = 'flap'
           end
           object ConnBaseLabel: TLabel
             AnchorSideLeft.Control = ConnScrollBox
@@ -280,7 +281,7 @@ object MainForm: TMainForm
             EchoMode = emPassword
             PasswordChar = '*'
             TabOrder = 1
-            Text = 'postgres'
+            Text = 'admin'
           end
           object ShowPwdBtn: TBitBtn
             AnchorSideLeft.Control = ConnPwdEdit
@@ -1218,8 +1219,8 @@ object MainForm: TMainForm
               Width = 539
               Align = alBottom
               AutoSize = True
-              ClientHeight = 33
-              ClientWidth = 535
+              ClientHeight = 37
+              ClientWidth = 539
               TabOrder = 0
               object WorkMainSaveBtn: TBitBtn
                 AnchorSideLeft.Control = ActionPanel4
@@ -1245,8 +1246,8 @@ object MainForm: TMainForm
               Width = 539
               Align = alClient
               BevelOuter = bvNone
-              ClientHeight = 515
-              ClientWidth = 535
+              ClientHeight = 519
+              ClientWidth = 539
               TabOrder = 1
               object PageControl1: TPageControl
                 Left = 0
@@ -1259,7 +1260,7 @@ object MainForm: TMainForm
                 TabOrder = 0
                 object MainTabSheet: TTabSheet
                   Caption = 'Основное'
-                  ClientHeight = 514
+                  ClientHeight = 487
                   ClientWidth = 535
                   object PairSplitter4: TPairSplitter
                     Cursor = crVSplit
@@ -1295,7 +1296,7 @@ object MainForm: TMainForm
                         TabOrder = 0
                         object Label4: TLabel
                           Left = 0
-                          Height = 33
+                          Height = 75
                           Top = 0
                           Width = 223
                           Caption = 'Наименование'
@@ -1303,7 +1304,7 @@ object MainForm: TMainForm
                         end
                         object WorkNameEdit: TMemo
                           Left = 223
-                          Height = 33
+                          Height = 75
                           Top = 0
                           Width = 312
                           ScrollBars = ssAutoBoth
@@ -1312,7 +1313,7 @@ object MainForm: TMainForm
                         object Label5: TLabel
                           Left = 0
                           Height = 27
-                          Top = 33
+                          Top = 75
                           Width = 223
                           Caption = 'Код'
                           ParentColor = False
@@ -1320,14 +1321,14 @@ object MainForm: TMainForm
                         object WorkCodeEdit: TEdit
                           Left = 223
                           Height = 27
-                          Top = 33
+                          Top = 75
                           Width = 312
                           TabOrder = 0
                         end
                         object Label6: TLabel
                           Left = 0
                           Height = 27
-                          Top = 60
+                          Top = 102
                           Width = 223
                           Caption = 'База'
                           ParentColor = False
@@ -1335,7 +1336,7 @@ object MainForm: TMainForm
                         object BaseCB: TComboBox
                           Left = 223
                           Height = 27
-                          Top = 60
+                          Top = 102
                           Width = 312
                           AutoComplete = True
                           AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
@@ -1345,7 +1346,7 @@ object MainForm: TMainForm
                         object Label7: TLabel
                           Left = 0
                           Height = 27
-                          Top = 87
+                          Top = 129
                           Width = 223
                           Caption = 'Множитель'
                           ParentColor = False
@@ -1353,7 +1354,7 @@ object MainForm: TMainForm
                         object WorkFactorEdit: TEdit
                           Left = 223
                           Height = 27
-                          Top = 87
+                          Top = 129
                           Width = 312
                           OnChange = WorkFactorEditChange
                           TabOrder = 1
@@ -1361,7 +1362,7 @@ object MainForm: TMainForm
                         object Label8: TLabel
                           Left = 0
                           Height = 75
-                          Top = 114
+                          Top = 156
                           Width = 223
                           Caption = 'Условие'
                           ParentColor = False
@@ -1369,7 +1370,7 @@ object MainForm: TMainForm
                         object WorkCondEdit: TMemo
                           Left = 223
                           Height = 75
-                          Top = 114
+                          Top = 156
                           Width = 312
                           ScrollBars = ssAutoBoth
                           TabOrder = 4
@@ -1401,7 +1402,7 @@ object MainForm: TMainForm
                 end
                 object WorkTabSheet: TTabSheet
                   Caption = 'Ресурсы'
-                  ClientHeight = 514
+                  ClientHeight = 487
                   ClientWidth = 535
                   object WorkResourcesVST: TDBVST
                     Left = 0

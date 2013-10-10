@@ -233,7 +233,7 @@ var
 begin
   case (Sender as TComponent).Name of
     'SrvWorksSaveBtn': begin
-      ExecSQL('delete from s_uk.service_works where '
+      ExecSQL('delete from service_works where '
         + ' service =  '
         + '''' + TKeyValue(ServicesTreeView.Selected.Data).Code + ''' '
         + ';'  );
@@ -243,7 +243,7 @@ begin
 //        ServiceVSTNodeData:=ServiceCompaniesVST.GetNodeData(
 //          ServiceCompaniesVST.FocusedNode);
         if ServiceWorksList.Items[i].Data <> nil then
-          ExecSQL('insert into s_uk.service_works '
+          ExecSQL('insert into service_works '
             + ' (service, work) '
             + ' values ( '
 //          + '''' + ServiceVSTNodeData^[0] + ''', '
@@ -257,7 +257,7 @@ begin
       sql := '';
       if (WorksMainTreeView.SelectionCount > 0) then begin
         wid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
-        sql := sql + 'update s_uk.works set ';
+        sql := sql + 'update works set ';
         if WorkCodeEdit.Text > '' then
           sql := sql + ' code = ' + '''' + WorkCodeEdit.Text + '''::ltree, '
         else
@@ -278,14 +278,13 @@ begin
           sql := sql + ' condition = ' + '''' + WorkCondEdit.Text + ''' '
         else
           sql := sql + ' condition = NULL ';
-        sql := sql + ' where uuid = '
+        sql := sql + ' where id = '
             + '''' + wid + '''  '
             + ';';
         ExecSQL(sql);
       end;
     end;
   end;
-
 end;
 
 
@@ -326,7 +325,7 @@ begin
     'WorkResourcesVST': with (p as TDBVST) do
       if (WorksMainTreeView.SelectionCount > 0) then begin
         FillFromQuery(conn,
-          'select uuid, false, resource_code::text, resource_disp, measure, amount from s_uk.work_resources where work = '''
+          'select id, false, resource_code::text, resource_disp, measure, amount from work_resources where work = '''
           + TKeyValue(WorksMainTreeView.Selected.Data).Code
           + ''' ',
           'null', '3', 1);
@@ -337,7 +336,7 @@ begin
     'ServiceCompaniesVST': with (p as TDBVST) do
       if (BuildingsTreeView.SelectionCount > 0) then begin
         FillFromQuery(conn,
-          'select service, (substring(service_disp,2,1) = ''о''), service_disp, company_disp from s_uk.building_service_companies_complete where building = '''
+          'select service, (substring(service_disp,2,1) = ''о''), service_disp, company_disp from building_service_companies_complete where building = '''
           + TKeyValue(BuildingsTreeView.Selected.Data).Code
           + ''' ',
           'service_parent', '2', 1);
@@ -348,7 +347,7 @@ begin
       'BuildingPropertiesVST': with (p as TDBVST) do
         if (BuildingsTreeView.SelectionCount > 0) then begin
           FillFromQuery(conn,
-            'select code::text, false, code::text, val from s_uk.r_building_props where building = '''
+            'select code::text, false, code::text, val from buildings_p where obj = '''
             + TKeyValue(BuildingsTreeView.Selected.Data).Code
             + ''' ',
             'null', '2', 1);
@@ -359,7 +358,7 @@ begin
     'ServiceWorksList': with (p as TDBDynTreeView) do
       if (ServicesTreeView.SelectionCount > 0) then begin
           FillFromQuery(conn,
-            'SELECT work, work_full_disp FROM s_uk.service_works '
+            'SELECT work, work_full_disp FROM service_works '
            + ' where service = '''
            + TKeyValue(ServicesTreeView.Selected.Data).Code
            + ''''
@@ -373,7 +372,7 @@ begin
           VSTNodeData:=ServiceCompaniesVST.GetNodeData(
             ServiceCompaniesVST.FocusedNode);
           FillFromQuery(conn,
-            'SELECT work, work_disp FROM s_uk.buildings_service_works '
+            'SELECT work, work_disp FROM buildings_service_works '
            + ' where service = '''
            + VSTNodeData^[0]
            + ''''
@@ -415,7 +414,7 @@ begin
           tid := TKeyValue(ServiceWorksList.Selected.Data).Code;
       if tid > '' then begin
         Json := TJSONParser.Create(ReturnStringSQL(
-          'select note from s_uk.dic_works where uuid = '''
+          'select note from works where id = '''
           + tid
           +''''));
         Text:=Json.Parse.FormatJSON([foDoNotQuoteMembers]);
@@ -429,7 +428,7 @@ begin
           tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
       if tid > '' then begin
         Json := TJSONParser.Create(ReturnStringSQL(
-          'select note from s_uk.dic_works where uuid = '''
+          'select note from works where id = '''
           + tid
           +''''));
         Text:=Json.Parse.FormatJSON([foDoNotQuoteMembers]);
@@ -442,7 +441,7 @@ begin
           tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
       if tid > '' then begin
         Caption:= ReturnStringSQL(
-          'select code::text from s_uk.dic_works where uuid = '''
+          'select code::text from works where id = '''
           + tid
           +'''');
       end
@@ -454,7 +453,7 @@ begin
           tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
       if tid > '' then begin
         Text:= ReturnStringSQL(
-          'select disp from s_uk.dic_works where uuid = '''
+          'select disp from works where id = '''
           + tid
           +'''');
       end
@@ -466,7 +465,7 @@ begin
           tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
       if tid > '' then begin
         Text:= ReturnStringSQL(
-          'select code::text from s_uk.dic_works where uuid = '''
+          'select code::text from works where id = '''
           + tid
           +'''');
       end
@@ -478,7 +477,7 @@ begin
           tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
       if tid > '' then begin
         Text:= ReturnStringSQL(
-          'select base::text from s_uk.dic_works where uuid = '''
+          'select base::text from works where id = '''
           + tid
           +'''');
       end
@@ -490,7 +489,7 @@ begin
           tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
       if tid > '' then begin
         Text:= ReturnStringSQL(
-          'select factor::text from s_uk.dic_works where uuid = '''
+          'select factor::text from works where id = '''
           + tid
           +'''');
       end
@@ -502,7 +501,7 @@ begin
           tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
       if tid > '' then begin
         Text:= ReturnStringSQL(
-          'select condition::text from s_uk.dic_works where uuid = '''
+          'select condition::text from works where id = '''
           + tid
           +'''');
       end
@@ -571,7 +570,7 @@ begin
       RefreshControl('BuildingServiceWorksList');
       if (Sender as TDBDynTreeView).SelectionCount > 0 then begin
         Txt:=ReturnStringSQL(
-          'select note from s_uk.dic_buildings where uuid = '''
+          'select note from buildings where id = '''
           + TKeyValue((Sender as TDBDynTreeView).Selected.Data).Code
           +'''');
         Json := TJSONParser.Create(Txt);
@@ -690,29 +689,29 @@ begin
   Log('Ждите...');
   Log('...получение справочника услуг');
   ServicesTreeView.FillFromQuery(Conn,
-   'select uuid, disp from s_uk.services_hlist where parent ') ;
+   'select id, disp from services_hlist where pid ') ;
 //  BuildingServicesTreeView.FillFromQuery(Conn,
-//   'select uuid, disp from s_uk.services_hlist where parent ') ;
+//   'select id, disp from services_hlist where parent ') ;
 
   Log('...получение справочника работ');
   WorksTreeView.FillFromQuery(Conn,
-    'select uuid, full_disp from s_uk.works where parent ');
+    'select id, full_disp from works where pid ');
 
   Log('...получение справочника работ');
   WorksMainTreeView.FillFromQuery(Conn,
-    'select uuid, full_disp from s_uk.works where parent ');
+    'select id, full_disp from works where pid ');
 
   Log('...получение справочника услуг');
   ServicesTreeView.FillFromQuery(Conn,
-    'select uuid, disp from s_uk.dic_services where parent ');
+    'select id, disp from services where pid ');
 
   Log('...получение справочника домов');
   BuildingsTreeView.FillFromQuery(Conn,
-    'select uuid, disp from s_uk.buildings_hlist where parent ') ;
+    'select id, disp from buildings_hlist where pid ') ;
 
   Log('...получение справочника характеристик домов');
   FillListFromQuery(Conn, BaseCB.Items,
-    'select code::text from s_uk.building_prop_names ') ;
+    'select code::text from building_prop_names ') ;
 
   Log('...получение справочника организаций');
 //  FillListFromSQL(BuildingServiceCompany.Items,

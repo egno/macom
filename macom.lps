@@ -11,7 +11,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="5"/>
-        <UsageCount Value="81"/>
+        <UsageCount Value="132"/>
       </Unit0>
       <Unit1>
         <Filename Value="main.pas"/>
@@ -23,19 +23,21 @@
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="340"/>
-        <CursorPos X="1" Y="6"/>
-        <UsageCount Value="81"/>
+        <TopLine Value="258"/>
+        <CursorPos X="1" Y="621"/>
+        <UsageCount Value="132"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="components/dbvcextend/dbvst.pas"/>
         <UnitName Value="DBVST"/>
+        <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="32" Y="2"/>
-        <UsageCount Value="31"/>
+        <TopLine Value="279"/>
+        <CursorPos X="19" Y="11"/>
+        <UsageCount Value="26"/>
+        <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="components/dbvcextend/extsqlquery.pas"/>
@@ -43,7 +45,7 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="29" Y="4"/>
-        <UsageCount Value="31"/>
+        <UsageCount Value="26"/>
       </Unit3>
       <Unit4>
         <Filename Value="components/dbvcextend/dbdyntreeview.pas"/>
@@ -51,15 +53,17 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="14" Y="5"/>
-        <UsageCount Value="31"/>
+        <UsageCount Value="26"/>
       </Unit4>
       <Unit5>
         <Filename Value="components/dbvcextend/dbfunc.pas"/>
         <UnitName Value="dbfunc"/>
+        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="1" Y="6"/>
-        <UsageCount Value="25"/>
+        <TopLine Value="43"/>
+        <CursorPos X="1" Y="57"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
       </Unit5>
       <Unit6>
         <Filename Value="components/dbvcextend/keyvalue.pas"/>
@@ -67,13 +71,13 @@
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="1" Y="6"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="20"/>
       </Unit6>
     </Units>
     <General>
       <ActiveWindowIndexAtStart Value="0"/>
     </General>
-    <JumpHistory Count="15" HistoryIndex="14">
+    <JumpHistory Count="21" HistoryIndex="20">
       <Position1>
         <Filename Value="main.pas"/>
         <Caret Line="518" Column="18" TopLine="510"/>
@@ -134,6 +138,30 @@
         <Filename Value="main.pas"/>
         <Caret Line="331" Column="18" TopLine="311"/>
       </Position15>
+      <Position16>
+        <Filename Value="main.pas"/>
+        <Caret Line="714" Column="29" TopLine="724"/>
+      </Position16>
+      <Position17>
+        <Filename Value="components/dbvcextend/dbvst.pas"/>
+        <Caret Line="275" Column="39" TopLine="191"/>
+      </Position17>
+      <Position18>
+        <Filename Value="main.pas"/>
+        <Caret Line="732" Column="76" TopLine="724"/>
+      </Position18>
+      <Position19>
+        <Filename Value="main.pas"/>
+        <Caret Line="1" Column="12" TopLine="1"/>
+      </Position19>
+      <Position20>
+        <Filename Value="main.pas"/>
+        <Caret Line="350" Column="82" TopLine="329"/>
+      </Position20>
+      <Position21>
+        <Filename Value="components/dbvcextend/dbfunc.pas"/>
+        <Caret Line="57" Column="1" TopLine="43"/>
+      </Position21>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>
