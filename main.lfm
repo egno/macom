@@ -38,6 +38,12 @@ object MainForm: TMainForm
       Top = 2
       Action = ActionSave
     end
+    object ToolButton4: TToolButton
+      Left = 79
+      Top = 2
+      Caption = 'ToolButton4'
+      OnClick = ToolButton4Click
+    end
   end
   object MainStatusBar: TStatusBar
     Left = 0
@@ -176,11 +182,11 @@ object MainForm: TMainForm
           Height = 514
           Top = 0
           Width = 744
-          HorzScrollBar.Page = 744
-          VertScrollBar.Page = 514
+          HorzScrollBar.Page = 742
+          VertScrollBar.Page = 512
           Align = alClient
-          ClientHeight = 510
-          ClientWidth = 740
+          ClientHeight = 512
+          ClientWidth = 742
           TabOrder = 0
           object ConnUserLabel: TLabel
             AnchorSideLeft.Control = ConnScrollBox
@@ -456,12 +462,13 @@ object MainForm: TMainForm
               Top = 27
               Width = 200
               Anchors = [akTop, akLeft, akRight, akBottom]
+              MultiSelect = True
               ReadOnly = True
               ScrollBars = ssAutoBoth
               SortType = stText
               TabOrder = 0
               OnSelectionChanged = TreeViewSelectionChanged
-              Options = [tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
+              Options = [tvoAllowMultiselect, tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
               Connection.Connected = False
               Connection.LoginPrompt = False
               Connection.KeepConnection = False
@@ -676,7 +683,7 @@ object MainForm: TMainForm
                       Header.AutoSizeIndex = 0
                       Header.Columns = <                      
                         item
-                          Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAllowFocus, coWrapCaption]
+                          Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAutoSpring, coAllowFocus, coWrapCaption]
                           Position = 0
                           Text = 'Работа'
                           Width = 300
@@ -694,10 +701,15 @@ object MainForm: TMainForm
                       Header.DefaultHeight = 17
                       Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
                       Header.Style = hsFlatButtons
+                      IncrementalSearch = isAll
+                      IncrementalSearchStart = ssAlwaysStartOver
+                      ParentShowHint = False
                       ScrollBarOptions.ScrollBars = ssAutoBoth
+                      ShowHint = True
                       TabOrder = 0
                       TreeOptions.AutoOptions = [toAutoDropExpand, toAutoExpand, toAutoScrollOnExpand, toAutoTristateTracking, toAutoDeleteMovedNodes]
-                      TreeOptions.MiscOptions = [toEditable, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
+                      TreeOptions.MiscOptions = [toEditable, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toVariableNodeHeight, toNodeHeightResize, toNodeHeightDblClickResize, toEditOnClick]
+                      TreeOptions.PaintOptions = [toShowButtons, toShowDropmark, toShowHorzGridLines, toShowRoot, toShowVertGridLines, toThemeAware, toUseBlendedImages]
                       TreeOptions.SelectionOptions = [toExtendedFocus]
                       OnFocusChanged = ServiceCompaniesVSTFocusChanged
                       Connection.Connected = False
@@ -825,7 +837,7 @@ object MainForm: TMainForm
               TabOrder = 0
               object ServicePropMainTabSheet: TTabSheet
                 Caption = 'Основное'
-                ClientHeight = 551
+                ClientHeight = 524
                 ClientWidth = 535
                 object ScrollBox1: TScrollBox
                   Left = 0
@@ -868,8 +880,8 @@ object MainForm: TMainForm
                   Width = 535
                   Align = alBottom
                   AutoSize = True
-                  ClientHeight = 33
-                  ClientWidth = 531
+                  ClientHeight = 37
+                  ClientWidth = 535
                   TabOrder = 1
                   object SrvMainSaveBtn: TBitBtn
                     AnchorSideLeft.Control = ActionPanel1
@@ -891,7 +903,7 @@ object MainForm: TMainForm
               end
               object SrvWorksTabSheet: TTabSheet
                 Caption = 'Работы'
-                ClientHeight = 551
+                ClientHeight = 524
                 ClientWidth = 535
                 object ActionPanel2: TPanel
                   Left = 0
@@ -900,8 +912,8 @@ object MainForm: TMainForm
                   Width = 535
                   Align = alBottom
                   AutoSize = True
-                  ClientHeight = 33
-                  ClientWidth = 531
+                  ClientHeight = 37
+                  ClientWidth = 535
                   TabOrder = 0
                   object SrvWorksSaveBtn: TBitBtn
                     AnchorSideLeft.Control = ActionPanel2
@@ -951,8 +963,8 @@ object MainForm: TMainForm
                       ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
                       ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
                       ChildSizing.Layout = cclLeftToRightThenTopToBottom
-                      ClientHeight = 396
-                      ClientWidth = 531
+                      ClientHeight = 400
+                      ClientWidth = 535
                       TabOrder = 0
                       object WorksTreeView: TDBDynTreeView
                         AnchorSideLeft.Control = Panel3
@@ -1074,8 +1086,8 @@ object MainForm: TMainForm
                         Anchors = [akTop, akRight, akBottom]
                         AutoSize = True
                         BevelOuter = bvNone
-                        ClientHeight = 376
-                        ClientWidth = 30
+                        ClientHeight = 380
+                        ClientWidth = 34
                         TabOrder = 4
                         object WorkAddBtn: TBitBtn
                           AnchorSideLeft.Control = ActPanel
@@ -1247,8 +1259,8 @@ object MainForm: TMainForm
               Width = 539
               Align = alBottom
               AutoSize = True
-              ClientHeight = 33
-              ClientWidth = 535
+              ClientHeight = 37
+              ClientWidth = 539
               TabOrder = 0
               object WorkMainSaveBtn: TBitBtn
                 AnchorSideLeft.Control = ActionPanel4
@@ -1274,8 +1286,8 @@ object MainForm: TMainForm
               Width = 539
               Align = alClient
               BevelOuter = bvNone
-              ClientHeight = 515
-              ClientWidth = 535
+              ClientHeight = 519
+              ClientWidth = 539
               TabOrder = 1
               object PageControl1: TPageControl
                 Left = 0
@@ -1288,7 +1300,7 @@ object MainForm: TMainForm
                 TabOrder = 0
                 object MainTabSheet: TTabSheet
                   Caption = 'Основное'
-                  ClientHeight = 514
+                  ClientHeight = 487
                   ClientWidth = 535
                   object PairSplitter4: TPairSplitter
                     Cursor = crVSplit
@@ -1430,7 +1442,7 @@ object MainForm: TMainForm
                 end
                 object WorkTabSheet: TTabSheet
                   Caption = 'Ресурсы'
-                  ClientHeight = 514
+                  ClientHeight = 487
                   ClientWidth = 535
                   object WorkResourcesVST: TDBVST
                     Left = 0

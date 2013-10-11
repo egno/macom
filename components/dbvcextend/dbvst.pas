@@ -72,6 +72,8 @@ type
     procedure FillFromQuery(conn: TSQLConnection; aQry, aKey, aOrder: String;
       levFull:integer);
     procedure FillFromQuery(conn: TSQLConnection; aQry, aKey, aOrder: String);
+    function GetSelectedID(): String;
+    function GetID(Node: PVirtualNode): String;
   published
     property SQL: TStringList read FSQL write SetSQL;
     property Key: String read FKey write SetKey;
@@ -82,6 +84,9 @@ type
 procedure Register;
 
 implementation
+
+const
+     WrapWidth: Integer = 80;
 
 procedure Register;
 begin
@@ -201,6 +206,8 @@ var
   Checked, hasChecked, hasUnchecked: Boolean;
 begin
   if (Node <> nil) and (Node^.ChildCount > 0) then Exit;
+  Cursor:=crSQLWait;
+  Application.ProcessMessages;
   try
     Query := TExtSQLQuery.Create(Self, FConnection);
     if (Node = nil) then
@@ -301,6 +308,23 @@ procedure TDBVST.FillFromQuery(conn: TSQLConnection; aQry, aKey, aOrder: String
   );
 begin
   FillFromQuery(conn, aQry, aKey, aOrder, 0)
+end;
+
+function TDBVST.GetSelectedID: String;
+begin
+  Result := GetID(FocusedNode);
+end;
+
+function TDBVST.GetID(Node: PVirtualNode): String;
+var
+  VSTNodeData: PDBTreeData;
+begin
+  if Assigned(Node) then begin
+    VSTNodeData := GetNodeData(Node);
+    Result := VSTNodeData^[0];
+  end
+  else
+    Result := '';
 end;
 
 end.

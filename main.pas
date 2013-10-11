@@ -58,6 +58,7 @@ type
     Label7: TLabel;
     Label8: TLabel;
     TabSheet2: TTabSheet;
+    ToolButton4: TToolButton;
     WorkNameEdit: TMemo;
     WorkLabel: TLabel;
     WorkCondEdit: TMemo;
@@ -176,6 +177,7 @@ type
     procedure ServiceCompaniesVSTFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
     procedure ServicesTreeViewEnter(Sender: TObject);
+    procedure ToolButton4Click(Sender: TObject);
     procedure TreeViewSelectionChanged(Sender: TObject);
     procedure WorkAddBtnClick(Sender: TObject);
     procedure WorkDelBtnClick(Sender: TObject);
@@ -212,10 +214,12 @@ const
 
 procedure TMainForm.ActionConnectExecute(Sender: TObject);
 begin
+  Cursor:=crHourGlass;
   DBConnect(Conn, ConnUserEdit.Text, ConnPwdEdit.Text,
               ConnHostEdit.Text, ConnPortEdit.Text,
               ConnBaseEdit.Text);
   CheckConnected();
+  Cursor:=crDefault;
 end;
 
 procedure TMainForm.ActionDisconnectExecute(Sender: TObject);
@@ -227,27 +231,49 @@ end;
 
 procedure TMainForm.DataSave(Sender: TObject);
 var
-  i:Integer;
-  wid: String;
+  i, ib:Integer;
+  VSTNode: PVirtualNode;
+  VSTNodeData: PDBTreeData;
+  bid, sid, wid: String;
   sql: String;
 //  ServiceVSTNodeData: PDBTreeData;
 begin
   case (Sender as TComponent).Name of
+    'BuildingWorksSaveBtn': begin
+      if (BuildingsTreeView.SelectionCount > 0)
+              and Assigned(ServiceCompaniesVST.FocusedNode) then begin
+        bid := '';
+        for i:=0 to BuildingsTreeView.SelectionCount-1 do begin
+          if bid > '' then bid := bid + ', ' ;
+          bid := bid + '$$'
+            + TKeyValue(BuildingsTreeView.Selections[i].Data).Code + '$$';
+        end;
+        sid := ServiceCompaniesVST.GetSelectedID();
+        VSTNode := BuildingContractWorksVST.GetFirst();
+        while VSTNode <> nil do begin
+          VSTNodeData := BuildingContractWorksVST.GetNodeData(VSTNode);
+          ExecSQL('update buildings_service_works set '
+            + ' amount = 0' + VSTNodeData^[3] + ', '
+            + ' amount_interval = $$' + VSTNodeData^[2] + '$$::interval '
+            + ' where building in (' + bid + ') '
+            + ' and service = $$' + sid +'$$ '
+            + ' and work = $$' + VSTNodeData^[0] + '$$ ;'
+            );
+          VSTNode := BuildingContractWorksVST.GetNext(VSTNode);
+        end;
+      end;
+      RefreshControl('BuildingContractWorksVST');
+    end;
     'SrvWorksSaveBtn': begin
       ExecSQL('delete from service_works where '
         + ' service =  '
         + '''' + TKeyValue(ServicesTreeView.Selected.Data).Code + ''' '
         + ';'  );
       for i:=0 to ServiceWorksList.Items.Count-1 do begin
-//        writeln(i);
-//        writeln(TKeyValue(ServiceWorksList.Items[i].Data).Code);
-//        ServiceVSTNodeData:=ServiceCompaniesVST.GetNodeData(
-//          ServiceCompaniesVST.FocusedNode);
         if ServiceWorksList.Items[i].Data <> nil then
           ExecSQL('insert into service_works '
             + ' (service, work) '
             + ' values ( '
-//          + '''' + ServiceVSTNodeData^[0] + ''', '
             + '''' + TKeyValue(ServicesTreeView.Selected.Data).Code + ''', '
             + '''' + TKeyValue(ServiceWorksList.Items[i].Data).Code + ''''
             + ');'  );
@@ -306,6 +332,7 @@ var
 begin
   p:=FindComponent(C);
   if p = nil then Exit;
+  (p as TControl).Cursor:=crSQLWait;
   case C of
     'MainStatusBar': with (p as TStatusBar) do begin
       if Conn.Connected then begin
@@ -340,7 +367,7 @@ begin
           'select service, false, service_disp, company_disp from building_service_companies_complete where building = '''
           + TKeyValue(BuildingsTreeView.Selected.Data).Code
           + ''' ',
-          'service_parent', '2', 1);
+          'service_parent', '3', 2);
         Refresh;
       end
       else
@@ -382,17 +409,18 @@ begin
           VSTNodeData:=ServiceCompaniesVST.GetNodeData(
             ServiceCompaniesVST.FocusedNode);
           FillFromQuery(conn,
-            'SELECT work, work_disp FROM buildings_service_works '
+            'SELECT work, false, work_full_disp, amount_interval::text, amount FROM buildings_service_works '
            + ' where service = '''
            + VSTNodeData^[0]
            + ''''
            + ' and building = '''
            + TKeyValue(BuildingsTreeView.Selected.Data).Code
            + ''''
-           + ' and null ');
+           + '  ',
+           'null', '2');
         end
       else
-        Items.Clear;
+        Clear;
     'ServicesWorkNote': with (p as TMemo) do begin
       tid := '';
       if (ActiveControl.Name = 'WorksTreeView') and
@@ -498,6 +526,7 @@ begin
         Text:='';
       end;
   end;
+  (p as TControl).Cursor:=crDefault;
 end;
 
 procedure TMainForm.ServiceCompaniesVSTDblClick(Sender: TObject);
@@ -524,11 +553,17 @@ begin
 //  SrvNameEdit.Text:=ServicesTreeView.Selected.Text;
 end;
 
+procedure TMainForm.ToolButton4Click(Sender: TObject);
+begin
+  MainForm.Cursor:=crHourGlass;
+end;
+
 procedure TMainForm.TreeViewSelectionChanged(Sender: TObject);
 var
   Txt: String;
   Json: TJSONParser;
 begin
+  (Sender as TControl).Cursor:=crSQLWait;
   case (Sender as TComponent).Name of
     'ServicesTreeView': begin
       ServiceLabel.Caption:=(Sender as TDBDynTreeView).Selected.Text;
@@ -553,10 +588,10 @@ begin
     end;
     'BuildingsTreeView': begin
       BuildingDetailsMemo.Clear;
-      RefreshControl('ServiceCompaniesVST');
-      RefreshControl('BuildingPropertiesVST');
       RefreshControl('BuildingBox');
+      RefreshControl('ServiceCompaniesVST');
       RefreshControl('BuildingContractWorksVST');
+      RefreshControl('BuildingPropertiesVST');
 //      RefreshControl('BuildingServiceBox');
 //      RefreshControl('BuildingServiceWorksList');
       if (Sender as TDBDynTreeView).SelectionCount > 0 then begin
@@ -570,6 +605,7 @@ begin
     end;
 //    'BuildingServicesTreeView': RefreshControl(BuildingServiceCompany);
   end;
+  (Sender as TControl).Cursor:=crDefault;
 end;
 
 procedure TMainForm.WorkAddBtnClick(Sender: TObject);
@@ -676,6 +712,7 @@ end;
 procedure TMainForm.InitFormAfterConnect;
 begin
   if not Conn.Connected then Exit;
+  Cursor:=crSQLWait;
   Log('Подключено');
   Log('Ждите...');
   Log('...получение справочника услуг');
@@ -713,6 +750,7 @@ begin
   BuildingTabSheet.TabVisible:=True;
   CenterPageControl.ActivePage:=BuildingTabSheet;
   ConnectTabSheet.TabVisible:=False;
+  Cursor:=crDefault;
 
 end;
 
