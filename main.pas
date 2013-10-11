@@ -43,22 +43,39 @@ type
     ActionPanel3: TPanel;
     ActionPanel4: TPanel;
     ActionPanel5: TPanel;
+    ActionPanel6: TPanel;
     ActionSave: TAction;
     ActionDisconnect: TAction;
     ActionConnect: TAction;
     ActionPanel1: TPanel;
     ActionPanel2: TPanel;
+    ActPanel1: TPanel;
     BuildingWorksSaveBtn: TBitBtn;
     BaseCB: TComboBox;
     BuildingPropertiesVST: TDBVST;
     IniPropStorage: TIniPropStorage;
+    Label10: TLabel;
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
     Label8: TLabel;
+    Label9: TLabel;
+    PairSplitter5: TPairSplitter;
+    PairSplitterSide14: TPairSplitterSide;
+    PairSplitterSide15: TPairSplitterSide;
+    Panel4: TPanel;
+    PersonNote: TMemo;
+    BuildingPersonList: TDBDynTreeView;
+    Splitter3: TSplitter;
+    BuildingPersSaveBtn: TBitBtn;
     TabSheet2: TTabSheet;
+    TabSheet4: TTabSheet;
     ToolButton4: TToolButton;
+    WorkAddAllBtn1: TBitBtn;
+    PersAddBtn: TBitBtn;
+    WorkDelAllBtn1: TBitBtn;
+    PersDelBtn: TBitBtn;
     WorkNameEdit: TMemo;
     WorkLabel: TLabel;
     WorkCondEdit: TMemo;
@@ -90,6 +107,8 @@ type
     ServiceCompaniesVST: TDBVST;
     MainTabSheet: TTabSheet;
     BuildingContractWorksVST: TDBVST;
+    WorksTreeFilter1: TTreeFilterEdit;
+    PersonnelTreeView: TDBDynTreeView;
     WorkTabSheet: TTabSheet;
     TreeFilterEdit3: TTreeFilterEdit;
     WorkMainSaveBtn: TBitBtn;
@@ -239,6 +258,27 @@ var
 //  ServiceVSTNodeData: PDBTreeData;
 begin
   case (Sender as TComponent).Name of
+    'BuildingPersSaveBtn': begin
+      if (BuildingsTreeView.SelectionCount > 0) then begin
+        bid := '';
+        for i:=0 to BuildingsTreeView.SelectionCount-1 do begin
+          if bid > '' then bid := bid + ', ' ;
+          bid := bid + '$$'
+            + TKeyValue(BuildingsTreeView.Selections[i].Data).Code + '$$';
+        end;
+      end;
+      ExecSQL('delete from building_staff where '
+        + ' building in (' + bid + ') ;'  );
+      for i:=0 to BuildingPersonList.Items.Count-1 do begin
+        if BuildingPersonList.Items[i].Data <> nil then
+          ExecSQL('insert into building_staff '
+            + ' (building, contract) '
+            + ' select id, '
+            + '$$' + TKeyValue(BuildingPersonList.Items[i].Data).Code + '$$'
+            + ' from buildings where id in ( ' + bid + ') '
+            + ';'  );
+      end;
+    end;
     'BuildingWorksSaveBtn': begin
       if (BuildingsTreeView.SelectionCount > 0)
               and Assigned(ServiceCompaniesVST.FocusedNode) then begin
@@ -372,6 +412,17 @@ begin
       end
       else
         Clear;
+      'BuildingPersonList': with (p as TDBDynTreeView) do
+        if (BuildingsTreeView.SelectionCount > 0) then begin
+            FillFromQuery(conn,
+              'SELECT contract, contract_disp FROM building_staff '
+             + ' where building = '''
+             + TKeyValue(BuildingsTreeView.Selected.Data).Code
+             + ''''
+             + ' and null ');
+          end
+        else
+          Items.Clear;
       'BuildingPropertiesVST': with (p as TDBVST) do
         if (BuildingsTreeView.SelectionCount > 0) then begin
           FillFromQuery(conn,
@@ -421,6 +472,25 @@ begin
         end
       else
         Clear;
+    'PersonNote': with (p as TMemo) do begin
+      tid := '';
+      if (ActiveControl.Name = 'PersonnelTreeView') and
+        (PersonnelTreeView.SelectionCount > 0) then
+          tid := TKeyValue(PersonnelTreeView.Selected.Data).Code;
+      if (ActiveControl.Name = 'BuildingPersonList') and
+        (BuildingPersonList.SelectionCount > 0) then
+          tid := TKeyValue(BuildingPersonList.Selected.Data).Code;
+      if tid > '' then begin
+        Text:=ReturnStringSQL(
+          'select max(contract_disp) || $$ $$ || (array_agg(code::text || $$: $$ '
+          + '|| val::text))::text disp from all_staff_params '
+          + ' where val is not null and contract = '''
+          + tid
+          +''' group by contract');
+      end
+      else
+        Text:='';
+      end;
     'ServicesWorkNote': with (p as TMemo) do begin
       tid := '';
       if (ActiveControl.Name = 'WorksTreeView') and
@@ -592,6 +662,7 @@ begin
       RefreshControl('ServiceCompaniesVST');
       RefreshControl('BuildingContractWorksVST');
       RefreshControl('BuildingPropertiesVST');
+      RefreshControl('BuildingPersonList');
 //      RefreshControl('BuildingServiceBox');
 //      RefreshControl('BuildingServiceWorksList');
       if (Sender as TDBDynTreeView).SelectionCount > 0 then begin
@@ -603,7 +674,12 @@ begin
         BuildingDetailsMemo.Text:=Json.Parse.FormatJSON([foDoNotQuoteMembers]);
       end;
     end;
-//    'BuildingServicesTreeView': RefreshControl(BuildingServiceCompany);
+    'PersonnelTreeView': begin
+      RefreshControl('PersonNote');
+    end;
+    'BuildingPersonList': begin
+      RefreshControl('PersonNote');
+    end;
   end;
   (Sender as TControl).Cursor:=crDefault;
 end;
@@ -619,7 +695,13 @@ begin
           ServiceWorksList.Items.AddObject(nil,
             WorksTreeView.Selections[i].Text,
             WorksTreeView.Selections[i].Data);
-
+    end;
+    'PersAddBtn': begin
+      if PersonnelTreeView.Items.SelectionCount > 0 then
+        for i := 0 to PersonnelTreeView.Items.SelectionCount-1 do
+          BuildingPersonList.Items.AddObject(nil,
+            PersonnelTreeView.Selections[i].Text,
+            PersonnelTreeView.Selections[i].Data);
     end;
   end;
 end;
@@ -634,6 +716,12 @@ begin
         for i := ServiceWorksList.Items.SelectionCount-1 downto 0   do
           ServiceWorksList.Items.Delete(
             ServiceWorksList.Selections[i]);
+    end;
+    'PersDelBtn': begin
+      if BuildingPersonList.Items.SelectionCount > 0 then
+        for i := BuildingPersonList.Items.SelectionCount-1 downto 0   do
+          BuildingPersonList.Items.Delete(
+            BuildingPersonList.Selections[i]);
     end;
   end;
 end;
@@ -744,6 +832,11 @@ begin
   Log('...получение справочника организаций');
 //  FillListFromSQL(BuildingServiceCompany.Items,
 //   'select uuid, disp from s_uk.dic_companies order by 2 ') ;
+
+  Log('...получение справочника персонала');
+  PersonnelTreeView.FillFromQuery(Conn,
+    'select id, disp from pers_contracts where null ');
+
 
   Log('Готово');
 
