@@ -40,15 +40,29 @@ type
 
   TDBVST = class(TVirtualStringTree)
   private
+    FFields: TStringList;
+    FFieldsConvFrom: TStringList;
+    FFieldsConvTo: TStringList;
+    FFieldsDisp: TStringList;
     FKey: String;
     FConnection: TSQLConnection;
     FOrder: String;
     FSQL: TStringList;
+    FTable: String;
+    FWhere: String;
     procedure SetConnection(AValue: TSQLConnection);
+    procedure SetFields(AValue: TStringList);
+    procedure SetFieldsConvFrom(AValue: TStringList);
+    procedure SetFieldsConvTo(AValue: TStringList);
+    procedure SetFieldsDisp(AValue: TStringList);
     procedure SetKey(AValue: String);
     procedure SetOrder(AValue: String);
     procedure SetSQL(AValue: TStringList);
+    procedure SetTable(AValue: String);
+    procedure SetWhere(AValue: String);
   protected
+    procedure Edited(Sender: TBaseVirtualTree;
+      Node: PVirtualNode; Column: TColumnIndex);
     procedure Expanding(Sender: TBaseVirtualTree;
       Node: PVirtualNode; var Allowed: Boolean);
     procedure Change(Sender: TBaseVirtualTree; Node: PVirtualNode);
@@ -69,15 +83,22 @@ type
     destructor Destroy; override;
     procedure FillNode(Node: PVirtualNode; levFull:integer);
     procedure FillNode(Node: PVirtualNode);
-    procedure FillFromQuery(conn: TSQLConnection; aQry, aKey, aOrder: String;
-      levFull:integer);
-    procedure FillFromQuery(conn: TSQLConnection; aQry, aKey, aOrder: String);
+    procedure CreateAndFill(conn: TSQLConnection; aTable:String;
+      aFields, aFieldsDisp, aFieldsConvTo, aFieldsConvFrom:array of String; aKey, aWhere, aOrder: String; levFull:integer);
     function GetSelectedID(): String;
     function GetID(Node: PVirtualNode): String;
+    function SaveAll():String;
+    function SaveRow():String;
   published
     property SQL: TStringList read FSQL write SetSQL;
+    property Table: String read FTable write SetTable;
+    property Fields: TStringList read FFields write SetFields;
+    property FieldsDisp: TStringList read FFieldsDisp write SetFieldsDisp;
+    property FieldsConvTo: TStringList read FFieldsConvTo write SetFieldsConvTo;
+    property FieldsConvFrom: TStringList read FFieldsConvFrom write SetFieldsConvFrom;
     property Key: String read FKey write SetKey;
     property Order: String read FOrder write SetOrder;
+    property Where: String read FWhere write SetWhere;
     property Connection: TSQLConnection read FConnection write SetConnection;
  end;
 
@@ -101,6 +122,30 @@ begin
   FConnection:=AValue;
 end;
 
+procedure TDBVST.SetFields(AValue: TStringList);
+begin
+  if FFields=AValue then Exit;
+  FFields:=AValue;
+end;
+
+procedure TDBVST.SetFieldsConvFrom(AValue: TStringList);
+begin
+  if FFieldsConvFrom=AValue then Exit;
+  FFieldsConvFrom:=AValue;
+end;
+
+procedure TDBVST.SetFieldsConvTo(AValue: TStringList);
+begin
+  if FFieldsConvTo=AValue then Exit;
+  FFieldsConvTo:=AValue;
+end;
+
+procedure TDBVST.SetFieldsDisp(AValue: TStringList);
+begin
+  if FFieldsDisp=AValue then Exit;
+  FFieldsDisp:=AValue;
+end;
+
 procedure TDBVST.SetKey(AValue: String);
 begin
   if FKey=AValue then Exit;
@@ -117,6 +162,24 @@ procedure TDBVST.SetSQL(AValue: TStringList);
 begin
   if FSQL=AValue then Exit;
   FSQL:=AValue;
+end;
+
+procedure TDBVST.SetTable(AValue: String);
+begin
+  if FTable=AValue then Exit;
+  FTable:=AValue;
+end;
+
+procedure TDBVST.SetWhere(AValue: String);
+begin
+  if FWhere=AValue then Exit;
+  FWhere:=AValue;
+end;
+
+procedure TDBVST.Edited(Sender: TBaseVirtualTree; Node: PVirtualNode;
+  Column: TColumnIndex);
+begin
+  SaveRow();
 end;
 
 procedure TDBVST.Expanding(Sender: TBaseVirtualTree; Node: PVirtualNode;
@@ -182,8 +245,14 @@ begin
   FConnection:=TSQLConnection.Create(Self);
   FConnection.SetSubComponent(true);
   FSQL:=TStringList.Create();
+  FFields:=TStringList.Create();
+  FFieldsDisp:=TStringList.Create();
+  FFieldsConvTo:=TStringList.Create();
+  FFieldsConvFrom:=TStringList.Create();
+  OnEdited:=@Edited;
   OnExpanding:=@Expanding;
   OnChange:=@Change;
+  OnFocusChanged:=@FocusChanged;
   OnGetNodeDataSize:=@GetNodeDataSize;
   OnGetText:=@GetText;
   OnFreeNode:=@FreeNode;
@@ -218,7 +287,6 @@ begin
       Query.SQL.Text := FSQL.Text + ' ' + ' and '
        + FKey + ' = ''' + ParentNodeData^[0] + ''' order by ' + FOrder;
     end;
-//    writeln(Query.SQL.Text);
     Checked:=false;
     hasChecked := false;
     hasUnchecked := false;
@@ -228,18 +296,6 @@ begin
       NodeData:=TStringList.Create;
       NodeData.Add(Query.Fields[0].AsString);
       cnt := 1;
-      if Query.FieldCount > cnt then
-        if Query.FieldDefs[cnt].DataType = ftBoolean then begin
-          Checked := Query.Fields[cnt].AsBoolean;
-          hasChecked := hasChecked or Checked;
-          hasUnchecked := hasUnchecked or not(Checked);
-          cnt := cnt+1;
-        end
-        else begin
-          NodeData.Add(Query.Fields[cnt].AsString);
-        end
-      else
-        NodeData.Add(Query.Fields[0].AsString);
       for i:=cnt to Query.FieldCount-1 do begin
         NodeData.Add(Query.Fields[i].AsString);
       end;
@@ -257,6 +313,7 @@ begin
          else Node^.CheckState:=csCheckedNormal
       else Node^.CheckState:=csUncheckedNormal
     end;
+
   finally
     Query.Free;
   end;
@@ -267,26 +324,57 @@ begin
   FillNode(Node, 1)
 end;
 
-procedure TDBVST.FillFromQuery(conn: TSQLConnection; aQry, aKey, aOrder: String;
-  levFull:integer);
+procedure TDBVST.CreateAndFill(conn: TSQLConnection; aTable: String; aFields,
+  aFieldsDisp, aFieldsConvTo, aFieldsConvFrom: array of String; aKey, aWhere,
+  aOrder: String; levFull: integer);
+
+  function GetSQLFieldString(i: Integer):String;
+  var
+    res: String;
+  begin
+    res:=FFields[i];
+    if FFieldsConvFrom[i] > '' then
+      res := res+'::'+ FFieldsConvFrom[i];
+    Result := res;
+  end;
+
 var
   Query: TExtSQLQuery;
   Column: TVirtualTreeColumn;
   i, cnt: Integer;
 begin
   Clear;
-//  Header.Columns.Clear;
-  Key:=aKey;
-  Order:=aOrder;
-  SQL.Clear;
-  SQL.Add(aQry);
+  Table := aTable;
+  Key := aKey;
+  Order := aOrder;
+  Where := aWhere;
   Connection:=conn;
+  FFields.Clear;
+  FFieldsDisp.Clear;
+  FFieldsConvTo.Clear;
+  FFieldsConvFrom.Clear;
+  for i:=0 to length(aFields)-1 do begin
+      FFields.Add(aFields[i]);
+      FFieldsDisp.Add(aFieldsDisp[i]);
+      FFieldsConvFrom.Add(aFieldsConvFrom[i]);
+      FFieldsConvTo.Add(aFieldsConvTo[i]);
+  end;
+  FSQL.Clear;
+  FSQL.Add('select ');
+  FSQL.Add(GetSQLFieldString(0));
+  for i:=1 to FFields.Count-1 do begin
+    FSQL.Add(', '+ GetSQLFieldString(i));
+  end;
+  FSQL.Add(' from ' + Table);
+  FSQL.Add(' where ' + Where);
   try
     Query := TExtSQLQuery.Create(Self, FConnection);
-    Query.SQL.Text:=aQry + ' limit 1 ' ;
+    Query.SQL.Text:=SQL.Text + ' limit 1 ' ;
+    writeln (Query.SQL.Text);
     Query.Open;
     cnt := Query.FieldCount-1;
-    if Query.FieldDefs[1].DataType = ftBoolean then cnt := cnt -1;
+    Header.Options := Header.Options + [hoVisible];
+//    if Query.FieldDefs[1].DataType = ftBoolean then cnt := cnt -1;
     for i:=Header.Columns.Count+1 to cnt do begin
       Column:=Header.Columns.Add;
       Column.Width:=200;
@@ -297,17 +385,10 @@ begin
       + [toEditable, toGridExtensions];
     TreeOptions.SelectionOptions:=TreeOptions.SelectionOptions
       + [toExtendedFocus];
-//    ScrollBarOptions.ScrollBars:=ssAutoBoth;
     FillNode(nil, levFull);
   finally
     Query.Free;
   end;
-end;
-
-procedure TDBVST.FillFromQuery(conn: TSQLConnection; aQry, aKey, aOrder: String
-  );
-begin
-  FillFromQuery(conn, aQry, aKey, aOrder, 0)
 end;
 
 function TDBVST.GetSelectedID: String;
@@ -325,6 +406,37 @@ begin
   end
   else
     Result := '';
+end;
+
+function TDBVST.SaveAll: String;
+begin
+
+end;
+
+function TDBVST.SaveRow: String;
+var
+  Query: TExtSQLQuery;
+  i: Integer;
+  Val: String;
+begin
+  Query := TExtSQLQuery.Create(Self, FConnection);
+  Query.SQL.Add('update ' + Table);
+  Query.SQL.Add('set ');
+  GetText(Self, FocusedNode, 0, ttNormal, Val);
+  Query.SQL.Add(Fields[2] + ' = $$' + Val + '$$ ');
+  for i:=3 to Fields.Count-1 do begin
+    GetText(Self, FocusedNode, i-2, ttNormal, Val);
+    Query.SQL.Add(', '+ Fields[i] + ' = $$' + Val + '$$ ');
+  end;
+  Query.SQL.Add('where ' + Where);
+  Query.SQL.Add('and ' + Fields[0] + ' = $$' + GetSelectedID() + '$$');
+  try
+//    Query.ExecSQL;
+  except
+    on E: Exception do
+      Result:=E.Message;
+  end;
+  Query.Free;
 end;
 
 end.

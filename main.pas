@@ -31,9 +31,9 @@ uses
   Classes, SysUtils, FileUtil, TreeFilterEdit, Forms, Controls, Graphics,
   Dialogs, Menus, ComCtrls, ActnList, PairSplitter, StdCtrls, ExtCtrls, Buttons,
   StdActns, DBGrids, pqconnection, fpjson, jsonparser, XMLConf, sqldb, db,
-  dbfunc, ExpandPanels, Grids, CheckLst, DbCtrls, FileCtrl, IniPropStorage,
-  XMLPropStorage, Calendar, EditBtn, keyvalue, DBDynTreeView, ExtSQLQuery,
-  DBVST, VirtualTrees;
+  dbfunc, ExpandPanels, Grids, CheckLst, DbCtrls, IniPropStorage,
+  EditBtn, DBActns, keyvalue, DBDynTreeView,
+  ExtSQLQuery, DBVST, VirtualTrees;
 
 type
 
@@ -44,6 +44,7 @@ type
     ActionPanel4: TPanel;
     ActionPanel5: TPanel;
     ActionPanel6: TPanel;
+    ActionPanel7: TPanel;
     ActionSave: TAction;
     ActionDisconnect: TAction;
     ActionConnect: TAction;
@@ -53,6 +54,11 @@ type
     BuildingWorksSaveBtn: TBitBtn;
     BaseCB: TComboBox;
     BuildingPropertiesVST: TDBVST;
+    DataSetDelete: TDataSetDelete;
+    DataSetEdit: TDataSetEdit;
+    DataSetInsert: TDataSetInsert;
+    DataSetPost: TDataSetPost;
+    DBVST1: TDBVST;
     IniPropStorage: TIniPropStorage;
     Label10: TLabel;
     Label4: TLabel;
@@ -61,16 +67,22 @@ type
     Label7: TLabel;
     Label8: TLabel;
     Label9: TLabel;
+    MenuItem5: TMenuItem;
+    MenuItem6: TMenuItem;
+    MenuItem7: TMenuItem;
     PairSplitter5: TPairSplitter;
     PairSplitterSide14: TPairSplitterSide;
     PairSplitterSide15: TPairSplitterSide;
     Panel4: TPanel;
     PersonNote: TMemo;
     BuildingPersonList: TDBDynTreeView;
+    DBPopupMenu: TPopupMenu;
     Splitter3: TSplitter;
     BuildingPersSaveBtn: TBitBtn;
+    BuildingPropsSaveBtn: TBitBtn;
     TabSheet2: TTabSheet;
     TabSheet4: TTabSheet;
+    TabSheet5: TTabSheet;
     ToolButton4: TToolButton;
     WorkAddAllBtn1: TBitBtn;
     PersAddBtn: TBitBtn;
@@ -190,6 +202,8 @@ type
     procedure ActionConnectExecute(Sender: TObject);
     procedure ActionDisconnectExecute(Sender: TObject);
     procedure DataSave(Sender: TObject);
+    procedure DataSetInsertExecute(Sender: TObject);
+    procedure DBPopupMenuPopup(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure RefreshControl(C:String);
     procedure ServiceCompaniesVSTDblClick(Sender: TObject);
@@ -200,7 +214,9 @@ type
     procedure TreeViewSelectionChanged(Sender: TObject);
     procedure WorkAddBtnClick(Sender: TObject);
     procedure WorkDelBtnClick(Sender: TObject);
+//    function StringArrayToString(A: array of String; Delimiter: String);
     procedure ExecSQL(SQL: String);
+    procedure UpdateDBTable(Table: String; Fields, Values: array of String);
     function ReturnStringSQL(SQL: String): String;
     procedure FillListFromSQL(Items:TStrings ; SQL: String);
     procedure WorkFactorEditChange(Sender: TObject);
@@ -279,6 +295,28 @@ begin
             + ';'  );
       end;
     end;
+    'BuildingPropsSaveBtn': begin
+      if (BuildingsTreeView.SelectionCount > 0) then begin
+        bid := '';
+        for i:=0 to BuildingsTreeView.SelectionCount-1 do begin
+          if bid > '' then bid := bid + ', ' ;
+          bid := bid + '$$'
+            + TKeyValue(BuildingsTreeView.Selections[i].Data).Code + '$$';
+        end;
+        VSTNode := BuildingPropertiesVST.GetFirst();
+        while VSTNode <> nil do begin
+          VSTNodeData := BuildingPropertiesVST.GetNodeData(VSTNode);
+            ExecSQL('insert into buildings_p (obj, code, val) select '
+              + ' id, '
+              + ' $$' + VSTNodeData^[1] + '$$::ltree, '
+              + ' $$' + VSTNodeData^[2] + '$$ '
+              + ' from buildings where id in ( ' +bid + ') ;'
+              );
+          VSTNode := BuildingPropertiesVST.GetNext(VSTNode);
+        end;
+      end;
+      RefreshControl('BuildingPropertiesVST');
+    end;
     'BuildingWorksSaveBtn': begin
       if (BuildingsTreeView.SelectionCount > 0)
               and Assigned(ServiceCompaniesVST.FocusedNode) then begin
@@ -354,6 +392,29 @@ begin
   end;
 end;
 
+procedure TMainForm.DataSetInsertExecute(Sender: TObject);
+var
+  Node : PVirtualNode;
+  NodeData: TStringList;
+begin
+  if ActiveControl.ClassNameIs('TDBVST') then
+    with (ActiveControl as TDBVST) do begin
+      NodeData:=TStringList.Create;
+      NodeData.Add('');
+      NodeData.Add('');
+      NodeData.Add('');
+      Node:=AddChild(nil, NodeData);
+      (ActiveControl as TDBVST).
+      Refresh;
+  end;
+end;
+
+procedure TMainForm.DBPopupMenuPopup(Sender: TObject);
+begin
+  Log (ActiveControl.ClassName);
+//  DataSetInsert.Enabled := (ActiveControl.ClassName = 'DBVST');
+end;
+
 
 
 procedure TMainForm.FormShow(Sender: TObject);
@@ -392,22 +453,29 @@ begin
     end;
     'WorkResourcesVST': with (p as TDBVST) do
       if (WorksMainTreeView.SelectionCount > 0) then begin
-        FillFromQuery(conn,
-          'select id, false, resource_code::text, resource_disp, measure, amount from work_resources where work = '''
-          + TKeyValue(WorksMainTreeView.Selected.Data).Code
-          + ''' ',
-          'null', '3', 1);
-        Refresh;
+        CreateAndFill(conn, 'work_resources',
+           ['id','resource_code','resource_disp','measure','amount'],
+           ['','','','',''],
+           ['','ltree','','',''],
+           ['','text','','',''],
+          'null',
+          'work = $$' + TKeyValue(WorksMainTreeView.Selected.Data).Code + '$$ ',
+          '2', 0);
+          Refresh;
       end
       else
         Clear;
     'ServiceCompaniesVST': with (p as TDBVST) do
       if (BuildingsTreeView.SelectionCount > 0) then begin
-        FillFromQuery(conn,
-          'select service, false, service_disp, company_disp from building_service_companies_complete where building = '''
-          + TKeyValue(BuildingsTreeView.Selected.Data).Code
-          + ''' ',
-          'service_parent', '3', 2);
+        CreateAndFill(conn, 'building_service_companies_complete',
+          ['service', 'service_disp', 'company_disp'],
+          ['','',''],
+          ['','',''],
+          ['','',''],
+          'service_parent',
+          'building = $$'
+          + TKeyValue(BuildingsTreeView.Selected.Data).Code  + '$$ ',
+          '2', 1);
         Refresh;
       end
       else
@@ -425,11 +493,15 @@ begin
           Items.Clear;
       'BuildingPropertiesVST': with (p as TDBVST) do
         if (BuildingsTreeView.SelectionCount > 0) then begin
-          FillFromQuery(conn,
-            'select code::text, false, code::text, val from buildings_p where obj = '''
-            + TKeyValue(BuildingsTreeView.Selected.Data).Code
-            + ''' ',
-            'null', '2', 1);
+          CreateAndFill(conn, 'buildings_p',
+            ['code', 'code', 'val'],
+            ['','',''],
+            ['ltree','ltree',''],
+            ['text','text',''],
+            'null',
+            'obj = $$'
+            + TKeyValue(BuildingsTreeView.Selected.Data).Code  + '$$ ',
+            '2', 0);
           Refresh;
         end
         else
@@ -459,16 +531,16 @@ begin
         and Assigned(ServiceCompaniesVST.FocusedNode) then begin
           VSTNodeData:=ServiceCompaniesVST.GetNodeData(
             ServiceCompaniesVST.FocusedNode);
-          FillFromQuery(conn,
-            'SELECT work, false, work_full_disp, amount_interval::text, amount FROM buildings_service_works '
-           + ' where service = '''
-           + VSTNodeData^[0]
-           + ''''
-           + ' and building = '''
-           + TKeyValue(BuildingsTreeView.Selected.Data).Code
-           + ''''
-           + '  ',
-           'null', '2');
+          CreateAndFill(conn, 'buildings_service_works',
+            ['work', 'work_full_disp', 'amount_interval', 'amount'],
+            ['', '', '', ''],
+            ['', '', 'interval', ''],
+            ['', '', 'text', ''],
+            'null',
+            'service = $$' + VSTNodeData^[0] + '$$ '
+            + ' and building = $$'
+            + TKeyValue(BuildingsTreeView.Selected.Data).Code  + '$$ ',
+            '2', 0);
         end
       else
         Clear;
@@ -737,6 +809,16 @@ begin
   finally
     Query.Free;
   end;
+end;
+
+procedure TMainForm.UpdateDBTable(Table: String; Fields, Values: array of String
+  );
+var
+  ids, SQL: String;
+begin
+  SQL := 'insert into '
+    + Table + ' '
+    + ' (';
 end;
 
 function TMainForm.ReturnStringSQL(SQL: String): String;

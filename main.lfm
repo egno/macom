@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 478
+  Left = 471
   Height = 650
-  Top = 199
+  Top = 186
   Width = 766
   Caption = 'MaCom FLOSS'
   ClientHeight = 650
@@ -168,9 +168,9 @@ object MainForm: TMainForm
       Height = 587
       Top = 1
       Width = 748
-      ActivePage = BuildingTabSheet
+      ActivePage = WorksTabSheet
       Align = alClient
-      TabIndex = 1
+      TabIndex = 3
       TabOrder = 2
       TabPosition = tpBottom
       object ConnectTabSheet: TTabSheet
@@ -182,11 +182,11 @@ object MainForm: TMainForm
           Height = 514
           Top = 0
           Width = 744
-          HorzScrollBar.Page = 742
-          VertScrollBar.Page = 512
+          HorzScrollBar.Page = 744
+          VertScrollBar.Page = 514
           Align = alClient
-          ClientHeight = 512
-          ClientWidth = 742
+          ClientHeight = 510
+          ClientWidth = 740
           TabOrder = 0
           object ConnUserLabel: TLabel
             AnchorSideLeft.Control = ConnScrollBox
@@ -504,21 +504,21 @@ object MainForm: TMainForm
               Height = 556
               Top = 0
               Width = 539
-              ActivePage = TabSheet4
+              ActivePage = TabSheet1
               Align = alClient
-              TabIndex = 3
+              TabIndex = 0
               TabOrder = 0
               object TabSheet1: TTabSheet
                 Caption = 'Основное'
-                ClientHeight = 525
+                ClientHeight = 552
                 ClientWidth = 535
                 object ScrollBox2: TScrollBox
                   Left = 0
                   Height = 525
                   Top = 0
                   Width = 535
-                  HorzScrollBar.Page = 533
-                  VertScrollBar.Page = 523
+                  HorzScrollBar.Page = 535
+                  VertScrollBar.Page = 525
                   Align = alClient
                   ChildSizing.LeftRightSpacing = 3
                   ChildSizing.TopBottomSpacing = 3
@@ -527,8 +527,8 @@ object MainForm: TMainForm
                   ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
                   ChildSizing.Layout = cclLeftToRightThenTopToBottom
                   ChildSizing.ControlsPerLine = 2
-                  ClientHeight = 523
-                  ClientWidth = 533
+                  ClientHeight = 521
+                  ClientWidth = 531
                   TabOrder = 0
                   object BuildingDetailsMemo: TMemo
                     AnchorSideLeft.Control = ScrollBox2
@@ -555,8 +555,8 @@ object MainForm: TMainForm
                     Width = 527
                     Align = alBottom
                     AutoSize = True
-                    ClientHeight = 37
-                    ClientWidth = 527
+                    ClientHeight = 33
+                    ClientWidth = 523
                     TabOrder = 1
                     object SrvMainSaveBtn1: TBitBtn
                       AnchorSideLeft.Control = ActionPanel3
@@ -579,11 +579,11 @@ object MainForm: TMainForm
               end
               object TabSheet2: TTabSheet
                 Caption = 'Характеристики'
-                ClientHeight = 525
+                ClientHeight = 552
                 ClientWidth = 535
                 object BuildingPropertiesVST: TDBVST
                   Left = 0
-                  Height = 525
+                  Height = 488
                   Top = 0
                   Width = 535
                   Align = alClient
@@ -602,16 +602,44 @@ object MainForm: TMainForm
                     end>
                   Header.DefaultHeight = 17
                   Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
+                  PopupMenu = DBPopupMenu
                   TabOrder = 0
                   Connection.Connected = False
                   Connection.LoginPrompt = False
                   Connection.KeepConnection = False
                   Connection.LogEvents = []
                 end
+                object ActionPanel7: TPanel
+                  Left = 0
+                  Height = 37
+                  Top = 488
+                  Width = 535
+                  Align = alBottom
+                  AutoSize = True
+                  ClientHeight = 33
+                  ClientWidth = 531
+                  TabOrder = 1
+                  object BuildingPropsSaveBtn: TBitBtn
+                    AnchorSideLeft.Control = ActionPanel7
+                    AnchorSideTop.Control = ActionPanel7
+                    AnchorSideBottom.Control = ActionPanel7
+                    AnchorSideBottom.Side = asrBottom
+                    Left = 4
+                    Height = 29
+                    Top = 4
+                    Width = 88
+                    Anchors = [akLeft, akBottom]
+                    AutoSize = True
+                    BorderSpacing.Around = 3
+                    Caption = 'Сохранить'
+                    OnClick = DataSave
+                    TabOrder = 0
+                  end
+                end
               end
               object TabSheet3: TTabSheet
                 Caption = 'Услуги'
-                ClientHeight = 525
+                ClientHeight = 552
                 ClientWidth = 535
                 object PairSplitter1: TPairSplitter
                   Cursor = crVSplit
@@ -726,8 +754,8 @@ object MainForm: TMainForm
                   Width = 535
                   Align = alBottom
                   AutoSize = True
-                  ClientHeight = 37
-                  ClientWidth = 535
+                  ClientHeight = 33
+                  ClientWidth = 531
                   TabOrder = 1
                   object BuildingWorksSaveBtn: TBitBtn
                     AnchorSideLeft.Control = ActionPanel5
@@ -749,7 +777,7 @@ object MainForm: TMainForm
               end
               object TabSheet4: TTabSheet
                 Caption = 'Персонал'
-                ClientHeight = 525
+                ClientHeight = 552
                 ClientWidth = 535
                 object ActionPanel6: TPanel
                   Left = 0
@@ -758,8 +786,8 @@ object MainForm: TMainForm
                   Width = 535
                   Align = alBottom
                   AutoSize = True
-                  ClientHeight = 37
-                  ClientWidth = 535
+                  ClientHeight = 33
+                  ClientWidth = 531
                   TabOrder = 0
                   object BuildingPersSaveBtn: TBitBtn
                     AnchorSideLeft.Control = ActionPanel6
@@ -809,8 +837,8 @@ object MainForm: TMainForm
                       ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
                       ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
                       ChildSizing.Layout = cclLeftToRightThenTopToBottom
-                      ClientHeight = 400
-                      ClientWidth = 535
+                      ClientHeight = 396
+                      ClientWidth = 531
                       TabOrder = 0
                       object PersonnelTreeView: TDBDynTreeView
                         AnchorSideLeft.Control = Panel4
@@ -932,8 +960,8 @@ object MainForm: TMainForm
                         Anchors = [akTop, akRight, akBottom]
                         AutoSize = True
                         BevelOuter = bvNone
-                        ClientHeight = 380
-                        ClientWidth = 34
+                        ClientHeight = 376
+                        ClientWidth = 30
                         TabOrder = 4
                         object PersAddBtn: TBitBtn
                           AnchorSideLeft.Control = ActPanel1
@@ -1114,7 +1142,7 @@ object MainForm: TMainForm
               TabOrder = 0
               object ServicePropMainTabSheet: TTabSheet
                 Caption = 'Основное'
-                ClientHeight = 524
+                ClientHeight = 551
                 ClientWidth = 535
                 object ScrollBox1: TScrollBox
                   Left = 0
@@ -1157,8 +1185,8 @@ object MainForm: TMainForm
                   Width = 535
                   Align = alBottom
                   AutoSize = True
-                  ClientHeight = 37
-                  ClientWidth = 535
+                  ClientHeight = 33
+                  ClientWidth = 531
                   TabOrder = 1
                   object SrvMainSaveBtn: TBitBtn
                     AnchorSideLeft.Control = ActionPanel1
@@ -1180,7 +1208,7 @@ object MainForm: TMainForm
               end
               object SrvWorksTabSheet: TTabSheet
                 Caption = 'Работы'
-                ClientHeight = 524
+                ClientHeight = 551
                 ClientWidth = 535
                 object ActionPanel2: TPanel
                   Left = 0
@@ -1189,8 +1217,8 @@ object MainForm: TMainForm
                   Width = 535
                   Align = alBottom
                   AutoSize = True
-                  ClientHeight = 37
-                  ClientWidth = 535
+                  ClientHeight = 33
+                  ClientWidth = 531
                   TabOrder = 0
                   object SrvWorksSaveBtn: TBitBtn
                     AnchorSideLeft.Control = ActionPanel2
@@ -1240,8 +1268,8 @@ object MainForm: TMainForm
                       ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
                       ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
                       ChildSizing.Layout = cclLeftToRightThenTopToBottom
-                      ClientHeight = 400
-                      ClientWidth = 535
+                      ClientHeight = 396
+                      ClientWidth = 531
                       TabOrder = 0
                       object WorksTreeView: TDBDynTreeView
                         AnchorSideLeft.Control = Panel3
@@ -1363,8 +1391,8 @@ object MainForm: TMainForm
                         Anchors = [akTop, akRight, akBottom]
                         AutoSize = True
                         BevelOuter = bvNone
-                        ClientHeight = 380
-                        ClientWidth = 34
+                        ClientHeight = 376
+                        ClientWidth = 30
                         TabOrder = 4
                         object WorkAddBtn: TBitBtn
                           AnchorSideLeft.Control = ActPanel
@@ -1766,6 +1794,28 @@ object MainForm: TMainForm
                     Connection.LogEvents = []
                   end
                 end
+                object TabSheet5: TTabSheet
+                  Caption = 'Параметры'
+                  ClientHeight = 487
+                  ClientWidth = 535
+                  object DBVST1: TDBVST
+                    Left = 0
+                    Height = 487
+                    Top = 0
+                    Width = 535
+                    Align = alClient
+                    DefaultText = 'Node'
+                    Header.AutoSizeIndex = 0
+                    Header.Columns = <>
+                    Header.DefaultHeight = 17
+                    Header.MainColumn = -1
+                    TabOrder = 0
+                    Connection.Connected = False
+                    Connection.LoginPrompt = False
+                    Connection.KeepConnection = False
+                    Connection.LogEvents = []
+                  end
+                end
               end
               object WorkLabel: TLabel
                 Left = 0
@@ -2020,6 +2070,28 @@ object MainForm: TMainForm
       ImageIndex = 3
       OnExecute = DataSave
     end
+    object DataSetEdit: TDataSetEdit
+      Category = 'Database'
+      Caption = '&Редактировать'
+      Hint = 'Редактировать'
+      ImageIndex = 13
+    end
+    object DataSetDelete: TDataSetDelete
+      Category = 'Database'
+      Caption = '&Удалить'
+      Hint = 'Удалить'
+    end
+    object DataSetInsert: TDataSetInsert
+      Category = 'Database'
+      Caption = '&Вставить'
+      Hint = 'Вставить'
+      OnExecute = DataSetInsertExecute
+    end
+    object DataSetPost: TDataSetPost
+      Category = 'Database'
+      Caption = 'О&тправить'
+      Hint = 'Отправить'
+    end
   end
   object Conn: TPQConnection
     Connected = False
@@ -2040,7 +2112,7 @@ object MainForm: TMainForm
     Width = 22
     left = 544
     Bitmap = {
-      4C690D0000001600000016000000FFFFFF00FFFFFF00000000070000000D0000
+      4C690E0000001600000016000000FFFFFF00FFFFFF00000000070000000D0000
       000D0000000D0000000D0000000D0000000D0000000D0000000D0000000D0000
       000D0000000D0000000D0000000D0000000D0000000D0000000D00000007FFFF
       FF00FFFFFF00FFFFFF00A455A666C473C5E3CB7ECCFFCB7ECCFFCB7ECCFFCA7F
@@ -2826,11 +2898,85 @@ object MainForm: TMainForm
       FF00FFFFFF01DCECFA314860EDF3324DEDFF7A8CF5B37688F3B9324DEDFF4D64
       EFEEFFFFFF2AFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-      FF04EEF7FF4C98A8FC99FFFFFF23FFFFFF259AAAFC9BFFFFFF43FFFFFF02
+      FF04EEF7FF4C98A8FC99FFFFFF23FFFFFF259AAAFC9BFFFFFF43FFFFFF02FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF04FFFFFF1FFFFFFF1EFFFFFF04FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF04FFFFFF200D0D0D9A0D0D
+      0D9AFFFFFF20FFFFFF04FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF04FFFFFF200D0D0D98000000DE000000DE0D0D0D98FFFF
+      FF20FFFFFF04FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF1E0E0E0E96000000DA000000CE000000CE000000DA0E0E0E96FFFFFF20FFFF
+      FF04FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1E3333338B0000
+      00C8000000C8000000C8000000C8000000D610101094FFFFFF20FFFFFF04FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF04FFFFFF415D5D5D83000000C20000
+      00C2000000C2000000C2000000D110101092FFFFFF20FFFFFF04FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF04FFFFFF4160606080000000BC000000BC0000
+      00BC000000BC000000CD10101090FFFFFF20FFFFFF04FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF04FFFFFF416060607F000000B6000000B6000000B60000
+      00B6000000C81010108EFFFFFF20FFFFFF04FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF04FFFFFF416363637C000000B0000000B0000000B0000000B00000
+      00C41010108CFFFFFF20FFFFFF04FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF04FFFFFF4167676779000000AA000000AA000000AA000000AA000000BF1212
+      128AFFFFFF20FFFFFF04FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF04FFFF
+      FF4169696977000000A4000000A4000000A4000000A4000000BB13131387FFFF
+      FF20FFFFFF04FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF04FFFFFF416C6C
+      6C740000009E0000009E0000009E0000009E000000B613131385FFFFFF1FFFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF04FFFFFF416D6D6D730000
+      009800000098686868737B7B7B70000000B24C4C4C4DFFFFFF0BFFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF04FFFFFF4172727270000000934C4C
+      4C6FFFFFFF433535357C10101082FFFFFF1AFFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF04FFFFFF417474746E000000AC0808089D6161
+      61740202029CB8B8B82FFFFFFF04FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF09FFFFFF1EFFFFFF1CFFFFFF0CFFFFFF1CFFFFFF1CFFFFFF0CFFFFFF1CFFFF
+      FF1EFFFFFF09FFFFFF04FFFFFF41CBCBCB6647474785080808A40000008A2525
+      2568FFFFFF12FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1E0707079C0707
+      079CFFFFFF260707079C0707079CFFFFFF260707079C0707079CFFFFFF1EFFFF
+      FF00FFFFFF00FFFFFF1AFFFFFF43F2F2F263959595672929297DFFFFFF20FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1E3333337E3333337EFFFFFF263333
+      337E3333337EFFFFFF263333337E3333337EFFFFFF1EFFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF08FFFFFF2EFFFFFF48FFFFFF15FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF09FFFFFF4EFFFFFF4DFFFFFF0CFFFFFF4DFFFFFF4DFFFF
+      FF0CFFFFFF4DFFFFFF4EFFFFFF09FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00
     }
   end
   object IniPropStorage: TIniPropStorage
     StoredValues = <>
     left = 584
+  end
+  object DBPopupMenu: TPopupMenu
+    OnPopup = DBPopupMenuPopup
+    left = 680
+    object MenuItem5: TMenuItem
+      Action = DataSetEdit
+    end
+    object MenuItem6: TMenuItem
+      Action = DataSetInsert
+    end
+    object MenuItem7: TMenuItem
+      Action = DataSetDelete
+    end
   end
 end
