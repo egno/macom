@@ -59,6 +59,16 @@ type
     DataSetInsert: TDataSetInsert;
     DataSetPost: TDataSetPost;
     DBVST1: TDBVST;
+    BuildingsList: TDBVST;
+    BuildingsFilter: TEdit;
+    BuildingPersonnel: TDBVST;
+    BuildingsLabel: TLabel;
+    BuildingContractWorksVST: TDBVST;
+    BuildingPersonnelVST: TDBVST;
+    Panel2: TPanel;
+    Panel5: TPanel;
+    WorksList: TDBVST;
+    ServicesList: TDBVST;
     IniPropStorage: TIniPropStorage;
     Label10: TLabel;
     Label4: TLabel;
@@ -75,13 +85,12 @@ type
     PairSplitterSide15: TPairSplitterSide;
     Panel4: TPanel;
     PersonNote: TMemo;
-    BuildingPersonList: TDBDynTreeView;
     DBPopupMenu: TPopupMenu;
     Splitter3: TSplitter;
     BuildingPersSaveBtn: TBitBtn;
     BuildingPropsSaveBtn: TBitBtn;
-    TabSheet2: TTabSheet;
-    TabSheet4: TTabSheet;
+    BuildingPropsTabSheet: TTabSheet;
+    BuildingPersonnelTabSheet: TTabSheet;
     TabSheet5: TTabSheet;
     ToolButton4: TToolButton;
     WorkAddAllBtn1: TBitBtn;
@@ -118,14 +127,10 @@ type
     ScrollBox3: TScrollBox;
     ServiceCompaniesVST: TDBVST;
     MainTabSheet: TTabSheet;
-    BuildingContractWorksVST: TDBVST;
-    WorksTreeFilter1: TTreeFilterEdit;
-    PersonnelTreeView: TDBDynTreeView;
     WorkTabSheet: TTabSheet;
-    TreeFilterEdit3: TTreeFilterEdit;
     WorkMainSaveBtn: TBitBtn;
-    TabSheet1: TTabSheet;
-    TabSheet3: TTabSheet;
+    BuildingMainTabSheet: TTabSheet;
+    BuildingServicesTabSheet: TTabSheet;
     WorksTreeFilter: TTreeFilterEdit;
     WorkPairSplitter: TPairSplitter;
     PairSplitterSide3: TPairSplitterSide;
@@ -133,7 +138,6 @@ type
     PairSplitterSide6: TPairSplitterSide;
     ScrollBox2: TScrollBox;
     ServiceLabel: TLabel;
-    BuildingsTreeView: TDBDynTreeView;
     SrvMainSaveBtn1: TBitBtn;
     SrvWorksSaveBtn: TBitBtn;
     Panel3: TPanel;
@@ -141,8 +145,6 @@ type
     BuildingTabSheet: TTabSheet;
     WorksTabSheet: TTabSheet;
     ToolButton3: TToolButton;
-    TreeFilterEdit1: TTreeFilterEdit;
-    TreeFilterEdit2: TTreeFilterEdit;
     WorkAddBtn: TBitBtn;
     WorkAddAllBtn: TBitBtn;
     WorkDelBtn: TBitBtn;
@@ -156,7 +158,6 @@ type
     Label3: TLabel;
     ActPanel: TPanel;
     WorksTreeView: TDBDynTreeView;
-    ServicesTreeView: TDBDynTreeView;
     SrvNameEdit: TEdit;
     FileExit: TFileExit;
     Label1: TLabel;
@@ -198,18 +199,30 @@ type
     SrvWorksTabSheet: TTabSheet;
     ToolButton1: TToolButton;
     ToolButton2: TToolButton;
-    WorksMainTreeView: TDBDynTreeView;
     procedure ActionConnectExecute(Sender: TObject);
     procedure ActionDisconnectExecute(Sender: TObject);
+    procedure BuildingMainTabSheetShow(Sender: TObject);
+    procedure BuildingPersonnelFocusChanged(Sender: TBaseVirtualTree;
+      Node: PVirtualNode; Column: TColumnIndex);
+    procedure BuildingPersonnelVSTFocusChanged(Sender: TBaseVirtualTree;
+      Node: PVirtualNode; Column: TColumnIndex);
+    procedure BuildingPropsTabSheetShow(Sender: TObject);
+    procedure BuildingServicesTabSheetShow(Sender: TObject);
+    procedure BuildingsListFocusChanged(Sender: TBaseVirtualTree;
+      Node: PVirtualNode; Column: TColumnIndex);
+    procedure BuildingTabSheetShow(Sender: TObject);
     procedure DataSave(Sender: TObject);
     procedure DataSetInsertExecute(Sender: TObject);
     procedure DBPopupMenuPopup(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure RefreshControl(C:String);
+    procedure RefreshPersonNote(ids: String);
     procedure ServiceCompaniesVSTDblClick(Sender: TObject);
     procedure ServiceCompaniesVSTFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
     procedure ServicesTreeViewEnter(Sender: TObject);
+    procedure ServiceTabSheetShow(Sender: TObject);
+    procedure BuildingPersonnelTabSheetShow(Sender: TObject);
     procedure ToolButton4Click(Sender: TObject);
     procedure TreeViewSelectionChanged(Sender: TObject);
     procedure WorkAddBtnClick(Sender: TObject);
@@ -220,6 +233,7 @@ type
     function ReturnStringSQL(SQL: String): String;
     procedure FillListFromSQL(Items:TStrings ; SQL: String);
     procedure WorkFactorEditChange(Sender: TObject);
+    procedure WorksTabSheetShow(Sender: TObject);
     procedure WorksTreeViewEnter(Sender: TObject);
   protected
   private
@@ -245,7 +259,8 @@ const
   dspDisconnected: String = 'Нет подключения';
 
   sqlDateFormat: String = 'DD.MM.YYYY';
-
+  sqlStringQuote = '$$';
+  sqlFieldDelimiter = ',';
 
 procedure TMainForm.ActionConnectExecute(Sender: TObject);
 begin
@@ -263,6 +278,113 @@ begin
   CheckConnected();
 end;
 
+procedure TMainForm.BuildingMainTabSheetShow(Sender: TObject);
+begin
+  if (not Conn.Connected) then exit;
+  if (BuildingsList.SelectedCount > 0) then begin
+    BuildingDetailsMemo.Text:=ReturnStringSQL(
+      'select array_to_string(array_agg(note), chr(13)||$$-------$$||chr(13)) from buildings where id in ('
+      + BuildingsList.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
+      +')');
+  end
+  else begin
+    BuildingDetailsMemo.Clear;
+  end;
+end;
+
+procedure TMainForm.BuildingPersonnelFocusChanged(Sender: TBaseVirtualTree;
+  Node: PVirtualNode; Column: TColumnIndex);
+begin
+  RefreshPersonNote(
+    (Sender as TDBVST).GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter));
+end;
+
+procedure TMainForm.BuildingPersonnelVSTFocusChanged(Sender: TBaseVirtualTree;
+  Node: PVirtualNode; Column: TColumnIndex);
+begin
+  RefreshPersonNote(
+    (Sender as TDBVST).GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter));
+end;
+
+procedure TMainForm.BuildingPropsTabSheetShow(Sender: TObject);
+begin
+  if (not Conn.Connected) then exit;
+  BuildingPropertiesVST.InitAndFill(conn, 'buildings_p',
+    ['code', 'code', 'val'],
+    ['','',''],
+    ['ltree','ltree',''],
+    ['text','text',''],
+    ['BuildingsList'],['obj'],
+    'null',
+    '',
+    '2', 0);
+end;
+
+procedure TMainForm.BuildingServicesTabSheetShow(Sender: TObject);
+begin
+  if (not Conn.Connected) then exit;
+  ServiceCompaniesVST.InitAndFill(conn, 'building_service_companies_complete',
+    ['service', 'service_disp', 'company_disp'],
+    ['','',''],
+    ['','',''],
+    ['','',''],
+    ['BuildingsList'],['building'],
+    'service_parent',
+    '',
+    '2', 1);
+  BuildingContractWorksVST.InitAndFill(conn, 'buildings_service_works',
+    ['work', 'work_full_disp', 'amount_interval', 'amount'],
+    ['', 'Работа', 'Периодичность', 'Количество'],
+    ['', '', 'interval', ''],
+    ['', '', 'text', ''],
+    ['ServiceCompaniesVST','BuildingsList'],['service', 'building'],
+    'null',
+    '',
+    '2', 0);
+end;
+
+procedure TMainForm.BuildingsListFocusChanged(Sender: TBaseVirtualTree;
+  Node: PVirtualNode; Column: TColumnIndex);
+begin
+  if (not Conn.Connected) then exit;
+  if (BuildingsList.SelectedCount > 0) then begin
+    BuildingsLabel.Caption:= ReturnStringSQL(
+      'select disp from buildings where id = '
+      + BuildingsList.GetSQLSelectedID(sqlStringQuote)
+      );
+    BuildingsLabel.Font.Style:=BuildingsLabel.Font.Style-[fsBold];
+    if (BuildingsList.SelectedCount > 1) then begin
+      BuildingsLabel.Caption:= '[Выбрано: '
+        + ReturnStringSQL(
+          'select count(*)::text from buildings where id in ('
+        + BuildingsList.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
+        +')')
+        + '] '
+        + BuildingsLabel.Caption ;
+        BuildingsLabel.Font.Style:=BuildingsLabel.Font.Style+[fsBold];
+    end;
+  end
+  else begin
+    BuildingsLabel.Caption:='';
+  end;
+  BuildingPageControl.ActivePage.OnShow(Sender);
+end;
+
+procedure TMainForm.BuildingTabSheetShow(Sender: TObject);
+begin
+  if (not Conn.Connected) then exit;
+  if Assigned(BuildingsList.GetFirst()) then exit;
+  Log('...получение справочника домов');
+  BuildingsList.InitAndFill(Conn, 'buildings_hlist',
+    ['id', 'disp'],
+    ['', 'Адрес'],
+    ['', ''],
+    ['', ''],
+    [],[],
+    'pid',
+    '',
+    '2', 0);
+end;
 
 procedure TMainForm.DataSave(Sender: TObject);
 var
@@ -273,9 +395,9 @@ var
   sql: String;
 //  ServiceVSTNodeData: PDBTreeData;
 begin
-  case (Sender as TComponent).Name of
+{  case (Sender as TComponent).Name of
     'BuildingPersSaveBtn': begin
-      if (BuildingsTreeView.SelectionCount > 0) then begin
+      if (Assigned(Buildings.FocusedNode)) then begin
         bid := '';
         for i:=0 to BuildingsTreeView.SelectionCount-1 do begin
           if bid > '' then bid := bid + ', ' ;
@@ -296,7 +418,7 @@ begin
       end;
     end;
     'BuildingPropsSaveBtn': begin
-      if (BuildingsTreeView.SelectionCount > 0) then begin
+      if (Assigned(Buildings.FocusedNode)) then begin
         bid := '';
         for i:=0 to BuildingsTreeView.SelectionCount-1 do begin
           if bid > '' then bid := bid + ', ' ;
@@ -318,7 +440,7 @@ begin
       RefreshControl('BuildingPropertiesVST');
     end;
     'BuildingWorksSaveBtn': begin
-      if (BuildingsTreeView.SelectionCount > 0)
+      if (Assigned(Buildings.FocusedNode))
               and Assigned(ServiceCompaniesVST.FocusedNode) then begin
         bid := '';
         for i:=0 to BuildingsTreeView.SelectionCount-1 do begin
@@ -390,6 +512,7 @@ begin
       end;
     end;
   end;
+}
 end;
 
 procedure TMainForm.DataSetInsertExecute(Sender: TObject);
@@ -434,7 +557,8 @@ begin
   p:=FindComponent(C);
   if p = nil then Exit;
   (p as TControl).Cursor:=crSQLWait;
-  case C of
+{
+case C of
     'MainStatusBar': with (p as TStatusBar) do begin
       if Conn.Connected then begin
         Panels[0].Text:=Conn.UserName + '@'+ Conn.HostName + '/'
@@ -467,7 +591,7 @@ begin
       else
         Clear;
     'ServiceCompaniesVST': with (p as TDBVST) do
-      if (BuildingsTreeView.SelectionCount > 0) then begin
+      if (Assigned(Buildings.FocusedNode)) then begin
         InitAndFill(conn, 'building_service_companies_complete',
           ['service', 'service_disp', 'company_disp'],
           ['','',''],
@@ -483,7 +607,7 @@ begin
       else
         Clear;
       'BuildingPersonList': with (p as TDBDynTreeView) do
-        if (BuildingsTreeView.SelectionCount > 0) then begin
+        if (Assigned(Buildings.FocusedNode)) then begin
             FillFromQuery(conn,
               'SELECT contract, contract_disp FROM building_staff '
              + ' where building = '''
@@ -494,7 +618,7 @@ begin
         else
           Items.Clear;
       'BuildingPropertiesVST': with (p as TDBVST) do
-        if (BuildingsTreeView.SelectionCount > 0) then begin
+        if (Assigned(Buildings.FocusedNode)) then begin
           InitAndFill(conn, 'buildings_p',
             ['code', 'code', 'val'],
             ['','',''],
@@ -521,7 +645,7 @@ begin
       else
         Items.Clear;
     'BuildingBox': with (p as TGroupBox) do
-      if (BuildingsTreeView.SelectionCount > 0) then begin
+      if (Assigned(Buildings.FocusedNode)) then begin
           Visible:=True;
           Caption:=TKeyValue(BuildingsTreeView.Selected.Data).Value;
         end
@@ -530,7 +654,7 @@ begin
         Visible:=False;
       end;
     'BuildingContractWorksVST': with (p as TDBVST) do
-      if (BuildingsTreeView.SelectionCount > 0)
+      if (Assigned(Buildings.FocusedNode))
         and Assigned(ServiceCompaniesVST.FocusedNode) then begin
           VSTNodeData:=ServiceCompaniesVST.GetNodeData(
             ServiceCompaniesVST.FocusedNode);
@@ -673,6 +797,24 @@ begin
       end;
   end;
   (p as TControl).Cursor:=crDefault;
+}
+end;
+
+procedure TMainForm.RefreshPersonNote(ids: String);
+begin
+  PersonNote.Clear;
+  try
+    PersonNote.Text:=ReturnStringSQL(
+      'select array_to_string(array_agg(disp), '
+      + ' chr(13)||$$-------$$||chr(13)) from ( '
+      + 'select max(contract_disp) || chr(13) || '
+      + ' (array_agg(code::text || $$: $$ || val::text))::text disp '
+      + ' from all_staff_params '
+      + ' where val is not null and contract IN ('
+      + ids
+      +') group by contract ) q');
+  finally
+  end;
 end;
 
 procedure TMainForm.ServiceCompaniesVSTDblClick(Sender: TObject);
@@ -685,18 +827,53 @@ end;
 procedure TMainForm.ServiceCompaniesVSTFocusChanged(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Column: TColumnIndex);
 begin
-  case (Sender as TComponent).Name of
-    'ServiceCompaniesVST': begin
-//      RefreshControl('BuildingServiceBox');
-//      RefreshControl('BuildingServiceWorksList');
-      RefreshControl('BuildingContractWorksVST');
-    end;
-  end;
+  BuildingContractWorksVST.ReFill(0);
 end;
 
 procedure TMainForm.ServicesTreeViewEnter(Sender: TObject);
 begin
 //  SrvNameEdit.Text:=ServicesTreeView.Selected.Text;
+end;
+
+procedure TMainForm.ServiceTabSheetShow(Sender: TObject);
+begin
+  if (not Conn.Connected) then exit;
+  if Assigned(ServicesList.GetFirst()) then exit;
+  Log('...получение справочника услуг');
+  ServicesList.InitAndFill(Conn, 'services',
+    ['id', 'disp'],
+    ['', 'Наименование'],
+    ['', ''],
+    ['', ''],
+    [],[],
+    'pid',
+    '',
+    '2', -1);
+end;
+
+procedure TMainForm.BuildingPersonnelTabSheetShow(Sender: TObject);
+begin
+  if (not Conn.Connected) then exit;
+//  if Assigned(BuildingPersonnel.GetFirst()) then exit;
+  Log('...получение справочника персонала');
+  BuildingPersonnel.InitAndFill(Conn, 'pers_contracts',
+    ['id', 'disp'],
+    ['', 'Наименование'],
+    ['', ''],
+    ['', ''],
+    [],[],
+    'null',
+    '',
+    '2', 0);
+  BuildingPersonnelVST.InitAndFill(conn, 'building_staff',
+    ['contract', 'contract_disp'],
+    ['',''],
+    ['',''],
+    ['',''],
+    ['BuildingsList'],['building'],
+    'null',
+    '',
+    '2', 0);
 end;
 
 procedure TMainForm.ToolButton4Click(Sender: TObject);
@@ -773,11 +950,8 @@ begin
             WorksTreeView.Selections[i].Data);
     end;
     'PersAddBtn': begin
-      if PersonnelTreeView.Items.SelectionCount > 0 then
-        for i := 0 to PersonnelTreeView.Items.SelectionCount-1 do
-          BuildingPersonList.Items.AddObject(nil,
-            PersonnelTreeView.Selections[i].Text,
-            PersonnelTreeView.Selections[i].Data);
+      BuildingPersonnelVST.AddFrom(BuildingPersonnel);
+      Refresh;
     end;
   end;
 end;
@@ -793,13 +967,13 @@ begin
           ServiceWorksList.Items.Delete(
             ServiceWorksList.Selections[i]);
     end;
-    'PersDelBtn': begin
+{    'PersDelBtn': begin
       if BuildingPersonList.Items.SelectionCount > 0 then
         for i := BuildingPersonList.Items.SelectionCount-1 downto 0   do
           BuildingPersonList.Items.Delete(
             BuildingPersonList.Selections[i]);
     end;
-  end;
+}  end;
 end;
 
 procedure TMainForm.ExecSQL(SQL: String);
@@ -866,6 +1040,22 @@ begin
 
 end;
 
+procedure TMainForm.WorksTabSheetShow(Sender: TObject);
+begin
+  if (not Conn.Connected) then exit;
+  if Assigned(WorksList.GetFirst()) then exit;
+  Log('...получение справочника работ');
+  WorksList.InitAndFill(Conn, 'works',
+    ['id', 'full_disp'],
+    ['', 'Наименование'],
+    ['', ''],
+    ['', ''],
+    [],[],
+    'pid',
+    '',
+    '2', 0);
+end;
+
 procedure TMainForm.WorksTreeViewEnter(Sender: TObject);
 begin
 
@@ -889,39 +1079,6 @@ begin
   Cursor:=crSQLWait;
   Log('Подключено');
   Log('Ждите...');
-  Log('...получение справочника услуг');
-  ServicesTreeView.FillFromQuery(Conn,
-   'select id, disp from services_hlist where pid ') ;
-//  BuildingServicesTreeView.FillFromQuery(Conn,
-//   'select id, disp from services_hlist where parent ') ;
-
-  Log('...получение справочника работ');
-  WorksTreeView.FillFromQuery(Conn,
-    'select id, full_disp from works where pid ');
-
-  Log('...получение справочника работ');
-  WorksMainTreeView.FillFromQuery(Conn,
-    'select id, full_disp from works where pid ');
-
-  Log('...получение справочника услуг');
-  ServicesTreeView.FillFromQuery(Conn,
-    'select id, disp from services where pid ');
-
-  Log('...получение справочника домов');
-  BuildingsTreeView.FillFromQuery(Conn,
-    'select id, disp from buildings_hlist where pid ') ;
-
-  Log('...получение справочника характеристик домов');
-  FillListFromQuery(Conn, BaseCB.Items,
-    'select code::text from building_prop_names ') ;
-
-  Log('...получение справочника организаций');
-//  FillListFromSQL(BuildingServiceCompany.Items,
-//   'select uuid, disp from s_uk.dic_companies order by 2 ') ;
-
-  Log('...получение справочника персонала');
-  PersonnelTreeView.FillFromQuery(Conn,
-    'select id, disp from pers_contracts where null ');
 
 
   Log('Готово');
@@ -942,8 +1099,8 @@ begin
   CenterPageControl.ActivePage:=ConnectTabSheet;
 //  for i:=0 to CenterPageControl.PageCount-1 do
 //    CenterPageControl.Pages[i].TabVisible:=False;
-  ServicesTreeView.Items.Clear;
-  WorksTreeView.Items.Clear;
+//  ServicesTreeView.Items.Clear;
+//  WorksTreeView.Items.Clear;
 end;
 
 procedure TMainForm.Log(Note: String; Level: Integer);
