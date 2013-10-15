@@ -453,11 +453,12 @@ begin
     end;
     'WorkResourcesVST': with (p as TDBVST) do
       if (WorksMainTreeView.SelectionCount > 0) then begin
-        CreateAndFill(conn, 'work_resources',
+        InitAndFill(conn, 'work_resources',
            ['id','resource_code','resource_disp','measure','amount'],
            ['','','','',''],
            ['','ltree','','',''],
            ['','text','','',''],
+           [],[],
           'null',
           'work = $$' + TKeyValue(WorksMainTreeView.Selected.Data).Code + '$$ ',
           '2', 0);
@@ -467,11 +468,12 @@ begin
         Clear;
     'ServiceCompaniesVST': with (p as TDBVST) do
       if (BuildingsTreeView.SelectionCount > 0) then begin
-        CreateAndFill(conn, 'building_service_companies_complete',
+        InitAndFill(conn, 'building_service_companies_complete',
           ['service', 'service_disp', 'company_disp'],
           ['','',''],
           ['','',''],
           ['','',''],
+          [],[],
           'service_parent',
           'building = $$'
           + TKeyValue(BuildingsTreeView.Selected.Data).Code  + '$$ ',
@@ -493,11 +495,12 @@ begin
           Items.Clear;
       'BuildingPropertiesVST': with (p as TDBVST) do
         if (BuildingsTreeView.SelectionCount > 0) then begin
-          CreateAndFill(conn, 'buildings_p',
+          InitAndFill(conn, 'buildings_p',
             ['code', 'code', 'val'],
             ['','',''],
             ['ltree','ltree',''],
             ['text','text',''],
+            [],[],
             'null',
             'obj = $$'
             + TKeyValue(BuildingsTreeView.Selected.Data).Code  + '$$ ',
@@ -531,11 +534,12 @@ begin
         and Assigned(ServiceCompaniesVST.FocusedNode) then begin
           VSTNodeData:=ServiceCompaniesVST.GetNodeData(
             ServiceCompaniesVST.FocusedNode);
-          CreateAndFill(conn, 'buildings_service_works',
+          InitAndFill(conn, 'buildings_service_works',
             ['work', 'work_full_disp', 'amount_interval', 'amount'],
             ['', '', '', ''],
             ['', '', 'interval', ''],
             ['', '', 'text', ''],
+            [],[],
             'null',
             'service = $$' + VSTNodeData^[0] + '$$ '
             + ' and building = $$'

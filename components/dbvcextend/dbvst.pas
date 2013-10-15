@@ -46,6 +46,8 @@ type
     FFieldsDisp: TStringList;
     FKey: String;
     FConnection: TSQLConnection;
+    FLinkFields: TStringList;
+    FMasterControls: TStringList;
     FOrder: String;
     FSQL: TStringList;
     FTable: String;
@@ -56,6 +58,8 @@ type
     procedure SetFieldsConvTo(AValue: TStringList);
     procedure SetFieldsDisp(AValue: TStringList);
     procedure SetKey(AValue: String);
+    procedure SetLinkFields(AValue: TStringList);
+    procedure SetMasterControls(AValue: TStringList);
     procedure SetOrder(AValue: String);
     procedure SetSQL(AValue: TStringList);
     procedure SetTable(AValue: String);
@@ -83,8 +87,10 @@ type
     destructor Destroy; override;
     procedure FillNode(Node: PVirtualNode; levFull:integer);
     procedure FillNode(Node: PVirtualNode);
-    procedure CreateAndFill(conn: TSQLConnection; aTable:String;
-      aFields, aFieldsDisp, aFieldsConvTo, aFieldsConvFrom:array of String; aKey, aWhere, aOrder: String; levFull:integer);
+    procedure InitAndFill(conn: TSQLConnection; aTable:String;
+      aFields, aFieldsDisp, aFieldsConvTo, aFieldsConvFrom,
+      aMasterControls, aLinkFielsd:array of String;
+      aKey, aWhere, aOrder: String; levFull:integer);
     function GetSelectedID(): String;
     function GetID(Node: PVirtualNode): String;
     function SaveAll():String;
@@ -96,6 +102,8 @@ type
     property FieldsDisp: TStringList read FFieldsDisp write SetFieldsDisp;
     property FieldsConvTo: TStringList read FFieldsConvTo write SetFieldsConvTo;
     property FieldsConvFrom: TStringList read FFieldsConvFrom write SetFieldsConvFrom;
+    property MasterControls: TStringList read FMasterControls write SetMasterControls;
+    property LinkFields: TStringList read FLinkFields write SetLinkFields;
     property Key: String read FKey write SetKey;
     property Order: String read FOrder write SetOrder;
     property Where: String read FWhere write SetWhere;
@@ -152,6 +160,18 @@ begin
   FKey:=AValue;
 end;
 
+procedure TDBVST.SetLinkFields(AValue: TStringList);
+begin
+  if FLinkFields=AValue then Exit;
+  FLinkFields:=AValue;
+end;
+
+procedure TDBVST.SetMasterControls(AValue: TStringList);
+begin
+  if FMasterControls=AValue then Exit;
+  FMasterControls:=AValue;
+end;
+
 procedure TDBVST.SetOrder(AValue: String);
 begin
   if FOrder=AValue then Exit;
@@ -172,6 +192,7 @@ end;
 
 procedure TDBVST.SetWhere(AValue: String);
 begin
+  if AValue = '' then AValue := 'true';
   if FWhere=AValue then Exit;
   FWhere:=AValue;
 end;
@@ -324,9 +345,9 @@ begin
   FillNode(Node, 1)
 end;
 
-procedure TDBVST.CreateAndFill(conn: TSQLConnection; aTable: String; aFields,
-  aFieldsDisp, aFieldsConvTo, aFieldsConvFrom: array of String; aKey, aWhere,
-  aOrder: String; levFull: integer);
+procedure TDBVST.InitAndFill(conn: TSQLConnection; aTable: String; aFields,
+  aFieldsDisp, aFieldsConvTo, aFieldsConvFrom, aMasterControls,
+  aLinkFielsd: array of String; aKey, aWhere, aOrder: String; levFull: integer);
 
   function GetSQLFieldString(i: Integer):String;
   var
@@ -359,6 +380,10 @@ begin
       FFieldsConvFrom.Add(aFieldsConvFrom[i]);
       FFieldsConvTo.Add(aFieldsConvTo[i]);
   end;
+  for i:=0 to length(aMasterControls)-1 do begin
+      FMasterControls.Add(aMasterControls[i]);
+      FLinkFields.Add(aLinkFielsd[i]);
+  end;
   FSQL.Clear;
   FSQL.Add('select ');
   FSQL.Add(GetSQLFieldString(0));
@@ -367,6 +392,8 @@ begin
   end;
   FSQL.Add(' from ' + Table);
   FSQL.Add(' where ' + Where);
+//  for i:=0 to FMasterControls.Count do
+//    FSQL.Add(' and (' + FLinkFielsd[i] + ' = $$' +  + '$$) ');
   try
     Query := TExtSQLQuery.Create(Self, FConnection);
     Query.SQL.Text:=SQL.Text + ' limit 1 ' ;
