@@ -14,30 +14,25 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Files Count="5">
+    <Files Count="4">
       <Item1>
-        <Filename Value="dbdyntreeview.pas"/>
-        <HasRegisterProc Value="True"/>
-        <UnitName Value="DBDynTreeView"/>
-      </Item1>
-      <Item2>
         <Filename Value="dbfunc.pas"/>
         <UnitName Value="dbfunc"/>
-      </Item2>
-      <Item3>
+      </Item1>
+      <Item2>
         <Filename Value="keyvalue.pas"/>
         <UnitName Value="keyvalue"/>
-      </Item3>
-      <Item4>
+      </Item2>
+      <Item3>
         <Filename Value="extsqlquery.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ExtSQLQuery"/>
-      </Item4>
-      <Item5>
+      </Item3>
+      <Item4>
         <Filename Value="dbvst.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="DBVST"/>
-      </Item5>
+      </Item4>
     </Files>
     <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="4">

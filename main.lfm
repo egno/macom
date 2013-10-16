@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 466
+  Left = 271
   Height = 650
-  Top = 175
+  Top = 215
   Width = 766
   Caption = 'MaCom FLOSS'
   ClientHeight = 650
@@ -32,17 +32,6 @@ object MainForm: TMainForm
       Left = 27
       Top = 2
       Action = ActionDisconnect
-    end
-    object ToolButton3: TToolButton
-      Left = 53
-      Top = 2
-      Action = ActionSave
-    end
-    object ToolButton4: TToolButton
-      Left = 79
-      Top = 2
-      Caption = 'ToolButton4'
-      OnClick = ToolButton4Click
     end
   end
   object MainStatusBar: TStatusBar
@@ -464,6 +453,7 @@ object MainForm: TMainForm
               Header.DefaultHeight = 17
               Header.MainColumn = -1
               TabOrder = 0
+              TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
               TreeOptions.SelectionOptions = [toMultiSelect]
               OnFocusChanged = BuildingsListFocusChanged
               Connection.Connected = False
@@ -496,66 +486,53 @@ object MainForm: TMainForm
                 OnShow = BuildingMainTabSheetShow
                 object ScrollBox2: TScrollBox
                   Left = 0
-                  Height = 524
+                  Height = 487
                   Top = 0
                   Width = 535
                   HorzScrollBar.Page = 533
-                  VertScrollBar.Page = 522
+                  VertScrollBar.Page = 485
                   Align = alClient
-                  ChildSizing.LeftRightSpacing = 3
-                  ChildSizing.TopBottomSpacing = 3
-                  ChildSizing.HorizontalSpacing = 3
-                  ChildSizing.VerticalSpacing = 3
-                  ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-                  ChildSizing.Layout = cclLeftToRightThenTopToBottom
-                  ChildSizing.ControlsPerLine = 2
-                  ClientHeight = 522
+                  ClientHeight = 485
                   ClientWidth = 533
                   TabOrder = 0
                   object BuildingDetailsMemo: TMemo
-                    AnchorSideLeft.Control = ScrollBox2
-                    AnchorSideTop.Control = ScrollBox2
-                    AnchorSideRight.Control = ScrollBox2
-                    AnchorSideRight.Side = asrBottom
-                    AnchorSideBottom.Control = ScrollBox2
-                    AnchorSideBottom.Side = asrBottom
-                    Left = 3
-                    Height = 516
-                    Top = 3
-                    Width = 527
-                    Anchors = [akTop, akLeft, akRight, akBottom]
+                    Left = 0
+                    Height = 485
+                    Top = 0
+                    Width = 533
+                    Align = alClient
                     Lines.Strings = (
                       ''
                     )
                     ScrollBars = ssAutoBoth
                     TabOrder = 0
                   end
-                  object ActionPanel3: TPanel
-                    Left = 3
-                    Height = 37
-                    Top = 482
-                    Width = 527
-                    Align = alBottom
+                end
+                object ActionPanel3: TPanel
+                  Left = 0
+                  Height = 37
+                  Top = 487
+                  Width = 535
+                  Align = alBottom
+                  AutoSize = True
+                  ClientHeight = 37
+                  ClientWidth = 535
+                  TabOrder = 1
+                  object SrvMainSaveBtn1: TBitBtn
+                    AnchorSideLeft.Control = ActionPanel3
+                    AnchorSideTop.Control = ActionPanel3
+                    AnchorSideBottom.Control = ActionPanel3
+                    AnchorSideBottom.Side = asrBottom
+                    Left = 4
+                    Height = 29
+                    Top = 4
+                    Width = 88
+                    Anchors = [akLeft, akBottom]
                     AutoSize = True
-                    ClientHeight = 37
-                    ClientWidth = 527
-                    TabOrder = 1
-                    object SrvMainSaveBtn1: TBitBtn
-                      AnchorSideLeft.Control = ActionPanel3
-                      AnchorSideTop.Control = ActionPanel3
-                      AnchorSideBottom.Control = ActionPanel3
-                      AnchorSideBottom.Side = asrBottom
-                      Left = 4
-                      Height = 29
-                      Top = 4
-                      Width = 88
-                      Anchors = [akLeft, akBottom]
-                      AutoSize = True
-                      BorderSpacing.Around = 3
-                      Caption = 'Сохранить'
-                      OnClick = DataSave
-                      TabOrder = 0
-                    end
+                    BorderSpacing.Around = 3
+                    Caption = 'Сохранить'
+                    OnClick = DataSave
+                    TabOrder = 0
                   end
                 end
               end
@@ -566,7 +543,7 @@ object MainForm: TMainForm
                 OnShow = BuildingPropsTabSheetShow
                 object BuildingPropertiesVST: TDBVST
                   Left = 0
-                  Height = 487
+                  Height = 524
                   Top = 0
                   Width = 535
                   Align = alClient
@@ -587,37 +564,11 @@ object MainForm: TMainForm
                   Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
                   PopupMenu = DBPopupMenu
                   TabOrder = 0
+                  OnEdited = BuildingPropertiesVSTEdited
                   Connection.Connected = False
                   Connection.LoginPrompt = False
                   Connection.KeepConnection = False
                   Connection.LogEvents = []
-                end
-                object ActionPanel7: TPanel
-                  Left = 0
-                  Height = 37
-                  Top = 487
-                  Width = 535
-                  Align = alBottom
-                  AutoSize = True
-                  ClientHeight = 37
-                  ClientWidth = 535
-                  TabOrder = 1
-                  object BuildingPropsSaveBtn: TBitBtn
-                    AnchorSideLeft.Control = ActionPanel7
-                    AnchorSideTop.Control = ActionPanel7
-                    AnchorSideBottom.Control = ActionPanel7
-                    AnchorSideBottom.Side = asrBottom
-                    Left = 4
-                    Height = 29
-                    Top = 4
-                    Width = 88
-                    Anchors = [akLeft, akBottom]
-                    AutoSize = True
-                    BorderSpacing.Around = 3
-                    Caption = 'Сохранить'
-                    OnClick = DataSave
-                    TabOrder = 0
-                  end
                 end
               end
               object BuildingServicesTabSheet: TTabSheet
@@ -751,37 +702,10 @@ object MainForm: TMainForm
                 ClientHeight = 524
                 ClientWidth = 535
                 OnShow = BuildingPersonnelTabSheetShow
-                object ActionPanel6: TPanel
-                  Left = 0
-                  Height = 37
-                  Top = 487
-                  Width = 535
-                  Align = alBottom
-                  AutoSize = True
-                  ClientHeight = 37
-                  ClientWidth = 535
-                  TabOrder = 0
-                  object BuildingPersSaveBtn: TBitBtn
-                    AnchorSideLeft.Control = ActionPanel6
-                    AnchorSideTop.Control = ActionPanel6
-                    AnchorSideBottom.Control = ActionPanel6
-                    AnchorSideBottom.Side = asrBottom
-                    Left = 4
-                    Height = 29
-                    Top = 4
-                    Width = 88
-                    Anchors = [akLeft, akBottom]
-                    AutoSize = True
-                    BorderSpacing.Around = 3
-                    Caption = 'Сохранить'
-                    OnClick = DataSave
-                    TabOrder = 0
-                  end
-                end
                 object PairSplitter5: TPairSplitter
                   Cursor = crVSplit
                   Left = 0
-                  Height = 487
+                  Height = 524
                   Top = 0
                   Width = 535
                   Align = alClient
@@ -825,10 +749,10 @@ object MainForm: TMainForm
                         AnchorSideTop.Control = Panel4
                         AnchorSideRight.Control = Panel4
                         AnchorSideRight.Side = asrBottom
-                        Left = 277
+                        Left = 272
                         Height = 18
                         Top = 1
-                        Width = 257
+                        Width = 262
                         Anchors = [akTop, akLeft, akRight]
                         Caption = 'Закреплены'
                         ParentColor = False
@@ -844,7 +768,7 @@ object MainForm: TMainForm
                         Left = 269
                         Height = 398
                         Top = 1
-                        Width = 8
+                        Width = 3
                         Align = alNone
                         Anchors = [akTop, akBottom]
                         ResizeAnchor = akRight
@@ -960,6 +884,7 @@ object MainForm: TMainForm
                           Header.DefaultHeight = 17
                           Header.MainColumn = -1
                           TabOrder = 0
+                          TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
                           TreeOptions.SelectionOptions = [toMultiSelect]
                           OnFocusChanged = BuildingPersonnelFocusChanged
                           Connection.Connected = False
@@ -977,20 +902,20 @@ object MainForm: TMainForm
                         AnchorSideRight.Side = asrBottom
                         AnchorSideBottom.Control = ActPanel1
                         AnchorSideBottom.Side = asrBottom
-                        Left = 277
+                        Left = 272
                         Height = 380
                         Top = 19
-                        Width = 257
+                        Width = 262
                         Anchors = [akTop, akLeft, akRight, akBottom]
                         Caption = 'Panel5'
                         ClientHeight = 380
-                        ClientWidth = 257
+                        ClientWidth = 262
                         TabOrder = 3
                         object BuildingPersonnelVST: TDBVST
                           Left = 1
                           Height = 378
                           Top = 1
-                          Width = 255
+                          Width = 260
                           Align = alClient
                           DefaultText = 'Node'
                           Header.AutoSizeIndex = 0
@@ -998,6 +923,7 @@ object MainForm: TMainForm
                           Header.DefaultHeight = 17
                           Header.MainColumn = -1
                           TabOrder = 0
+                          TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
                           TreeOptions.SelectionOptions = [toMultiSelect]
                           OnFocusChanged = BuildingPersonnelVSTFocusChanged
                           Connection.Connected = False
@@ -1011,14 +937,14 @@ object MainForm: TMainForm
                   object PairSplitterSide15: TPairSplitterSide
                     Cursor = crArrow
                     Left = 0
-                    Height = 82
+                    Height = 119
                     Top = 405
                     Width = 535
                     ClientWidth = 535
-                    ClientHeight = 82
+                    ClientHeight = 119
                     object PersonNote: TMemo
                       Left = 0
-                      Height = 82
+                      Height = 119
                       Top = 0
                       Width = 535
                       Align = alClient
@@ -1072,6 +998,8 @@ object MainForm: TMainForm
               Header.DefaultHeight = 17
               Header.MainColumn = -1
               TabOrder = 0
+              TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
+              OnFocusChanged = ServicesListFocusChanged
               Connection.Connected = False
               Connection.LoginPrompt = False
               Connection.KeepConnection = False
@@ -1111,8 +1039,8 @@ object MainForm: TMainForm
                   Height = 487
                   Top = 0
                   Width = 535
-                  HorzScrollBar.Page = 535
-                  VertScrollBar.Page = 487
+                  HorzScrollBar.Page = 533
+                  VertScrollBar.Page = 485
                   Align = alClient
                   ChildSizing.LeftRightSpacing = 3
                   ChildSizing.TopBottomSpacing = 3
@@ -1121,8 +1049,8 @@ object MainForm: TMainForm
                   ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
                   ChildSizing.Layout = cclLeftToRightThenTopToBottom
                   ChildSizing.ControlsPerLine = 2
-                  ClientHeight = 483
-                  ClientWidth = 531
+                  ClientHeight = 485
+                  ClientWidth = 533
                   TabOrder = 0
                   object Label1: TLabel
                     Left = 3
@@ -1172,45 +1100,14 @@ object MainForm: TMainForm
                 Caption = 'Работы'
                 ClientHeight = 524
                 ClientWidth = 535
-                object ActionPanel2: TPanel
-                  Left = 0
-                  Height = 37
-                  Top = 487
-                  Width = 535
-                  Align = alBottom
-                  AutoSize = True
-                  ClientHeight = 37
-                  ClientWidth = 535
-                  TabOrder = 0
-                  object SrvWorksSaveBtn: TBitBtn
-                    AnchorSideLeft.Control = ActionPanel2
-                    AnchorSideTop.Control = ActionPanel2
-                    AnchorSideBottom.Control = ActionPanel2
-                    AnchorSideBottom.Side = asrBottom
-                    Left = 4
-                    Height = 29
-                    Top = 4
-                    Width = 88
-                    Anchors = [akLeft, akBottom]
-                    AutoSize = True
-                    BorderSpacing.Around = 3
-                    Caption = 'Сохранить'
-                    OnClick = DataSave
-                    TabOrder = 0
-                  end
-                end
+                OnShow = SrvWorksTabSheetShow
                 object PairSplitter2: TPairSplitter
-                  AnchorSideLeft.Control = SrvWorksTabSheet
-                  AnchorSideTop.Control = SrvWorksTabSheet
-                  AnchorSideRight.Control = SrvWorksTabSheet
-                  AnchorSideRight.Side = asrBottom
-                  AnchorSideBottom.Control = ActionPanel2
                   Cursor = crVSplit
                   Left = 0
-                  Height = 487
+                  Height = 524
                   Top = 0
                   Width = 535
-                  Anchors = [akTop, akLeft, akRight, akBottom]
+                  Align = alClient
                   Position = 400
                   SplitterType = pstVertical
                   object PairSplitterSide8: TPairSplitterSide
@@ -1233,28 +1130,6 @@ object MainForm: TMainForm
                       ClientHeight = 400
                       ClientWidth = 535
                       TabOrder = 0
-                      object WorksTreeView: TDBDynTreeView
-                        AnchorSideLeft.Control = Panel3
-                        AnchorSideTop.Control = WorksTreeFilter
-                        AnchorSideTop.Side = asrBottom
-                        AnchorSideRight.Control = ActPanel
-                        AnchorSideBottom.Control = Panel3
-                        AnchorSideBottom.Side = asrBottom
-                        Left = 1
-                        Height = 353
-                        Top = 46
-                        Width = 234
-                        Anchors = [akTop, akLeft, akRight, akBottom]
-                        MultiSelect = True
-                        TabOrder = 0
-                        OnEnter = TreeViewSelectionChanged
-                        OnSelectionChanged = TreeViewSelectionChanged
-                        Options = [tvoAllowMultiselect, tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
-                        Connection.Connected = False
-                        Connection.LoginPrompt = False
-                        Connection.KeepConnection = False
-                        Connection.LogEvents = []
-                      end
                       object Label2: TLabel
                         AnchorSideLeft.Control = Panel3
                         AnchorSideTop.Control = Panel3
@@ -1273,10 +1148,10 @@ object MainForm: TMainForm
                         AnchorSideTop.Control = Panel3
                         AnchorSideRight.Control = Panel3
                         AnchorSideRight.Side = asrBottom
-                        Left = 277
+                        Left = 272
                         Height = 18
                         Top = 1
-                        Width = 257
+                        Width = 262
                         Anchors = [akTop, akLeft, akRight]
                         Caption = 'Работы в услуге'
                         ParentColor = False
@@ -1292,53 +1167,10 @@ object MainForm: TMainForm
                         Left = 269
                         Height = 398
                         Top = 1
-                        Width = 8
+                        Width = 3
                         Align = alNone
                         Anchors = [akTop, akBottom]
                         ResizeAnchor = akRight
-                      end
-                      object WorksTreeFilter: TTreeFilterEdit
-                        AnchorSideLeft.Control = Label2
-                        AnchorSideTop.Control = Label2
-                        AnchorSideTop.Side = asrBottom
-                        AnchorSideRight.Control = WorksTreeView
-                        AnchorSideRight.Side = asrBottom
-                        Left = 1
-                        Height = 27
-                        Top = 19
-                        Width = 234
-                        ButtonWidth = 23
-                        ButtonOnlyWhenFocused = True
-                        NumGlyphs = 1
-                        Flat = True
-                        Anchors = [akTop, akLeft, akRight]
-                        MaxLength = 0
-                        TabOrder = 2
-                        FilteredTreeview = WorksTreeView
-                      end
-                      object ServiceWorksList: TDBDynTreeView
-                        AnchorSideLeft.Control = Splitter2
-                        AnchorSideLeft.Side = asrBottom
-                        AnchorSideTop.Control = Label3
-                        AnchorSideTop.Side = asrBottom
-                        AnchorSideRight.Control = Panel3
-                        AnchorSideRight.Side = asrBottom
-                        AnchorSideBottom.Control = ActPanel
-                        AnchorSideBottom.Side = asrBottom
-                        Left = 277
-                        Height = 380
-                        Top = 19
-                        Width = 257
-                        Anchors = [akTop, akLeft, akRight, akBottom]
-                        MultiSelect = True
-                        MultiSelectStyle = [msControlSelect, msShiftSelect]
-                        TabOrder = 3
-                        OnSelectionChanged = TreeViewSelectionChanged
-                        Options = [tvoAllowMultiselect, tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
-                        Connection.Connected = False
-                        Connection.LoginPrompt = False
-                        Connection.KeepConnection = False
-                        Connection.LogEvents = []
                       end
                       object ActPanel: TPanel
                         AnchorSideTop.Control = Label2
@@ -1355,7 +1187,7 @@ object MainForm: TMainForm
                         BevelOuter = bvNone
                         ClientHeight = 380
                         ClientWidth = 34
-                        TabOrder = 4
+                        TabOrder = 1
                         object WorkAddBtn: TBitBtn
                           AnchorSideLeft.Control = ActPanel
                           AnchorSideRight.Control = ActPanel
@@ -1423,19 +1255,93 @@ object MainForm: TMainForm
                           Visible = False
                         end
                       end
+                      object Panel6: TPanel
+                        AnchorSideLeft.Control = Panel3
+                        AnchorSideTop.Control = Label2
+                        AnchorSideTop.Side = asrBottom
+                        AnchorSideRight.Control = ActPanel
+                        AnchorSideBottom.Control = Panel3
+                        AnchorSideBottom.Side = asrBottom
+                        Left = 1
+                        Height = 380
+                        Top = 19
+                        Width = 234
+                        Anchors = [akTop, akLeft, akRight, akBottom]
+                        Caption = 'Panel6'
+                        ClientHeight = 380
+                        ClientWidth = 234
+                        TabOrder = 2
+                        object ServicesWorksList: TDBVST
+                          Left = 1
+                          Height = 378
+                          Top = 1
+                          Width = 232
+                          Align = alClient
+                          DefaultText = 'Node'
+                          Header.AutoSizeIndex = 0
+                          Header.Columns = <>
+                          Header.DefaultHeight = 17
+                          Header.MainColumn = -1
+                          TabOrder = 0
+                          TreeOptions.SelectionOptions = [toMultiSelect]
+                          OnFocusChanged = ServicesWorksListFocusChanged
+                          Connection.Connected = False
+                          Connection.LoginPrompt = False
+                          Connection.KeepConnection = False
+                          Connection.LogEvents = []
+                        end
+                      end
+                      object Panel7: TPanel
+                        AnchorSideLeft.Control = Splitter2
+                        AnchorSideLeft.Side = asrBottom
+                        AnchorSideTop.Control = Label3
+                        AnchorSideTop.Side = asrBottom
+                        AnchorSideRight.Control = Panel3
+                        AnchorSideRight.Side = asrBottom
+                        AnchorSideBottom.Control = Panel3
+                        AnchorSideBottom.Side = asrBottom
+                        Left = 272
+                        Height = 380
+                        Top = 19
+                        Width = 262
+                        Anchors = [akTop, akLeft, akRight, akBottom]
+                        Caption = 'Panel7'
+                        ClientHeight = 380
+                        ClientWidth = 262
+                        TabOrder = 3
+                        object ServiceWorks: TDBVST
+                          Left = 1
+                          Height = 378
+                          Top = 1
+                          Width = 260
+                          Align = alClient
+                          DefaultText = 'Node'
+                          Header.AutoSizeIndex = 0
+                          Header.Columns = <>
+                          Header.DefaultHeight = 17
+                          Header.MainColumn = -1
+                          TabOrder = 0
+                          TreeOptions.SelectionOptions = [toMultiSelect]
+                          OnFocusChanged = ServicesWorksListFocusChanged
+                          Connection.Connected = False
+                          Connection.LoginPrompt = False
+                          Connection.KeepConnection = False
+                          Connection.LogEvents = []
+                        end
+                      end
                     end
                   end
                   object PairSplitterSide9: TPairSplitterSide
                     Cursor = crArrow
                     Left = 0
-                    Height = 82
+                    Height = 119
                     Top = 405
                     Width = 535
                     ClientWidth = 535
-                    ClientHeight = 82
+                    ClientHeight = 119
                     object ServicesWorkNote: TMemo
                       Left = 0
-                      Height = 82
+                      Height = 119
                       Top = 0
                       Width = 535
                       Align = alClient
@@ -1494,6 +1400,9 @@ object MainForm: TMainForm
               Header.DefaultHeight = 17
               Header.MainColumn = -1
               TabOrder = 0
+              TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
+              TreeOptions.SelectionOptions = [toMultiSelect]
+              OnFocusChanged = WorksListFocusChanged
               Connection.Connected = False
               Connection.LoginPrompt = False
               Connection.KeepConnection = False
@@ -1537,31 +1446,32 @@ object MainForm: TMainForm
             end
             object Panel1: TPanel
               Left = 0
-              Height = 519
-              Top = 0
+              Height = 518
+              Top = 1
               Width = 539
               Align = alClient
               BevelOuter = bvNone
-              ClientHeight = 519
+              ClientHeight = 518
               ClientWidth = 539
               TabOrder = 1
-              object PageControl1: TPageControl
+              object WorkPageControl: TPageControl
                 Left = 0
-                Height = 518
+                Height = 517
                 Top = 1
                 Width = 539
-                ActivePage = WorkTabSheet
+                ActivePage = MainTabSheet
                 Align = alClient
-                TabIndex = 1
+                TabIndex = 0
                 TabOrder = 0
                 object MainTabSheet: TTabSheet
                   Caption = 'Основное'
-                  ClientHeight = 487
+                  ClientHeight = 486
                   ClientWidth = 535
+                  OnShow = MainTabSheetShow
                   object PairSplitter4: TPairSplitter
                     Cursor = crVSplit
                     Left = 0
-                    Height = 487
+                    Height = 486
                     Top = 0
                     Width = 535
                     Align = alClient
@@ -1652,7 +1562,6 @@ object MainForm: TMainForm
                           Height = 27
                           Top = 129
                           Width = 312
-                          OnChange = WorkFactorEditChange
                           TabOrder = 1
                         end
                         object Label8: TLabel
@@ -1676,14 +1585,14 @@ object MainForm: TMainForm
                     object PairSplitterSide13: TPairSplitterSide
                       Cursor = crArrow
                       Left = 0
-                      Height = 182
+                      Height = 181
                       Top = 305
                       Width = 535
                       ClientWidth = 535
-                      ClientHeight = 182
+                      ClientHeight = 181
                       object WorkNote: TMemo
                         Left = 0
-                        Height = 182
+                        Height = 181
                         Top = 0
                         Width = 535
                         Align = alClient
@@ -1698,11 +1607,12 @@ object MainForm: TMainForm
                 end
                 object WorkTabSheet: TTabSheet
                   Caption = 'Ресурсы'
-                  ClientHeight = 487
+                  ClientHeight = 486
                   ClientWidth = 535
+                  OnShow = WorkTabSheetShow
                   object WorkResourcesVST: TDBVST
                     Left = 0
-                    Height = 487
+                    Height = 486
                     Top = 0
                     Width = 535
                     Align = alClient
@@ -1736,31 +1646,8 @@ object MainForm: TMainForm
                     ScrollBarOptions.ScrollBars = ssAutoBoth
                     TabOrder = 0
                     TreeOptions.AutoOptions = [toAutoDropExpand, toAutoExpand, toAutoScrollOnExpand, toAutoTristateTracking, toAutoDeleteMovedNodes]
-                    TreeOptions.MiscOptions = [toEditable, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
+                    TreeOptions.MiscOptions = [toEditable, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning]
                     TreeOptions.SelectionOptions = [toExtendedFocus]
-                    OnFocusChanged = ServiceCompaniesVSTFocusChanged
-                    Connection.Connected = False
-                    Connection.LoginPrompt = False
-                    Connection.KeepConnection = False
-                    Connection.LogEvents = []
-                  end
-                end
-                object TabSheet5: TTabSheet
-                  Caption = 'Параметры'
-                  ClientHeight = 487
-                  ClientWidth = 535
-                  object DBVST1: TDBVST
-                    Left = 0
-                    Height = 487
-                    Top = 0
-                    Width = 535
-                    Align = alClient
-                    DefaultText = 'Node'
-                    Header.AutoSizeIndex = 0
-                    Header.Columns = <>
-                    Header.DefaultHeight = 17
-                    Header.MainColumn = -1
-                    TabOrder = 0
                     Connection.Connected = False
                     Connection.LoginPrompt = False
                     Connection.KeepConnection = False
@@ -1776,6 +1663,14 @@ object MainForm: TMainForm
                 Align = alTop
                 ParentColor = False
               end
+            end
+            object WorkVSTLabel: TLabel
+              Left = 0
+              Height = 1
+              Top = 0
+              Width = 539
+              Align = alTop
+              ParentColor = False
             end
           end
         end

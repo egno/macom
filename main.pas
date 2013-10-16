@@ -32,7 +32,7 @@ uses
   Dialogs, Menus, ComCtrls, ActnList, PairSplitter, StdCtrls, ExtCtrls, Buttons,
   StdActns, DBGrids, pqconnection, fpjson, jsonparser, XMLConf, sqldb, db,
   dbfunc, ExpandPanels, Grids, CheckLst, DbCtrls, IniPropStorage,
-  EditBtn, DBActns, keyvalue, DBDynTreeView,
+  EditBtn, DBActns, keyvalue,
   ExtSQLQuery, DBVST, VirtualTrees;
 
 type
@@ -43,13 +43,10 @@ type
     ActionPanel3: TPanel;
     ActionPanel4: TPanel;
     ActionPanel5: TPanel;
-    ActionPanel6: TPanel;
-    ActionPanel7: TPanel;
     ActionSave: TAction;
     ActionDisconnect: TAction;
     ActionConnect: TAction;
     ActionPanel1: TPanel;
-    ActionPanel2: TPanel;
     ActPanel1: TPanel;
     BuildingWorksSaveBtn: TBitBtn;
     BaseCB: TComboBox;
@@ -58,15 +55,19 @@ type
     DataSetEdit: TDataSetEdit;
     DataSetInsert: TDataSetInsert;
     DataSetPost: TDataSetPost;
-    DBVST1: TDBVST;
     BuildingsList: TDBVST;
     BuildingsFilter: TEdit;
     BuildingPersonnel: TDBVST;
     BuildingsLabel: TLabel;
     BuildingContractWorksVST: TDBVST;
     BuildingPersonnelVST: TDBVST;
+    WorkVSTLabel: TLabel;
+    ServiceWorks: TDBVST;
+    Panel7: TPanel;
+    ServicesWorksList: TDBVST;
     Panel2: TPanel;
     Panel5: TPanel;
+    Panel6: TPanel;
     WorksList: TDBVST;
     ServicesList: TDBVST;
     IniPropStorage: TIniPropStorage;
@@ -87,12 +88,8 @@ type
     PersonNote: TMemo;
     DBPopupMenu: TPopupMenu;
     Splitter3: TSplitter;
-    BuildingPersSaveBtn: TBitBtn;
-    BuildingPropsSaveBtn: TBitBtn;
     BuildingPropsTabSheet: TTabSheet;
     BuildingPersonnelTabSheet: TTabSheet;
-    TabSheet5: TTabSheet;
-    ToolButton4: TToolButton;
     WorkAddAllBtn1: TBitBtn;
     PersAddBtn: TBitBtn;
     WorkDelAllBtn1: TBitBtn;
@@ -101,7 +98,7 @@ type
     WorkLabel: TLabel;
     WorkCondEdit: TMemo;
     WorkNote: TMemo;
-    PageControl1: TPageControl;
+    WorkPageControl: TPageControl;
     PairSplitter3: TPairSplitter;
     PairSplitter4: TPairSplitter;
     PairSplitterSide10: TPairSplitterSide;
@@ -116,7 +113,6 @@ type
     PairSplitter2: TPairSplitter;
     PairSplitterSide8: TPairSplitterSide;
     PairSplitterSide9: TPairSplitterSide;
-    ServiceWorksList: TDBDynTreeView;
     BuildingBox: TGroupBox;
     MainIconList22: TImageList;
     BuildingDetailsMemo: TMemo;
@@ -131,7 +127,6 @@ type
     WorkMainSaveBtn: TBitBtn;
     BuildingMainTabSheet: TTabSheet;
     BuildingServicesTabSheet: TTabSheet;
-    WorksTreeFilter: TTreeFilterEdit;
     WorkPairSplitter: TPairSplitter;
     PairSplitterSide3: TPairSplitterSide;
     PairSplitterSide5: TPairSplitterSide;
@@ -139,12 +134,10 @@ type
     ScrollBox2: TScrollBox;
     ServiceLabel: TLabel;
     SrvMainSaveBtn1: TBitBtn;
-    SrvWorksSaveBtn: TBitBtn;
     Panel3: TPanel;
     Splitter2: TSplitter;
     BuildingTabSheet: TTabSheet;
     WorksTabSheet: TTabSheet;
-    ToolButton3: TToolButton;
     WorkAddBtn: TBitBtn;
     WorkAddAllBtn: TBitBtn;
     WorkDelBtn: TBitBtn;
@@ -157,7 +150,6 @@ type
     Label2: TLabel;
     Label3: TLabel;
     ActPanel: TPanel;
-    WorksTreeView: TDBDynTreeView;
     SrvNameEdit: TEdit;
     FileExit: TFileExit;
     Label1: TLabel;
@@ -206,6 +198,10 @@ type
       Node: PVirtualNode; Column: TColumnIndex);
     procedure BuildingPersonnelVSTFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
+    procedure BuildingPropertiesVSTColumnDblClick(Sender: TBaseVirtualTree;
+      Column: TColumnIndex; Shift: TShiftState);
+    procedure BuildingPropertiesVSTEdited(Sender: TBaseVirtualTree;
+      Node: PVirtualNode; Column: TColumnIndex);
     procedure BuildingPropsTabSheetShow(Sender: TObject);
     procedure BuildingServicesTabSheetShow(Sender: TObject);
     procedure BuildingsListFocusChanged(Sender: TBaseVirtualTree;
@@ -215,32 +211,38 @@ type
     procedure DataSetInsertExecute(Sender: TObject);
     procedure DBPopupMenuPopup(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure MainTabSheetShow(Sender: TObject);
     procedure RefreshControl(C:String);
     procedure RefreshPersonNote(ids: String);
     procedure ServiceCompaniesVSTDblClick(Sender: TObject);
     procedure ServiceCompaniesVSTFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
-    procedure ServicesTreeViewEnter(Sender: TObject);
+    procedure ServicesListFocusChanged(Sender: TBaseVirtualTree;
+      Node: PVirtualNode; Column: TColumnIndex);
+    procedure ServicesWorksListFocusChanged(Sender: TBaseVirtualTree;
+      Node: PVirtualNode; Column: TColumnIndex);
     procedure ServiceTabSheetShow(Sender: TObject);
     procedure BuildingPersonnelTabSheetShow(Sender: TObject);
+    procedure SrvWorksTabSheetShow(Sender: TObject);
     procedure ToolButton4Click(Sender: TObject);
-    procedure TreeViewSelectionChanged(Sender: TObject);
     procedure WorkAddBtnClick(Sender: TObject);
     procedure WorkDelBtnClick(Sender: TObject);
-//    function StringArrayToString(A: array of String; Delimiter: String);
-    procedure ExecSQL(SQL: String);
     procedure UpdateDBTable(Table: String; Fields, Values: array of String);
     function ReturnStringSQL(SQL: String): String;
     procedure FillListFromSQL(Items:TStrings ; SQL: String);
-    procedure WorkFactorEditChange(Sender: TObject);
+    procedure WorksListFocusChanged(Sender: TBaseVirtualTree;
+      Node: PVirtualNode; Column: TColumnIndex);
     procedure WorksTabSheetShow(Sender: TObject);
     procedure WorksTreeViewEnter(Sender: TObject);
+    procedure WorkTabSheetShow(Sender: TObject);
   protected
   private
     procedure CheckConnected();
     procedure InitFormAfterConnect();
     procedure InitFormDisconnected();
     procedure Log(Note: String; Level: Integer = 0);
+    procedure MakeVSTLabelCaption(aVST: TDBVST; aLabel: TLabel);
+    procedure MakeVSTNoteText(aVST: TDBVST; aMemo: TMemo);
   public
     { public declarations }
   end;
@@ -306,6 +308,18 @@ begin
     (Sender as TDBVST).GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter));
 end;
 
+procedure TMainForm.BuildingPropertiesVSTColumnDblClick(
+  Sender: TBaseVirtualTree; Column: TColumnIndex; Shift: TShiftState);
+begin
+  BuildingPropertiesVST.EditNode(BuildingPropertiesVST.FocusedNode, Column);
+end;
+
+procedure TMainForm.BuildingPropertiesVSTEdited(Sender: TBaseVirtualTree;
+  Node: PVirtualNode; Column: TColumnIndex);
+begin
+//  ExecSQL('');
+end;
+
 procedure TMainForm.BuildingPropsTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
@@ -317,7 +331,7 @@ begin
     ['BuildingsList'],['obj'],
     'null',
     '',
-    '2', 0);
+    '3', 0);
 end;
 
 procedure TMainForm.BuildingServicesTabSheetShow(Sender: TObject);
@@ -331,7 +345,7 @@ begin
     ['BuildingsList'],['building'],
     'service_parent',
     '',
-    '2', 1);
+    '3', 1);
   BuildingContractWorksVST.InitAndFill(conn, 'buildings_service_works',
     ['work', 'work_full_disp', 'amount_interval', 'amount'],
     ['', 'Работа', 'Периодичность', 'Количество'],
@@ -340,33 +354,14 @@ begin
     ['ServiceCompaniesVST','BuildingsList'],['service', 'building'],
     'null',
     '',
-    '2', 0);
+    '3', 0);
 end;
 
 procedure TMainForm.BuildingsListFocusChanged(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Column: TColumnIndex);
 begin
   if (not Conn.Connected) then exit;
-  if (BuildingsList.SelectedCount > 0) then begin
-    BuildingsLabel.Caption:= ReturnStringSQL(
-      'select disp from buildings where id = '
-      + BuildingsList.GetSQLSelectedID(sqlStringQuote)
-      );
-    BuildingsLabel.Font.Style:=BuildingsLabel.Font.Style-[fsBold];
-    if (BuildingsList.SelectedCount > 1) then begin
-      BuildingsLabel.Caption:= '[Выбрано: '
-        + ReturnStringSQL(
-          'select count(*)::text from buildings where id in ('
-        + BuildingsList.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
-        +')')
-        + '] '
-        + BuildingsLabel.Caption ;
-        BuildingsLabel.Font.Style:=BuildingsLabel.Font.Style+[fsBold];
-    end;
-  end
-  else begin
-    BuildingsLabel.Caption:='';
-  end;
+  MakeVSTLabelCaption(BuildingsList, BuildingsLabel);
   BuildingPageControl.ActivePage.OnShow(Sender);
 end;
 
@@ -383,7 +378,7 @@ begin
     [],[],
     'pid',
     '',
-    '2', 0);
+    '3', 0);
 end;
 
 procedure TMainForm.DataSave(Sender: TObject);
@@ -405,11 +400,11 @@ begin
             + TKeyValue(BuildingsTreeView.Selections[i].Data).Code + '$$';
         end;
       end;
-      ExecSQL('delete from building_staff where '
+      ExecSQL(Conn, 'delete from building_staff where '
         + ' building in (' + bid + ') ;'  );
       for i:=0 to BuildingPersonList.Items.Count-1 do begin
         if BuildingPersonList.Items[i].Data <> nil then
-          ExecSQL('insert into building_staff '
+          ExecSQL(Conn, 'insert into building_staff '
             + ' (building, contract) '
             + ' select id, '
             + '$$' + TKeyValue(BuildingPersonList.Items[i].Data).Code + '$$'
@@ -428,7 +423,7 @@ begin
         VSTNode := BuildingPropertiesVST.GetFirst();
         while VSTNode <> nil do begin
           VSTNodeData := BuildingPropertiesVST.GetNodeData(VSTNode);
-            ExecSQL('insert into buildings_p (obj, code, val) select '
+            ExecSQL(Conn, 'insert into buildings_p (obj, code, val) select '
               + ' id, '
               + ' $$' + VSTNodeData^[1] + '$$::ltree, '
               + ' $$' + VSTNodeData^[2] + '$$ '
@@ -452,7 +447,7 @@ begin
         VSTNode := BuildingContractWorksVST.GetFirst();
         while VSTNode <> nil do begin
           VSTNodeData := BuildingContractWorksVST.GetNodeData(VSTNode);
-          ExecSQL('update buildings_service_works set '
+          ExecSQL(Conn, 'update buildings_service_works set '
             + ' amount = 0' + VSTNodeData^[3] + ', '
             + ' amount_interval = $$' + VSTNodeData^[2] + '$$::interval '
             + ' where building in (' + bid + ') '
@@ -465,13 +460,13 @@ begin
       RefreshControl('BuildingContractWorksVST');
     end;
     'SrvWorksSaveBtn': begin
-      ExecSQL('delete from service_works where '
+      ExecSQL(Conn, 'delete from service_works where '
         + ' service =  '
         + '''' + TKeyValue(ServicesTreeView.Selected.Data).Code + ''' '
         + ';'  );
       for i:=0 to ServiceWorksList.Items.Count-1 do begin
         if ServiceWorksList.Items[i].Data <> nil then
-          ExecSQL('insert into service_works '
+          ExecSQL(Conn, 'insert into service_works '
             + ' (service, work) '
             + ' values ( '
             + '''' + TKeyValue(ServicesTreeView.Selected.Data).Code + ''', '
@@ -508,7 +503,7 @@ begin
         sql := sql + ' where id = '
             + '''' + wid + '''  '
             + ';';
-        ExecSQL(sql);
+        ExecSQL(Conn, sql);
       end;
     end;
   end;
@@ -527,8 +522,8 @@ begin
       NodeData.Add('');
       NodeData.Add('');
       Node:=AddChild(nil, NodeData);
-      (ActiveControl as TDBVST).
-      Refresh;
+      (ActiveControl as TDBVST).FocusedNode:=Node;
+      (ActiveControl as TDBVST).EditNode(Node,0);
   end;
 end;
 
@@ -544,6 +539,32 @@ procedure TMainForm.FormShow(Sender: TObject);
 begin
   DBDisconnect(Conn);
   CheckConnected();
+end;
+
+procedure TMainForm.MainTabSheetShow(Sender: TObject);
+begin
+  if (not Conn.Connected) then exit;
+  WorkNameEdit.Text:=ReturnStringSQL(
+          'select disp from works where id = '
+          + WorksList.GetSQLSelectedID(sqlStringQuote)
+          );
+  WorkCodeEdit.Text:=ReturnStringSQL(
+          'select code::text from works where id = '
+          + WorksList.GetSQLSelectedID(sqlStringQuote)
+          );
+  BaseCB.Text:=ReturnStringSQL(
+          'select base::text from works where id = '
+          + WorksList.GetSQLSelectedID(sqlStringQuote)
+          );
+  WorkFactorEdit.Text:=ReturnStringSQL(
+          'select factor::text from works where id = '
+          + WorksList.GetSQLSelectedID(sqlStringQuote)
+          );
+  WorkCondEdit.Text:=ReturnStringSQL(
+          'select condition::text from works where id = '
+          + WorksList.GetSQLSelectedID(sqlStringQuote)
+          );
+  MakeVSTNoteText(WorksList, WorkNote);
 end;
 
 
@@ -830,9 +851,17 @@ begin
   BuildingContractWorksVST.ReFill(0);
 end;
 
-procedure TMainForm.ServicesTreeViewEnter(Sender: TObject);
+procedure TMainForm.ServicesListFocusChanged(Sender: TBaseVirtualTree;
+  Node: PVirtualNode; Column: TColumnIndex);
 begin
-//  SrvNameEdit.Text:=ServicesTreeView.Selected.Text;
+  MakeVSTLabelCaption(ServicesList, ServiceLabel);
+  ServicePageControl.ActivePage.OnShow(Sender);
+end;
+
+procedure TMainForm.ServicesWorksListFocusChanged(Sender: TBaseVirtualTree;
+  Node: PVirtualNode; Column: TColumnIndex);
+begin
+  MakeVSTNoteText(Sender as TDBVST, ServicesWorkNote);
 end;
 
 procedure TMainForm.ServiceTabSheetShow(Sender: TObject);
@@ -848,7 +877,7 @@ begin
     [],[],
     'pid',
     '',
-    '2', -1);
+    '3', -1);
 end;
 
 procedure TMainForm.BuildingPersonnelTabSheetShow(Sender: TObject);
@@ -864,7 +893,7 @@ begin
     [],[],
     'null',
     '',
-    '2', 0);
+    '3', 0);
   BuildingPersonnelVST.InitAndFill(conn, 'building_staff',
     ['contract', 'contract_disp'],
     ['',''],
@@ -873,7 +902,33 @@ begin
     ['BuildingsList'],['building'],
     'null',
     '',
-    '2', 0);
+    '3', 0);
+end;
+
+procedure TMainForm.SrvWorksTabSheetShow(Sender: TObject);
+begin
+  if (not Conn.Connected) then exit;
+  if not Assigned(ServicesWorksList.GetFirst()) then begin
+    Log('...получение справочника работ');
+    ServicesWorksList.InitAndFill(Conn, 'works',
+      ['id', 'full_disp'],
+      ['', 'Наименование'],
+      ['', ''],
+      ['', ''],
+      [],[],
+      'null',
+      '',
+      '3', 0);
+  end;
+  ServiceWorks.InitAndFill(Conn, 'service_works',
+    ['work', 'work_full_disp'],
+    ['', 'Наименование'],
+    ['', ''],
+    ['', ''],
+    ['ServicesList'],['service'],
+    'null',
+    '',
+    '3', 0);
 end;
 
 procedure TMainForm.ToolButton4Click(Sender: TObject);
@@ -881,61 +936,6 @@ begin
   MainForm.Cursor:=crHourGlass;
 end;
 
-procedure TMainForm.TreeViewSelectionChanged(Sender: TObject);
-var
-  Txt: String;
-  Json: TJSONParser;
-begin
-  (Sender as TControl).Cursor:=crSQLWait;
-  case (Sender as TComponent).Name of
-    'ServicesTreeView': begin
-      ServiceLabel.Caption:=(Sender as TDBDynTreeView).Selected.Text;
-      SrvNameEdit.Text:=(Sender as TDBDynTreeView).Selected.Text;
-      RefreshControl('ServiceWorksList');
-    end;
-    'WorksTreeView': begin
-      RefreshControl('ServicesWorkNote');
-    end;
-    'WorksMainTreeView': begin
-      RefreshControl('WorkLabel');
-      RefreshControl('WorkNote');
-      RefreshControl('WorkNameEdit');
-      RefreshControl('WorkCodeEdit');
-      RefreshControl('BaseCB');
-      RefreshControl('WorkFactorEdit');
-      RefreshControl('WorkCondEdit');
-      RefreshControl('WorkResourcesVST');
-    end;
-    'ServiceWorksList': begin
-        RefreshControl('ServicesWorkNote');
-    end;
-    'BuildingsTreeView': begin
-      BuildingDetailsMemo.Clear;
-      RefreshControl('BuildingBox');
-      RefreshControl('ServiceCompaniesVST');
-      RefreshControl('BuildingContractWorksVST');
-      RefreshControl('BuildingPropertiesVST');
-      RefreshControl('BuildingPersonList');
-//      RefreshControl('BuildingServiceBox');
-//      RefreshControl('BuildingServiceWorksList');
-      if (Sender as TDBDynTreeView).SelectionCount > 0 then begin
-        Txt:=ReturnStringSQL(
-          'select note from buildings where id = '''
-          + TKeyValue((Sender as TDBDynTreeView).Selected.Data).Code
-          +'''');
-        Json := TJSONParser.Create(Txt);
-        BuildingDetailsMemo.Text:=Json.Parse.FormatJSON([foDoNotQuoteMembers]);
-      end;
-    end;
-    'PersonnelTreeView': begin
-      RefreshControl('PersonNote');
-    end;
-    'BuildingPersonList': begin
-      RefreshControl('PersonNote');
-    end;
-  end;
-  (Sender as TControl).Cursor:=crDefault;
-end;
 
 procedure TMainForm.WorkAddBtnClick(Sender: TObject);
 var
@@ -943,15 +943,27 @@ var
 begin
   case (Sender as TComponent).Name of
     'WorkAddBtn': begin
-      if WorksTreeView.Items.SelectionCount > 0 then
-        for i := 0 to WorksTreeView.Items.SelectionCount-1 do
-          ServiceWorksList.Items.AddObject(nil,
-            WorksTreeView.Selections[i].Text,
-            WorksTreeView.Selections[i].Data);
+      ServiceWorks.AddFromQuery('select w.id, s.id '
+        + ' from services s, works w '
+        + ' where s.id in ('
+        + ServicesList.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
+        + ') '
+        + ' and w.id in ('
+        + ServicesWorksList.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
+        + ') '
+        );
     end;
+
     'PersAddBtn': begin
-      BuildingPersonnelVST.AddFrom(BuildingPersonnel);
-      Refresh;
+      BuildingPersonnelVST.AddFromQuery('select s.id, b.id '
+        + ' from pers_contracts s, buildings b '
+        + ' where b.id in ('
+        + BuildingsList.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
+        + ') '
+        + ' and s.id in ('
+        + BuildingPersonnel.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
+        + ') '
+        );
     end;
   end;
 end;
@@ -962,30 +974,24 @@ var
 begin
   case (Sender as TComponent).Name of
     'WorkDelBtn': begin
-      if ServiceWorksList.Items.SelectionCount > 0 then
-        for i := ServiceWorksList.Items.SelectionCount-1 downto 0   do
-          ServiceWorksList.Items.Delete(
-            ServiceWorksList.Selections[i]);
+      ServiceWorks.DelFromWhere(' service in ('
+        + ServicesList.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
+        + ') '
+        + ' and work in ( '
+        + ServiceWorks.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
+        + ') '
+        );
     end;
-{    'PersDelBtn': begin
-      if BuildingPersonList.Items.SelectionCount > 0 then
-        for i := BuildingPersonList.Items.SelectionCount-1 downto 0   do
-          BuildingPersonList.Items.Delete(
-            BuildingPersonList.Selections[i]);
-    end;
-}  end;
-end;
 
-procedure TMainForm.ExecSQL(SQL: String);
-var
-  Query: TExtSQLQuery;
-begin
-  Query := TExtSQLQuery.Create(Self, Conn);
-  try
-    Query.SQL.Add(SQL);
-    Query.ExecSQL;
-  finally
-    Query.Free;
+    'PersDelBtn': begin
+      BuildingPersonnelVST.DelFromWhere(' contract in ('
+        + BuildingPersonnelVST.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
+        + ') '
+        + ' and building in ( '
+        + BuildingsList.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
+        + ') '
+        );
+    end;
   end;
 end;
 
@@ -1035,9 +1041,11 @@ begin
   Query.Free;
 end;
 
-procedure TMainForm.WorkFactorEditChange(Sender: TObject);
+procedure TMainForm.WorksListFocusChanged(Sender: TBaseVirtualTree;
+  Node: PVirtualNode; Column: TColumnIndex);
 begin
-
+  MakeVSTLabelCaption(WorksList, WorkVSTLabel);
+  WorkPageControl.ActivePage.OnShow(Sender);
 end;
 
 procedure TMainForm.WorksTabSheetShow(Sender: TObject);
@@ -1053,12 +1061,26 @@ begin
     [],[],
     'pid',
     '',
-    '2', 0);
+    '3', 0);
 end;
 
 procedure TMainForm.WorksTreeViewEnter(Sender: TObject);
 begin
 
+end;
+
+procedure TMainForm.WorkTabSheetShow(Sender: TObject);
+begin
+  if (not Conn.Connected) then exit;
+  WorkResourcesVST.InitAndFill(conn, 'work_resources',
+     ['id','resource_code','resource_disp','measure','amount'],
+     ['','','','',''],
+     ['','ltree','','',''],
+     ['','text','','',''],
+     ['WorksList'],['work'],
+    'null',
+    '',
+    '3', 0);
 end;
 
 
@@ -1078,10 +1100,6 @@ begin
   if not Conn.Connected then Exit;
   Cursor:=crSQLWait;
   Log('Подключено');
-  Log('Ждите...');
-
-
-  Log('Готово');
 
   BuildingTabSheet.TabVisible:=True;
   CenterPageControl.ActivePage:=BuildingTabSheet;
@@ -1109,6 +1127,46 @@ begin
     LogView.Lines.Append(Note);
   LogView.SelStart:=Length(LogView.Text);
   Application.ProcessMessages();
+end;
+
+procedure TMainForm.MakeVSTLabelCaption(aVST: TDBVST; aLabel: TLabel);
+begin
+  if (not Conn.Connected) then exit;
+  if (aVST.SelectedCount > 0) then begin
+    aLabel.Caption:= ReturnStringSQL(
+      'select ' + aVST.Fields[1] + '  from ' + aVST.Table + ' where ' + aVST.Fields[0] + ' = '
+      + aVST.GetSQLSelectedID(sqlStringQuote)
+      );
+    aLabel.Font.Style:=aLabel.Font.Style-[fsBold];
+    if (aVST.SelectedCount > 1) then begin
+      aLabel.Caption:= '['
+        + ReturnStringSQL(
+        'select count(*)::text from ' + aVST.Table + ' where '
+        + aVST.Fields[0] + ' in ('
+        + aVST.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
+        +')')
+        + '] '
+        + aLabel.Caption ;
+        aLabel.Font.Style:=aLabel.Font.Style+[fsBold];
+    end;
+  end
+  else begin
+    aLabel.Caption:='';
+  end;
+end;
+
+procedure TMainForm.MakeVSTNoteText(aVST: TDBVST; aMemo: TMemo);
+begin
+  aMemo.Clear;
+  try
+    aMemo.Text:=ReturnStringSQL(
+      'select array_to_string(array_agg(' + aVST.Fields[1] + '), '
+      + ' chr(13)||$$-------$$||chr(13)) from ' + aVST.Table
+      + ' where ' + aVST.Fields[0] + '  IN ('
+      + aVST.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
+      + ')' );
+  finally
+  end;
 end;
 
 end.

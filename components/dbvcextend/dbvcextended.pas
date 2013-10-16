@@ -7,13 +7,12 @@ unit dbvcextended;
 interface
 
 uses
-  DBDynTreeView, dbfunc, keyvalue, ExtSQLQuery, DBVST, LazarusPackageIntf;
+  dbfunc, keyvalue, ExtSQLQuery, DBVST, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('DBDynTreeView', @DBDynTreeView.Register);
   RegisterUnit('ExtSQLQuery', @ExtSQLQuery.Register);
   RegisterUnit('DBVST', @DBVST.Register);
 end;

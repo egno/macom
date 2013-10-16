@@ -29,7 +29,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  sqldb, extsqlquery, db,
+  sqldb, extsqlquery, db, dbfunc,
   VirtualTrees;
 
 type
@@ -81,6 +81,8 @@ type
     procedure Expanding(Sender: TBaseVirtualTree;
       Node: PVirtualNode; var Allowed: Boolean);
     procedure Change(Sender: TBaseVirtualTree; Node: PVirtualNode);
+    procedure ColumnDblClick(
+      Sender: TBaseVirtualTree; Column: TColumnIndex; Shift: TShiftState);
     procedure FocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
       Column: TColumnIndex);
     procedure GetNodeDataSize(Sender: TBaseVirtualTree;
@@ -100,7 +102,8 @@ type
     procedure KeyPress(Sender: TObject; var Key: char);
     procedure FillNode(Node: PVirtualNode; levFull:integer);
     procedure FillNode(Node: PVirtualNode);
-    procedure AddFrom(Src: TDBVST);
+    procedure AddFromQuery(aQuery: String);
+    procedure DelFromWhere(aQuery: String);
     procedure ReFill(levFull: integer);
     procedure InitAndFill(conn: TSQLConnection; aTable:String;
       aFields, aFieldsDisp, aFieldsConvTo, aFieldsConvFrom,
@@ -145,7 +148,7 @@ procedure TDBVSTFilterEdit.KeyPress(Sender: TObject; var Key: char);
 begin
   if Key = char(27) then begin
     Text:='';
-    Application.MainForm.ActiveControl:=(Owner as TWinControl);
+    Application.MainForm.ActiveControl:=(Parent as TWinControl);
     Visible:=False;
   end;
 end;
@@ -310,6 +313,13 @@ begin
   Self.Refresh;
 end;
 
+procedure TDBVST.ColumnDblClick(Sender: TBaseVirtualTree; Column: TColumnIndex;
+  Shift: TShiftState);
+begin
+  if not Assigned(Sender.FocusedNode) then exit;
+  Sender.EditNode(Sender.FocusedNode, Column);
+end;
+
 procedure TDBVST.FocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
   Column: TColumnIndex);
 begin
@@ -373,7 +383,7 @@ var
   i: Integer;
 begin
   FSQL.Clear;
-  FSQL.Add('select ');
+  FSQL.Add('select count(*) __cnt, ');
   FSQL.Add(GetSQLFieldString(0));
   for i:=1 to FFields.Count-1 do begin
     FSQL.Add(', '+ GetSQLFieldString(i));
@@ -390,6 +400,7 @@ begin
     finally
     end;
   end;
+//  FSQL.Add(' group by ' + ListToString(FFields,',',''));
 end;
 
 constructor TDBVST.Create(TheOwner: TComponent);
@@ -404,7 +415,9 @@ begin
   FFieldsConvFrom:=TStringList.Create();
   FLinkFields:=TStringList.Create();
   FMasterControls:=TStringList.Create();
+  FilterEdit:=TDBVSTFilterEdit.Create(Self);
   OnExpanding:=@Expanding;
+  OnColumnDblClick:=@ColumnDblClick;
   OnFocusChanged:=@FocusChanged;
   OnGetNodeDataSize:=@GetNodeDataSize;
   OnGetText:=@GetText;
@@ -416,25 +429,21 @@ end;
 
 destructor TDBVST.Destroy;
 begin
+  FilterEdit.Free;
   inherited Destroy;
 end;
 
 procedure TDBVST.KeyPress(Sender: TObject; var Key: char);
 begin
-  if not Assigned(FilterEdit) then begin
-    FilterEdit:=TDBVSTFilterEdit.Create(Self);
-    Refresh;
+  if (Key = char(27)) then begin
+    FilterEdit.Text:='';
+    FilterEdit.Visible:=False;
+    exit;
   end;
   if not FilterEdit.Visible then begin
     FilterEdit.Visible:=True;
     Application.MainForm.ActiveControl:=FilterEdit;
-  end
-  else
-    if Key = char(27) then begin
-      FilterEdit.Text:='';
-      FilterEdit.Visible:=False;
-    end;
-
+  end;
 end;
 
 procedure TDBVST.FillNode(Node: PVirtualNode; levFull:integer);
@@ -444,7 +453,6 @@ var
   ParentNodeData: PDBTreeData;
   NodeData: TStringList;
   cnt, i: Integer;
-  Checked, hasChecked, hasUnchecked: Boolean;
 begin
   if (Node <> nil) and (Node^.ChildCount > 0) then Exit;
   Cursor:=crSQLWait;
@@ -453,39 +461,34 @@ begin
     Query := TExtSQLQuery.Create(Self, FConnection);
     if (Node = nil) then
        Query.SQL.Text := FSQL.Text + ' ' + ' and '
-       + FKey + ' is null order by ' + FOrder
+       + FKey + ' is null '
+       + ' group by ' + ListToString(FFields,',','')
+       + ' order by ' + FOrder
     else begin
       ParentNodeData:=Self.GetNodeData(Node);
       Query.SQL.Text := FSQL.Text + ' ' + ' and '
-       + FKey + ' = ''' + ParentNodeData^[0] + ''' order by ' + FOrder;
+       + FKey + ' = $$' + ParentNodeData^[0] + '$$ '
+       + ' group by ' + ListToString(FFields,',','')
+       + ' order by ' + FOrder;
     end;
-    Checked:=false;
-    hasChecked := false;
-    hasUnchecked := false;
     Query.Open;
     while not Query.Eof do
     begin
       NodeData:=TStringList.Create;
-      NodeData.Add(Query.Fields[0].AsString);
-      cnt := 1;
+      NodeData.Add(Query.Fields[1].AsString);
+      if Query.Fields[0].AsInteger > 1 then
+         NodeData.Add('[' + Query.Fields[0].AsString + '] '
+           + Query.Fields[2].AsString)
+      else
+        NodeData.Add(Query.Fields[2].AsString);
+      cnt := 3;
       for i:=cnt to Query.FieldCount-1 do begin
         NodeData.Add(Query.Fields[i].AsString);
       end;
       NewNode:=Self.InsertNode(Node, amAddChildLast, NodeData);
-      if Checked then
-        NewNode^.CheckState := csCheckedNormal
-      else
-        NewNode^.CheckState := csUncheckedNormal;
       if not(levFull = 0) then FillNode(NewNode, levFull - 1);
       Query.Next;
     end;
-    if Assigned(Node) then begin
-      if hasChecked then
-         if hasUnchecked then Node^.CheckState:=csMixedNormal
-         else Node^.CheckState:=csCheckedNormal
-      else Node^.CheckState:=csUncheckedNormal
-    end;
-
   finally
     Query.Free;
   end;
@@ -496,12 +499,31 @@ begin
   FillNode(Node, 1)
 end;
 
-procedure TDBVST.AddFrom(Src: TDBVST);
+procedure TDBVST.AddFromQuery(aQuery: String);
+var
+  xSQL: String;
+  i: Integer;
 begin
-{  sql:= 'insert into ' + FTable
-    + ' ( ' +
-}
+  xSQL := 'insert into ' + FTable + '('
+    + FFields[0] + ','
+    + ListToString(LinkFields,',','')
+    + ') '
+    + aQuery;
+  ExecSQL(Connection, xSQL);
+  ReFill(0);
 end;
+
+procedure TDBVST.DelFromWhere(aQuery: String);
+var
+  xSQL: String;
+  i: Integer;
+begin
+  xSQL := 'delete from ' + FTable
+    + ' where ' + aQuery;
+  ExecSQL(Connection, xSQL);
+  ReFill(0);
+end;
+
 
 procedure TDBVST.ReFill(levFull: integer);
 var
@@ -554,6 +576,8 @@ begin
       FFieldsConvFrom.Add(aFieldsConvFrom[i]);
       FFieldsConvTo.Add(aFieldsConvTo[i]);
   end;
+  FMasterControls.Clear;
+  FLinkFields.Clear;
   for i:=0 to length(aMasterControls)-1 do begin
       FMasterControls.Add(aMasterControls[i]);
       FLinkFields.Add(aLinkFielsd[i]);
