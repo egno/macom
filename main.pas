@@ -41,7 +41,6 @@ type
 
   TMainForm = class(TForm)
     ActionPanel3: TPanel;
-    ActionPanel4: TPanel;
     ActionSave: TAction;
     ActionDisconnect: TAction;
     ActionConnect: TAction;
@@ -122,7 +121,6 @@ type
     ServiceCompaniesVST: TDBVST;
     MainTabSheet: TTabSheet;
     WorkTabSheet: TTabSheet;
-    WorkMainSaveBtn: TBitBtn;
     BuildingMainTabSheet: TTabSheet;
     BuildingServicesTabSheet: TTabSheet;
     WorkPairSplitter: TPairSplitter;

@@ -34,10 +34,6 @@ uses
 
 type
 
-  { TDBVST }
-
-  PDBTreeData = ^TStringList;
-
   { TDBVSTFilterEdit }
 
   TDBVSTFilterEdit = class(TEdit)
@@ -47,6 +43,10 @@ type
     constructor Create(TheOwner: TComponent); override;
     destructor Destroy; override;
   end;
+
+  { TDBVST }
+
+  PDBTreeData = ^TStringList;
 
   TDBVST = class(TVirtualStringTree)
   private
@@ -145,12 +145,14 @@ begin
   RegisterComponents('Virtual Controls',[TDBVST]);
 end;
 
+{ TDBVSTFilterEdit }
+
 procedure TDBVSTFilterEdit.KeyPress(Sender: TObject; var Key: char);
 begin
   if Key = char(27) then begin
     Text:='';
-    Application.MainForm.ActiveControl:=(Parent as TWinControl);
     Visible:=False;
+    Application.MainForm.ActiveControl:=(Self.Owner as TWinControl);
   end;
 end;
 
@@ -166,6 +168,7 @@ end;
 
 destructor TDBVSTFilterEdit.Destroy;
 begin
+  Self.Parent:=nil;
   inherited Destroy;
 end;
 
@@ -187,10 +190,10 @@ Var
   S: String;
   isFound: Boolean;
 begin
-  with (Owner as TDBVST) do begin
+  SearchList:=TStringList.Create;
+  with (Parent as TDBVST) do begin
     If GetFirst = nil then Exit;
     VSTNode:=nil;
-    SearchList:=TStringList.Create;
     S := FilterEdit.Text+SearchDelimiter;
     repeat
       i:=Pos(SearchDelimiter, S);
@@ -215,12 +218,14 @@ begin
         VSTNode^.States:=VSTNode^.States - [vsVisible];
     Until VSTNode = GetLast();
     Refresh;
-    SearchList.Free;
   end;
+  SearchList.Free;
+  SearchList:=nil;
+  VSTNode:=nil;
+  VSTNodeData:=nil;
 end;
 
 
-{ TDBVSTFilterEdit }
 
 { TDBVST }
 
@@ -514,18 +519,21 @@ end;
 
 destructor TDBVST.Destroy;
 begin
-  inherited Destroy;
+  FilterEdit.Free;
+  FilterEdit:=nil;
+  FSQL.Free;
+  FSQL:=nil;
+  try
+// Access violation is there !!!
+    inherited;
+  finally
+  end;
 end;
 
 procedure TDBVST.KeyPress(Sender: TObject; var Key: char);
 begin
-  if (Key = char(27)) then begin
-    FilterEdit.Text:='';
-    FilterEdit.Visible:=False;
-    exit;
-  end;
-  if not FilterEdit.Visible then begin
-    FilterEdit.Visible:=True;
+  if not (Key = char(27)) then begin
+    FilterEdit.Show;
     Application.MainForm.ActiveControl:=FilterEdit;
   end;
 end;

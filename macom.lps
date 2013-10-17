@@ -22,8 +22,8 @@
         <UnitName Value="main"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="603"/>
-        <CursorPos X="64" Y="610"/>
+        <TopLine Value="577"/>
+        <CursorPos X="88" Y="581"/>
         <UsageCount Value="203"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -32,10 +32,10 @@
         <Filename Value="components/dbvcextend/dbvst.pas"/>
         <UnitName Value="DBVST"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="101"/>
-        <CursorPos X="37" Y="102"/>
+        <TopLine Value="505"/>
+        <CursorPos X="84" Y="513"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit2>
@@ -58,12 +58,10 @@
       <Unit5>
         <Filename Value="components/dbvcextend/dbfunc.pas"/>
         <UnitName Value="dbfunc"/>
-        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
         <TopLine Value="93"/>
         <CursorPos X="61" Y="99"/>
         <UsageCount Value="95"/>
-        <Loaded Value="True"/>
       </Unit5>
       <Unit6>
         <Filename Value="components/dbvcextend/keyvalue.pas"/>
@@ -85,8 +83,8 @@
         <Filename Value="../ukg/comp/virtualtreeview/VirtualTrees.pas"/>
         <UnitName Value="VirtualTrees"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="24329"/>
-        <CursorPos X="1" Y="24348"/>
+        <TopLine Value="25337"/>
+        <CursorPos X="1" Y="25355"/>
         <UsageCount Value="10"/>
       </Unit8>
       <Unit9>
@@ -132,127 +130,31 @@
     <General>
       <ActiveWindowIndexAtStart Value="0"/>
     </General>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="6" HistoryIndex="5">
       <Position1>
-        <Filename Value="main.pas"/>
-        <Caret Line="317" Column="1" TopLine="309"/>
+        <Filename Value="components/dbvcextend/dbvst.pas"/>
+        <Caret Line="161" Column="23" TopLine="158"/>
       </Position1>
       <Position2>
-        <Filename Value="main.pas"/>
-        <Caret Line="319" Column="1" TopLine="309"/>
+        <Filename Value="components/dbvcextend/dbvst.pas"/>
+        <Caret Line="181" Column="20" TopLine="167"/>
       </Position2>
       <Position3>
-        <Filename Value="main.pas"/>
-        <Caret Line="317" Column="1" TopLine="309"/>
+        <Filename Value="components/dbvcextend/dbvst.pas"/>
+        <Caret Line="536" Column="21" TopLine="517"/>
       </Position3>
       <Position4>
-        <Filename Value="main.pas"/>
-        <Caret Line="318" Column="1" TopLine="309"/>
+        <Filename Value="components/dbvcextend/dbvst.pas"/>
+        <Caret Line="531" Column="55" TopLine="512"/>
       </Position4>
       <Position5>
-        <Filename Value="main.pas"/>
-        <Caret Line="317" Column="1" TopLine="309"/>
+        <Filename Value="components/dbvcextend/dbvst.pas"/>
+        <Caret Line="163" Column="16" TopLine="146"/>
       </Position5>
       <Position6>
         <Filename Value="components/dbvcextend/dbvst.pas"/>
-        <Caret Line="636" Column="12" TopLine="607"/>
+        <Caret Line="157" Column="17" TopLine="144"/>
       </Position6>
-      <Position7>
-        <Filename Value="components/dbvcextend/dbvst.pas"/>
-        <Caret Line="486" Column="40" TopLine="464"/>
-      </Position7>
-      <Position8>
-        <Filename Value="components/dbvcextend/dbvst.pas"/>
-        <Caret Line="484" Column="1" TopLine="464"/>
-      </Position8>
-      <Position9>
-        <Filename Value="components/dbvcextend/dbvst.pas"/>
-        <Caret Line="486" Column="1" TopLine="464"/>
-      </Position9>
-      <Position10>
-        <Filename Value="components/dbvcextend/dbvst.pas"/>
-        <Caret Line="485" Column="1" TopLine="464"/>
-      </Position10>
-      <Position11>
-        <Filename Value="components/dbvcextend/dbvst.pas"/>
-        <Caret Line="486" Column="1" TopLine="464"/>
-      </Position11>
-      <Position12>
-        <Filename Value="components/dbvcextend/dbvst.pas"/>
-        <Caret Line="485" Column="1" TopLine="464"/>
-      </Position12>
-      <Position13>
-        <Filename Value="components/dbvcextend/dbvst.pas"/>
-        <Caret Line="486" Column="1" TopLine="464"/>
-      </Position13>
-      <Position14>
-        <Filename Value="components/dbvcextend/dbvst.pas"/>
-        <Caret Line="485" Column="1" TopLine="464"/>
-      </Position14>
-      <Position15>
-        <Filename Value="components/dbvcextend/dbvst.pas"/>
-        <Caret Line="486" Column="1" TopLine="464"/>
-      </Position15>
-      <Position16>
-        <Filename Value="components/dbvcextend/dbvst.pas"/>
-        <Caret Line="485" Column="1" TopLine="464"/>
-      </Position16>
-      <Position17>
-        <Filename Value="components/dbvcextend/dbvst.pas"/>
-        <Caret Line="481" Column="1" TopLine="464"/>
-      </Position17>
-      <Position18>
-        <Filename Value="components/dbvcextend/dbvst.pas"/>
-        <Caret Line="491" Column="1" TopLine="464"/>
-      </Position18>
-      <Position19>
-        <Filename Value="components/dbvcextend/dbvst.pas"/>
-        <Caret Line="624" Column="17" TopLine="609"/>
-      </Position19>
-      <Position20>
-        <Filename Value="main.pas"/>
-        <Caret Line="308" Column="39" TopLine="303"/>
-      </Position20>
-      <Position21>
-        <Filename Value="main.pas"/>
-        <Caret Line="323" Column="1" TopLine="303"/>
-      </Position21>
-      <Position22>
-        <Filename Value="components/dbvcextend/dbvst.pas"/>
-        <Caret Line="620" Column="1" TopLine="609"/>
-      </Position22>
-      <Position23>
-        <Filename Value="components/dbvcextend/dbvst.pas"/>
-        <Caret Line="621" Column="1" TopLine="609"/>
-      </Position23>
-      <Position24>
-        <Filename Value="components/dbvcextend/dbvst.pas"/>
-        <Caret Line="622" Column="1" TopLine="609"/>
-      </Position24>
-      <Position25>
-        <Filename Value="main.pas"/>
-        <Caret Line="323" Column="1" TopLine="303"/>
-      </Position25>
-      <Position26>
-        <Filename Value="main.pas"/>
-        <Caret Line="324" Column="34" TopLine="303"/>
-      </Position26>
-      <Position27>
-        <Filename Value="main.pas"/>
-        <Caret Line="323" Column="34" TopLine="302"/>
-      </Position27>
-      <Position28>
-        <Filename Value="main.pas"/>
-        <Caret Line="322" Column="34" TopLine="301"/>
-      </Position28>
-      <Position29>
-        <Filename Value="main.pas"/>
-        <Caret Line="473" Column="26" TopLine="460"/>
-      </Position29>
-      <Position30>
-        <Filename Value="components/dbvcextend/dbvst.pas"/>
-        <Caret Line="663" Column="1" TopLine="642"/>
-      </Position30>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>
