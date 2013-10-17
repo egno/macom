@@ -50,31 +50,36 @@ type
 
   TDBVST = class(TVirtualStringTree)
   private
-    FFields: TStringList;
-    FFieldsConvFrom: TStringList;
-    FFieldsConvTo: TStringList;
-    FFieldsDisp: TStringList;
+    FDBFields: TStrings;
+    FDBFieldsConvFrom: TStrings;
+    FDeep: Integer;
+    FFieldsConvTo: TStrings;
+    FFieldsDisp: TStrings;
+    FLinkFields: TStrings;
+    FMasterControls: TStrings;
     FKey: String;
     FConnection: TSQLConnection;
-    FLinkFields: TStringList;
-    FMasterControls: TStringList;
     FOrder: String;
-    FSQL: TStringList;
+    FSQL: TStrings;
     FTable: String;
     FWhere: String;
     FilterEdit: TDBVSTFilterEdit;
     procedure SetConnection(AValue: TSQLConnection);
-    procedure SetFields(AValue: TStringList);
-    procedure SetFieldsConvFrom(AValue: TStringList);
-    procedure SetFieldsConvTo(AValue: TStringList);
-    procedure SetFieldsDisp(AValue: TStringList);
+    procedure SetDBFields(AValue: TStrings);
+    procedure SetDBFieldsConvFrom(AValue: TStrings);
+    procedure SetDeep(AValue: Integer);
+    procedure SetFieldsConvTo(AValue: TStrings);
+    procedure SetFieldsDisp(AValue: TStrings);
     procedure SetKey(AValue: String);
-    procedure SetLinkFields(AValue: TStringList);
-    procedure SetMasterControls(AValue: TStringList);
+    procedure SetLinkFields(AValue: TStrings);
+    procedure SetMasterControls(AValue: TStrings);
     procedure SetOrder(AValue: String);
-    procedure SetSQL(AValue: TStringList);
+    procedure SetSQL(AValue: TStrings);
     procedure SetTable(AValue: String);
     procedure SetWhere(AValue: String);
+    function GetSQLFieldStringFrom(i: Integer):String;
+    function GetSQLFieldStringTo(aVal: String; i: Integer):String;
+    procedure SetFocusById(newId:String);
   protected
     procedure Edited(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
@@ -104,7 +109,8 @@ type
     procedure FillNode(Node: PVirtualNode);
     procedure AddFromQuery(aQuery: String);
     procedure DelFromWhere(aQuery: String);
-    procedure ReFill(levFull: integer);
+    procedure ReFill();
+    procedure Init();
     procedure InitAndFill(conn: TSQLConnection; aTable:String;
       aFields, aFieldsDisp, aFieldsConvTo, aFieldsConvFrom,
       aMasterControls, aLinkFielsd:array of String;
@@ -114,17 +120,16 @@ type
     function GetDBVST(aName: String): TDBVST;
     function GetSQLSelectedID(SQLStringQuote: String): String;
     function GetSQLSelectedIDs(SQLStringQuote, SQLFieldDelimiter: String): String;
-    function SaveAll():String;
-    function SaveRow():String;
   published
-    property SQL: TStringList read FSQL write SetSQL;
-    property Table: String read FTable write SetTable;
-    property Fields: TStringList read FFields write SetFields;
-    property FieldsDisp: TStringList read FFieldsDisp write SetFieldsDisp;
-    property FieldsConvTo: TStringList read FFieldsConvTo write SetFieldsConvTo;
-    property FieldsConvFrom: TStringList read FFieldsConvFrom write SetFieldsConvFrom;
-    property MasterControls: TStringList read FMasterControls write SetMasterControls;
-    property LinkFields: TStringList read FLinkFields write SetLinkFields;
+    property SQL: TStrings read FSQL write SetSQL;
+    property DBTable: String read FTable write SetTable;
+    property DBFields: TStrings read FDBFields write SetDBFields;
+    property DBFieldsDisp: TStrings read FFieldsDisp write SetFieldsDisp;
+    property DBFieldsConvTo: TStrings read FFieldsConvTo write SetFieldsConvTo;
+    property DBFieldsConvFrom: TStrings read FDBFieldsConvFrom write SetDBFieldsConvFrom;
+    property DBMasterControls: TStrings read FMasterControls write SetMasterControls;
+    property DBLinkFields: TStrings read FLinkFields write SetLinkFields;
+    property Deep: Integer read FDeep write SetDeep;
     property Key: String read FKey write SetKey;
     property Order: String read FOrder write SetOrder;
     property Where: String read FWhere write SetWhere;
@@ -229,28 +234,36 @@ begin
   FConnection:=AValue;
 end;
 
-procedure TDBVST.SetFields(AValue: TStringList);
+procedure TDBVST.SetDBFields(AValue: TStrings);
 begin
-  if FFields=AValue then Exit;
-  FFields:=AValue;
+  if DBFields=AValue then Exit;
+  if AValue<>nil then
+    DBFields.Assign(AValue);
 end;
 
-procedure TDBVST.SetFieldsConvFrom(AValue: TStringList);
+procedure TDBVST.SetDBFieldsConvFrom(AValue: TStrings);
 begin
-  if FFieldsConvFrom=AValue then Exit;
-  FFieldsConvFrom:=AValue;
+  if DBFieldsConvFrom=AValue then Exit;
+  if AValue<>nil then
+    DBFieldsConvFrom.Assign(AValue);
 end;
 
-procedure TDBVST.SetFieldsConvTo(AValue: TStringList);
+procedure TDBVST.SetDeep(AValue: Integer);
+begin
+  if FDeep=AValue then Exit;
+  FDeep:=AValue;
+end;
+
+procedure TDBVST.SetFieldsConvTo(AValue: TStrings);
 begin
   if FFieldsConvTo=AValue then Exit;
-  FFieldsConvTo:=AValue;
+  FFieldsConvTo.Assign(AValue);
 end;
 
-procedure TDBVST.SetFieldsDisp(AValue: TStringList);
+procedure TDBVST.SetFieldsDisp(AValue: TStrings);
 begin
   if FFieldsDisp=AValue then Exit;
-  FFieldsDisp:=AValue;
+  FFieldsDisp.Assign(AValue);
 end;
 
 procedure TDBVST.SetKey(AValue: String);
@@ -259,16 +272,16 @@ begin
   FKey:=AValue;
 end;
 
-procedure TDBVST.SetLinkFields(AValue: TStringList);
+procedure TDBVST.SetLinkFields(AValue: TStrings);
 begin
   if FLinkFields=AValue then Exit;
-  FLinkFields:=AValue;
+  FLinkFields.Assign(AValue);
 end;
 
-procedure TDBVST.SetMasterControls(AValue: TStringList);
+procedure TDBVST.SetMasterControls(AValue: TStrings);
 begin
   if FMasterControls=AValue then Exit;
-  FMasterControls:=AValue;
+  FMasterControls.Assign(AValue);
 end;
 
 procedure TDBVST.SetOrder(AValue: String);
@@ -277,10 +290,10 @@ begin
   FOrder:=AValue;
 end;
 
-procedure TDBVST.SetSQL(AValue: TStringList);
+procedure TDBVST.SetSQL(AValue: TStrings);
 begin
   if FSQL=AValue then Exit;
-  FSQL:=AValue;
+  FSQL.Assign(AValue);
 end;
 
 procedure TDBVST.SetTable(AValue: String);
@@ -296,10 +309,94 @@ begin
   FWhere:=AValue;
 end;
 
+function TDBVST.GetSQLFieldStringFrom(i: Integer): String;
+var
+  res: String;
+begin
+  res:=FDBFields[i];
+  if FDBFieldsConvFrom[i] > '' then
+    res := res+'::'+ FDBFieldsConvFrom[i];
+  Result := res;
+end;
+
+function TDBVST.GetSQLFieldStringTo(aVal: String; i: Integer): String;
+var
+  res: String;
+begin
+  res:=aVal;
+  if FFieldsConvTo[i] > '' then
+    res := res+'::'+ FFieldsConvTo[i];
+  Result := res;
+end;
+
+procedure TDBVST.SetFocusById(newId: String);
+Var
+  XNode: PVirtualNode;
+  Data: PDBTreeData;
+begin
+  If GetFirst = nil then Exit;
+  XNode:=nil;
+  Repeat
+    if XNode = nil then XNode:=GetFirst Else XNode:=GetNext(XNode);
+    Data:=GetNodeData(XNode);
+    If (Data^[0] = newId) then
+    Begin
+      FocusedNode:=XNode;
+      break;
+    End;
+  Until XNode = GetLast();
+end;
+
 procedure TDBVST.Edited(Sender: TBaseVirtualTree; Node: PVirtualNode;
   Column: TColumnIndex);
+const
+  sqlStringQuote: String = '$$';
+var
+  i: Integer;
+  MasterComponent: TComponent;
+  aSql, FldList: TStringList;
+  newId: String;
 begin
-  SaveRow();
+  aSql:=TStringList.Create;
+  FldList:=TStringList.Create;
+  if GetSelectedID() = '' then begin
+    aSql.Add('insert into ' + DBTable + ' (' + DBFields[Column+1]);
+    if DBLinkFields.Count>0 then
+      aSql.Add(', ' + ListToString(DBLinkFields,', ',''));
+    aSql.Add(') ' + ' select '
+      + sqlStringQuote + Text[Node, Column] + sqlStringQuote);
+    if DBLinkFields.Count>0 then
+      aSql.Add(', ' + ListToString(DBLinkFields,', ',''));
+    if DBLinkFields.Count>0 then begin
+      aSql.Add(' from ');
+      for i:=0 to DBLinkFields.Count-1 do begin
+        if i>0 then aSql.Add(', ');
+        aSql.Add(' unnest(array[');
+        MasterComponent:=Owner.FindComponent(FMasterControls[i]);
+        aSql.Add((MasterComponent as TDBVST).GetSQLSelectedIDs(sqlStringQuote, ',')
+          + ']) ' + DBLinkFields[i]);
+      end;
+      aSql.Add(' returning ' + GetSQLFieldStringFrom(0));
+    end;
+    newId:=ReturnStringSQL(Connection, aSql.Text);
+    if newId > '' then begin
+      NewText(Self, Node, 0, newId);
+      ReFill;
+      SetFocusById(newId);
+    end;
+  end
+  else begin
+    aSql.Add('update ' + DBTable + ' set '
+      + DBFields[Column+1]
+      + ' = ' + sqlStringQuote + Text[Node, Column] + sqlStringQuote + ' '
+      + ' where ' + DBFields[0] + ' = ' + GetSQLFieldStringTo(GetSQLSelectedID(sqlStringQuote), 0));
+    for i:=0 to DBLinkFields.Count-1 do begin
+      MasterComponent:=Owner.FindComponent(FMasterControls[i]) ;
+      aSql.Add(' and ' + DBLinkFields[i] + ' in ('
+        + (MasterComponent as TDBVST).GetSQLSelectedIDs(sqlStringQuote, ',') + ') ');
+    end;
+    ExecSQL(Connection, aSql.Text);
+  end;
 end;
 
 procedure TDBVST.Expanding(Sender: TBaseVirtualTree; Node: PVirtualNode;
@@ -367,29 +464,19 @@ begin
 end;
 
 procedure TDBVST.MakeSQL(forHeaders: Boolean);
-
-  function GetSQLFieldString(i: Integer):String;
-  var
-    res: String;
-  begin
-    res:=FFields[i];
-    if FFieldsConvFrom[i] > '' then
-      res := res+'::'+ FFieldsConvFrom[i];
-    Result := res;
-  end;
-
 var
   ParentVST: TDBVST;
   i: Integer;
 begin
   FSQL.Clear;
   FSQL.Add('select count(*) __cnt, ');
-  FSQL.Add(GetSQLFieldString(0));
-  for i:=1 to FFields.Count-1 do begin
-    FSQL.Add(', '+ GetSQLFieldString(i));
+  FSQL.Add(GetSQLFieldStringFrom(0));
+  for i:=1 to FDBFields.Count-1 do begin
+    FSQL.Add(', '+ GetSQLFieldStringFrom(i));
   end;
-  FSQL.Add(' from ' + Table);
+  FSQL.Add(' from ' + DBTable);
   if forHeaders then exit;
+  if Where = '' then Where:='true';
   FSQL.Add(' where ' + Where);
   for i:=0 to FMasterControls.Count-1 do begin
     try
@@ -400,7 +487,7 @@ begin
     finally
     end;
   end;
-//  FSQL.Add(' group by ' + ListToString(FFields,',',''));
+//  FSQL.Add(' group by ' + ListToString(FDBFields,',',''));
 end;
 
 constructor TDBVST.Create(TheOwner: TComponent);
@@ -409,13 +496,14 @@ begin
   FConnection:=TSQLConnection.Create(Self);
   FConnection.SetSubComponent(true);
   FSQL:=TStringList.Create();
-  FFields:=TStringList.Create();
+  FDBFields:=TStringList.Create();
   FFieldsDisp:=TStringList.Create();
   FFieldsConvTo:=TStringList.Create();
-  FFieldsConvFrom:=TStringList.Create();
+  FDBFieldsConvFrom:=TStringList.Create();
   FLinkFields:=TStringList.Create();
   FMasterControls:=TStringList.Create();
   FilterEdit:=TDBVSTFilterEdit.Create(Self);
+  OnEdited:=@Edited;
   OnExpanding:=@Expanding;
   OnColumnDblClick:=@ColumnDblClick;
   OnFocusChanged:=@FocusChanged;
@@ -429,7 +517,6 @@ end;
 
 destructor TDBVST.Destroy;
 begin
-  FilterEdit.Free;
   inherited Destroy;
 end;
 
@@ -462,13 +549,13 @@ begin
     if (Node = nil) then
        Query.SQL.Text := FSQL.Text + ' ' + ' and '
        + FKey + ' is null '
-       + ' group by ' + ListToString(FFields,',','')
+       + ' group by ' + ListToString(FDBFields,',','')
        + ' order by ' + FOrder
     else begin
       ParentNodeData:=Self.GetNodeData(Node);
       Query.SQL.Text := FSQL.Text + ' ' + ' and '
        + FKey + ' = $$' + ParentNodeData^[0] + '$$ '
-       + ' group by ' + ListToString(FFields,',','')
+       + ' group by ' + ListToString(FDBFields,',','')
        + ' order by ' + FOrder;
     end;
     Query.Open;
@@ -505,12 +592,12 @@ var
   i: Integer;
 begin
   xSQL := 'insert into ' + FTable + '('
-    + FFields[0] + ','
-    + ListToString(LinkFields,',','')
+    + FDBFields[0] + ','
+    + ListToString(DBLinkFields,',','')
     + ') '
     + aQuery;
   ExecSQL(Connection, xSQL);
-  ReFill(0);
+  ReFill;
 end;
 
 procedure TDBVST.DelFromWhere(aQuery: String);
@@ -521,21 +608,21 @@ begin
   xSQL := 'delete from ' + FTable
     + ' where ' + aQuery;
   ExecSQL(Connection, xSQL);
-  ReFill(0);
+  ReFill;
 end;
 
 
-procedure TDBVST.ReFill(levFull: integer);
+procedure TDBVST.ReFill;
 var
   isSelected: Boolean;
   i: Integer;
   ParentVST: TDBVST;
 begin
   Clear;
+  if not Connection.Connected then exit;
   isSelected:=True;
   for i:=0 to FMasterControls.Count-1 do begin
     ParentVST:=GetDBVST(FMasterControls[i]);
-    writeln(ParentVST.Name);
     if not Assigned(ParentVST) then begin
       isSelected:=False;
       break;
@@ -547,8 +634,29 @@ begin
   end;
   if isSelected then begin
     MakeSQL(false);
-    FillNode(nil, levFull);
+    FillNode(nil, Deep);
   end;
+end;
+
+procedure TDBVST.Init;
+var
+  i: Integer;
+  Column: TVirtualTreeColumn;
+begin
+  Clear;
+  if not Connection.Connected then exit;
+  for i:=Header.Columns.Count+1 to DBFields.Count-1 do begin
+    Column:=Header.Columns.Add;
+    Column.Width:=200;
+    Column.Options:=Column.Options + [coAllowClick, coAllowFocus];
+    Column.Text:=DBFieldsDisp[i];
+  end;
+  Header.Options:=Header.Options + [hoVisible, hoAutoResize];
+  TreeOptions.MiscOptions:=TreeOptions.MiscOptions
+    + [toEditable, toGridExtensions];
+  TreeOptions.SelectionOptions:=TreeOptions.SelectionOptions
+    + [toExtendedFocus];
+  ReFill;
 end;
 
 procedure TDBVST.InitAndFill(conn: TSQLConnection; aTable: String; aFields,
@@ -559,21 +667,22 @@ var
   Column: TVirtualTreeColumn;
   i, cnt: Integer;
 begin
-  Clear;
+  Init;
+{  Clear;
   if not conn.Connected then exit;
-  Table := aTable;
+  DBTable := aTable;
   Key := aKey;
   Order := aOrder;
   Where := aWhere;
   Connection:=conn;
-  FFields.Clear;
+  FDBFields.Clear;
   FFieldsDisp.Clear;
   FFieldsConvTo.Clear;
-  FFieldsConvFrom.Clear;
+  FDBFieldsConvFrom.Clear;
   for i:=0 to length(aFields)-1 do begin
-      FFields.Add(aFields[i]);
+      FDBFields.Add(aFields[i]);
       FFieldsDisp.Add(aFieldsDisp[i]);
-      FFieldsConvFrom.Add(aFieldsConvFrom[i]);
+      FDBFieldsConvFrom.Add(aFieldsConvFrom[i]);
       FFieldsConvTo.Add(aFieldsConvTo[i]);
   end;
   FMasterControls.Clear;
@@ -583,7 +692,7 @@ begin
       FLinkFields.Add(aLinkFielsd[i]);
   end;
     Header.Options := Header.Options + [hoVisible];
-    for i:=Header.Columns.Count+1 to FFields.Count-1 do begin
+    for i:=Header.Columns.Count+1 to FDBFields.Count-1 do begin
       Column:=Header.Columns.Add;
       Column.Width:=200;
       Column.Options:=Column.Options + [coAllowClick, coAllowFocus];
@@ -594,7 +703,8 @@ begin
       + [toEditable, toGridExtensions];
     TreeOptions.SelectionOptions:=TreeOptions.SelectionOptions
       + [toExtendedFocus];
-    ReFill(levFull);
+    ReFill;
+}
 end;
 
 function TDBVST.GetSelectedID: String;
@@ -652,35 +762,5 @@ begin
   end;
 end;
 
-function TDBVST.SaveAll: String;
-begin
-
-end;
-
-function TDBVST.SaveRow: String;
-var
-  Query: TExtSQLQuery;
-  i: Integer;
-  Val: String;
-begin
-  Query := TExtSQLQuery.Create(Self, FConnection);
-  Query.SQL.Add('update ' + Table);
-  Query.SQL.Add('set ');
-  GetText(Self, FocusedNode, 0, ttNormal, Val);
-  Query.SQL.Add(FFields[2] + ' = $$' + Val + '$$ ');
-  for i:=3 to FFields.Count-1 do begin
-    GetText(Self, FocusedNode, i-2, ttNormal, Val);
-    Query.SQL.Add(', '+ FFields[i] + ' = $$' + Val + '$$ ');
-  end;
-  Query.SQL.Add('where ' + Where);
-  Query.SQL.Add('and ' + FFields[0] + ' = $$' + GetSelectedID() + '$$');
-  try
-//    Query.ExecSQL;
-  except
-    on E: Exception do
-      Result:=E.Message;
-  end;
-  Query.Free;
-end;
 
 end.

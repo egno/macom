@@ -36,8 +36,10 @@ uses
   procedure DBDisconnect(Conn: TSQLConnection);
   function GetQuery(Conn: TSQLConnection): TSQLQuery;
   procedure FillListFromQuery(Conn: TSQLConnection; Items: TStrings; SQL:String);
-  function ListToString(aList: TStringList; aDelimiter, aQuote: String): String;
-  procedure ExecSQL(Conn: TSQLConnection; SQL: String);
+  function ListToString(aList: TStrings; aDelimiter, aQuote: String): String;
+  function ExecSQL(Conn: TSQLConnection; SQL: String): String;
+  function ReturnStringSQL(Conn: TSQLConnection; SQL: String): String;
+
 
 
 
@@ -97,7 +99,7 @@ begin
   end;
 end;
 
-function ListToString(aList: TStringList; aDelimiter, aQuote: String): String;
+function ListToString(aList: TStrings; aDelimiter, aQuote: String): String;
 var
   i: Integer;
   res: String;
@@ -111,7 +113,7 @@ begin
 end;
 
 
-procedure ExecSQL(Conn: TSQLConnection; SQL: String);
+function ExecSQL(Conn: TSQLConnection; SQL: String): String;
 var
   Query: TExtSQLQuery;
 begin
@@ -119,9 +121,25 @@ begin
   try
     Query.SQL.Add(SQL);
     Query.ExecSQL;
+    Query.Close;
   finally
     Query.Free;
   end;
+end;
+
+function ReturnStringSQL(Conn: TSQLConnection; SQL: String): String;
+var
+  Query: TExtSQLQuery;
+begin
+  Query := TExtSQLQuery.Create(nil, Conn);
+  try
+    Query.SQL.Add(SQL);
+    Query.Open;
+    Result := Query.Fields[0].AsString;
+  except
+    Result := '';
+  end;
+  Query.Free;
 end;
 
 

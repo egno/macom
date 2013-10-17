@@ -200,8 +200,6 @@ type
       Node: PVirtualNode; Column: TColumnIndex);
     procedure BuildingPropertiesVSTColumnDblClick(Sender: TBaseVirtualTree;
       Column: TColumnIndex; Shift: TShiftState);
-    procedure BuildingPropertiesVSTEdited(Sender: TBaseVirtualTree;
-      Node: PVirtualNode; Column: TColumnIndex);
     procedure BuildingPropsTabSheetShow(Sender: TObject);
     procedure BuildingServicesTabSheetShow(Sender: TObject);
     procedure BuildingsListFocusChanged(Sender: TBaseVirtualTree;
@@ -228,7 +226,6 @@ type
     procedure WorkAddBtnClick(Sender: TObject);
     procedure WorkDelBtnClick(Sender: TObject);
     procedure UpdateDBTable(Table: String; Fields, Values: array of String);
-    function ReturnStringSQL(SQL: String): String;
     procedure FillListFromSQL(Items:TStrings ; SQL: String);
     procedure WorksListFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
@@ -284,7 +281,7 @@ procedure TMainForm.BuildingMainTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
   if (BuildingsList.SelectedCount > 0) then begin
-    BuildingDetailsMemo.Text:=ReturnStringSQL(
+    BuildingDetailsMemo.Text:=ReturnStringSQL(Conn,
       'select array_to_string(array_agg(note), chr(13)||$$-------$$||chr(13)) from buildings where id in ('
       + BuildingsList.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
       +')');
@@ -312,12 +309,6 @@ procedure TMainForm.BuildingPropertiesVSTColumnDblClick(
   Sender: TBaseVirtualTree; Column: TColumnIndex; Shift: TShiftState);
 begin
   BuildingPropertiesVST.EditNode(BuildingPropertiesVST.FocusedNode, Column);
-end;
-
-procedure TMainForm.BuildingPropertiesVSTEdited(Sender: TBaseVirtualTree;
-  Node: PVirtualNode; Column: TColumnIndex);
-begin
-//  ExecSQL('');
 end;
 
 procedure TMainForm.BuildingPropsTabSheetShow(Sender: TObject);
@@ -357,6 +348,8 @@ begin
     '3', 0);
 end;
 
+
+
 procedure TMainForm.BuildingsListFocusChanged(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Column: TColumnIndex);
 begin
@@ -370,15 +363,7 @@ begin
   if (not Conn.Connected) then exit;
   if Assigned(BuildingsList.GetFirst()) then exit;
   Log('...получение справочника домов');
-  BuildingsList.InitAndFill(Conn, 'buildings_hlist',
-    ['id', 'disp'],
-    ['', 'Адрес'],
-    ['', ''],
-    ['', ''],
-    [],[],
-    'pid',
-    '',
-    '3', 0);
+  BuildingsList.ReFill;
 end;
 
 procedure TMainForm.DataSave(Sender: TObject);
@@ -544,23 +529,23 @@ end;
 procedure TMainForm.MainTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
-  WorkNameEdit.Text:=ReturnStringSQL(
+  WorkNameEdit.Text:=ReturnStringSQL(Conn,
           'select disp from works where id = '
           + WorksList.GetSQLSelectedID(sqlStringQuote)
           );
-  WorkCodeEdit.Text:=ReturnStringSQL(
+  WorkCodeEdit.Text:=ReturnStringSQL(Conn,
           'select code::text from works where id = '
           + WorksList.GetSQLSelectedID(sqlStringQuote)
           );
-  BaseCB.Text:=ReturnStringSQL(
+  BaseCB.Text:=ReturnStringSQL(Conn,
           'select base::text from works where id = '
           + WorksList.GetSQLSelectedID(sqlStringQuote)
           );
-  WorkFactorEdit.Text:=ReturnStringSQL(
+  WorkFactorEdit.Text:=ReturnStringSQL(Conn,
           'select factor::text from works where id = '
           + WorksList.GetSQLSelectedID(sqlStringQuote)
           );
-  WorkCondEdit.Text:=ReturnStringSQL(
+  WorkCondEdit.Text:=ReturnStringSQL(Conn,
           'select condition::text from works where id = '
           + WorksList.GetSQLSelectedID(sqlStringQuote)
           );
@@ -584,7 +569,7 @@ case C of
       if Conn.Connected then begin
         Panels[0].Text:=Conn.UserName + '@'+ Conn.HostName + '/'
           + Conn.DatabaseName;
-        Panels[1].Text:=ReturnStringSQL('select to_char(work_date(), '
+        Panels[1].Text:=ReturnStringSQL(Conn, 'select to_char(work_date(), '
           + '''' + sqlDateFormat + ''''
           + ') || '' '' || '
           + 'to_char(setting(''work.period'')::daterange, '''
@@ -702,7 +687,7 @@ case C of
         (BuildingPersonList.SelectionCount > 0) then
           tid := TKeyValue(BuildingPersonList.Selected.Data).Code;
       if tid > '' then begin
-        Text:=ReturnStringSQL(
+        Text:=ReturnStringSQL(Conn,
           'select max(contract_disp) || $$ $$ || (array_agg(code::text || $$: $$ '
           + '|| val::text))::text disp from all_staff_params '
           + ' where val is not null and contract = '''
@@ -721,7 +706,7 @@ case C of
         (ServiceWorksList.SelectionCount > 0) then
           tid := TKeyValue(ServiceWorksList.Selected.Data).Code;
       if tid > '' then begin
-        Json := TJSONParser.Create(ReturnStringSQL(
+        Json := TJSONParser.Create(ReturnStringSQL(Conn,
           'select note from works where id = '''
           + tid
           +''''));
@@ -735,7 +720,7 @@ case C of
       if (WorksMainTreeView.SelectionCount > 0) then
           tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
       if tid > '' then begin
-        Json := TJSONParser.Create(ReturnStringSQL(
+        Json := TJSONParser.Create(ReturnStringSQL(Conn,
           'select note from works where id = '''
           + tid
           +''''));
@@ -748,7 +733,7 @@ case C of
       tid := ''; if (WorksMainTreeView.SelectionCount > 0) then
           tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
       if tid > '' then begin
-        Caption:= ReturnStringSQL(
+        Caption:= ReturnStringSQL(Conn,
           'select code::text from works where id = '''
           + tid
           +'''');
@@ -760,7 +745,7 @@ case C of
       tid := ''; if (WorksMainTreeView.SelectionCount > 0) then
           tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
       if tid > '' then begin
-        Text:= ReturnStringSQL(
+        Text:= ReturnStringSQL(Conn,
           'select disp from works where id = '''
           + tid
           +'''');
@@ -772,7 +757,7 @@ case C of
       tid := ''; if (WorksMainTreeView.SelectionCount > 0) then
           tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
       if tid > '' then begin
-        Text:= ReturnStringSQL(
+        Text:= ReturnStringSQL(Conn,
           'select code::text from works where id = '''
           + tid
           +'''');
@@ -784,7 +769,7 @@ case C of
       tid := ''; if (WorksMainTreeView.SelectionCount > 0) then
           tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
       if tid > '' then begin
-        Text:= ReturnStringSQL(
+        Text:= ReturnStringSQL(Conn,
           'select base::text from works where id = '''
           + tid
           +'''');
@@ -796,7 +781,7 @@ case C of
       tid := ''; if (WorksMainTreeView.SelectionCount > 0) then
           tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
       if tid > '' then begin
-        Text:= ReturnStringSQL(
+        Text:= ReturnStringSQL(Conn,
           'select factor::text from works where id = '''
           + tid
           +'''');
@@ -808,7 +793,7 @@ case C of
       tid := ''; if (WorksMainTreeView.SelectionCount > 0) then
           tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
       if tid > '' then begin
-        Text:= ReturnStringSQL(
+        Text:= ReturnStringSQL(Conn,
           'select condition::text from works where id = '''
           + tid
           +'''');
@@ -825,7 +810,7 @@ procedure TMainForm.RefreshPersonNote(ids: String);
 begin
   PersonNote.Clear;
   try
-    PersonNote.Text:=ReturnStringSQL(
+    PersonNote.Text:=ReturnStringSQL(Conn,
       'select array_to_string(array_agg(disp), '
       + ' chr(13)||$$-------$$||chr(13)) from ( '
       + 'select max(contract_disp) || chr(13) || '
@@ -848,7 +833,7 @@ end;
 procedure TMainForm.ServiceCompaniesVSTFocusChanged(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Column: TColumnIndex);
 begin
-  BuildingContractWorksVST.ReFill(0);
+  BuildingContractWorksVST.ReFill;
 end;
 
 procedure TMainForm.ServicesListFocusChanged(Sender: TBaseVirtualTree;
@@ -997,27 +982,8 @@ end;
 
 procedure TMainForm.UpdateDBTable(Table: String; Fields, Values: array of String
   );
-var
-  ids, SQL: String;
 begin
-  SQL := 'insert into '
-    + Table + ' '
-    + ' (';
-end;
 
-function TMainForm.ReturnStringSQL(SQL: String): String;
-var
-  Query: TExtSQLQuery;
-begin
-  Query := TExtSQLQuery.Create(Self, Conn);
-  try
-    Query.SQL.Add(SQL);
-    Query.Open;
-    Result := Query.Fields[0].AsString;
-  except
-    Result := '';
-  end;
-  Query.Free;
 end;
 
 procedure TMainForm.FillListFromSQL(Items: TStrings; SQL: String);
@@ -1133,16 +1099,16 @@ procedure TMainForm.MakeVSTLabelCaption(aVST: TDBVST; aLabel: TLabel);
 begin
   if (not Conn.Connected) then exit;
   if (aVST.SelectedCount > 0) then begin
-    aLabel.Caption:= ReturnStringSQL(
-      'select ' + aVST.Fields[1] + '  from ' + aVST.Table + ' where ' + aVST.Fields[0] + ' = '
+    aLabel.Caption:= ReturnStringSQL(Conn,
+      'select ' + aVST.DBFields[1] + '  from ' + aVST.DBTable + ' where ' + aVST.DBFields[0] + ' = '
       + aVST.GetSQLSelectedID(sqlStringQuote)
       );
     aLabel.Font.Style:=aLabel.Font.Style-[fsBold];
     if (aVST.SelectedCount > 1) then begin
       aLabel.Caption:= '['
-        + ReturnStringSQL(
-        'select count(*)::text from ' + aVST.Table + ' where '
-        + aVST.Fields[0] + ' in ('
+        + ReturnStringSQL(Conn,
+        'select count(*)::text from ' + aVST.DBTable + ' where '
+        + aVST.DBFields[0] + ' in ('
         + aVST.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
         +')')
         + '] '
@@ -1159,10 +1125,10 @@ procedure TMainForm.MakeVSTNoteText(aVST: TDBVST; aMemo: TMemo);
 begin
   aMemo.Clear;
   try
-    aMemo.Text:=ReturnStringSQL(
-      'select array_to_string(array_agg(' + aVST.Fields[1] + '), '
-      + ' chr(13)||$$-------$$||chr(13)) from ' + aVST.Table
-      + ' where ' + aVST.Fields[0] + '  IN ('
+    aMemo.Text:=ReturnStringSQL(Conn,
+      'select array_to_string(array_agg(' + aVST.DBFields[1] + '), '
+      + ' chr(13)||$$-------$$||chr(13)) from ' + aVST.DBTable
+      + ' where ' + aVST.DBFields[0] + '  IN ('
       + aVST.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
       + ')' );
   finally
