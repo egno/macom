@@ -111,10 +111,6 @@ type
     procedure DelFromWhere(aQuery: String);
     procedure ReFill();
     procedure Init();
-    procedure InitAndFill(conn: TSQLConnection; aTable:String;
-      aFields, aFieldsDisp, aFieldsConvTo, aFieldsConvFrom,
-      aMasterControls, aLinkFielsd:array of String;
-      aKey, aWhere, aOrder: String; levFull:integer);
     function GetSelectedID(): String;
     function GetID(Node: PVirtualNode): String;
     function GetDBVST(aName: String): TDBVST;
@@ -478,11 +474,11 @@ begin
   if forHeaders then exit;
   if Where = '' then Where:='true';
   FSQL.Add(' where ' + Where);
-  for i:=0 to FMasterControls.Count-1 do begin
+  for i:=0 to DBMasterControls.Count-1 do begin
     try
-      ParentVST:=(Owner.FindComponent(FMasterControls[i]) as TDBVST);
+      ParentVST:=(Owner.FindComponent(DBMasterControls[i]) as TDBVST);
       if ParentVST = nil then break;
-      FSQL.Add(' and (' + FLinkFields[i] + ' in ('
+      FSQL.Add(' and (' + DBLinkFields[i] + ' in ('
       + ParentVST.GetSQLSelectedIDs('$$', ',') + ')) ');
     finally
     end;
@@ -503,6 +499,7 @@ begin
   FLinkFields:=TStringList.Create();
   FMasterControls:=TStringList.Create();
   FilterEdit:=TDBVSTFilterEdit.Create(Self);
+  FKey:='null';
   OnEdited:=@Edited;
   OnExpanding:=@Expanding;
   OnColumnDblClick:=@ColumnDblClick;
@@ -621,8 +618,8 @@ begin
   Clear;
   if not Connection.Connected then exit;
   isSelected:=True;
-  for i:=0 to FMasterControls.Count-1 do begin
-    ParentVST:=GetDBVST(FMasterControls[i]);
+  for i:=0 to DBMasterControls.Count-1 do begin
+    ParentVST:=GetDBVST(DBMasterControls[i]);
     if not Assigned(ParentVST) then begin
       isSelected:=False;
       break;
@@ -657,54 +654,6 @@ begin
   TreeOptions.SelectionOptions:=TreeOptions.SelectionOptions
     + [toExtendedFocus];
   ReFill;
-end;
-
-procedure TDBVST.InitAndFill(conn: TSQLConnection; aTable: String; aFields,
-  aFieldsDisp, aFieldsConvTo, aFieldsConvFrom, aMasterControls,
-  aLinkFielsd: array of String; aKey, aWhere, aOrder: String; levFull: integer);
-
-var
-  Column: TVirtualTreeColumn;
-  i, cnt: Integer;
-begin
-  Init;
-{  Clear;
-  if not conn.Connected then exit;
-  DBTable := aTable;
-  Key := aKey;
-  Order := aOrder;
-  Where := aWhere;
-  Connection:=conn;
-  FDBFields.Clear;
-  FFieldsDisp.Clear;
-  FFieldsConvTo.Clear;
-  FDBFieldsConvFrom.Clear;
-  for i:=0 to length(aFields)-1 do begin
-      FDBFields.Add(aFields[i]);
-      FFieldsDisp.Add(aFieldsDisp[i]);
-      FDBFieldsConvFrom.Add(aFieldsConvFrom[i]);
-      FFieldsConvTo.Add(aFieldsConvTo[i]);
-  end;
-  FMasterControls.Clear;
-  FLinkFields.Clear;
-  for i:=0 to length(aMasterControls)-1 do begin
-      FMasterControls.Add(aMasterControls[i]);
-      FLinkFields.Add(aLinkFielsd[i]);
-  end;
-    Header.Options := Header.Options + [hoVisible];
-    for i:=Header.Columns.Count+1 to FDBFields.Count-1 do begin
-      Column:=Header.Columns.Add;
-      Column.Width:=200;
-      Column.Options:=Column.Options + [coAllowClick, coAllowFocus];
-      Column.Text:=FFieldsDisp[i];
-    end;
-    Header.Options:=Header.Options + [hoVisible, hoAutoResize];
-    TreeOptions.MiscOptions:=TreeOptions.MiscOptions
-      + [toEditable, toGridExtensions];
-    TreeOptions.SelectionOptions:=TreeOptions.SelectionOptions
-      + [toExtendedFocus];
-    ReFill;
-}
 end;
 
 function TDBVST.GetSelectedID: String;

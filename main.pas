@@ -42,13 +42,11 @@ type
   TMainForm = class(TForm)
     ActionPanel3: TPanel;
     ActionPanel4: TPanel;
-    ActionPanel5: TPanel;
     ActionSave: TAction;
     ActionDisconnect: TAction;
     ActionConnect: TAction;
     ActionPanel1: TPanel;
     ActPanel1: TPanel;
-    BuildingWorksSaveBtn: TBitBtn;
     BaseCB: TComboBox;
     BuildingPropertiesVST: TDBVST;
     DataSetDelete: TDataSetDelete;
@@ -314,38 +312,14 @@ end;
 procedure TMainForm.BuildingPropsTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
-  BuildingPropertiesVST.InitAndFill(conn, 'buildings_p',
-    ['code', 'code', 'val'],
-    ['','',''],
-    ['ltree','ltree',''],
-    ['text','text',''],
-    ['BuildingsList'],['obj'],
-    'null',
-    '',
-    '3', 0);
+  BuildingPropertiesVST.Refill;
 end;
 
 procedure TMainForm.BuildingServicesTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
-  ServiceCompaniesVST.InitAndFill(conn, 'building_service_companies_complete',
-    ['service', 'service_disp', 'company_disp'],
-    ['','',''],
-    ['','',''],
-    ['','',''],
-    ['BuildingsList'],['building'],
-    'service_parent',
-    '',
-    '3', 1);
-  BuildingContractWorksVST.InitAndFill(conn, 'buildings_service_works',
-    ['work', 'work_full_disp', 'amount_interval', 'amount'],
-    ['', 'Работа', 'Периодичность', 'Количество'],
-    ['', '', 'interval', ''],
-    ['', '', 'text', ''],
-    ['ServiceCompaniesVST','BuildingsList'],['service', 'building'],
-    'null',
-    '',
-    '3', 0);
+  ServiceCompaniesVST.ReFill;
+  BuildingContractWorksVST.ReFill;
 end;
 
 
@@ -367,132 +341,7 @@ begin
 end;
 
 procedure TMainForm.DataSave(Sender: TObject);
-var
-  i, ib:Integer;
-  VSTNode: PVirtualNode;
-  VSTNodeData: PDBTreeData;
-  bid, sid, wid: String;
-  sql: String;
-//  ServiceVSTNodeData: PDBTreeData;
 begin
-{  case (Sender as TComponent).Name of
-    'BuildingPersSaveBtn': begin
-      if (Assigned(Buildings.FocusedNode)) then begin
-        bid := '';
-        for i:=0 to BuildingsTreeView.SelectionCount-1 do begin
-          if bid > '' then bid := bid + ', ' ;
-          bid := bid + '$$'
-            + TKeyValue(BuildingsTreeView.Selections[i].Data).Code + '$$';
-        end;
-      end;
-      ExecSQL(Conn, 'delete from building_staff where '
-        + ' building in (' + bid + ') ;'  );
-      for i:=0 to BuildingPersonList.Items.Count-1 do begin
-        if BuildingPersonList.Items[i].Data <> nil then
-          ExecSQL(Conn, 'insert into building_staff '
-            + ' (building, contract) '
-            + ' select id, '
-            + '$$' + TKeyValue(BuildingPersonList.Items[i].Data).Code + '$$'
-            + ' from buildings where id in ( ' + bid + ') '
-            + ';'  );
-      end;
-    end;
-    'BuildingPropsSaveBtn': begin
-      if (Assigned(Buildings.FocusedNode)) then begin
-        bid := '';
-        for i:=0 to BuildingsTreeView.SelectionCount-1 do begin
-          if bid > '' then bid := bid + ', ' ;
-          bid := bid + '$$'
-            + TKeyValue(BuildingsTreeView.Selections[i].Data).Code + '$$';
-        end;
-        VSTNode := BuildingPropertiesVST.GetFirst();
-        while VSTNode <> nil do begin
-          VSTNodeData := BuildingPropertiesVST.GetNodeData(VSTNode);
-            ExecSQL(Conn, 'insert into buildings_p (obj, code, val) select '
-              + ' id, '
-              + ' $$' + VSTNodeData^[1] + '$$::ltree, '
-              + ' $$' + VSTNodeData^[2] + '$$ '
-              + ' from buildings where id in ( ' +bid + ') ;'
-              );
-          VSTNode := BuildingPropertiesVST.GetNext(VSTNode);
-        end;
-      end;
-      RefreshControl('BuildingPropertiesVST');
-    end;
-    'BuildingWorksSaveBtn': begin
-      if (Assigned(Buildings.FocusedNode))
-              and Assigned(ServiceCompaniesVST.FocusedNode) then begin
-        bid := '';
-        for i:=0 to BuildingsTreeView.SelectionCount-1 do begin
-          if bid > '' then bid := bid + ', ' ;
-          bid := bid + '$$'
-            + TKeyValue(BuildingsTreeView.Selections[i].Data).Code + '$$';
-        end;
-        sid := ServiceCompaniesVST.GetSelectedID();
-        VSTNode := BuildingContractWorksVST.GetFirst();
-        while VSTNode <> nil do begin
-          VSTNodeData := BuildingContractWorksVST.GetNodeData(VSTNode);
-          ExecSQL(Conn, 'update buildings_service_works set '
-            + ' amount = 0' + VSTNodeData^[3] + ', '
-            + ' amount_interval = $$' + VSTNodeData^[2] + '$$::interval '
-            + ' where building in (' + bid + ') '
-            + ' and service = $$' + sid +'$$ '
-            + ' and work = $$' + VSTNodeData^[0] + '$$ ;'
-            );
-          VSTNode := BuildingContractWorksVST.GetNext(VSTNode);
-        end;
-      end;
-      RefreshControl('BuildingContractWorksVST');
-    end;
-    'SrvWorksSaveBtn': begin
-      ExecSQL(Conn, 'delete from service_works where '
-        + ' service =  '
-        + '''' + TKeyValue(ServicesTreeView.Selected.Data).Code + ''' '
-        + ';'  );
-      for i:=0 to ServiceWorksList.Items.Count-1 do begin
-        if ServiceWorksList.Items[i].Data <> nil then
-          ExecSQL(Conn, 'insert into service_works '
-            + ' (service, work) '
-            + ' values ( '
-            + '''' + TKeyValue(ServicesTreeView.Selected.Data).Code + ''', '
-            + '''' + TKeyValue(ServiceWorksList.Items[i].Data).Code + ''''
-            + ');'  );
-      end;
-    end;
-    'WorkMainSaveBtn': begin
-      wid := '';
-      sql := '';
-      if (WorksMainTreeView.SelectionCount > 0) then begin
-        wid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
-        sql := sql + 'update works set ';
-        if WorkCodeEdit.Text > '' then
-          sql := sql + ' code = ' + '''' + WorkCodeEdit.Text + '''::ltree, '
-        else
-          sql := sql + ' code = NULL::ltree, ';
-        if WorkNameEdit.Text > '' then
-          sql := sql + ' disp = ' + '''' + WorkNameEdit.Text + ''', '
-        else
-          sql := sql + ' disp = NULL, ';
-        if BaseCB.Text > '' then
-          sql := sql + ' base = ' + '''' + BaseCB.Text + '''::ltree, '
-        else
-          sql := sql + ' base = NULL::ltree, ';
-        if WorkFactorEdit.Text > '' then
-          sql := sql + ' factor = ' + '''' + WorkFactorEdit.Text + '''::numeric, '
-        else
-          sql := sql + ' factor = NULL, ';
-        if WorkCondEdit.Text > '' then
-          sql := sql + ' condition = ' + '''' + WorkCondEdit.Text + ''' '
-        else
-          sql := sql + ' condition = NULL ';
-        sql := sql + ' where id = '
-            + '''' + wid + '''  '
-            + ';';
-        ExecSQL(Conn, sql);
-      end;
-    end;
-  end;
-}
 end;
 
 procedure TMainForm.DataSetInsertExecute(Sender: TObject);
@@ -563,247 +412,6 @@ begin
   p:=FindComponent(C);
   if p = nil then Exit;
   (p as TControl).Cursor:=crSQLWait;
-{
-case C of
-    'MainStatusBar': with (p as TStatusBar) do begin
-      if Conn.Connected then begin
-        Panels[0].Text:=Conn.UserName + '@'+ Conn.HostName + '/'
-          + Conn.DatabaseName;
-        Panels[1].Text:=ReturnStringSQL(Conn, 'select to_char(work_date(), '
-          + '''' + sqlDateFormat + ''''
-          + ') || '' '' || '
-          + 'to_char(setting(''work.period'')::daterange, '''
-          + sqlDateFormat
-          + ''')');
-      end
-      else begin
-        Panels[0].Text:=dspDisconnected;
-        Panels[1].Text:='';
-      end;
-    end;
-    'WorkResourcesVST': with (p as TDBVST) do
-      if (WorksMainTreeView.SelectionCount > 0) then begin
-        InitAndFill(conn, 'work_resources',
-           ['id','resource_code','resource_disp','measure','amount'],
-           ['','','','',''],
-           ['','ltree','','',''],
-           ['','text','','',''],
-           [],[],
-          'null',
-          'work = $$' + TKeyValue(WorksMainTreeView.Selected.Data).Code + '$$ ',
-          '2', 0);
-          Refresh;
-      end
-      else
-        Clear;
-    'ServiceCompaniesVST': with (p as TDBVST) do
-      if (Assigned(Buildings.FocusedNode)) then begin
-        InitAndFill(conn, 'building_service_companies_complete',
-          ['service', 'service_disp', 'company_disp'],
-          ['','',''],
-          ['','',''],
-          ['','',''],
-          [],[],
-          'service_parent',
-          'building = $$'
-          + TKeyValue(BuildingsTreeView.Selected.Data).Code  + '$$ ',
-          '2', 1);
-        Refresh;
-      end
-      else
-        Clear;
-      'BuildingPersonList': with (p as TDBDynTreeView) do
-        if (Assigned(Buildings.FocusedNode)) then begin
-            FillFromQuery(conn,
-              'SELECT contract, contract_disp FROM building_staff '
-             + ' where building = '''
-             + TKeyValue(BuildingsTreeView.Selected.Data).Code
-             + ''''
-             + ' and null ');
-          end
-        else
-          Items.Clear;
-      'BuildingPropertiesVST': with (p as TDBVST) do
-        if (Assigned(Buildings.FocusedNode)) then begin
-          InitAndFill(conn, 'buildings_p',
-            ['code', 'code', 'val'],
-            ['','',''],
-            ['ltree','ltree',''],
-            ['text','text',''],
-            [],[],
-            'null',
-            'obj = $$'
-            + TKeyValue(BuildingsTreeView.Selected.Data).Code  + '$$ ',
-            '2', 0);
-          Refresh;
-        end
-        else
-          Clear;
-    'ServiceWorksList': with (p as TDBDynTreeView) do
-      if (ServicesTreeView.SelectionCount > 0) then begin
-          FillFromQuery(conn,
-            'SELECT work, work_full_disp FROM service_works '
-           + ' where service = '''
-           + TKeyValue(ServicesTreeView.Selected.Data).Code
-           + ''''
-           + ' and null ');
-        end
-      else
-        Items.Clear;
-    'BuildingBox': with (p as TGroupBox) do
-      if (Assigned(Buildings.FocusedNode)) then begin
-          Visible:=True;
-          Caption:=TKeyValue(BuildingsTreeView.Selected.Data).Value;
-        end
-      else begin
-        Caption:=dspNotAssigned;
-        Visible:=False;
-      end;
-    'BuildingContractWorksVST': with (p as TDBVST) do
-      if (Assigned(Buildings.FocusedNode))
-        and Assigned(ServiceCompaniesVST.FocusedNode) then begin
-          VSTNodeData:=ServiceCompaniesVST.GetNodeData(
-            ServiceCompaniesVST.FocusedNode);
-          InitAndFill(conn, 'buildings_service_works',
-            ['work', 'work_full_disp', 'amount_interval', 'amount'],
-            ['', '', '', ''],
-            ['', '', 'interval', ''],
-            ['', '', 'text', ''],
-            [],[],
-            'null',
-            'service = $$' + VSTNodeData^[0] + '$$ '
-            + ' and building = $$'
-            + TKeyValue(BuildingsTreeView.Selected.Data).Code  + '$$ ',
-            '2', 0);
-        end
-      else
-        Clear;
-    'PersonNote': with (p as TMemo) do begin
-      tid := '';
-      if (ActiveControl.Name = 'PersonnelTreeView') and
-        (PersonnelTreeView.SelectionCount > 0) then
-          tid := TKeyValue(PersonnelTreeView.Selected.Data).Code;
-      if (ActiveControl.Name = 'BuildingPersonList') and
-        (BuildingPersonList.SelectionCount > 0) then
-          tid := TKeyValue(BuildingPersonList.Selected.Data).Code;
-      if tid > '' then begin
-        Text:=ReturnStringSQL(Conn,
-          'select max(contract_disp) || $$ $$ || (array_agg(code::text || $$: $$ '
-          + '|| val::text))::text disp from all_staff_params '
-          + ' where val is not null and contract = '''
-          + tid
-          +''' group by contract');
-      end
-      else
-        Text:='';
-      end;
-    'ServicesWorkNote': with (p as TMemo) do begin
-      tid := '';
-      if (ActiveControl.Name = 'WorksTreeView') and
-        (WorksTreeView.SelectionCount > 0) then
-          tid := TKeyValue(WorksTreeView.Selected.Data).Code;
-      if (ActiveControl.Name = 'ServiceWorksList') and
-        (ServiceWorksList.SelectionCount > 0) then
-          tid := TKeyValue(ServiceWorksList.Selected.Data).Code;
-      if tid > '' then begin
-        Json := TJSONParser.Create(ReturnStringSQL(Conn,
-          'select note from works where id = '''
-          + tid
-          +''''));
-        Text:=Json.Parse.FormatJSON([foDoNotQuoteMembers]);
-      end
-      else
-        Text:='';
-      end;
-    'WorkNote': with (p as TMemo) do begin
-      tid := '';
-      if (WorksMainTreeView.SelectionCount > 0) then
-          tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
-      if tid > '' then begin
-        Json := TJSONParser.Create(ReturnStringSQL(Conn,
-          'select note from works where id = '''
-          + tid
-          +''''));
-        Text:=Json.Parse.FormatJSON([foDoNotQuoteMembers]);
-      end
-      else
-        Text:='';
-      end;
-    'WorkLabel': with (p as TLabel) do begin
-      tid := ''; if (WorksMainTreeView.SelectionCount > 0) then
-          tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
-      if tid > '' then begin
-        Caption:= ReturnStringSQL(Conn,
-          'select code::text from works where id = '''
-          + tid
-          +'''');
-      end
-      else
-        Text:='';
-      end;
-    'WorkNameEdit': with (p as TMemo) do begin
-      tid := ''; if (WorksMainTreeView.SelectionCount > 0) then
-          tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
-      if tid > '' then begin
-        Text:= ReturnStringSQL(Conn,
-          'select disp from works where id = '''
-          + tid
-          +'''');
-      end
-      else
-        Text:='';
-      end;
-    'WorkCodeEdit': with (p as TEdit) do begin
-      tid := ''; if (WorksMainTreeView.SelectionCount > 0) then
-          tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
-      if tid > '' then begin
-        Text:= ReturnStringSQL(Conn,
-          'select code::text from works where id = '''
-          + tid
-          +'''');
-      end
-      else
-        Text:='';
-      end;
-    'BaseCB': with (p as TComboBox) do begin
-      tid := ''; if (WorksMainTreeView.SelectionCount > 0) then
-          tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
-      if tid > '' then begin
-        Text:= ReturnStringSQL(Conn,
-          'select base::text from works where id = '''
-          + tid
-          +'''');
-      end
-      else
-        Text:='';
-      end;
-    'WorkFactorEdit': with (p as TEdit) do begin
-      tid := ''; if (WorksMainTreeView.SelectionCount > 0) then
-          tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
-      if tid > '' then begin
-        Text:= ReturnStringSQL(Conn,
-          'select factor::text from works where id = '''
-          + tid
-          +'''');
-      end
-      else
-        Text:='';
-      end;
-    'WorkCondEdit': with (p as TMemo) do begin
-      tid := ''; if (WorksMainTreeView.SelectionCount > 0) then
-          tid := TKeyValue(WorksMainTreeView.Selected.Data).Code;
-      if tid > '' then begin
-        Text:= ReturnStringSQL(Conn,
-          'select condition::text from works where id = '''
-          + tid
-          +'''');
-      end
-      else
-        Text:='';
-      end;
-  end;
-  (p as TControl).Cursor:=crDefault;
-}
 end;
 
 procedure TMainForm.RefreshPersonNote(ids: String);
@@ -854,40 +462,18 @@ begin
   if (not Conn.Connected) then exit;
   if Assigned(ServicesList.GetFirst()) then exit;
   Log('...получение справочника услуг');
-  ServicesList.InitAndFill(Conn, 'services',
-    ['id', 'disp'],
-    ['', 'Наименование'],
-    ['', ''],
-    ['', ''],
-    [],[],
-    'pid',
-    '',
-    '3', -1);
+  ServicesList.Refill;
 end;
 
 procedure TMainForm.BuildingPersonnelTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
 //  if Assigned(BuildingPersonnel.GetFirst()) then exit;
-  Log('...получение справочника персонала');
-  BuildingPersonnel.InitAndFill(Conn, 'pers_contracts',
-    ['id', 'disp'],
-    ['', 'Наименование'],
-    ['', ''],
-    ['', ''],
-    [],[],
-    'null',
-    '',
-    '3', 0);
-  BuildingPersonnelVST.InitAndFill(conn, 'building_staff',
-    ['contract', 'contract_disp'],
-    ['',''],
-    ['',''],
-    ['',''],
-    ['BuildingsList'],['building'],
-    'null',
-    '',
-    '3', 0);
+  if not Assigned(BuildingPersonnel.GetFirst()) then begin
+     Log('...получение справочника персонала');
+     BuildingPersonnel.ReFill;
+  end;
+  BuildingPersonnelVST.ReFill;
 end;
 
 procedure TMainForm.SrvWorksTabSheetShow(Sender: TObject);
@@ -895,25 +481,9 @@ begin
   if (not Conn.Connected) then exit;
   if not Assigned(ServicesWorksList.GetFirst()) then begin
     Log('...получение справочника работ');
-    ServicesWorksList.InitAndFill(Conn, 'works',
-      ['id', 'full_disp'],
-      ['', 'Наименование'],
-      ['', ''],
-      ['', ''],
-      [],[],
-      'null',
-      '',
-      '3', 0);
+    ServicesWorksList.ReFill;
   end;
-  ServiceWorks.InitAndFill(Conn, 'service_works',
-    ['work', 'work_full_disp'],
-    ['', 'Наименование'],
-    ['', ''],
-    ['', ''],
-    ['ServicesList'],['service'],
-    'null',
-    '',
-    '3', 0);
+  ServiceWorks.ReFill;
 end;
 
 procedure TMainForm.ToolButton4Click(Sender: TObject);
@@ -1019,15 +589,7 @@ begin
   if (not Conn.Connected) then exit;
   if Assigned(WorksList.GetFirst()) then exit;
   Log('...получение справочника работ');
-  WorksList.InitAndFill(Conn, 'works',
-    ['id', 'full_disp'],
-    ['', 'Наименование'],
-    ['', ''],
-    ['', ''],
-    [],[],
-    'pid',
-    '',
-    '3', 0);
+  WorksList.ReFill;
 end;
 
 procedure TMainForm.WorksTreeViewEnter(Sender: TObject);
@@ -1038,15 +600,7 @@ end;
 procedure TMainForm.WorkTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
-  WorkResourcesVST.InitAndFill(conn, 'work_resources',
-     ['id','resource_code','resource_disp','measure','amount'],
-     ['','','','',''],
-     ['','ltree','','',''],
-     ['','text','','',''],
-     ['WorksList'],['work'],
-    'null',
-    '',
-    '3', 0);
+  WorkResourcesVST.ReFill;
 end;
 
 
