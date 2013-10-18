@@ -191,7 +191,7 @@ Var
   isFound: Boolean;
 begin
   SearchList:=TStringList.Create;
-  with (Parent as TDBVST) do begin
+  with (Owner as TDBVST) do begin
     If GetFirst = nil then Exit;
     VSTNode:=nil;
     S := FilterEdit.Text+SearchDelimiter;
@@ -533,8 +533,8 @@ end;
 procedure TDBVST.KeyPress(Sender: TObject; var Key: char);
 begin
   if not (Key = char(27)) then begin
-    FilterEdit.Show;
-    Application.MainForm.ActiveControl:=FilterEdit;
+    Self.FilterEdit.Show;
+    Application.MainForm.ActiveControl:=Self.FilterEdit;
   end;
 end;
 
