@@ -30,7 +30,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
   sqldb, extsqlquery, db, dbfunc,
-  VirtualTrees;
+  VirtualTrees, VSTCombo;
 
 type
 
@@ -88,6 +88,8 @@ type
     procedure Change(Sender: TBaseVirtualTree; Node: PVirtualNode);
     procedure ColumnDblClick(
       Sender: TBaseVirtualTree; Column: TColumnIndex; Shift: TShiftState);
+    procedure CreateEditor(Sender: TBaseVirtualTree;
+       Node: PVirtualNode; Column: TColumnIndex; out aEditLink: IVTEditLink);
     procedure FocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
       Column: TColumnIndex);
     procedure GetNodeDataSize(Sender: TBaseVirtualTree;
@@ -114,6 +116,7 @@ type
     function GetSelectedID(): String;
     function GetID(Node: PVirtualNode): String;
     function GetDBVST(aName: String): TDBVST;
+    function GetEditLinkProps(Node: PVirtualNode; Column: Integer): TStrings;
     function GetSQLSelectedID(SQLStringQuote: String): String;
     function GetSQLSelectedIDs(SQLStringQuote, SQLFieldDelimiter: String): String;
   published
@@ -246,7 +249,7 @@ procedure TDBVST.SetDBFieldsConvFrom(AValue: TStrings);
 begin
   if DBFieldsConvFrom=AValue then Exit;
   if AValue<>nil then
-    DBFieldsConvFrom.Assign(AValue);
+    DBFieldsConvFrom:=AValue;
 end;
 
 procedure TDBVST.SetDeep(AValue: Integer);
@@ -258,13 +261,13 @@ end;
 procedure TDBVST.SetFieldsConvTo(AValue: TStrings);
 begin
   if FFieldsConvTo=AValue then Exit;
-  FFieldsConvTo.Assign(AValue);
+  FFieldsConvTo:=AValue;
 end;
 
 procedure TDBVST.SetFieldsDisp(AValue: TStrings);
 begin
   if FFieldsDisp=AValue then Exit;
-  FFieldsDisp.Assign(AValue);
+  FFieldsDisp:=AValue;
 end;
 
 procedure TDBVST.SetKey(AValue: String);
@@ -276,13 +279,13 @@ end;
 procedure TDBVST.SetLinkFields(AValue: TStrings);
 begin
   if FLinkFields=AValue then Exit;
-  FLinkFields.Assign(AValue);
+  FLinkFields:=AValue;
 end;
 
 procedure TDBVST.SetMasterControls(AValue: TStrings);
 begin
   if FMasterControls=AValue then Exit;
-  FMasterControls.Assign(AValue);
+  FMasterControls:=AValue;
 end;
 
 procedure TDBVST.SetOrder(AValue: String);
@@ -294,7 +297,7 @@ end;
 procedure TDBVST.SetSQL(AValue: TStrings);
 begin
   if FSQL=AValue then Exit;
-  FSQL.Assign(AValue);
+  FSQL:=AValue;
 end;
 
 procedure TDBVST.SetTable(AValue: String);
@@ -418,6 +421,18 @@ begin
   Sender.EditNode(Sender.FocusedNode, Column);
 end;
 
+procedure TDBVST.CreateEditor(Sender: TBaseVirtualTree; Node: PVirtualNode;
+  Column: TColumnIndex; out aEditLink: IVTEditLink);
+var
+  xEditLinkProps: TStrings;
+begin
+  xEditLinkProps := GetEditLinkProps(Node, Column);
+  if Assigned(xEditLinkProps) then
+    aEditLink:=TCBStringEditLink.Create(Connection, xEditLinkProps)
+  else
+    aEditLink:=TStringEditLink.Create;
+end;
+
 procedure TDBVST.FocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
   Column: TColumnIndex);
 begin
@@ -508,6 +523,7 @@ begin
   OnEdited:=@Edited;
   OnExpanding:=@Expanding;
   OnColumnDblClick:=@ColumnDblClick;
+  OnCreateEditor:=@CreateEditor;
   OnFocusChanged:=@FocusChanged;
   OnGetNodeDataSize:=@GetNodeDataSize;
   OnGetText:=@GetText;
@@ -719,5 +735,19 @@ begin
   end;
 end;
 
+function TDBVST.GetEditLinkProps(Node: PVirtualNode; Column: Integer): TStrings;
+var
+  xList: TStrings;
+  xText: String;
+begin
+  Result:=nil;
+  GetText(Self, Node, 0, ttStatic, xText);
+  if (Column=1)
+      and ((Copy(xText, 0, 2) = 'Р.') or (Copy(xText, 0, 2) = 'P.')) then begin
+    xList:=TStringList.Create;
+    xList.Add('select disp from positions order by 1');
+    Result:=xList;
+  end;
+end;
 
 end.

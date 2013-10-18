@@ -58,6 +58,12 @@ type
     BuildingsLabel: TLabel;
     BuildingContractWorksVST: TDBVST;
     BuildingPersonnelVST: TDBVST;
+    BuildingCalcPriceEdit: TEdit;
+    Label11: TLabel;
+    PairSplitter6: TPairSplitter;
+    PairSplitterSide16: TPairSplitterSide;
+    PairSplitterSide17: TPairSplitterSide;
+    ScrollBox4: TScrollBox;
     WorkVSTLabel: TLabel;
     ServiceWorks: TDBVST;
     Panel7: TPanel;
@@ -285,6 +291,12 @@ begin
   else begin
     BuildingDetailsMemo.Clear;
   end;
+  BuildingCalcPriceEdit.Text:=ReturnStringSQL(Conn,
+        'select round(sum(year_price))::text '
+        + ' from c_service_price where building in ('
+        + BuildingsList.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
+        + ') '
+        );
 end;
 
 procedure TMainForm.BuildingPersonnelFocusChanged(Sender: TBaseVirtualTree;

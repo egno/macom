@@ -7,7 +7,7 @@ unit dbvcextended;
 interface
 
 uses
-  dbfunc, keyvalue, ExtSQLQuery, DBVST, LazarusPackageIntf;
+  dbfunc, keyvalue, ExtSQLQuery, DBVST, VSTCombo, LazarusPackageIntf;
 
 implementation
 
