@@ -249,7 +249,7 @@ procedure TDBVST.SetDBFieldsConvFrom(AValue: TStrings);
 begin
   if DBFieldsConvFrom=AValue then Exit;
   if AValue<>nil then
-    DBFieldsConvFrom:=AValue;
+    DBFieldsConvFrom.Assign(AValue);
 end;
 
 procedure TDBVST.SetDeep(AValue: Integer);
@@ -261,13 +261,13 @@ end;
 procedure TDBVST.SetFieldsConvTo(AValue: TStrings);
 begin
   if FFieldsConvTo=AValue then Exit;
-  FFieldsConvTo:=AValue;
+  FFieldsConvTo.Assign(AValue);
 end;
 
 procedure TDBVST.SetFieldsDisp(AValue: TStrings);
 begin
   if FFieldsDisp=AValue then Exit;
-  FFieldsDisp:=AValue;
+  FFieldsDisp.Assign(AValue);
 end;
 
 procedure TDBVST.SetKey(AValue: String);
@@ -279,13 +279,13 @@ end;
 procedure TDBVST.SetLinkFields(AValue: TStrings);
 begin
   if FLinkFields=AValue then Exit;
-  FLinkFields:=AValue;
+  FLinkFields.Assign(AValue);
 end;
 
 procedure TDBVST.SetMasterControls(AValue: TStrings);
 begin
   if FMasterControls=AValue then Exit;
-  FMasterControls:=AValue;
+  FMasterControls.Assign(AValue);
 end;
 
 procedure TDBVST.SetOrder(AValue: String);

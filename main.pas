@@ -59,6 +59,7 @@ type
     BuildingContractWorksVST: TDBVST;
     BuildingPersonnelVST: TDBVST;
     BuildingCalcPriceEdit: TEdit;
+    MainTree: TDBVST;
     Label11: TLabel;
     PairSplitter6: TPairSplitter;
     PairSplitterSide16: TPairSplitterSide;
@@ -184,7 +185,6 @@ type
     MainStatusBar: TStatusBar;
     MainToolBar: TToolBar;
     LeftAllSheet: TTabSheet;
-    LeftAllTreeView: TTreeView;
     ConnectTabSheet: TTabSheet;
     ConnScrollBox: TScrollBox;
     ActionPanel: TPanel;
@@ -207,11 +207,13 @@ type
     procedure BuildingsListFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
     procedure BuildingTabSheetShow(Sender: TObject);
+    procedure CenterPageControlCloseTabClicked(Sender: TObject);
     procedure DataSave(Sender: TObject);
     procedure DataSetInsertExecute(Sender: TObject);
     procedure DBPopupMenuPopup(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure MainTabSheetShow(Sender: TObject);
+    procedure MainTreeDblClick(Sender: TObject);
     procedure RefreshControl(C:String);
     procedure RefreshPersonNote(ids: String);
     procedure ServiceCompaniesVSTDblClick(Sender: TObject);
@@ -242,6 +244,7 @@ type
     procedure Log(Note: String; Level: Integer = 0);
     procedure MakeVSTLabelCaption(aVST: TDBVST; aLabel: TLabel);
     procedure MakeVSTNoteText(aVST: TDBVST; aMemo: TMemo);
+    procedure MainTreeFill();
   public
     { public declarations }
   end;
@@ -287,16 +290,17 @@ begin
       'select array_to_string(array_agg(note), chr(13)||$$-------$$||chr(13)) from buildings where id in ('
       + BuildingsList.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
       +')');
+    BuildingCalcPriceEdit.Text:=ReturnStringSQL(Conn,
+          'select round(sum(year_price))::text '
+          + ' from c_service_price where building in ('
+          + BuildingsList.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
+          + ') '
+          );
   end
   else begin
     BuildingDetailsMemo.Clear;
+    BuildingCalcPriceEdit.Text:='';
   end;
-  BuildingCalcPriceEdit.Text:=ReturnStringSQL(Conn,
-        'select round(sum(year_price))::text '
-        + ' from c_service_price where building in ('
-        + BuildingsList.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
-        + ') '
-        );
 end;
 
 procedure TMainForm.BuildingPersonnelFocusChanged(Sender: TBaseVirtualTree;
@@ -348,6 +352,11 @@ begin
   if Assigned(BuildingsList.GetFirst()) then exit;
   Log('...получение справочника домов');
   BuildingsList.ReFill;
+end;
+
+procedure TMainForm.CenterPageControlCloseTabClicked(Sender: TObject);
+begin
+  (Sender as TTabSheet).TabVisible:=False;
 end;
 
 procedure TMainForm.DataSave(Sender: TObject);
@@ -409,6 +418,21 @@ begin
           + WorksList.GetSQLSelectedID(sqlStringQuote)
           );
   MakeVSTNoteText(WorksList, WorkNote);
+end;
+
+procedure TMainForm.MainTreeDblClick(Sender: TObject);
+var
+  xName: String;
+  xComponent: TComponent;
+begin
+  if not Conn.Connected then exit;
+  xName:=ReturnStringSQL(Conn, 'select mode from app.maintree where id = '
+    + MainTree.GetSQLSelectedID(sqlStringQuote)) + 'TabSheet';
+  xComponent:=CenterPageControl.FindChildControl(xName);
+  if not Assigned(xComponent) then exit;
+  if not xComponent.ClassNameIs('TTabSheet') then exit;
+  (xComponent as TTabSheet).TabVisible:=True;
+  CenterPageControl.ActivePage:=(xComponent as TTabSheet);
 end;
 
 
@@ -630,12 +654,15 @@ begin
   if not Conn.Connected then Exit;
   Cursor:=crSQLWait;
   Log('Подключено');
+  ConnectTabSheet.TabVisible:=False;
 
+  MainTreeFill;
+  LeftRollOut.Collapsed:=False;
+{
   BuildingTabSheet.TabVisible:=True;
   CenterPageControl.ActivePage:=BuildingTabSheet;
-  ConnectTabSheet.TabVisible:=False;
+}
   Cursor:=crDefault;
-
 end;
 
 procedure TMainForm.InitFormDisconnected;
@@ -643,12 +670,10 @@ var i: Integer;
 begin
   if Conn.Connected then DBDisconnect(Conn);
   Log('Отключено');
+  for i:=0 to CenterPageControl.PageCount-1 do
+    CenterPageControl.Pages[i].TabVisible:=False;
   ConnectTabSheet.TabVisible:=True;
   CenterPageControl.ActivePage:=ConnectTabSheet;
-//  for i:=0 to CenterPageControl.PageCount-1 do
-//    CenterPageControl.Pages[i].TabVisible:=False;
-//  ServicesTreeView.Items.Clear;
-//  WorksTreeView.Items.Clear;
 end;
 
 procedure TMainForm.Log(Note: String; Level: Integer);
@@ -697,6 +722,11 @@ begin
       + ')' );
   finally
   end;
+end;
+
+procedure TMainForm.MainTreeFill;
+begin
+  MainTree.ReFill;
 end;
 
 end.
