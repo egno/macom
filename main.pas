@@ -32,7 +32,7 @@ uses
   Dialogs, Menus, ComCtrls, ActnList, PairSplitter, StdCtrls, ExtCtrls, Buttons,
   StdActns, DBGrids, pqconnection, fpjson, jsonparser, XMLConf, sqldb, db,
   dbfunc, ExpandPanels, Grids, CheckLst, DbCtrls, IniPropStorage,
-  EditBtn, DBActns, keyvalue,
+  EditBtn, DBActns, Calendar, keyvalue,
   ExtSQLQuery, DBVST, VirtualTrees;
 
 type
@@ -59,12 +59,26 @@ type
     BuildingContractWorksVST: TDBVST;
     BuildingPersonnelVST: TDBVST;
     BuildingCalcPriceEdit: TEdit;
+    BuildingWorkPlanFact: TDBVST;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    BuildingWorkPeriodLabel: TLabel;
     MainTree: TDBVST;
     Label11: TLabel;
     PairSplitter6: TPairSplitter;
     PairSplitterSide16: TPairSplitterSide;
     PairSplitterSide17: TPairSplitterSide;
+    Panel10: TPanel;
+    Panel11: TPanel;
+    Panel8: TPanel;
+    Panel9: TPanel;
     ScrollBox4: TScrollBox;
+    BuildingWorksTabSheet: TTabSheet;
+    ToolButton3: TToolButton;
+    WorkDateEdit: TDateEdit;
+    WorkPeriodBeginEdit: TDateEdit;
+    WorkPeriodBeginEdit1: TDateEdit;
     WorkVSTLabel: TLabel;
     ServiceWorks: TDBVST;
     Panel7: TPanel;
@@ -207,6 +221,7 @@ type
     procedure BuildingsListFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
     procedure BuildingTabSheetShow(Sender: TObject);
+    procedure BuildingWorksTabSheetShow(Sender: TObject);
     procedure CenterPageControlCloseTabClicked(Sender: TObject);
     procedure DataSave(Sender: TObject);
     procedure DataSetInsertExecute(Sender: TObject);
@@ -216,6 +231,7 @@ type
     procedure MainTreeDblClick(Sender: TObject);
     procedure RefreshControl(C:String);
     procedure RefreshPersonNote(ids: String);
+    procedure SaveWorkDate(aDate: TDateTime);
     procedure ServiceCompaniesVSTDblClick(Sender: TObject);
     procedure ServiceCompaniesVSTFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
@@ -226,8 +242,13 @@ type
     procedure ServiceTabSheetShow(Sender: TObject);
     procedure BuildingPersonnelTabSheetShow(Sender: TObject);
     procedure SrvWorksTabSheetShow(Sender: TObject);
+    procedure ToolButton3Click(Sender: TObject);
     procedure ToolButton4Click(Sender: TObject);
     procedure WorkAddBtnClick(Sender: TObject);
+    procedure WorkDateEditAcceptDate(Sender: TObject; var ADate: TDateTime;
+      var AcceptDate: Boolean);
+    procedure WorkDateEditCustomDate(Sender: TObject; var ADate: string);
+    procedure WorkDateEditEditingDone(Sender: TObject);
     procedure WorkDelBtnClick(Sender: TObject);
     procedure UpdateDBTable(Table: String; Fields, Values: array of String);
     procedure FillListFromSQL(Items:TStrings ; SQL: String);
@@ -236,6 +257,7 @@ type
     procedure WorksTabSheetShow(Sender: TObject);
     procedure WorksTreeViewEnter(Sender: TObject);
     procedure WorkTabSheetShow(Sender: TObject);
+
   protected
   private
     procedure CheckConnected();
@@ -350,8 +372,16 @@ procedure TMainForm.BuildingTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
   if Assigned(BuildingsList.GetFirst()) then exit;
-  Log('...получение справочника домов');
+//  Log('...получение справочника домов');
   BuildingsList.ReFill;
+end;
+
+procedure TMainForm.BuildingWorksTabSheetShow(Sender: TObject);
+begin
+  if (not Conn.Connected) then exit;
+  BuildingWorkPeriodLabel.Caption:=ReturnStringSQL(Conn,
+    'select to_char(work_date(),$$mm.yyyy$$)');
+  BuildingWorkPlanFact.ReFill();
 end;
 
 procedure TMainForm.CenterPageControlCloseTabClicked(Sender: TObject);
@@ -397,6 +427,7 @@ end;
 procedure TMainForm.MainTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
+  if WorksList.GetSelectedID() = '' then exit;
   WorkNameEdit.Text:=ReturnStringSQL(Conn,
           'select disp from works where id = '
           + WorksList.GetSQLSelectedID(sqlStringQuote)
@@ -465,6 +496,15 @@ begin
   end;
 end;
 
+procedure TMainForm.SaveWorkDate(aDate: TDateTime);
+begin
+  if QWord(aDate) > 0 then begin
+//    ExecSQL(Conn, '');
+//    Log('Расчётная дата: ' + DateToStr(aDate));
+  end;
+  WorkDateEdit.Date:=StrToDate(ReturnStringSQL(Conn, 'select work_date()'));
+end;
+
 procedure TMainForm.ServiceCompaniesVSTDblClick(Sender: TObject);
 begin
   ServiceCompaniesVST.EditNode(ServiceCompaniesVST.FocusedNode,
@@ -495,7 +535,7 @@ procedure TMainForm.ServiceTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
   if Assigned(ServicesList.GetFirst()) then exit;
-  Log('...получение справочника услуг');
+//  Log('...получение справочника услуг');
   ServicesList.Refill;
 end;
 
@@ -504,7 +544,7 @@ begin
   if (not Conn.Connected) then exit;
 //  if Assigned(BuildingPersonnel.GetFirst()) then exit;
   if not Assigned(BuildingPersonnel.GetFirst()) then begin
-     Log('...получение справочника персонала');
+//     Log('...получение справочника персонала');
      BuildingPersonnel.ReFill;
   end;
   BuildingPersonnelVST.ReFill;
@@ -514,10 +554,15 @@ procedure TMainForm.SrvWorksTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
   if not Assigned(ServicesWorksList.GetFirst()) then begin
-    Log('...получение справочника работ');
+//    Log('...получение справочника работ');
     ServicesWorksList.ReFill;
   end;
   ServiceWorks.ReFill;
+end;
+
+procedure TMainForm.ToolButton3Click(Sender: TObject);
+begin
+
 end;
 
 procedure TMainForm.ToolButton4Click(Sender: TObject);
@@ -555,6 +600,22 @@ begin
         );
     end;
   end;
+end;
+
+procedure TMainForm.WorkDateEditAcceptDate(Sender: TObject;
+  var ADate: TDateTime; var AcceptDate: Boolean);
+begin
+  SaveWorkDate(ADate);
+end;
+
+procedure TMainForm.WorkDateEditCustomDate(Sender: TObject; var ADate: string);
+begin
+
+end;
+
+procedure TMainForm.WorkDateEditEditingDone(Sender: TObject);
+begin
+  SaveWorkDate((Sender as TDateEdit).Date);
 end;
 
 procedure TMainForm.WorkDelBtnClick(Sender: TObject);
@@ -622,7 +683,7 @@ procedure TMainForm.WorksTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
   if Assigned(WorksList.GetFirst()) then exit;
-  Log('...получение справочника работ');
+//  Log('...получение справочника работ');
   WorksList.ReFill;
 end;
 
@@ -656,8 +717,13 @@ begin
   Log('Подключено');
   ConnectTabSheet.TabVisible:=False;
 
+
+  SaveWorkDate(TDateTime(0));
+  Panel11.Enabled:=True;
+
   MainTreeFill;
   LeftRollOut.Collapsed:=False;
+  BottomRollOut.Collapsed:=True;
 {
   BuildingTabSheet.TabVisible:=True;
   CenterPageControl.ActivePage:=BuildingTabSheet;
@@ -674,13 +740,16 @@ begin
     CenterPageControl.Pages[i].TabVisible:=False;
   ConnectTabSheet.TabVisible:=True;
   CenterPageControl.ActivePage:=ConnectTabSheet;
+  Panel11.Enabled:=false;
+  BottomRollOut.Collapsed:=False;
 end;
 
 procedure TMainForm.Log(Note: String; Level: Integer);
 begin
   if length(Note)>0 then
-    LogView.Lines.Append(Note);
+    LogView.Lines.Append(DateTimeToStr(Now) + chr(9)+ Note);
   LogView.SelStart:=Length(LogView.Text);
+  BottomRollOut.Collapsed:=False;
   Application.ProcessMessages();
 end;
 

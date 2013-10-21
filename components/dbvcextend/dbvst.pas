@@ -179,10 +179,10 @@ procedure TDBVSTFilterEdit.Change(Sender: TObject);
 
   procedure SetVisibleParents(VSTNode: PVirtualNode);
   begin
-    if Assigned(VSTNode^.Parent) then begin
-      VSTNode^.Parent^.States:=VSTNode^.Parent^.States + [vsExpanded, vsVisible];
+    if not Assigned(VSTNode) then exit;
+    VSTNode^.States:=VSTNode^.States + [vsExpanded, vsVisible];
+    if VSTNode^.Index > 0 then
       SetVisibleParents(VSTNode^.Parent);
-    end;
   end;
 
 Var
