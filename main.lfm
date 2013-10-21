@@ -827,11 +827,11 @@ object MainForm: TMainForm
                   Height = 507
                   Top = 0
                   Width = 593
-                  HorzScrollBar.Page = 591
-                  VertScrollBar.Page = 505
+                  HorzScrollBar.Page = 593
+                  VertScrollBar.Page = 507
                   Align = alClient
-                  ClientHeight = 505
-                  ClientWidth = 591
+                  ClientHeight = 503
+                  ClientWidth = 589
                   TabOrder = 0
                   object PairSplitter6: TPairSplitter
                     Cursor = crVSplit
@@ -855,15 +855,15 @@ object MainForm: TMainForm
                         Height = 300
                         Top = 0
                         Width = 591
-                        HorzScrollBar.Page = 589
-                        VertScrollBar.Page = 298
+                        HorzScrollBar.Page = 591
+                        VertScrollBar.Page = 300
                         Align = alClient
                         ChildSizing.HorizontalSpacing = 3
                         ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
                         ChildSizing.Layout = cclLeftToRightThenTopToBottom
                         ChildSizing.ControlsPerLine = 2
-                        ClientHeight = 298
-                        ClientWidth = 589
+                        ClientHeight = 296
+                        ClientWidth = 587
                         TabOrder = 0
                         object Label11: TLabel
                           Left = 0
@@ -2106,8 +2106,8 @@ object MainForm: TMainForm
               Width = 597
               Align = alClient
               BevelOuter = bvNone
-              ClientHeight = 575
-              ClientWidth = 597
+              ClientHeight = 571
+              ClientWidth = 593
               TabOrder = 0
               object WorkPageControl: TPageControl
                 Left = 0
@@ -2120,7 +2120,7 @@ object MainForm: TMainForm
                 TabOrder = 0
                 object MainTabSheet: TTabSheet
                   Caption = 'Основное'
-                  ClientHeight = 543
+                  ClientHeight = 570
                   ClientWidth = 593
                   OnShow = MainTabSheetShow
                   object PairSplitter4: TPairSplitter
@@ -2262,7 +2262,7 @@ object MainForm: TMainForm
                 end
                 object WorkTabSheet: TTabSheet
                   Caption = 'Ресурсы'
-                  ClientHeight = 543
+                  ClientHeight = 570
                   ClientWidth = 593
                   OnShow = WorkTabSheetShow
                   object WorkResourcesVST: TDBVST
