@@ -489,9 +489,9 @@ object MainForm: TMainForm
           Height = 420
           Top = 0
           Width = 517
-          ActivePage = BuildingTabSheet
+          ActivePage = ServiceTabSheet
           Align = alClient
-          TabIndex = 1
+          TabIndex = 2
           TabOrder = 0
           TabPosition = tpBottom
           OnChange = CenterPageControlChange
@@ -769,21 +769,21 @@ object MainForm: TMainForm
                 OnShow = BuildingMainTabSheetShow
                 object ScrollBox2: TScrollBox
                   Left = 0
-                  Height = 544
+                  Height = 353
                   Top = 0
-                  Width = 514
-                  HorzScrollBar.Page = 514
-                  VertScrollBar.Page = 544
+                  Width = 509
+                  HorzScrollBar.Page = 491
+                  VertScrollBar.Page = 351
                   Align = alClient
-                  ClientHeight = 540
-                  ClientWidth = 510
+                  ClientHeight = 351
+                  ClientWidth = 491
                   TabOrder = 0
                   object PairSplitter6: TPairSplitter
                     Cursor = crVSplit
                     Left = 0
-                    Height = 542
+                    Height = 380
                     Top = 0
-                    Width = 512
+                    Width = 491
                     Align = alClient
                     Position = 300
                     SplitterType = pstVertical
@@ -792,37 +792,37 @@ object MainForm: TMainForm
                       Left = 0
                       Height = 300
                       Top = 0
-                      Width = 512
-                      ClientWidth = 512
+                      Width = 491
+                      ClientWidth = 491
                       ClientHeight = 300
                       object ScrollBox4: TScrollBox
                         Left = 0
                         Height = 300
                         Top = 0
-                        Width = 512
-                        HorzScrollBar.Page = 512
-                        VertScrollBar.Page = 300
+                        Width = 491
+                        HorzScrollBar.Page = 489
+                        VertScrollBar.Page = 298
                         Align = alClient
                         ChildSizing.HorizontalSpacing = 3
                         ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
                         ChildSizing.Layout = cclLeftToRightThenTopToBottom
                         ChildSizing.ControlsPerLine = 2
-                        ClientHeight = 296
-                        ClientWidth = 508
+                        ClientHeight = 298
+                        ClientWidth = 489
                         TabOrder = 0
                         object Label11: TLabel
                           Left = 0
                           Height = 27
                           Top = 0
-                          Width = 341
+                          Width = 330
                           Caption = 'Плановая стоимость обслуживания'
                           ParentColor = False
                         end
                         object BuildingCalcPriceEdit: TEdit
-                          Left = 344
+                          Left = 333
                           Height = 27
                           Top = 0
-                          Width = 166
+                          Width = 156
                           TabOrder = 0
                         end
                       end
@@ -830,16 +830,16 @@ object MainForm: TMainForm
                     object PairSplitterSide17: TPairSplitterSide
                       Cursor = crArrow
                       Left = 0
-                      Height = 237
+                      Height = 75
                       Top = 305
-                      Width = 512
-                      ClientWidth = 512
-                      ClientHeight = 237
+                      Width = 491
+                      ClientWidth = 491
+                      ClientHeight = 75
                       object BuildingDetailsMemo: TMemo
                         Left = 0
-                        Height = 237
+                        Height = 75
                         Top = 0
-                        Width = 512
+                        Width = 491
                         Align = alClient
                         Lines.Strings = (
                           ''

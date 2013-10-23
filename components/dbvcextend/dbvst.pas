@@ -34,6 +34,39 @@ uses
 
 type
 
+  { TDBVMemo }
+
+  TDBVMemo = class(TMemo)
+  private
+    FConnection: TSQLConnection;
+    FDBField: String;
+    FDBFieldConvFrom: String;
+    FDBFieldConvTo: String;
+    FDBTable: String;
+    FLinkFields: TStrings;
+    FMasterControls: TStrings;
+    FWhere: String;
+    procedure SetConnection(AValue: TSQLConnection);
+    procedure SetDBField(AValue: String);
+    procedure SetDBFieldConvFrom(AValue: String);
+    procedure SetDBFieldConvTo(AValue: String);
+    procedure SetDBTable(AValue: String);
+    procedure SetLinkFields(AValue: TStrings);
+    procedure SetMasterControls(AValue: TStrings);
+    procedure SetWhere(AValue: String);
+  public
+    procedure ReFill();
+  published
+    property DBTable: String read FDBTable write SetDBTable;
+    property DBField: String read FDBField write SetDBField;
+    property DBFieldConvTo: String read FDBFieldConvTo write SetDBFieldConvTo;
+    property DBFieldConvFrom: String read FDBFieldConvFrom write SetDBFieldConvFrom;
+    property DBMasterControls: TStrings read FMasterControls write SetMasterControls;
+    property DBLinkFields: TStrings read FLinkFields write SetLinkFields;
+    property Where: String read FWhere write SetWhere;
+    property Connection: TSQLConnection read FConnection write SetConnection;
+  end;
+
   { TDBVSTFilterEdit }
 
   TDBVSTFilterEdit = class(TEdit)
@@ -146,6 +179,73 @@ const
 procedure Register;
 begin
   RegisterComponents('Virtual Controls',[TDBVST]);
+end;
+
+{ TDBVMemo }
+
+procedure TDBVMemo.SetConnection(AValue: TSQLConnection);
+begin
+  if FConnection=AValue then Exit;
+  FConnection.Assign(AValue);
+end;
+
+procedure TDBVMemo.SetDBField(AValue: String);
+begin
+  if FDBField=AValue then Exit;
+  FDBField:=AValue;
+end;
+
+procedure TDBVMemo.SetDBFieldConvFrom(AValue: String);
+begin
+  if FDBFieldConvFrom=AValue then Exit;
+  FDBFieldConvFrom:=AValue;
+end;
+
+procedure TDBVMemo.SetDBFieldConvTo(AValue: String);
+begin
+  if FDBFieldConvTo=AValue then Exit;
+  FDBFieldConvTo:=AValue;
+end;
+
+procedure TDBVMemo.SetDBTable(AValue: String);
+begin
+  if FDBTable=AValue then Exit;
+  FDBTable:=AValue;
+end;
+
+procedure TDBVMemo.SetLinkFields(AValue: TStrings);
+begin
+  if FLinkFields=AValue then Exit;
+  FLinkFields.Assign(AValue);
+end;
+
+procedure TDBVMemo.SetMasterControls(AValue: TStrings);
+begin
+  if FMasterControls=AValue then Exit;
+  FMasterControls.Assign(AValue);
+end;
+
+procedure TDBVMemo.SetWhere(AValue: String);
+begin
+  if FWhere=AValue then Exit;
+  FWhere:=AValue;
+end;
+
+procedure TDBVMemo.ReFill;
+var
+  xQuery: TExtSQLQuery;
+begin
+  Clear;
+  try
+    Query := TExtSQLQuery.Create(Self, FConnection);
+    Query.Open;
+    while not Query.Eof do begin
+      Self.Append(Query.Fields[0].AsString);
+      Query.Next;
+    end;
+  finally
+    Query.Free;
+  end;
 end;
 
 { TDBVSTFilterEdit }
