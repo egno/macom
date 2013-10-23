@@ -33,7 +33,7 @@ uses
   StdCtrls, ExtCtrls, Buttons, StdActns, DBGrids, pqconnection, fpjson,
   jsonparser, XMLConf, sqldb, db, dbfunc, Grids, CheckLst,
   DbCtrls, IniPropStorage, EditBtn, DBActns, Calendar, keyvalue, ExtSQLQuery,
-  DBVST, PanelRollOut, VirtualTrees;
+  DBVST, ExpandPanels, VirtualTrees;
 
 type
 
@@ -66,6 +66,7 @@ type
     BuildingWorkPeriodLabel: TLabel;
     MainTree: TDBVST;
     Label11: TLabel;
+    BottomRollOut: TMyRollOut;
     PairSplitter6: TPairSplitter;
     MainSplitter: TPairSplitter;
     PairSplitterSide1: TPairSplitterSide;
@@ -174,7 +175,6 @@ type
     MenuItem2: TMenuItem;
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
-    BottomRollOut: TMyRollOut;
     MainPanel: TPanel;
     ScrollBox1: TScrollBox;
     ServicePageControl: TPageControl;
