@@ -77,7 +77,7 @@ type
     Panel9: TPanel;
     ScrollBox4: TScrollBox;
     TabSheet1: TTabSheet;
-    TabSheet2: TTabSheet;
+    MainBuildingsTabSheet: TTabSheet;
     TabSheet3: TTabSheet;
     LeftDateTabSheet: TTabSheet;
     BuildingServicesTabSheet: TTabSheet;
@@ -217,6 +217,7 @@ type
       Node: PVirtualNode; Column: TColumnIndex);
     procedure BuildingTabSheetShow(Sender: TObject);
     procedure BuildingWorksTabSheetShow(Sender: TObject);
+    procedure CenterPageControlChange(Sender: TObject);
     procedure CenterPageControlCloseTabClicked(Sender: TObject);
     procedure DataSave(Sender: TObject);
     procedure DataSetInsertExecute(Sender: TObject);
@@ -364,15 +365,11 @@ begin
   OpenPage('BuildingTabSheet');
 end;
 
-
-
 procedure TMainForm.BuildingsListFocusChanged(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Column: TColumnIndex);
 begin
   if (not Conn.Connected) then exit;
-  TabSheet2.Caption:=IntToStr(BuildingsList.SelectedCount);
-//  if not BuildingTabSheet.TabVisible then exit;
-  MakeVSTLabelCaption(BuildingsList, BuildingsLabel);
+  MainBuildingsTabSheet.Caption:=IntToStr(BuildingsList.SelectedCount);
   if not Assigned(CenterPageControl.ActivePage) then exit;
   CenterPageControl.ActivePage.OnShow(Sender);
 end;
@@ -380,9 +377,8 @@ end;
 procedure TMainForm.BuildingTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
-  if Assigned(BuildingsList.GetFirst()) then exit;
-//  Log('...получение справочника домов');
-  BuildingsList.ReFill;
+  if not Assigned(BuildingPageControl.ActivePage) then exit;
+  BuildingPageControl.ActivePage.OnShow(Sender);
 end;
 
 procedure TMainForm.BuildingWorksTabSheetShow(Sender: TObject);
@@ -391,6 +387,11 @@ begin
   BuildingWorkPeriodLabel.Caption:=ReturnStringSQL(Conn,
     'select to_char(work_date(),$$mm.yyyy$$)');
   BuildingWorkPlanFact.ReFill();
+end;
+
+procedure TMainForm.CenterPageControlChange(Sender: TObject);
+begin
+
 end;
 
 procedure TMainForm.CenterPageControlCloseTabClicked(Sender: TObject);
