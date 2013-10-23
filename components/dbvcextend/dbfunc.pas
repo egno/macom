@@ -32,7 +32,7 @@ uses
   db, extsqlquery, keyvalue;
 
   procedure DBConnect(Conn: TSQLConnection;
-    cUser, cPwd, cHost, cPort, cBase: String);
+    cUser, cPwd, cHost, cPort, cBase: String; var cErrMsg: String);
   procedure DBDisconnect(Conn: TSQLConnection);
   function GetQuery(Conn: TSQLConnection): TSQLQuery;
   procedure FillListFromQuery(Conn: TSQLConnection; Items: TStrings; SQL:String);
@@ -45,8 +45,8 @@ uses
 
 implementation
 
-procedure DBConnect(Conn: TSQLConnection; cUser, cPwd,
-  cHost, cPort, cBase: String);
+procedure DBConnect(Conn: TSQLConnection; cUser, cPwd, cHost, cPort,
+  cBase: String; var cErrMsg: String);
 begin
   DBDisconnect(Conn);
 
@@ -60,10 +60,11 @@ begin
     Conn.Connected:=True;
   except
     on E: Exception do begin
-//      DBConnect:=('Ошибка при подключении к базе данных: ' + E.Message);
+      cErrMsg:=('Ошибка при подключении к базе данных: ' + E.Message);
     end;
   end;
 end;
+
 
 procedure DBDisconnect(Conn: TSQLConnection);
 begin

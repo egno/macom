@@ -76,11 +76,11 @@ object MainForm: TMainForm
       ExpandedSize = 200
       CollapsedSize = 0
       ButtonPosition = akLeft
-      ButtonSize = 16
+      ButtonSize = 24
       Button.Left = 0
       Button.Height = 16
       Button.Top = 0
-      Button.Width = 16
+      Button.Width = 24
       Button.Anchors = [akTop, akLeft, akBottom]
       Button.Caption = '+'
       Button.Color = clSkyBlue
@@ -88,10 +88,10 @@ object MainForm: TMainForm
       AnimationSpeed = 60
       Collapsed = True
       object LogView: TMemo
-        Left = 16
+        Left = 24
         Height = 33
         Top = 0
-        Width = 806
+        Width = 798
         Align = alClient
         Lines.Strings = (
           'Программный продукт: MaCom FLOSS (Management Company. Free/Libre and Open-Source Software)'

@@ -291,17 +291,16 @@ const
   sqlFieldDelimiter = ',';
 
 procedure TMainForm.ActionConnectExecute(Sender: TObject);
+var
+  xErrMsg: String;
 begin
   Cursor:=crHourGlass;
-  try
+  xErrMsg:='';
   DBConnect(Conn, ConnUserEdit.Text, ConnPwdEdit.Text,
               ConnHostEdit.Text, ConnPortEdit.Text,
-              ConnBaseEdit.Text);
-  except
-    on E: Exception do begin
-      Log('Ошибка при подключении к базе данных: ' + E.Message);
-    end;
-  end;
+              ConnBaseEdit.Text, xErrMsg);
+  if xErrMsg <> '' then
+    Log(xErrMsg);
   CheckConnected();
   Cursor:=crDefault;
 end;
