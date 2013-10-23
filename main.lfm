@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 470
+  Left = 515
   Height = 675
-  Top = 174
+  Top = 211
   Width = 824
   Caption = 'MaCom FLOSS'
   ClientHeight = 675
@@ -23,14 +23,6 @@ object MainForm: TMainForm
     Images = MainIconList22
     ParentColor = False
     TabOrder = 1
-    object ToolButton3: TToolButton
-      Left = 53
-      Top = 2
-      Width = 5
-      Caption = 'ToolButton3'
-      OnClick = ToolButton3Click
-      Style = tbsDivider
-    end
     object ToolButton2: TToolButton
       Left = 27
       Top = 2
@@ -40,275 +32,6 @@ object MainForm: TMainForm
       Left = 1
       Top = 2
       Action = ActionConnect
-    end
-    object Panel11: TPanel
-      Left = 58
-      Height = 18
-      Top = 2
-      Width = 397
-      AutoSize = True
-      BevelOuter = bvNone
-      Caption = 'Panel11'
-      ChildSizing.Layout = cclLeftToRightThenTopToBottom
-      ChildSizing.ControlsPerLine = 3
-      ClientHeight = 18
-      ClientWidth = 397
-      TabOrder = 0
-      object Panel8: TPanel
-        Left = 0
-        Height = 18
-        Top = 0
-        Width = 127
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 2
-        ClientHeight = 18
-        ClientWidth = 127
-        TabOrder = 0
-        object Label12: TLabel
-          AnchorSideLeft.Control = Panel8
-          AnchorSideTop.Control = Panel8
-          AnchorSideBottom.Control = Panel8
-          AnchorSideBottom.Side = asrBottom
-          Left = 0
-          Height = 18
-          Top = 0
-          Width = 24
-          Caption = 'РД:'
-          ParentColor = False
-        end
-        object WorkDateEdit: TDateEdit
-          AnchorSideLeft.Control = Label12
-          AnchorSideLeft.Side = asrBottom
-          AnchorSideTop.Control = Panel8
-          AnchorSideBottom.Control = Label12
-          AnchorSideBottom.Side = asrBottom
-          Left = 24
-          Height = 18
-          Top = 0
-          Width = 80
-          DialogTitle = 'Выберите дату'
-          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames, dsStartMonday]
-          OnAcceptDate = WorkDateEditAcceptDate
-          OnCustomDate = WorkDateEditCustomDate
-          OKCaption = 'OK'
-          CancelCaption = 'Cancel'
-          DateOrder = doDMY
-          ButtonWidth = 23
-          Anchors = [akTop, akLeft, akBottom]
-          CharCase = ecNormal
-          Glyph.Data = {
-            36040000424D3604000000000000360000002800000010000000100000000100
-            2000000000000004000064000000640000000000000000000000FFFFFF00FFFF
-            FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-            FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00D69E
-            72C4D3996EF4D19668FFCE9263FFCB8E5EFFC98A5BFFC78756FFC38452FFC384
-            52FFC38452FFC38452FFC38452FFC38452FFBB7742B0FFFFFF00FFFFFF00D7A1
-            75FFF8F2EDFFF7F0EAFFF6EDE6FFF4EAE2FFF3E7DEFFF1E4DBFFF0E2D8FFEAD6
-            C8FFF2E5DCFFFAF4F1FFF9F3F0FFFAF5F2FFC58A5DFDFFFFFF00FFFFFF00D9A4
-            7AFFF9F3EEFFEBD2BEFFFFFFFFFFEBD3BFFFFFFFFFFFEBD3C0FFFFFFFFFFEAC7
-            ADFFECD9CDFFF1E4DBFFF9F3F0FFF9F2EFFFC68C5FFFFFFFFF00FFFFFF00DDA8
-            7EFFF9F3EFFFEBD0BAFFEBD0BBFF75B57AFF75B57AFF75B57AFFEBD1BDFFEACD
-            B5FFFAF4F0FFEBD9CCFFF1E4DBFFFAF4F1FFC68A5CFFFFFFFF00FFFFFF00DFAA
-            82FFF9F3EFFFEACEB7FFFFFFFFFF75B57AFF94D49BFF74B579FFFFFFFFFFEACF
-            BAFFFBF6F2FFFAF3F0FFEBD8CBFFF2E6DDFFC88D5FFFFFFFFF00FFFFFF00E1AE
-            87FFFAF4F0FFEACBB2FFEACCB3FF75B57AFF74B579FF73B478FFEACEB7FF70B3
-            75FF6FB274FF6EB172FFE8C8AEFFEAD7C9FFC48654FFFFFFFF00FFFFFF00E3B1
-            8CFFFAF6F1FFEAC9AEFFFFFFFFFFEAC9B0FFFFFFFFFFE9CBB3FFFFFFFFFF6FB1
-            73FF8ED295FF6BAF6FFFFFFFFFFFF1E5DBFFC68655FFFFFFFF00FFFFFF00E5B4
-            8FFFFAF6F2FFE9C6AAFFE9C6ACFFEAC7ACFFE9C7ADFFE9C9AEFFE9C9B0FF6CB0
-            71FF6AAF6EFF68AD6DFFE8CCB5FFF2E7DEFFC88A59FFFFFFFF00FFFFFF00E7B7
-            94FFFBF7F4FFE9C3A6FFFFFFFFFFE8C4A9FFFFFFFFFFE9C6AAFFFFFFFFFFE8C7
-            ACFFFFFFFFFFE8C8B0FFFFFFFFFFF7F1EBFFCB8F5FFFFFFFFF00FFFFFF00E9BA
-            98FFFBF7F4FF65A4FFFF64A3FFFF62A2FFFF61A1FFFF5F9FFFFF5C9DFFFF5A9A
-            FFFF5798FFFF5495FFFF5294FFFFFBF7F4FFCE9364FFFFFFFF00FFFFFF00EBBD
-            9BFFFBF7F4FF64A4FFFF79BDFFFF75BBFFFF71B9FFFF6DB8FFFF68B3FFFF61B0
-            FFFF5AABFFFF54A7FFFF3B7DFFFFFBF7F4FFD1976AFFFFFFFF00FFFFFF00ECBF
-            9EFFFBF7F4FF65A4FFFF64A3FFFF60A0FFFF5D9EFFFF5899FFFF5496FFFF4D90
-            FFFF478BFFFF4284FFFF3D7FFFFFFBF7F4FFD49B6FFFFFFFFF00FFFFFF00EEC1
-            A1EBFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7
-            F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFD7A074F8FFFFFF00FFFFFF00EFC2
-            A37EEFC1A2E3EDC09FFFEBBE9DFFEBBC9AFFE9BA96FFE7B793FFE6B590FFE4B2
-            8CFFE2AF88FFE0AC84FFDDA980FFDCA57DFFDAA37ACAFFFFFF00FFFFFF00FFFF
-            FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-            FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00
-          }
-          NumGlyphs = 0
-          MaxLength = 10
-          OnEditingDone = WorkDateEditEditingDone
-          TabOrder = 0
-        end
-      end
-      object Panel9: TPanel
-        Left = 127
-        Height = 18
-        Top = 0
-        Width = 162
-        AutoSize = True
-        BevelOuter = bvNone
-        ClientHeight = 18
-        ClientWidth = 162
-        TabOrder = 1
-        object Label13: TLabel
-          AnchorSideLeft.Control = Panel9
-          AnchorSideTop.Control = Panel9
-          AnchorSideBottom.Control = Panel9
-          AnchorSideBottom.Side = asrBottom
-          Left = 0
-          Height = 18
-          Top = 0
-          Width = 59
-          Caption = 'Период:'
-          ParentColor = False
-        end
-        object WorkPeriodBeginEdit: TDateEdit
-          AnchorSideLeft.Control = Label13
-          AnchorSideLeft.Side = asrBottom
-          AnchorSideTop.Control = Panel9
-          AnchorSideBottom.Control = Label13
-          AnchorSideBottom.Side = asrBottom
-          Left = 59
-          Height = 18
-          Top = 0
-          Width = 80
-          DialogTitle = 'Выберите дату'
-          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames, dsStartMonday]
-          OnAcceptDate = WorkDateEditAcceptDate
-          OnCustomDate = WorkDateEditCustomDate
-          OKCaption = 'OK'
-          CancelCaption = 'Cancel'
-          DateOrder = doDMY
-          ButtonWidth = 23
-          Anchors = [akTop, akLeft, akBottom]
-          CharCase = ecNormal
-          Glyph.Data = {
-            36040000424D3604000000000000360000002800000010000000100000000100
-            2000000000000004000064000000640000000000000000000000FFFFFF00FFFF
-            FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-            FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00D69E
-            72C4D3996EF4D19668FFCE9263FFCB8E5EFFC98A5BFFC78756FFC38452FFC384
-            52FFC38452FFC38452FFC38452FFC38452FFBB7742B0FFFFFF00FFFFFF00D7A1
-            75FFF8F2EDFFF7F0EAFFF6EDE6FFF4EAE2FFF3E7DEFFF1E4DBFFF0E2D8FFEAD6
-            C8FFF2E5DCFFFAF4F1FFF9F3F0FFFAF5F2FFC58A5DFDFFFFFF00FFFFFF00D9A4
-            7AFFF9F3EEFFEBD2BEFFFFFFFFFFEBD3BFFFFFFFFFFFEBD3C0FFFFFFFFFFEAC7
-            ADFFECD9CDFFF1E4DBFFF9F3F0FFF9F2EFFFC68C5FFFFFFFFF00FFFFFF00DDA8
-            7EFFF9F3EFFFEBD0BAFFEBD0BBFF75B57AFF75B57AFF75B57AFFEBD1BDFFEACD
-            B5FFFAF4F0FFEBD9CCFFF1E4DBFFFAF4F1FFC68A5CFFFFFFFF00FFFFFF00DFAA
-            82FFF9F3EFFFEACEB7FFFFFFFFFF75B57AFF94D49BFF74B579FFFFFFFFFFEACF
-            BAFFFBF6F2FFFAF3F0FFEBD8CBFFF2E6DDFFC88D5FFFFFFFFF00FFFFFF00E1AE
-            87FFFAF4F0FFEACBB2FFEACCB3FF75B57AFF74B579FF73B478FFEACEB7FF70B3
-            75FF6FB274FF6EB172FFE8C8AEFFEAD7C9FFC48654FFFFFFFF00FFFFFF00E3B1
-            8CFFFAF6F1FFEAC9AEFFFFFFFFFFEAC9B0FFFFFFFFFFE9CBB3FFFFFFFFFF6FB1
-            73FF8ED295FF6BAF6FFFFFFFFFFFF1E5DBFFC68655FFFFFFFF00FFFFFF00E5B4
-            8FFFFAF6F2FFE9C6AAFFE9C6ACFFEAC7ACFFE9C7ADFFE9C9AEFFE9C9B0FF6CB0
-            71FF6AAF6EFF68AD6DFFE8CCB5FFF2E7DEFFC88A59FFFFFFFF00FFFFFF00E7B7
-            94FFFBF7F4FFE9C3A6FFFFFFFFFFE8C4A9FFFFFFFFFFE9C6AAFFFFFFFFFFE8C7
-            ACFFFFFFFFFFE8C8B0FFFFFFFFFFF7F1EBFFCB8F5FFFFFFFFF00FFFFFF00E9BA
-            98FFFBF7F4FF65A4FFFF64A3FFFF62A2FFFF61A1FFFF5F9FFFFF5C9DFFFF5A9A
-            FFFF5798FFFF5495FFFF5294FFFFFBF7F4FFCE9364FFFFFFFF00FFFFFF00EBBD
-            9BFFFBF7F4FF64A4FFFF79BDFFFF75BBFFFF71B9FFFF6DB8FFFF68B3FFFF61B0
-            FFFF5AABFFFF54A7FFFF3B7DFFFFFBF7F4FFD1976AFFFFFFFF00FFFFFF00ECBF
-            9EFFFBF7F4FF65A4FFFF64A3FFFF60A0FFFF5D9EFFFF5899FFFF5496FFFF4D90
-            FFFF478BFFFF4284FFFF3D7FFFFFFBF7F4FFD49B6FFFFFFFFF00FFFFFF00EEC1
-            A1EBFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7
-            F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFD7A074F8FFFFFF00FFFFFF00EFC2
-            A37EEFC1A2E3EDC09FFFEBBE9DFFEBBC9AFFE9BA96FFE7B793FFE6B590FFE4B2
-            8CFFE2AF88FFE0AC84FFDDA980FFDCA57DFFDAA37ACAFFFFFF00FFFFFF00FFFF
-            FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-            FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00
-          }
-          NumGlyphs = 0
-          MaxLength = 10
-          OnEditingDone = WorkDateEditEditingDone
-          TabOrder = 0
-        end
-      end
-      object Panel10: TPanel
-        Left = 289
-        Height = 18
-        Top = 0
-        Width = 108
-        AutoSize = True
-        BevelOuter = bvNone
-        ClientHeight = 18
-        ClientWidth = 108
-        TabOrder = 2
-        object Label14: TLabel
-          AnchorSideLeft.Control = Panel10
-          AnchorSideTop.Control = Panel10
-          AnchorSideBottom.Control = Panel10
-          AnchorSideBottom.Side = asrBottom
-          Left = 0
-          Height = 18
-          Top = 0
-          Width = 5
-          Anchors = [akTop, akLeft, akBottom]
-          Caption = '-'
-          ParentColor = False
-        end
-        object WorkPeriodBeginEdit1: TDateEdit
-          AnchorSideLeft.Control = Label14
-          AnchorSideLeft.Side = asrBottom
-          AnchorSideTop.Control = Panel10
-          AnchorSideBottom.Control = Label14
-          AnchorSideBottom.Side = asrBottom
-          Left = 5
-          Height = 18
-          Top = 0
-          Width = 80
-          DialogTitle = 'Выберите дату'
-          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames, dsStartMonday]
-          OnAcceptDate = WorkDateEditAcceptDate
-          OnCustomDate = WorkDateEditCustomDate
-          OKCaption = 'OK'
-          CancelCaption = 'Cancel'
-          DateOrder = doDMY
-          ButtonWidth = 23
-          Anchors = [akTop, akLeft, akBottom]
-          CharCase = ecNormal
-          Glyph.Data = {
-            36040000424D3604000000000000360000002800000010000000100000000100
-            2000000000000004000064000000640000000000000000000000FFFFFF00FFFF
-            FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-            FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00D69E
-            72C4D3996EF4D19668FFCE9263FFCB8E5EFFC98A5BFFC78756FFC38452FFC384
-            52FFC38452FFC38452FFC38452FFC38452FFBB7742B0FFFFFF00FFFFFF00D7A1
-            75FFF8F2EDFFF7F0EAFFF6EDE6FFF4EAE2FFF3E7DEFFF1E4DBFFF0E2D8FFEAD6
-            C8FFF2E5DCFFFAF4F1FFF9F3F0FFFAF5F2FFC58A5DFDFFFFFF00FFFFFF00D9A4
-            7AFFF9F3EEFFEBD2BEFFFFFFFFFFEBD3BFFFFFFFFFFFEBD3C0FFFFFFFFFFEAC7
-            ADFFECD9CDFFF1E4DBFFF9F3F0FFF9F2EFFFC68C5FFFFFFFFF00FFFFFF00DDA8
-            7EFFF9F3EFFFEBD0BAFFEBD0BBFF75B57AFF75B57AFF75B57AFFEBD1BDFFEACD
-            B5FFFAF4F0FFEBD9CCFFF1E4DBFFFAF4F1FFC68A5CFFFFFFFF00FFFFFF00DFAA
-            82FFF9F3EFFFEACEB7FFFFFFFFFF75B57AFF94D49BFF74B579FFFFFFFFFFEACF
-            BAFFFBF6F2FFFAF3F0FFEBD8CBFFF2E6DDFFC88D5FFFFFFFFF00FFFFFF00E1AE
-            87FFFAF4F0FFEACBB2FFEACCB3FF75B57AFF74B579FF73B478FFEACEB7FF70B3
-            75FF6FB274FF6EB172FFE8C8AEFFEAD7C9FFC48654FFFFFFFF00FFFFFF00E3B1
-            8CFFFAF6F1FFEAC9AEFFFFFFFFFFEAC9B0FFFFFFFFFFE9CBB3FFFFFFFFFF6FB1
-            73FF8ED295FF6BAF6FFFFFFFFFFFF1E5DBFFC68655FFFFFFFF00FFFFFF00E5B4
-            8FFFFAF6F2FFE9C6AAFFE9C6ACFFEAC7ACFFE9C7ADFFE9C9AEFFE9C9B0FF6CB0
-            71FF6AAF6EFF68AD6DFFE8CCB5FFF2E7DEFFC88A59FFFFFFFF00FFFFFF00E7B7
-            94FFFBF7F4FFE9C3A6FFFFFFFFFFE8C4A9FFFFFFFFFFE9C6AAFFFFFFFFFFE8C7
-            ACFFFFFFFFFFE8C8B0FFFFFFFFFFF7F1EBFFCB8F5FFFFFFFFF00FFFFFF00E9BA
-            98FFFBF7F4FF65A4FFFF64A3FFFF62A2FFFF61A1FFFF5F9FFFFF5C9DFFFF5A9A
-            FFFF5798FFFF5495FFFF5294FFFFFBF7F4FFCE9364FFFFFFFF00FFFFFF00EBBD
-            9BFFFBF7F4FF64A4FFFF79BDFFFF75BBFFFF71B9FFFF6DB8FFFF68B3FFFF61B0
-            FFFF5AABFFFF54A7FFFF3B7DFFFFFBF7F4FFD1976AFFFFFFFF00FFFFFF00ECBF
-            9EFFFBF7F4FF65A4FFFF64A3FFFF60A0FFFF5D9EFFFF5899FFFF5496FFFF4D90
-            FFFF478BFFFF4284FFFF3D7FFFFFFBF7F4FFD49B6FFFFFFFFF00FFFFFF00EEC1
-            A1EBFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7
-            F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFD7A074F8FFFFFF00FFFFFF00EFC2
-            A37EEFC1A2E3EDC09FFFEBBE9DFFEBBC9AFFE9BA96FFE7B793FFE6B590FFE4B2
-            8CFFE2AF88FFE0AC84FFDDA980FFDCA57DFFDAA37ACAFFFFFF00FFFFFF00FFFF
-            FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-            FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00
-          }
-          NumGlyphs = 0
-          MaxLength = 10
-          OnEditingDone = WorkDateEditEditingDone
-          TabOrder = 0
-        end
-      end
     end
   end
   object MainStatusBar: TStatusBar
@@ -351,6 +74,7 @@ object MainForm: TMainForm
       CollapsedButtonColor = clSkyBlue
       CollapseKind = akTop
       ExpandedSize = 200
+      CollapsedSize = 0
       ButtonPosition = akLeft
       ButtonSize = 16
       Button.Left = 0
@@ -387,395 +111,350 @@ object MainForm: TMainForm
         WantTabs = True
       end
     end
-    object LeftRollOut: TMyRollOut
+    object MainSplitter: TPairSplitter
       Left = 1
       Height = 612
       Top = 1
-      Width = 16
-      Align = alLeft
-      BevelOuter = bvNone
-      Caption = 'LeftRollOut'
-      ClientHeight = 612
-      ClientWidth = 16
-      TabOrder = 1
-      ExpandedButtonColor = 16287767
-      CollapsedButtonColor = clSkyBlue
-      CollapseKind = akLeft
-      ExpandedSize = 200
-      ButtonPosition = akTop
-      ButtonSize = 16
-      Button.Left = 0
-      Button.Height = 16
-      Button.Top = 0
-      Button.Width = 16
-      Button.Anchors = [akTop, akLeft, akRight]
-      Button.Caption = '+'
-      Button.Color = clSkyBlue
-      Button.TabOrder = 0
-      AnimationSpeed = 60
-      Collapsed = True
-      object LeftPageControl: TPageControl
-        Left = 0
-        Height = 596
-        Top = 16
-        Width = 16
-        ActivePage = LeftAllSheet
-        Align = alClient
-        TabIndex = 0
-        TabOrder = 1
-        TabPosition = tpBottom
-        object LeftAllSheet: TTabSheet
-          Caption = 'Действия'
-          ClientHeight = 565
-          ClientWidth = 12
-          object MainTree: TDBVST
-            Left = 0
-            Height = 565
-            Top = 0
-            Width = 12
-            Align = alClient
-            DefaultText = 'Node'
-            Header.AutoSizeIndex = 0
-            Header.Columns = <            
-              item
-                Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAutoSpring, coSmartResize, coAllowFocus]
-                Position = 0
-                Width = 200
-              end>
-            Header.DefaultHeight = 17
-            TabOrder = 0
-            OnDblClick = MainTreeDblClick
-            DBTable = 'app.maintree'
-            DBFields.Strings = (
-              'id'
-              'disp'
-            )
-            DBFieldsDisp.Strings = (
-              ''
-              ''
-            )
-            DBFieldsConvTo.Strings = (
-              ''
-              ''
-            )
-            DBFieldsConvFrom.Strings = (
-              ''
-              ''
-            )
-            Deep = -1
-            Key = 'pid'
-            Order = '3'
-            Connection = Conn
-          end
-        end
-      end
-    end
-    object CenterPageControl: TPageControl
-      Left = 17
-      Height = 612
-      Top = 1
-      Width = 806
-      ActivePage = BuildingTabSheet
+      Width = 822
       Align = alClient
-      TabIndex = 1
-      TabOrder = 2
-      TabPosition = tpBottom
-      OnCloseTabClicked = CenterPageControlCloseTabClicked
-      Options = [nboShowCloseButtons]
-      object ConnectTabSheet: TTabSheet
-        Caption = 'Подключение'
-        ClientHeight = 576
-        ClientWidth = 802
-        object ConnScrollBox: TScrollBox
+      Position = 300
+      object PairSplitterSide1: TPairSplitterSide
+        Cursor = crArrow
+        Left = 0
+        Height = 612
+        Top = 0
+        Width = 300
+        ClientWidth = 300
+        ClientHeight = 612
+        object LeftTabs: TExtendedNotebook
           Left = 0
-          Height = 534
+          Height = 612
           Top = 0
-          Width = 802
-          HorzScrollBar.Page = 802
-          VertScrollBar.Page = 534
+          Width = 300
+          ActivePage = TabSheet1
           Align = alClient
-          ClientHeight = 530
-          ClientWidth = 798
+          Images = MainIconList22
+          ParentShowHint = False
+          ShowHint = True
+          TabIndex = 0
           TabOrder = 0
-          object ConnUserLabel: TLabel
-            AnchorSideLeft.Control = ConnScrollBox
-            AnchorSideTop.Control = ConnScrollBox
-            Left = 3
-            Height = 18
-            Top = 3
-            Width = 132
-            BorderSpacing.Around = 3
-            Caption = 'Имя пользователя'
-            ParentColor = False
+          TabPosition = tpRight
+          OnExit = LeftTabsMouseLeave
+          OnMouseUp = LeftTabsMouseUp
+          Options = [nboHidePageListPopup]
+          object TabSheet1: TTabSheet
+            ClientHeight = 608
+            ClientWidth = 263
+            ImageIndex = 14
+            object MainTree: TDBVST
+              Left = 0
+              Height = 608
+              Top = 0
+              Width = 263
+              Align = alClient
+              DefaultText = 'Node'
+              Header.AutoSizeIndex = 0
+              Header.Columns = <              
+                item
+                  Position = 0
+                  Width = 261
+                end>
+              Header.DefaultHeight = 17
+              Header.Options = [hoDrag, hoShowSortGlyphs, hoAutoSpring]
+              TabOrder = 0
+              OnDblClick = MainTreeDblClick
+              DBTable = 'app.maintree'
+              DBFields.Strings = (
+                'id'
+                'disp'
+              )
+              DBFieldsDisp.Strings = (
+                ''
+                ''
+              )
+              DBFieldsConvTo.Strings = (
+                ''
+                ''
+              )
+              DBFieldsConvFrom.Strings = (
+                ''
+                ''
+              )
+              Deep = -1
+              Key = 'pid'
+              Order = '3'
+              Connection = Conn
+            end
           end
-          object ConnUserEdit: TEdit
-            AnchorSideLeft.Control = ConnScrollBox
-            AnchorSideTop.Control = ConnUserLabel
-            AnchorSideTop.Side = asrBottom
-            Left = 3
-            Height = 27
-            Top = 24
-            Width = 123
-            BorderSpacing.Around = 3
-            TabOrder = 0
-            Text = 'admin'
+          object LeftDateTabSheet: TTabSheet
+            ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+            ChildSizing.Layout = cclLeftToRightThenTopToBottom
+            ChildSizing.ControlsPerLine = 1
+            ClientHeight = 608
+            ClientWidth = 263
+            ImageIndex = 21
+            object Panel9: TPanel
+              Left = 0
+              Height = 27
+              Top = 0
+              Width = 263
+              AutoSize = True
+              BevelOuter = bvNone
+              Caption = 'Panel9'
+              ClientHeight = 27
+              ClientWidth = 263
+              TabOrder = 1
+              object Label12: TLabel
+                AnchorSideTop.Side = asrCenter
+                Left = 0
+                Height = 18
+                Top = 4
+                Width = 24
+                Caption = 'РД:'
+                ParentColor = False
+              end
+              object WorkDateEdit: TDateEdit
+                AnchorSideLeft.Side = asrCenter
+                AnchorSideTop.Side = asrCenter
+                AnchorSideBottom.Side = asrBottom
+                Left = 91
+                Height = 27
+                Top = 0
+                Width = 80
+                DialogTitle = 'Выберите дату'
+                CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames, dsStartMonday]
+                OnAcceptDate = WorkDateEditAcceptDate
+                OnCustomDate = WorkDateEditCustomDate
+                OKCaption = 'OK'
+                CancelCaption = 'Cancel'
+                DateOrder = doDMY
+                ButtonWidth = 23
+                CharCase = ecNormal
+                Glyph.Data = {
+                  36040000424D3604000000000000360000002800000010000000100000000100
+                  2000000000000004000064000000640000000000000000000000FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00D69E
+                  72C4D3996EF4D19668FFCE9263FFCB8E5EFFC98A5BFFC78756FFC38452FFC384
+                  52FFC38452FFC38452FFC38452FFC38452FFBB7742B0FFFFFF00FFFFFF00D7A1
+                  75FFF8F2EDFFF7F0EAFFF6EDE6FFF4EAE2FFF3E7DEFFF1E4DBFFF0E2D8FFEAD6
+                  C8FFF2E5DCFFFAF4F1FFF9F3F0FFFAF5F2FFC58A5DFDFFFFFF00FFFFFF00D9A4
+                  7AFFF9F3EEFFEBD2BEFFFFFFFFFFEBD3BFFFFFFFFFFFEBD3C0FFFFFFFFFFEAC7
+                  ADFFECD9CDFFF1E4DBFFF9F3F0FFF9F2EFFFC68C5FFFFFFFFF00FFFFFF00DDA8
+                  7EFFF9F3EFFFEBD0BAFFEBD0BBFF75B57AFF75B57AFF75B57AFFEBD1BDFFEACD
+                  B5FFFAF4F0FFEBD9CCFFF1E4DBFFFAF4F1FFC68A5CFFFFFFFF00FFFFFF00DFAA
+                  82FFF9F3EFFFEACEB7FFFFFFFFFF75B57AFF94D49BFF74B579FFFFFFFFFFEACF
+                  BAFFFBF6F2FFFAF3F0FFEBD8CBFFF2E6DDFFC88D5FFFFFFFFF00FFFFFF00E1AE
+                  87FFFAF4F0FFEACBB2FFEACCB3FF75B57AFF74B579FF73B478FFEACEB7FF70B3
+                  75FF6FB274FF6EB172FFE8C8AEFFEAD7C9FFC48654FFFFFFFF00FFFFFF00E3B1
+                  8CFFFAF6F1FFEAC9AEFFFFFFFFFFEAC9B0FFFFFFFFFFE9CBB3FFFFFFFFFF6FB1
+                  73FF8ED295FF6BAF6FFFFFFFFFFFF1E5DBFFC68655FFFFFFFF00FFFFFF00E5B4
+                  8FFFFAF6F2FFE9C6AAFFE9C6ACFFEAC7ACFFE9C7ADFFE9C9AEFFE9C9B0FF6CB0
+                  71FF6AAF6EFF68AD6DFFE8CCB5FFF2E7DEFFC88A59FFFFFFFF00FFFFFF00E7B7
+                  94FFFBF7F4FFE9C3A6FFFFFFFFFFE8C4A9FFFFFFFFFFE9C6AAFFFFFFFFFFE8C7
+                  ACFFFFFFFFFFE8C8B0FFFFFFFFFFF7F1EBFFCB8F5FFFFFFFFF00FFFFFF00E9BA
+                  98FFFBF7F4FF65A4FFFF64A3FFFF62A2FFFF61A1FFFF5F9FFFFF5C9DFFFF5A9A
+                  FFFF5798FFFF5495FFFF5294FFFFFBF7F4FFCE9364FFFFFFFF00FFFFFF00EBBD
+                  9BFFFBF7F4FF64A4FFFF79BDFFFF75BBFFFF71B9FFFF6DB8FFFF68B3FFFF61B0
+                  FFFF5AABFFFF54A7FFFF3B7DFFFFFBF7F4FFD1976AFFFFFFFF00FFFFFF00ECBF
+                  9EFFFBF7F4FF65A4FFFF64A3FFFF60A0FFFF5D9EFFFF5899FFFF5496FFFF4D90
+                  FFFF478BFFFF4284FFFF3D7FFFFFFBF7F4FFD49B6FFFFFFFFF00FFFFFF00EEC1
+                  A1EBFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7
+                  F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFD7A074F8FFFFFF00FFFFFF00EFC2
+                  A37EEFC1A2E3EDC09FFFEBBE9DFFEBBC9AFFE9BA96FFE7B793FFE6B590FFE4B2
+                  8CFFE2AF88FFE0AC84FFDDA980FFDCA57DFFDAA37ACAFFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00
+                }
+                NumGlyphs = 0
+                MaxLength = 10
+                OnEditingDone = WorkDateEditEditingDone
+                TabOrder = 0
+              end
+            end
+            object Panel10: TPanel
+              Left = 0
+              Height = 27
+              Top = 27
+              Width = 263
+              AutoSize = True
+              BevelOuter = bvNone
+              Caption = 'Panel10'
+              ClientHeight = 27
+              ClientWidth = 263
+              TabOrder = 2
+              object Label13: TLabel
+                AnchorSideTop.Side = asrCenter
+                Left = 0
+                Height = 18
+                Top = 2
+                Width = 69
+                Caption = 'Период с:'
+                ParentColor = False
+              end
+              object WorkPeriodBeginEdit: TDateEdit
+                AnchorSideLeft.Side = asrCenter
+                AnchorSideTop.Side = asrCenter
+                AnchorSideBottom.Side = asrBottom
+                Left = 91
+                Height = 27
+                Top = 0
+                Width = 80
+                DialogTitle = 'Выберите дату'
+                CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames, dsStartMonday]
+                OnAcceptDate = WorkDateEditAcceptDate
+                OnCustomDate = WorkDateEditCustomDate
+                OKCaption = 'OK'
+                CancelCaption = 'Cancel'
+                DateOrder = doDMY
+                ButtonWidth = 23
+                CharCase = ecNormal
+                Glyph.Data = {
+                  36040000424D3604000000000000360000002800000010000000100000000100
+                  2000000000000004000064000000640000000000000000000000FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00D69E
+                  72C4D3996EF4D19668FFCE9263FFCB8E5EFFC98A5BFFC78756FFC38452FFC384
+                  52FFC38452FFC38452FFC38452FFC38452FFBB7742B0FFFFFF00FFFFFF00D7A1
+                  75FFF8F2EDFFF7F0EAFFF6EDE6FFF4EAE2FFF3E7DEFFF1E4DBFFF0E2D8FFEAD6
+                  C8FFF2E5DCFFFAF4F1FFF9F3F0FFFAF5F2FFC58A5DFDFFFFFF00FFFFFF00D9A4
+                  7AFFF9F3EEFFEBD2BEFFFFFFFFFFEBD3BFFFFFFFFFFFEBD3C0FFFFFFFFFFEAC7
+                  ADFFECD9CDFFF1E4DBFFF9F3F0FFF9F2EFFFC68C5FFFFFFFFF00FFFFFF00DDA8
+                  7EFFF9F3EFFFEBD0BAFFEBD0BBFF75B57AFF75B57AFF75B57AFFEBD1BDFFEACD
+                  B5FFFAF4F0FFEBD9CCFFF1E4DBFFFAF4F1FFC68A5CFFFFFFFF00FFFFFF00DFAA
+                  82FFF9F3EFFFEACEB7FFFFFFFFFF75B57AFF94D49BFF74B579FFFFFFFFFFEACF
+                  BAFFFBF6F2FFFAF3F0FFEBD8CBFFF2E6DDFFC88D5FFFFFFFFF00FFFFFF00E1AE
+                  87FFFAF4F0FFEACBB2FFEACCB3FF75B57AFF74B579FF73B478FFEACEB7FF70B3
+                  75FF6FB274FF6EB172FFE8C8AEFFEAD7C9FFC48654FFFFFFFF00FFFFFF00E3B1
+                  8CFFFAF6F1FFEAC9AEFFFFFFFFFFEAC9B0FFFFFFFFFFE9CBB3FFFFFFFFFF6FB1
+                  73FF8ED295FF6BAF6FFFFFFFFFFFF1E5DBFFC68655FFFFFFFF00FFFFFF00E5B4
+                  8FFFFAF6F2FFE9C6AAFFE9C6ACFFEAC7ACFFE9C7ADFFE9C9AEFFE9C9B0FF6CB0
+                  71FF6AAF6EFF68AD6DFFE8CCB5FFF2E7DEFFC88A59FFFFFFFF00FFFFFF00E7B7
+                  94FFFBF7F4FFE9C3A6FFFFFFFFFFE8C4A9FFFFFFFFFFE9C6AAFFFFFFFFFFE8C7
+                  ACFFFFFFFFFFE8C8B0FFFFFFFFFFF7F1EBFFCB8F5FFFFFFFFF00FFFFFF00E9BA
+                  98FFFBF7F4FF65A4FFFF64A3FFFF62A2FFFF61A1FFFF5F9FFFFF5C9DFFFF5A9A
+                  FFFF5798FFFF5495FFFF5294FFFFFBF7F4FFCE9364FFFFFFFF00FFFFFF00EBBD
+                  9BFFFBF7F4FF64A4FFFF79BDFFFF75BBFFFF71B9FFFF6DB8FFFF68B3FFFF61B0
+                  FFFF5AABFFFF54A7FFFF3B7DFFFFFBF7F4FFD1976AFFFFFFFF00FFFFFF00ECBF
+                  9EFFFBF7F4FF65A4FFFF64A3FFFF60A0FFFF5D9EFFFF5899FFFF5496FFFF4D90
+                  FFFF478BFFFF4284FFFF3D7FFFFFFBF7F4FFD49B6FFFFFFFFF00FFFFFF00EEC1
+                  A1EBFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7
+                  F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFD7A074F8FFFFFF00FFFFFF00EFC2
+                  A37EEFC1A2E3EDC09FFFEBBE9DFFEBBC9AFFE9BA96FFE7B793FFE6B590FFE4B2
+                  8CFFE2AF88FFE0AC84FFDDA980FFDCA57DFFDAA37ACAFFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00
+                }
+                NumGlyphs = 0
+                MaxLength = 10
+                OnEditingDone = WorkDateEditEditingDone
+                TabOrder = 0
+              end
+            end
+            object Panel8: TPanel
+              Left = 0
+              Height = 27
+              Top = 54
+              Width = 263
+              AutoSize = True
+              BevelOuter = bvNone
+              ClientHeight = 27
+              ClientWidth = 263
+              TabOrder = 0
+              object Label14: TLabel
+                AnchorSideTop.Side = asrCenter
+                Left = 0
+                Height = 18
+                Top = 4
+                Width = 79
+                Caption = 'Период по:'
+                ParentColor = False
+              end
+              object WorkPeriodBeginEdit1: TDateEdit
+                AnchorSideLeft.Side = asrCenter
+                AnchorSideTop.Side = asrCenter
+                AnchorSideBottom.Side = asrBottom
+                Left = 91
+                Height = 27
+                Top = 0
+                Width = 80
+                DialogTitle = 'Выберите дату'
+                CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames, dsStartMonday]
+                OnAcceptDate = WorkDateEditAcceptDate
+                OnCustomDate = WorkDateEditCustomDate
+                OKCaption = 'OK'
+                CancelCaption = 'Cancel'
+                DateOrder = doDMY
+                ButtonWidth = 23
+                CharCase = ecNormal
+                Glyph.Data = {
+                  36040000424D3604000000000000360000002800000010000000100000000100
+                  2000000000000004000064000000640000000000000000000000FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00D69E
+                  72C4D3996EF4D19668FFCE9263FFCB8E5EFFC98A5BFFC78756FFC38452FFC384
+                  52FFC38452FFC38452FFC38452FFC38452FFBB7742B0FFFFFF00FFFFFF00D7A1
+                  75FFF8F2EDFFF7F0EAFFF6EDE6FFF4EAE2FFF3E7DEFFF1E4DBFFF0E2D8FFEAD6
+                  C8FFF2E5DCFFFAF4F1FFF9F3F0FFFAF5F2FFC58A5DFDFFFFFF00FFFFFF00D9A4
+                  7AFFF9F3EEFFEBD2BEFFFFFFFFFFEBD3BFFFFFFFFFFFEBD3C0FFFFFFFFFFEAC7
+                  ADFFECD9CDFFF1E4DBFFF9F3F0FFF9F2EFFFC68C5FFFFFFFFF00FFFFFF00DDA8
+                  7EFFF9F3EFFFEBD0BAFFEBD0BBFF75B57AFF75B57AFF75B57AFFEBD1BDFFEACD
+                  B5FFFAF4F0FFEBD9CCFFF1E4DBFFFAF4F1FFC68A5CFFFFFFFF00FFFFFF00DFAA
+                  82FFF9F3EFFFEACEB7FFFFFFFFFF75B57AFF94D49BFF74B579FFFFFFFFFFEACF
+                  BAFFFBF6F2FFFAF3F0FFEBD8CBFFF2E6DDFFC88D5FFFFFFFFF00FFFFFF00E1AE
+                  87FFFAF4F0FFEACBB2FFEACCB3FF75B57AFF74B579FF73B478FFEACEB7FF70B3
+                  75FF6FB274FF6EB172FFE8C8AEFFEAD7C9FFC48654FFFFFFFF00FFFFFF00E3B1
+                  8CFFFAF6F1FFEAC9AEFFFFFFFFFFEAC9B0FFFFFFFFFFE9CBB3FFFFFFFFFF6FB1
+                  73FF8ED295FF6BAF6FFFFFFFFFFFF1E5DBFFC68655FFFFFFFF00FFFFFF00E5B4
+                  8FFFFAF6F2FFE9C6AAFFE9C6ACFFEAC7ACFFE9C7ADFFE9C9AEFFE9C9B0FF6CB0
+                  71FF6AAF6EFF68AD6DFFE8CCB5FFF2E7DEFFC88A59FFFFFFFF00FFFFFF00E7B7
+                  94FFFBF7F4FFE9C3A6FFFFFFFFFFE8C4A9FFFFFFFFFFE9C6AAFFFFFFFFFFE8C7
+                  ACFFFFFFFFFFE8C8B0FFFFFFFFFFF7F1EBFFCB8F5FFFFFFFFF00FFFFFF00E9BA
+                  98FFFBF7F4FF65A4FFFF64A3FFFF62A2FFFF61A1FFFF5F9FFFFF5C9DFFFF5A9A
+                  FFFF5798FFFF5495FFFF5294FFFFFBF7F4FFCE9364FFFFFFFF00FFFFFF00EBBD
+                  9BFFFBF7F4FF64A4FFFF79BDFFFF75BBFFFF71B9FFFF6DB8FFFF68B3FFFF61B0
+                  FFFF5AABFFFF54A7FFFF3B7DFFFFFBF7F4FFD1976AFFFFFFFF00FFFFFF00ECBF
+                  9EFFFBF7F4FF65A4FFFF64A3FFFF60A0FFFF5D9EFFFF5899FFFF5496FFFF4D90
+                  FFFF478BFFFF4284FFFF3D7FFFFFFBF7F4FFD49B6FFFFFFFFF00FFFFFF00EEC1
+                  A1EBFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7
+                  F4FFFBF7F4FFFBF7F4FFFBF7F4FFFBF7F4FFD7A074F8FFFFFF00FFFFFF00EFC2
+                  A37EEFC1A2E3EDC09FFFEBBE9DFFEBBC9AFFE9BA96FFE7B793FFE6B590FFE4B2
+                  8CFFE2AF88FFE0AC84FFDDA980FFDCA57DFFDAA37ACAFFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00
+                }
+                NumGlyphs = 0
+                MaxLength = 10
+                OnEditingDone = WorkDateEditEditingDone
+                TabOrder = 0
+              end
+            end
           end
-          object ConnPwdLabel: TLabel
-            AnchorSideLeft.Control = ConnScrollBox
-            AnchorSideTop.Control = ConnUserEdit
-            AnchorSideTop.Side = asrBottom
-            Left = 3
-            Height = 18
-            Top = 57
-            Width = 54
-            BorderSpacing.Top = 3
-            BorderSpacing.Around = 3
-            Caption = 'Пароль'
-            ParentColor = False
-          end
-          object ConnHostLabel: TLabel
-            AnchorSideLeft.Control = ConnScrollBox
-            AnchorSideTop.Control = ConnPwdEdit
-            AnchorSideTop.Side = asrBottom
-            Left = 3
-            Height = 18
-            Top = 111
-            Width = 52
-            BorderSpacing.Top = 3
-            BorderSpacing.Around = 3
-            Caption = 'Сервер'
-            ParentColor = False
-          end
-          object ConnHostEdit: TEdit
-            AnchorSideLeft.Control = ConnScrollBox
-            AnchorSideTop.Control = ConnHostLabel
-            AnchorSideTop.Side = asrBottom
-            Left = 3
-            Height = 27
-            Top = 132
-            Width = 123
-            BorderSpacing.Around = 3
-            TabOrder = 3
-            Text = 'localhost'
-          end
-          object ConnBaseEdit: TEdit
-            AnchorSideLeft.Control = ConnScrollBox
-            AnchorSideTop.Control = ConnBaseLabel
-            AnchorSideTop.Side = asrBottom
-            Left = 3
-            Height = 27
-            Top = 240
-            Width = 123
-            HelpType = htKeyword
-            BorderSpacing.Around = 3
-            TabOrder = 5
-            Text = 'flap'
-          end
-          object ConnBaseLabel: TLabel
-            AnchorSideLeft.Control = ConnScrollBox
-            AnchorSideTop.Control = ConnPortEdit
-            AnchorSideTop.Side = asrBottom
-            Left = 3
-            Height = 18
-            Top = 219
-            Width = 90
-            BorderSpacing.Top = 3
-            BorderSpacing.Around = 3
-            Caption = 'База данных'
-            ParentColor = False
-          end
-          object ConnPwdEdit: TEdit
-            AnchorSideLeft.Control = ConnScrollBox
-            AnchorSideTop.Control = ConnPwdLabel
-            AnchorSideTop.Side = asrBottom
-            Left = 3
-            Height = 27
-            Top = 78
-            Width = 123
-            BorderSpacing.Around = 3
-            EchoMode = emPassword
-            PasswordChar = '*'
-            TabOrder = 1
-            Text = 'admin'
-          end
-          object ShowPwdBtn: TBitBtn
-            AnchorSideLeft.Control = ConnPwdEdit
-            AnchorSideLeft.Side = asrBottom
-            AnchorSideTop.Control = ConnPwdEdit
-            AnchorSideBottom.Control = ConnPwdEdit
-            AnchorSideBottom.Side = asrBottom
-            Left = 129
-            Height = 27
-            Top = 78
-            Width = 77
-            Anchors = [akTop, akLeft, akBottom]
-            AutoSize = True
-            Caption = 'Показать'
-            TabOrder = 2
-          end
-          object ConnPortLabel: TLabel
-            AnchorSideLeft.Control = ConnScrollBox
-            AnchorSideTop.Control = ConnHostEdit
-            AnchorSideTop.Side = asrBottom
-            Left = 3
-            Height = 18
-            Top = 165
-            Width = 36
-            BorderSpacing.Top = 3
-            BorderSpacing.Around = 3
-            Caption = 'Порт'
-            ParentColor = False
-          end
-          object ConnPortEdit: TEdit
-            AnchorSideLeft.Control = ConnScrollBox
-            AnchorSideTop.Control = ConnPortLabel
-            AnchorSideTop.Side = asrBottom
-            Left = 3
-            Height = 27
-            Top = 186
-            Width = 123
-            BorderSpacing.Around = 3
-            TabOrder = 4
-            Text = '5432'
-          end
-        end
-        object ActionPanel: TPanel
-          Left = 0
-          Height = 42
-          Top = 534
-          Width = 802
-          Align = alBottom
-          AutoSize = True
-          ClientHeight = 42
-          ClientWidth = 802
-          TabOrder = 1
-          object ConnBtn: TBitBtn
-            AnchorSideLeft.Control = ActionPanel
-            AnchorSideTop.Control = ActionPanel
-            AnchorSideBottom.Control = ActionPanel
-            AnchorSideBottom.Side = asrBottom
-            Left = 4
-            Height = 34
-            Top = 4
-            Width = 141
-            Action = ActionConnect
-            Anchors = [akLeft, akBottom]
-            AutoSize = True
-            BorderSpacing.Around = 3
-            Default = True
-            Glyph.Data = {
-              C6070000424DC607000000000000360000002800000016000000160000000100
-              2000000000009007000064000000640000000000000000000000FFFFFF07FFFF
-              FF49FFFFFF53FFFFFF12FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1C2727276E2F2F2F71E1E1
-              E15DFFFFFF14FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF1C0505059A0000008F1C1C1C7BDFDFDF5EFFFF
-              FF14FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF098C8C8C36030303AC000000971A1A1A83DEDEDE5EFFFFFF14FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF0A8A8A8A37030303B0000000A019191989DFDFDF66FFFFFF60FFFFFF5CFFFF
-              FF33FFFFFF02FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0A8C8C
-              8C36030303B4000000A10404049D0909099A1111119474747474FFFFFF45FFFF
-              FF03FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0A8E8E8E370101
-              01A5000000A9000000A9000000A9000000A95858587EFFFFFF3FFFFFFF03FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF21010101AB000000B20000
-              00B2000000B2000000B2000000B249494970FFFFFF15FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF20010101BB000000BC000000BC000000BC0000
-              00BC000000BC020202B0FFFFFF1CFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF121414148A000000D3000000C5000000C5000000C5000000D11111
-              1192FFFFFF45FFFFFF5CFFFFFF32FFFFFF02FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFF
-              FF1E0D0D0D99000000DB000000D1000000DA0A0A0AA6F8F8F8526F6F6F691616
-              167591919167FFFFFF3EFFFFFF02FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFFFF1E1212
-              128F010101D80E0E0E97F4F4F44C4C4C4C710000008600000086000000867D7D
-              7D6BFFFFFF39FFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFFFF14FFFFFF21FFFF
-              FF244141416A0000008F0000008F0000008F0000008F0000008F7B7B7B62FFFF
-              FF10FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1E0202029B0000
-              0098000000980000009800000098000000980C0C0C82FFFFFF1DFFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1711111188000000B5000000A10000
-              00A1000000A1000000A10B0B0B91FFFFFF23FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF03FFFFFF200C0C0C95000000C1000000AE000000AD0000
-              00AB0A0A0AA2E5E5E55BFFFFFF0FFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF03FFFFFF1F13131386010101CC000000D1000000D0000000B81C1C
-              1C9AE3E3E35CFFFFFF0FFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF02FFFFFF12FFFFFF20FFFFFF216D6D6D42020202C8000000C01B1B1BA1E1E1
-              E15DFFFFFF10FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF0C6F6F6F41010101CC000000C9191919A9D9D9D953FFFF
-              FF08FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF0C6D6D6D42010101D0000000D40C0C0CA9FFFFFF1AFFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF0C6F6F6F41020202CF060606B2FFFFFF19FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-              FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0AFFFF
-              FF1CFFFFFF1AFFFFFF06
-            }
-            TabOrder = 0
-          end
-        end
-      end
-      object BuildingTabSheet: TTabSheet
-        Caption = 'Здания'
-        ClientHeight = 576
-        ClientWidth = 802
-        OnShow = BuildingTabSheetShow
-        object PairSplitterSide3: TPairSplitterSide
-          Cursor = crArrow
-          Left = 255
-          Height = 468
-          Top = 0
-          Width = 465
-        end
-        object WorkPairSplitter: TPairSplitter
-          Left = 0
-          Height = 576
-          Top = 0
-          Width = 802
-          Align = alClient
-          Position = 200
-          object PairSplitterSide5: TPairSplitterSide
-            Cursor = crArrow
-            Left = 0
-            Height = 576
-            Top = 0
-            Width = 200
-            ClientWidth = 200
-            ClientHeight = 576
+          object TabSheet2: TTabSheet
+            ClientHeight = 608
+            ClientWidth = 263
+            ImageIndex = 17
             object BuildingsList: TDBVST
               Left = 0
-              Height = 576
+              Height = 608
               Top = 0
-              Width = 200
+              Width = 263
               Align = alClient
               DefaultText = 'Node'
               Header.AutoSizeIndex = -1
               Header.Columns = <              
                 item
+                  Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAutoSpring, coSmartResize, coAllowFocus]
                   Position = 0
-                  Width = 300
+                  Width = 250
                 end>
               Header.DefaultHeight = 17
+              Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoAutoSpring]
+              ScrollBarOptions.ScrollBars = ssAutoBoth
               TabOrder = 0
               TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toWheelPanning]
               TreeOptions.SelectionOptions = [toMultiSelect]
+              OnDblClick = BuildingsListDblClick
               OnFocusChanged = BuildingsListFocusChanged
               DBTable = 'buildings_hlist'
               DBFields.Strings = (
@@ -800,19 +479,334 @@ object MainForm: TMainForm
               Connection = Conn
             end
           end
-          object PairSplitterSide6: TPairSplitterSide
-            Cursor = crArrow
-            Left = 205
-            Height = 576
-            Top = 0
-            Width = 597
-            ClientWidth = 597
+          object TabSheet3: TTabSheet
+            ClientHeight = 608
+            ClientWidth = 263
+            ImageIndex = 18
+            object ServicesList: TDBVST
+              Left = 0
+              Height = 608
+              Top = 0
+              Width = 263
+              Align = alClient
+              DefaultText = 'Node'
+              Header.AutoSizeIndex = 0
+              Header.Columns = <              
+                item
+                  Position = 0
+                  Width = 500
+                end>
+              Header.DefaultHeight = 17
+              Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoAutoSpring]
+              TabOrder = 0
+              TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
+              OnDblClick = ServicesListDblClick
+              OnFocusChanged = ServicesListFocusChanged
+              DBTable = 'services'
+              DBFields.Strings = (
+                'id'
+                'disp'
+              )
+              DBFieldsDisp.Strings = (
+                ''
+                'Наименование'
+              )
+              DBFieldsConvTo.Strings = (
+                ''
+                ''
+              )
+              DBFieldsConvFrom.Strings = (
+                ''
+                ''
+              )
+              Deep = -1
+              Key = 'pid'
+              Order = '3'
+              Connection = Conn
+            end
+          end
+        end
+      end
+      object PairSplitterSide2: TPairSplitterSide
+        Cursor = crArrow
+        Left = 305
+        Height = 612
+        Top = 0
+        Width = 517
+        ClientWidth = 517
+        ClientHeight = 612
+        object CenterPageControl: TPageControl
+          Left = 0
+          Height = 612
+          Top = 0
+          Width = 517
+          ActivePage = BuildingWorksTabSheet
+          Align = alClient
+          TabIndex = 6
+          TabOrder = 0
+          TabPosition = tpBottom
+          OnCloseTabClicked = CenterPageControlCloseTabClicked
+          Options = [nboShowCloseButtons]
+          object ConnectTabSheet: TTabSheet
+            Caption = 'Подключение'
             ClientHeight = 576
+            ClientWidth = 513
+            object ConnScrollBox: TScrollBox
+              Left = 0
+              Height = 534
+              Top = 0
+              Width = 513
+              HorzScrollBar.Page = 511
+              VertScrollBar.Page = 532
+              Align = alClient
+              ClientHeight = 532
+              ClientWidth = 511
+              TabOrder = 0
+              object ConnUserLabel: TLabel
+                AnchorSideLeft.Control = ConnScrollBox
+                AnchorSideTop.Control = ConnScrollBox
+                Left = 3
+                Height = 18
+                Top = 3
+                Width = 132
+                BorderSpacing.Around = 3
+                Caption = 'Имя пользователя'
+                ParentColor = False
+              end
+              object ConnUserEdit: TEdit
+                AnchorSideLeft.Control = ConnScrollBox
+                AnchorSideTop.Control = ConnUserLabel
+                AnchorSideTop.Side = asrBottom
+                Left = 3
+                Height = 27
+                Top = 24
+                Width = 123
+                BorderSpacing.Around = 3
+                TabOrder = 0
+                Text = 'admin'
+              end
+              object ConnPwdLabel: TLabel
+                AnchorSideLeft.Control = ConnScrollBox
+                AnchorSideTop.Control = ConnUserEdit
+                AnchorSideTop.Side = asrBottom
+                Left = 3
+                Height = 18
+                Top = 57
+                Width = 54
+                BorderSpacing.Top = 3
+                BorderSpacing.Around = 3
+                Caption = 'Пароль'
+                ParentColor = False
+              end
+              object ConnHostLabel: TLabel
+                AnchorSideLeft.Control = ConnScrollBox
+                AnchorSideTop.Control = ConnPwdEdit
+                AnchorSideTop.Side = asrBottom
+                Left = 3
+                Height = 18
+                Top = 111
+                Width = 52
+                BorderSpacing.Top = 3
+                BorderSpacing.Around = 3
+                Caption = 'Сервер'
+                ParentColor = False
+              end
+              object ConnHostEdit: TEdit
+                AnchorSideLeft.Control = ConnScrollBox
+                AnchorSideTop.Control = ConnHostLabel
+                AnchorSideTop.Side = asrBottom
+                Left = 3
+                Height = 27
+                Top = 132
+                Width = 123
+                BorderSpacing.Around = 3
+                TabOrder = 3
+                Text = 'localhost'
+              end
+              object ConnBaseEdit: TEdit
+                AnchorSideLeft.Control = ConnScrollBox
+                AnchorSideTop.Control = ConnBaseLabel
+                AnchorSideTop.Side = asrBottom
+                Left = 3
+                Height = 27
+                Top = 240
+                Width = 123
+                HelpType = htKeyword
+                BorderSpacing.Around = 3
+                TabOrder = 5
+                Text = 'flap'
+              end
+              object ConnBaseLabel: TLabel
+                AnchorSideLeft.Control = ConnScrollBox
+                AnchorSideTop.Control = ConnPortEdit
+                AnchorSideTop.Side = asrBottom
+                Left = 3
+                Height = 18
+                Top = 219
+                Width = 90
+                BorderSpacing.Top = 3
+                BorderSpacing.Around = 3
+                Caption = 'База данных'
+                ParentColor = False
+              end
+              object ConnPwdEdit: TEdit
+                AnchorSideLeft.Control = ConnScrollBox
+                AnchorSideTop.Control = ConnPwdLabel
+                AnchorSideTop.Side = asrBottom
+                Left = 3
+                Height = 27
+                Top = 78
+                Width = 123
+                BorderSpacing.Around = 3
+                EchoMode = emPassword
+                PasswordChar = '*'
+                TabOrder = 1
+                Text = 'admin'
+              end
+              object ShowPwdBtn: TBitBtn
+                AnchorSideLeft.Control = ConnPwdEdit
+                AnchorSideLeft.Side = asrBottom
+                AnchorSideTop.Control = ConnPwdEdit
+                AnchorSideBottom.Control = ConnPwdEdit
+                AnchorSideBottom.Side = asrBottom
+                Left = 129
+                Height = 27
+                Top = 78
+                Width = 77
+                Anchors = [akTop, akLeft, akBottom]
+                AutoSize = True
+                Caption = 'Показать'
+                TabOrder = 2
+              end
+              object ConnPortLabel: TLabel
+                AnchorSideLeft.Control = ConnScrollBox
+                AnchorSideTop.Control = ConnHostEdit
+                AnchorSideTop.Side = asrBottom
+                Left = 3
+                Height = 18
+                Top = 165
+                Width = 36
+                BorderSpacing.Top = 3
+                BorderSpacing.Around = 3
+                Caption = 'Порт'
+                ParentColor = False
+              end
+              object ConnPortEdit: TEdit
+                AnchorSideLeft.Control = ConnScrollBox
+                AnchorSideTop.Control = ConnPortLabel
+                AnchorSideTop.Side = asrBottom
+                Left = 3
+                Height = 27
+                Top = 186
+                Width = 123
+                BorderSpacing.Around = 3
+                TabOrder = 4
+                Text = '5432'
+              end
+            end
+            object ActionPanel: TPanel
+              Left = 0
+              Height = 42
+              Top = 534
+              Width = 513
+              Align = alBottom
+              AutoSize = True
+              ClientHeight = 42
+              ClientWidth = 513
+              TabOrder = 1
+              object ConnBtn: TBitBtn
+                AnchorSideLeft.Control = ActionPanel
+                AnchorSideTop.Control = ActionPanel
+                AnchorSideBottom.Control = ActionPanel
+                AnchorSideBottom.Side = asrBottom
+                Left = 4
+                Height = 34
+                Top = 4
+                Width = 141
+                Action = ActionConnect
+                Anchors = [akLeft, akBottom]
+                AutoSize = True
+                BorderSpacing.Around = 3
+                Default = True
+                Glyph.Data = {
+                  C6070000424DC607000000000000360000002800000016000000160000000100
+                  2000000000009007000064000000640000000000000000000000FFFFFF07FFFF
+                  FF49FFFFFF53FFFFFF12FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1C2727276E2F2F2F71E1E1
+                  E15DFFFFFF14FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF1C0505059A0000008F1C1C1C7BDFDFDF5EFFFF
+                  FF14FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF098C8C8C36030303AC000000971A1A1A83DEDEDE5EFFFFFF14FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF0A8A8A8A37030303B0000000A019191989DFDFDF66FFFFFF60FFFFFF5CFFFF
+                  FF33FFFFFF02FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0A8C8C
+                  8C36030303B4000000A10404049D0909099A1111119474747474FFFFFF45FFFF
+                  FF03FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0A8E8E8E370101
+                  01A5000000A9000000A9000000A9000000A95858587EFFFFFF3FFFFFFF03FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF21010101AB000000B20000
+                  00B2000000B2000000B2000000B249494970FFFFFF15FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF20010101BB000000BC000000BC000000BC0000
+                  00BC000000BC020202B0FFFFFF1CFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF121414148A000000D3000000C5000000C5000000C5000000D11111
+                  1192FFFFFF45FFFFFF5CFFFFFF32FFFFFF02FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFF
+                  FF1E0D0D0D99000000DB000000D1000000DA0A0A0AA6F8F8F8526F6F6F691616
+                  167591919167FFFFFF3EFFFFFF02FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFFFF1E1212
+                  128F010101D80E0E0E97F4F4F44C4C4C4C710000008600000086000000867D7D
+                  7D6BFFFFFF39FFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF02FFFFFF14FFFFFF21FFFF
+                  FF244141416A0000008F0000008F0000008F0000008F0000008F7B7B7B62FFFF
+                  FF10FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1E0202029B0000
+                  0098000000980000009800000098000000980C0C0C82FFFFFF1DFFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF1711111188000000B5000000A10000
+                  00A1000000A1000000A10B0B0B91FFFFFF23FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF03FFFFFF200C0C0C95000000C1000000AE000000AD0000
+                  00AB0A0A0AA2E5E5E55BFFFFFF0FFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF03FFFFFF1F13131386010101CC000000D1000000D0000000B81C1C
+                  1C9AE3E3E35CFFFFFF0FFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF02FFFFFF12FFFFFF20FFFFFF216D6D6D42020202C8000000C01B1B1BA1E1E1
+                  E15DFFFFFF10FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF0C6F6F6F41010101CC000000C9191919A9D9D9D953FFFF
+                  FF08FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF0C6D6D6D42010101D0000000D40C0C0CA9FFFFFF1AFFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF0C6F6F6F41020202CF060606B2FFFFFF19FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+                  FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0AFFFF
+                  FF1CFFFFFF1AFFFFFF06
+                }
+                TabOrder = 0
+              end
+            end
+          end
+          object BuildingTabSheet: TTabSheet
+            Caption = 'Здания'
+            ClientHeight = 576
+            ClientWidth = 513
+            OnShow = BuildingTabSheetShow
             object BuildingPageControl: TPageControl
               Left = 0
               Height = 575
               Top = 1
-              Width = 597
+              Width = 513
               ActivePage = BuildingPropsTabSheet
               Align = alClient
               TabIndex = 1
@@ -820,25 +814,25 @@ object MainForm: TMainForm
               object BuildingMainTabSheet: TTabSheet
                 Caption = 'Основное'
                 ClientHeight = 544
-                ClientWidth = 593
+                ClientWidth = 509
                 OnShow = BuildingMainTabSheetShow
                 object ScrollBox2: TScrollBox
                   Left = 0
-                  Height = 507
+                  Height = 544
                   Top = 0
-                  Width = 593
-                  HorzScrollBar.Page = 593
-                  VertScrollBar.Page = 507
+                  Width = 514
+                  HorzScrollBar.Page = 514
+                  VertScrollBar.Page = 544
                   Align = alClient
-                  ClientHeight = 503
-                  ClientWidth = 589
+                  ClientHeight = 540
+                  ClientWidth = 510
                   TabOrder = 0
                   object PairSplitter6: TPairSplitter
                     Cursor = crVSplit
                     Left = 0
-                    Height = 505
+                    Height = 542
                     Top = 0
-                    Width = 591
+                    Width = 512
                     Align = alClient
                     Position = 300
                     SplitterType = pstVertical
@@ -847,15 +841,15 @@ object MainForm: TMainForm
                       Left = 0
                       Height = 300
                       Top = 0
-                      Width = 591
-                      ClientWidth = 591
+                      Width = 512
+                      ClientWidth = 512
                       ClientHeight = 300
                       object ScrollBox4: TScrollBox
                         Left = 0
                         Height = 300
                         Top = 0
-                        Width = 591
-                        HorzScrollBar.Page = 591
+                        Width = 512
+                        HorzScrollBar.Page = 512
                         VertScrollBar.Page = 300
                         Align = alClient
                         ChildSizing.HorizontalSpacing = 3
@@ -863,21 +857,21 @@ object MainForm: TMainForm
                         ChildSizing.Layout = cclLeftToRightThenTopToBottom
                         ChildSizing.ControlsPerLine = 2
                         ClientHeight = 296
-                        ClientWidth = 587
+                        ClientWidth = 508
                         TabOrder = 0
                         object Label11: TLabel
                           Left = 0
                           Height = 27
                           Top = 0
-                          Width = 380
+                          Width = 341
                           Caption = 'Плановая стоимость обслуживания'
                           ParentColor = False
                         end
                         object BuildingCalcPriceEdit: TEdit
-                          Left = 383
+                          Left = 344
                           Height = 27
                           Top = 0
-                          Width = 206
+                          Width = 166
                           TabOrder = 0
                         end
                       end
@@ -885,16 +879,16 @@ object MainForm: TMainForm
                     object PairSplitterSide17: TPairSplitterSide
                       Cursor = crArrow
                       Left = 0
-                      Height = 200
+                      Height = 237
                       Top = 305
-                      Width = 591
-                      ClientWidth = 591
-                      ClientHeight = 200
+                      Width = 512
+                      ClientWidth = 512
+                      ClientHeight = 237
                       object BuildingDetailsMemo: TMemo
                         Left = 0
-                        Height = 200
+                        Height = 237
                         Top = 0
-                        Width = 591
+                        Width = 512
                         Align = alClient
                         Lines.Strings = (
                           ''
@@ -905,44 +899,17 @@ object MainForm: TMainForm
                     end
                   end
                 end
-                object ActionPanel3: TPanel
-                  Left = 0
-                  Height = 37
-                  Top = 507
-                  Width = 593
-                  Align = alBottom
-                  AutoSize = True
-                  ClientHeight = 37
-                  ClientWidth = 593
-                  TabOrder = 1
-                  object SrvMainSaveBtn1: TBitBtn
-                    AnchorSideLeft.Control = ActionPanel3
-                    AnchorSideTop.Control = ActionPanel3
-                    AnchorSideBottom.Control = ActionPanel3
-                    AnchorSideBottom.Side = asrBottom
-                    Left = 4
-                    Height = 29
-                    Top = 4
-                    Width = 88
-                    Anchors = [akLeft, akBottom]
-                    AutoSize = True
-                    BorderSpacing.Around = 3
-                    Caption = 'Сохранить'
-                    OnClick = DataSave
-                    TabOrder = 0
-                  end
-                end
               end
               object BuildingPropsTabSheet: TTabSheet
                 Caption = 'Характеристики'
                 ClientHeight = 544
-                ClientWidth = 593
+                ClientWidth = 509
                 OnShow = BuildingPropsTabSheetShow
                 object BuildingPropertiesVST: TDBVST
                   Left = 0
                   Height = 544
                   Top = 0
-                  Width = 593
+                  Width = 774
                   Align = alClient
                   DefaultText = 'Node'
                   Header.AutoSizeIndex = 1
@@ -961,6 +928,7 @@ object MainForm: TMainForm
                   PopupMenu = DBPopupMenu
                   TabOrder = 0
                   TreeOptions.MiscOptions = [toEditable, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnDblClick]
+                  TreeOptions.PaintOptions = [toShowButtons, toShowDropmark, toShowHorzGridLines, toShowRoot, toShowVertGridLines, toThemeAware, toUseBlendedImages]
                   TreeOptions.SelectionOptions = [toExtendedFocus]
                   DBTable = 'buildings_p'
                   DBFields.Strings = (
@@ -995,659 +963,38 @@ object MainForm: TMainForm
                   Connection = Conn
                 end
               end
-              object BuildingServicesTabSheet: TTabSheet
-                Caption = 'Услуги'
-                ClientHeight = 544
-                ClientWidth = 593
-                OnShow = BuildingServicesTabSheetShow
-                object PairSplitter1: TPairSplitter
-                  Cursor = crVSplit
-                  Left = 0
-                  Height = 544
-                  Top = 0
-                  Width = 593
-                  Align = alClient
-                  Position = 400
-                  SplitterType = pstVertical
-                  object PairSplitterSide4: TPairSplitterSide
-                    Cursor = crArrow
-                    Left = 0
-                    Height = 400
-                    Top = 0
-                    Width = 593
-                    ClientWidth = 593
-                    ClientHeight = 400
-                    object ServiceCompaniesVST: TDBVST
-                      Left = 0
-                      Height = 400
-                      Top = 0
-                      Width = 593
-                      Align = alClient
-                      DefaultText = 'Node'
-                      Header.AutoSizeIndex = 0
-                      Header.Columns = <                      
-                        item
-                          Position = 0
-                          Text = 'Услуга'
-                          Width = 200
-                        end                      
-                        item
-                          Position = 1
-                          Text = 'Организация'
-                          Width = 200
-                        end>
-                      Header.DefaultHeight = 17
-                      Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
-                      Header.Style = hsFlatButtons
-                      ScrollBarOptions.ScrollBars = ssAutoBoth
-                      TabOrder = 0
-                      TreeOptions.AutoOptions = [toAutoDropExpand, toAutoExpand, toAutoScrollOnExpand, toAutoTristateTracking, toAutoDeleteMovedNodes]
-                      TreeOptions.MiscOptions = [toEditable, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toWheelPanning, toVariableNodeHeight, toNodeHeightResize, toEditOnClick, toEditOnDblClick]
-                      TreeOptions.SelectionOptions = [toExtendedFocus]
-                      OnDblClick = ServiceCompaniesVSTDblClick
-                      OnFocusChanged = ServiceCompaniesVSTFocusChanged
-                      DBTable = 'building_service_companies_complete'
-                      DBFields.Strings = (
-                        'service'
-                        'service_disp'
-                        'company_disp'
-                      )
-                      DBFieldsDisp.Strings = (
-                        ''
-                        ''
-                        ''
-                      )
-                      DBFieldsConvTo.Strings = (
-                        ''
-                        ''
-                        ''
-                      )
-                      DBFieldsConvFrom.Strings = (
-                        ''
-                        ''
-                        ''
-                      )
-                      DBMasterControls.Strings = (
-                        'BuildingsList'
-                      )
-                      DBLinkFields.Strings = (
-                        'building'
-                      )
-                      Deep = 1
-                      Key = 'service_parent'
-                      Order = '3'
-                      Connection = Conn
-                    end
-                  end
-                  object PairSplitterSide7: TPairSplitterSide
-                    Cursor = crArrow
-                    Left = 0
-                    Height = 139
-                    Top = 405
-                    Width = 593
-                    ClientWidth = 593
-                    ClientHeight = 139
-                    object BuildingContractWorksVST: TDBVST
-                      Left = 0
-                      Height = 139
-                      Top = 0
-                      Width = 593
-                      Align = alClient
-                      DefaultText = 'Node'
-                      Header.AutoSizeIndex = 0
-                      Header.Columns = <                      
-                        item
-                          Position = 0
-                          Text = 'Работа'
-                          Width = 300
-                        end                      
-                        item
-                          Position = 1
-                          Text = 'Периодичность'
-                          Width = 100
-                        end                      
-                        item
-                          Position = 2
-                          Text = 'Количество'
-                        end>
-                      Header.DefaultHeight = 17
-                      Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
-                      TabOrder = 0
-                      TreeOptions.MiscOptions = [toEditable, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnDblClick]
-                      TreeOptions.SelectionOptions = [toExtendedFocus]
-                      DBTable = 'buildings_service_works'
-                      DBFields.Strings = (
-                        'work'
-                        'work_full_disp'
-                        'amount_interval'
-                        'amount'
-                      )
-                      DBFieldsDisp.Strings = (
-                        ''
-                        'Работа'
-                        'Периодичность'
-                        'Количество'
-                      )
-                      DBFieldsConvTo.Strings = (
-                        ''
-                        ''
-                        'interval'
-                        ''
-                      )
-                      DBFieldsConvFrom.Strings = (
-                        ''
-                        ''
-                        'text'
-                        ''
-                      )
-                      DBMasterControls.Strings = (
-                        'ServiceCompaniesVST'
-                        'BuildingsList'
-                      )
-                      DBLinkFields.Strings = (
-                        'service'
-                        'building'
-                      )
-                      Deep = 0
-                      Key = 'null'
-                      Order = '3'
-                      Connection = Conn
-                    end
-                  end
-                end
-              end
-              object BuildingPersonnelTabSheet: TTabSheet
-                Caption = 'Персонал'
-                ClientHeight = 544
-                ClientWidth = 593
-                OnShow = BuildingPersonnelTabSheetShow
-                object PairSplitter5: TPairSplitter
-                  Cursor = crVSplit
-                  Left = 0
-                  Height = 544
-                  Top = 0
-                  Width = 593
-                  Align = alClient
-                  Position = 400
-                  SplitterType = pstVertical
-                  object PairSplitterSide14: TPairSplitterSide
-                    Cursor = crArrow
-                    Left = 0
-                    Height = 400
-                    Top = 0
-                    Width = 593
-                    ClientWidth = 593
-                    ClientHeight = 400
-                    object Panel4: TPanel
-                      Left = 0
-                      Height = 400
-                      Top = 0
-                      Width = 593
-                      Align = alClient
-                      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-                      ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-                      ChildSizing.Layout = cclLeftToRightThenTopToBottom
-                      ClientHeight = 396
-                      ClientWidth = 589
-                      TabOrder = 0
-                      object Label9: TLabel
-                        AnchorSideLeft.Control = Panel4
-                        AnchorSideTop.Control = Panel4
-                        AnchorSideRight.Control = Splitter3
-                        Left = 1
-                        Height = 18
-                        Top = 1
-                        Width = 308
-                        Anchors = [akTop, akLeft, akRight]
-                        Caption = 'Справочник персонала'
-                        ParentColor = False
-                      end
-                      object Label10: TLabel
-                        AnchorSideLeft.Control = Splitter3
-                        AnchorSideLeft.Side = asrBottom
-                        AnchorSideTop.Control = Panel4
-                        AnchorSideRight.Control = Panel4
-                        AnchorSideRight.Side = asrBottom
-                        Left = 312
-                        Height = 18
-                        Top = 1
-                        Width = 280
-                        Anchors = [akTop, akLeft, akRight]
-                        Caption = 'Закреплены'
-                        ParentColor = False
-                      end
-                      object Splitter3: TSplitter
-                        AnchorSideLeft.Control = Panel4
-                        AnchorSideLeft.Side = asrBottom
-                        AnchorSideTop.Control = Panel4
-                        AnchorSideRight.Control = Panel4
-                        AnchorSideRight.Side = asrCenter
-                        AnchorSideBottom.Control = Panel4
-                        AnchorSideBottom.Side = asrBottom
-                        Left = 309
-                        Height = 398
-                        Top = 1
-                        Width = 3
-                        Align = alNone
-                        Anchors = [akTop, akBottom]
-                        ResizeAnchor = akRight
-                      end
-                      object ActPanel1: TPanel
-                        AnchorSideTop.Control = Label9
-                        AnchorSideTop.Side = asrBottom
-                        AnchorSideRight.Control = Splitter3
-                        AnchorSideBottom.Control = Panel4
-                        AnchorSideBottom.Side = asrBottom
-                        Left = 275
-                        Height = 380
-                        Top = 19
-                        Width = 34
-                        Anchors = [akTop, akRight, akBottom]
-                        AutoSize = True
-                        BevelOuter = bvNone
-                        ClientHeight = 376
-                        ClientWidth = 30
-                        TabOrder = 1
-                        object PersAddBtn: TBitBtn
-                          AnchorSideLeft.Control = ActPanel1
-                          AnchorSideRight.Control = ActPanel1
-                          AnchorSideRight.Side = asrBottom
-                          Left = 3
-                          Height = 29
-                          Top = 3
-                          Width = 28
-                          Anchors = [akTop, akLeft, akRight]
-                          AutoSize = True
-                          BorderSpacing.Around = 3
-                          Caption = '>'
-                          OnClick = WorkAddBtnClick
-                          TabOrder = 0
-                        end
-                        object WorkAddAllBtn1: TBitBtn
-                          AnchorSideLeft.Control = ActPanel1
-                          AnchorSideTop.Control = PersAddBtn
-                          AnchorSideTop.Side = asrBottom
-                          AnchorSideRight.Control = ActPanel1
-                          AnchorSideRight.Side = asrBottom
-                          Left = 3
-                          Height = 29
-                          Top = 35
-                          Width = 28
-                          Anchors = [akTop, akLeft, akRight]
-                          AutoSize = True
-                          BorderSpacing.Around = 3
-                          Caption = '>>'
-                          TabOrder = 1
-                          Visible = False
-                        end
-                        object PersDelBtn: TBitBtn
-                          AnchorSideLeft.Control = ActPanel1
-                          AnchorSideTop.Control = WorkAddAllBtn1
-                          AnchorSideTop.Side = asrBottom
-                          AnchorSideRight.Control = ActPanel1
-                          AnchorSideRight.Side = asrBottom
-                          Left = 3
-                          Height = 29
-                          Top = 67
-                          Width = 28
-                          Anchors = [akTop, akLeft, akRight]
-                          AutoSize = True
-                          BorderSpacing.Around = 3
-                          Caption = '<'
-                          OnClick = WorkDelBtnClick
-                          TabOrder = 2
-                        end
-                        object WorkDelAllBtn1: TBitBtn
-                          AnchorSideLeft.Control = ActPanel1
-                          AnchorSideTop.Control = PersDelBtn
-                          AnchorSideTop.Side = asrBottom
-                          AnchorSideRight.Control = ActPanel1
-                          AnchorSideRight.Side = asrBottom
-                          Left = 3
-                          Height = 29
-                          Top = 99
-                          Width = 28
-                          Anchors = [akTop, akLeft, akRight]
-                          AutoSize = True
-                          BorderSpacing.Around = 3
-                          Caption = '<<'
-                          TabOrder = 3
-                          Visible = False
-                        end
-                      end
-                      object Panel2: TPanel
-                        AnchorSideLeft.Control = Panel4
-                        AnchorSideTop.Control = Label9
-                        AnchorSideTop.Side = asrBottom
-                        AnchorSideRight.Control = ActPanel1
-                        AnchorSideBottom.Control = Panel4
-                        AnchorSideBottom.Side = asrBottom
-                        Left = 1
-                        Height = 380
-                        Top = 19
-                        Width = 274
-                        Anchors = [akTop, akLeft, akRight, akBottom]
-                        BevelOuter = bvNone
-                        ClientHeight = 376
-                        ClientWidth = 270
-                        TabOrder = 2
-                        object BuildingPersonnel: TDBVST
-                          Left = 0
-                          Height = 380
-                          Top = 0
-                          Width = 274
-                          Align = alClient
-                          DefaultText = 'Node'
-                          Header.AutoSizeIndex = 0
-                          Header.Columns = <                          
-                            item
-                              Position = 0
-                              Width = 500
-                            end>
-                          Header.DefaultHeight = 17
-                          TabOrder = 0
-                          TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
-                          TreeOptions.SelectionOptions = [toMultiSelect]
-                          OnFocusChanged = BuildingPersonnelFocusChanged
-                          DBTable = 'pers_contracts'
-                          DBFields.Strings = (
-                            'id'
-                            'disp'
-                          )
-                          DBFieldsConvTo.Strings = (
-                            ''
-                            ''
-                          )
-                          DBFieldsConvFrom.Strings = (
-                            ''
-                            ''
-                          )
-                          Deep = 0
-                          Key = 'null'
-                          Order = '3'
-                          Connection = Conn
-                        end
-                      end
-                      object Panel5: TPanel
-                        AnchorSideLeft.Control = Splitter3
-                        AnchorSideLeft.Side = asrBottom
-                        AnchorSideTop.Control = Label9
-                        AnchorSideTop.Side = asrBottom
-                        AnchorSideRight.Control = Panel4
-                        AnchorSideRight.Side = asrBottom
-                        AnchorSideBottom.Control = ActPanel1
-                        AnchorSideBottom.Side = asrBottom
-                        Left = 312
-                        Height = 380
-                        Top = 19
-                        Width = 280
-                        Anchors = [akTop, akLeft, akRight, akBottom]
-                        Caption = 'Panel5'
-                        ClientHeight = 376
-                        ClientWidth = 276
-                        TabOrder = 3
-                        object BuildingPersonnelVST: TDBVST
-                          Left = 1
-                          Height = 378
-                          Top = 1
-                          Width = 278
-                          Align = alClient
-                          DefaultText = 'Node'
-                          Header.AutoSizeIndex = 0
-                          Header.Columns = <                          
-                            item
-                              Position = 0
-                              Width = 500
-                            end>
-                          Header.DefaultHeight = 17
-                          TabOrder = 0
-                          TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
-                          TreeOptions.SelectionOptions = [toMultiSelect]
-                          OnFocusChanged = BuildingPersonnelVSTFocusChanged
-                          DBTable = 'building_staff'
-                          DBFields.Strings = (
-                            'contract'
-                            'contract_disp'
-                          )
-                          DBFieldsDisp.Strings = (
-                            ''
-                            ''
-                          )
-                          DBFieldsConvTo.Strings = (
-                            ''
-                            ''
-                          )
-                          DBFieldsConvFrom.Strings = (
-                            ''
-                            ''
-                          )
-                          DBMasterControls.Strings = (
-                            'BuildingsList'
-                          )
-                          DBLinkFields.Strings = (
-                            'building'
-                          )
-                          Deep = 0
-                          Key = 'null'
-                          Order = '3'
-                          Connection = Conn
-                        end
-                      end
-                    end
-                  end
-                  object PairSplitterSide15: TPairSplitterSide
-                    Cursor = crArrow
-                    Left = 0
-                    Height = 139
-                    Top = 405
-                    Width = 593
-                    ClientWidth = 593
-                    ClientHeight = 139
-                    object PersonNote: TMemo
-                      Left = 0
-                      Height = 139
-                      Top = 0
-                      Width = 593
-                      Align = alClient
-                      ScrollBars = ssAutoBoth
-                      TabOrder = 0
-                    end
-                  end
-                end
-              end
-              object BuildingWorksTabSheet: TTabSheet
-                Caption = 'Работы'
-                ClientHeight = 544
-                ClientWidth = 593
-                OnShow = BuildingWorksTabSheetShow
-                object BuildingWorkPeriodLabel: TLabel
-                  Left = 0
-                  Height = 1
-                  Top = 0
-                  Width = 593
-                  Align = alTop
-                  ParentColor = False
-                end
-                object BuildingWorkPlanFact: TDBVST
-                  Left = 0
-                  Height = 543
-                  Top = 1
-                  Width = 593
-                  Align = alClient
-                  DefaultText = 'Node'
-                  Header.AutoSizeIndex = 0
-                  Header.Columns = <                  
-                    item
-                      Position = 0
-                      Text = 'Работа'
-                      Width = 391
-                    end                  
-                    item
-                      Position = 1
-                      Text = 'Периодичность'
-                    end                  
-                    item
-                      Position = 2
-                      Text = 'Количество'
-                    end                  
-                    item
-                      Position = 3
-                      Text = 'План'
-                    end                  
-                    item
-                      Position = 4
-                      Text = 'Факт'
-                    end>
-                  Header.DefaultHeight = 17
-                  Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible, hoAutoSpring]
-                  TabOrder = 0
-                  TreeOptions.MiscOptions = [toEditable, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnDblClick]
-                  DBTable = 'works_plan_fact'
-                  DBFields.Strings = (
-                    'work'
-                    'work_full_disp'
-                    'contr_amount_interval'
-                    'contr_amount'
-                    'plan_amount'
-                    'fact_amount'
-                  )
-                  DBFieldsDisp.Strings = (
-                    ''
-                    'Работа'
-                    ''
-                    ''
-                    ''
-                    ''
-                  )
-                  DBFieldsConvTo.Strings = (
-                    'uuid'
-                    ''
-                    'daterange'
-                    'numeric'
-                    'numeric'
-                    'numeric'
-                  )
-                  DBFieldsConvFrom.Strings = (
-                    'text'
-                    ''
-                    'text'
-                    'text'
-                    'text'
-                    'text'
-                  )
-                  DBMasterControls.Strings = (
-                    'BuildingsList'
-                  )
-                  DBLinkFields.Strings = (
-                    'building'
-                  )
-                  Deep = 0
-                  Key = 'null'
-                  Order = '3'
-                  Connection = Conn
-                end
-              end
             end
             object BuildingsLabel: TLabel
               Left = 0
               Height = 1
               Top = 0
-              Width = 597
+              Width = 513
               Align = alTop
               ParentColor = False
             end
           end
-        end
-      end
-      object ServiceTabSheet: TTabSheet
-        Caption = 'Услуги'
-        ClientHeight = 576
-        ClientWidth = 802
-        OnShow = ServiceTabSheetShow
-        object ServicePairSplitter: TPairSplitter
-          Left = 0
-          Height = 576
-          Top = 0
-          Width = 802
-          Align = alClient
-          Position = 200
-          object PairSplitterSide1: TPairSplitterSide
-            Cursor = crArrow
-            Left = 0
-            Height = 576
-            Top = 0
-            Width = 200
-            ClientWidth = 200
+          object ServiceTabSheet: TTabSheet
+            Caption = 'Услуги'
             ClientHeight = 576
-            object ServicesList: TDBVST
-              Left = 0
-              Height = 576
-              Top = 0
-              Width = 200
-              Align = alClient
-              DefaultText = 'Node'
-              Header.AutoSizeIndex = 0
-              Header.Columns = <              
-                item
-                  Position = 0
-                  Width = 500
-                end>
-              Header.DefaultHeight = 17
-              Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoAutoSpring]
-              TabOrder = 0
-              TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
-              OnFocusChanged = ServicesListFocusChanged
-              DBTable = 'services'
-              DBFields.Strings = (
-                'id'
-                'disp'
-              )
-              DBFieldsDisp.Strings = (
-                ''
-                'Наименование'
-              )
-              DBFieldsConvTo.Strings = (
-                ''
-                ''
-              )
-              DBFieldsConvFrom.Strings = (
-                ''
-                ''
-              )
-              Deep = -1
-              Key = 'pid'
-              Order = '3'
-              Connection = Conn
-            end
-          end
-          object PairSplitterSide2: TPairSplitterSide
-            Cursor = crArrow
-            Left = 205
-            Height = 576
-            Top = 0
-            Width = 597
-            ClientWidth = 597
-            ClientHeight = 576
+            ClientWidth = 513
+            OnShow = ServiceTabSheetShow
             object ServicePageControl: TPageControl
-              AnchorSideLeft.Control = PairSplitterSide2
               AnchorSideTop.Control = ServiceLabel
               AnchorSideTop.Side = asrBottom
-              AnchorSideRight.Control = PairSplitterSide2
               AnchorSideRight.Side = asrBottom
-              AnchorSideBottom.Control = PairSplitterSide2
               AnchorSideBottom.Side = asrBottom
               Left = 0
               Height = 575
               Top = 1
-              Width = 597
+              Width = 592
               ActivePage = SrvWorksTabSheet
               Anchors = [akTop, akLeft, akRight, akBottom]
               TabIndex = 1
               TabOrder = 0
               object ServicePropMainTabSheet: TTabSheet
                 Caption = 'Основное'
-                ClientHeight = 571
-                ClientWidth = 593
+                ClientHeight = 544
+                ClientWidth = 588
                 object ScrollBox1: TScrollBox
                   Left = 0
                   Height = 512
@@ -1689,8 +1036,8 @@ object MainForm: TMainForm
                   Width = 593
                   Align = alBottom
                   AutoSize = True
-                  ClientHeight = 33
-                  ClientWidth = 589
+                  ClientHeight = 37
+                  ClientWidth = 593
                   TabOrder = 1
                   object SrvMainSaveBtn: TBitBtn
                     AnchorSideLeft.Control = ActionPanel1
@@ -1712,15 +1059,15 @@ object MainForm: TMainForm
               end
               object SrvWorksTabSheet: TTabSheet
                 Caption = 'Работы'
-                ClientHeight = 571
-                ClientWidth = 593
+                ClientHeight = 544
+                ClientWidth = 588
                 OnShow = SrvWorksTabSheetShow
                 object PairSplitter2: TPairSplitter
                   Cursor = crVSplit
                   Left = 0
                   Height = 544
                   Top = 0
-                  Width = 593
+                  Width = 588
                   Align = alClient
                   Position = 400
                   SplitterType = pstVertical
@@ -1729,20 +1076,20 @@ object MainForm: TMainForm
                     Left = 0
                     Height = 400
                     Top = 0
-                    Width = 593
-                    ClientWidth = 593
+                    Width = 588
+                    ClientWidth = 588
                     ClientHeight = 400
                     object Panel3: TPanel
                       Left = 0
                       Height = 400
                       Top = 0
-                      Width = 593
+                      Width = 588
                       Align = alClient
                       ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
                       ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
                       ChildSizing.Layout = cclLeftToRightThenTopToBottom
-                      ClientHeight = 396
-                      ClientWidth = 589
+                      ClientHeight = 400
+                      ClientWidth = 588
                       TabOrder = 0
                       object Label2: TLabel
                         AnchorSideLeft.Control = Panel3
@@ -1751,7 +1098,7 @@ object MainForm: TMainForm
                         Left = 1
                         Height = 18
                         Top = 1
-                        Width = 310
+                        Width = 309
                         Anchors = [akTop, akLeft, akRight]
                         Caption = 'Справочники работ'
                         ParentColor = False
@@ -1762,10 +1109,10 @@ object MainForm: TMainForm
                         AnchorSideTop.Control = Panel3
                         AnchorSideRight.Control = Panel3
                         AnchorSideRight.Side = asrBottom
-                        Left = 314
+                        Left = 313
                         Height = 18
                         Top = 1
-                        Width = 278
+                        Width = 274
                         Anchors = [akTop, akLeft, akRight]
                         Caption = 'Работы в услуге'
                         ParentColor = False
@@ -1778,7 +1125,7 @@ object MainForm: TMainForm
                         AnchorSideRight.Side = asrCenter
                         AnchorSideBottom.Control = Panel3
                         AnchorSideBottom.Side = asrBottom
-                        Left = 311
+                        Left = 310
                         Height = 398
                         Top = 1
                         Width = 3
@@ -1792,15 +1139,15 @@ object MainForm: TMainForm
                         AnchorSideRight.Control = Splitter2
                         AnchorSideBottom.Control = Panel3
                         AnchorSideBottom.Side = asrBottom
-                        Left = 277
+                        Left = 276
                         Height = 380
                         Top = 19
                         Width = 34
                         Anchors = [akTop, akRight, akBottom]
                         AutoSize = True
                         BevelOuter = bvNone
-                        ClientHeight = 376
-                        ClientWidth = 30
+                        ClientHeight = 380
+                        ClientWidth = 34
                         TabOrder = 1
                         object WorkAddBtn: TBitBtn
                           AnchorSideLeft.Control = ActPanel
@@ -1879,17 +1226,17 @@ object MainForm: TMainForm
                         Left = 1
                         Height = 380
                         Top = 19
-                        Width = 276
+                        Width = 275
                         Anchors = [akTop, akLeft, akRight, akBottom]
                         Caption = 'Panel6'
-                        ClientHeight = 376
-                        ClientWidth = 272
+                        ClientHeight = 380
+                        ClientWidth = 275
                         TabOrder = 2
                         object ServicesWorksList: TDBVST
                           Left = 1
                           Height = 378
                           Top = 1
-                          Width = 274
+                          Width = 273
                           Align = alClient
                           DefaultText = 'Node'
                           Header.AutoSizeIndex = 0
@@ -1934,20 +1281,20 @@ object MainForm: TMainForm
                         AnchorSideRight.Side = asrBottom
                         AnchorSideBottom.Control = Panel3
                         AnchorSideBottom.Side = asrBottom
-                        Left = 314
+                        Left = 313
                         Height = 380
                         Top = 19
-                        Width = 278
+                        Width = 274
                         Anchors = [akTop, akLeft, akRight, akBottom]
                         Caption = 'Panel7'
-                        ClientHeight = 376
+                        ClientHeight = 380
                         ClientWidth = 274
                         TabOrder = 3
                         object ServiceWorks: TDBVST
                           Left = 1
                           Height = 378
                           Top = 1
-                          Width = 276
+                          Width = 272
                           Align = alClient
                           DefaultText = 'Node'
                           Header.AutoSizeIndex = 0
@@ -1996,14 +1343,14 @@ object MainForm: TMainForm
                     Left = 0
                     Height = 139
                     Top = 405
-                    Width = 593
-                    ClientWidth = 593
+                    Width = 588
+                    ClientWidth = 588
                     ClientHeight = 139
                     object ServicesWorkNote: TMemo
                       Left = 0
                       Height = 139
                       Top = 0
-                      Width = 593
+                      Width = 588
                       Align = alClient
                       ScrollBars = ssAutoBoth
                       TabOrder = 0
@@ -2013,354 +1360,908 @@ object MainForm: TMainForm
               end
             end
             object ServiceLabel: TLabel
-              AnchorSideLeft.Control = PairSplitterSide2
-              AnchorSideTop.Control = PairSplitterSide2
-              AnchorSideRight.Control = PairSplitterSide2
               AnchorSideRight.Side = asrBottom
               Left = 0
               Height = 1
               Top = 0
-              Width = 597
+              Width = 592
               Anchors = [akTop, akLeft, akRight]
               ParentColor = False
               WordWrap = True
             end
           end
-        end
-      end
-      object WorksTabSheet: TTabSheet
-        Caption = 'Работы'
-        ClientHeight = 576
-        ClientWidth = 802
-        OnShow = WorksTabSheetShow
-        object PairSplitter3: TPairSplitter
-          Left = 0
-          Height = 576
-          Top = 0
-          Width = 802
-          Align = alClient
-          Position = 200
-          object PairSplitterSide10: TPairSplitterSide
-            Cursor = crArrow
-            Left = 0
-            Height = 576
-            Top = 0
-            Width = 200
-            ClientWidth = 200
+          object WorksTabSheet: TTabSheet
+            Caption = 'Работы'
             ClientHeight = 576
-            object WorksList: TDBVST
+            ClientWidth = 513
+            OnShow = WorksTabSheetShow
+            object PairSplitter3: TPairSplitter
               Left = 0
               Height = 576
               Top = 0
-              Width = 200
+              Width = 513
+              Align = alClient
+              Position = 200
+              object PairSplitterSide10: TPairSplitterSide
+                Cursor = crArrow
+                Left = 0
+                Height = 576
+                Top = 0
+                Width = 200
+                ClientWidth = 200
+                ClientHeight = 576
+                object WorksList: TDBVST
+                  Left = 0
+                  Height = 576
+                  Top = 0
+                  Width = 200
+                  Align = alClient
+                  DefaultText = 'Node'
+                  Header.AutoSizeIndex = 0
+                  Header.Columns = <                  
+                    item
+                      Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAutoSpring, coSmartResize, coAllowFocus]
+                      Position = 0
+                      Width = 198
+                    end>
+                  Header.DefaultHeight = 17
+                  Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoAutoSpring]
+                  TabOrder = 0
+                  TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toFullRowDrag]
+                  TreeOptions.SelectionOptions = [toMultiSelect]
+                  OnFocusChanged = WorksListFocusChanged
+                  DBTable = 'works'
+                  DBFields.Strings = (
+                    'id'
+                    'full_disp'
+                  )
+                  DBFieldsDisp.Strings = (
+                    ''
+                    'Наименование'
+                  )
+                  DBFieldsConvTo.Strings = (
+                    ''
+                    ''
+                  )
+                  DBFieldsConvFrom.Strings = (
+                    ''
+                    ''
+                  )
+                  Deep = 0
+                  Key = 'pid'
+                  Order = '3'
+                  Connection = Conn
+                end
+              end
+              object PairSplitterSide11: TPairSplitterSide
+                Cursor = crArrow
+                Left = 205
+                Height = 576
+                Top = 0
+                Width = 308
+                ClientWidth = 308
+                ClientHeight = 576
+                object Panel1: TPanel
+                  Left = 0
+                  Height = 575
+                  Top = 1
+                  Width = 308
+                  Align = alClient
+                  BevelOuter = bvNone
+                  ClientHeight = 575
+                  ClientWidth = 308
+                  TabOrder = 0
+                  object WorkPageControl: TPageControl
+                    Left = 0
+                    Height = 574
+                    Top = 1
+                    Width = 308
+                    ActivePage = WorkTabSheet
+                    Align = alClient
+                    TabIndex = 1
+                    TabOrder = 0
+                    object MainTabSheet: TTabSheet
+                      Caption = 'Основное'
+                      ClientHeight = 543
+                      ClientWidth = 304
+                      OnShow = MainTabSheetShow
+                      object PairSplitter4: TPairSplitter
+                        Cursor = crVSplit
+                        Left = 0
+                        Height = 543
+                        Top = 0
+                        Width = 593
+                        Align = alClient
+                        Position = 300
+                        SplitterType = pstVertical
+                        object PairSplitterSide12: TPairSplitterSide
+                          Cursor = crArrow
+                          Left = 0
+                          Height = 300
+                          Top = 0
+                          Width = 593
+                          ClientWidth = 593
+                          ClientHeight = 300
+                          object ScrollBox3: TScrollBox
+                            Left = 0
+                            Height = 300
+                            Top = 0
+                            Width = 593
+                            HorzScrollBar.Page = 593
+                            VertScrollBar.Page = 300
+                            Align = alClient
+                            BorderStyle = bsNone
+                            ChildSizing.EnlargeHorizontal = crsScaleChilds
+                            ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                            ChildSizing.ControlsPerLine = 2
+                            ClientHeight = 300
+                            ClientWidth = 593
+                            TabOrder = 0
+                            object Label4: TLabel
+                              Left = 0
+                              Height = 75
+                              Top = 0
+                              Width = 247
+                              Caption = 'Наименование'
+                              ParentColor = False
+                            end
+                            object WorkNameEdit: TMemo
+                              Left = 247
+                              Height = 75
+                              Top = 0
+                              Width = 346
+                              ScrollBars = ssAutoBoth
+                              TabOrder = 3
+                            end
+                            object Label5: TLabel
+                              Left = 0
+                              Height = 27
+                              Top = 75
+                              Width = 247
+                              Caption = 'Код'
+                              ParentColor = False
+                            end
+                            object WorkCodeEdit: TEdit
+                              Left = 247
+                              Height = 27
+                              Top = 75
+                              Width = 346
+                              TabOrder = 0
+                            end
+                            object Label6: TLabel
+                              Left = 0
+                              Height = 27
+                              Top = 102
+                              Width = 247
+                              Caption = 'База'
+                              ParentColor = False
+                            end
+                            object BaseCB: TComboBox
+                              Left = 247
+                              Height = 27
+                              Top = 102
+                              Width = 346
+                              AutoComplete = True
+                              AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+                              ItemHeight = 0
+                              TabOrder = 2
+                            end
+                            object Label7: TLabel
+                              Left = 0
+                              Height = 27
+                              Top = 129
+                              Width = 247
+                              Caption = 'Множитель'
+                              ParentColor = False
+                            end
+                            object WorkFactorEdit: TEdit
+                              Left = 247
+                              Height = 27
+                              Top = 129
+                              Width = 346
+                              TabOrder = 1
+                            end
+                            object Label8: TLabel
+                              Left = 0
+                              Height = 75
+                              Top = 156
+                              Width = 247
+                              Caption = 'Условие'
+                              ParentColor = False
+                            end
+                            object WorkCondEdit: TMemo
+                              Left = 247
+                              Height = 75
+                              Top = 156
+                              Width = 346
+                              ScrollBars = ssAutoBoth
+                              TabOrder = 4
+                            end
+                          end
+                        end
+                        object PairSplitterSide13: TPairSplitterSide
+                          Cursor = crArrow
+                          Left = 0
+                          Height = 238
+                          Top = 305
+                          Width = 593
+                          ClientWidth = 593
+                          ClientHeight = 238
+                          object WorkNote: TMemo
+                            Left = 0
+                            Height = 238
+                            Top = 0
+                            Width = 593
+                            Align = alClient
+                            Lines.Strings = (
+                              'WorkNote'
+                            )
+                            ScrollBars = ssAutoBoth
+                            TabOrder = 0
+                          end
+                        end
+                      end
+                    end
+                    object WorkTabSheet: TTabSheet
+                      Caption = 'Ресурсы'
+                      ClientHeight = 543
+                      ClientWidth = 304
+                      OnShow = WorkTabSheetShow
+                      object WorkResourcesVST: TDBVST
+                        Left = 0
+                        Height = 543
+                        Top = 0
+                        Width = 304
+                        Align = alClient
+                        DefaultText = 'Node'
+                        Header.AutoSizeIndex = 0
+                        Header.Columns = <                        
+                          item
+                            Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAllowFocus, coWrapCaption]
+                            Position = 0
+                            Text = 'Код'
+                            Width = 100
+                          end                        
+                          item
+                            Position = 1
+                            Text = 'Наименование'
+                            Width = 200
+                          end                        
+                          item
+                            Position = 2
+                            Text = 'Ед. изм.'
+                            Width = 100
+                          end                        
+                          item
+                            Position = 3
+                            Text = 'Норма'
+                            Width = 100
+                          end>
+                        Header.DefaultHeight = 17
+                        Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
+                        Header.Style = hsFlatButtons
+                        ScrollBarOptions.ScrollBars = ssAutoBoth
+                        TabOrder = 0
+                        TreeOptions.AutoOptions = [toAutoDropExpand, toAutoExpand, toAutoScrollOnExpand, toAutoTristateTracking, toAutoDeleteMovedNodes]
+                        TreeOptions.MiscOptions = [toEditable, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnDblClick]
+                        TreeOptions.PaintOptions = [toShowButtons, toShowDropmark, toShowHorzGridLines, toShowRoot, toShowVertGridLines, toThemeAware, toUseBlendedImages]
+                        TreeOptions.SelectionOptions = [toExtendedFocus]
+                        DBTable = 'work_resources'
+                        DBFields.Strings = (
+                          'id'
+                          'resource_code'
+                          'resource_disp'
+                          'measure'
+                          'amount'
+                        )
+                        DBFieldsDisp.Strings = (
+                          ''
+                          ''
+                          ''
+                          ''
+                          ''
+                        )
+                        DBFieldsConvTo.Strings = (
+                          ''
+                          'ltree'
+                          ''
+                          ''
+                          ''
+                        )
+                        DBFieldsConvFrom.Strings = (
+                          ''
+                          'text'
+                          ''
+                          ''
+                          ''
+                        )
+                        DBMasterControls.Strings = (
+                          'WorksList'
+                        )
+                        DBLinkFields.Strings = (
+                          'work'
+                        )
+                        Deep = 0
+                        Key = 'null'
+                        Order = '3'
+                        Connection = Conn
+                      end
+                    end
+                  end
+                  object WorkLabel: TLabel
+                    Left = 0
+                    Height = 1
+                    Top = 0
+                    Width = 308
+                    Align = alTop
+                    ParentColor = False
+                  end
+                end
+                object WorkVSTLabel: TLabel
+                  Left = 0
+                  Height = 1
+                  Top = 0
+                  Width = 308
+                  Align = alTop
+                  ParentColor = False
+                end
+              end
+            end
+          end
+          object BuildingServicesTabSheet: TTabSheet
+            Caption = 'BuildingServicesTabSheet'
+            ClientHeight = 576
+            ClientWidth = 513
+            OnShow = BuildingServicesTabSheetShow
+            object PairSplitter1: TPairSplitter
+              Cursor = crVSplit
+              Left = 0
+              Height = 576
+              Top = 0
+              Width = 513
+              Align = alClient
+              Position = 400
+              SplitterType = pstVertical
+              object PairSplitterSide4: TPairSplitterSide
+                Cursor = crArrow
+                Left = 0
+                Height = 400
+                Top = 0
+                Width = 513
+                ClientWidth = 513
+                ClientHeight = 400
+                object ServiceCompaniesVST: TDBVST
+                  Left = 0
+                  Height = 400
+                  Top = 0
+                  Width = 513
+                  Align = alClient
+                  DefaultText = 'Node'
+                  Header.AutoSizeIndex = 0
+                  Header.Columns = <                  
+                    item
+                      Position = 0
+                      Text = 'Услуга'
+                      Width = 200
+                    end                  
+                    item
+                      Position = 1
+                      Text = 'Организация'
+                      Width = 200
+                    end>
+                  Header.DefaultHeight = 17
+                  Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
+                  Header.Style = hsFlatButtons
+                  ScrollBarOptions.ScrollBars = ssAutoBoth
+                  TabOrder = 0
+                  TreeOptions.AutoOptions = [toAutoDropExpand, toAutoExpand, toAutoScrollOnExpand, toAutoTristateTracking, toAutoDeleteMovedNodes]
+                  TreeOptions.MiscOptions = [toEditable, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toWheelPanning, toVariableNodeHeight, toNodeHeightResize, toEditOnClick, toEditOnDblClick]
+                  TreeOptions.SelectionOptions = [toExtendedFocus]
+                  OnDblClick = ServiceCompaniesVSTDblClick
+                  OnFocusChanged = ServiceCompaniesVSTFocusChanged
+                  DBTable = 'building_service_companies_complete'
+                  DBFields.Strings = (
+                    'service'
+                    'service_disp'
+                    'company_disp'
+                  )
+                  DBFieldsDisp.Strings = (
+                    ''
+                    ''
+                    ''
+                  )
+                  DBFieldsConvTo.Strings = (
+                    ''
+                    ''
+                    ''
+                  )
+                  DBFieldsConvFrom.Strings = (
+                    ''
+                    ''
+                    ''
+                  )
+                  DBMasterControls.Strings = (
+                    'BuildingsList'
+                  )
+                  DBLinkFields.Strings = (
+                    'building'
+                  )
+                  Deep = 1
+                  Key = 'service_parent'
+                  Order = '3'
+                  Connection = Conn
+                end
+              end
+              object PairSplitterSide7: TPairSplitterSide
+                Cursor = crArrow
+                Left = 0
+                Height = 171
+                Top = 405
+                Width = 513
+                ClientWidth = 513
+                ClientHeight = 171
+                object BuildingContractWorksVST: TDBVST
+                  Left = 0
+                  Height = 171
+                  Top = 0
+                  Width = 513
+                  Align = alClient
+                  DefaultText = 'Node'
+                  Header.AutoSizeIndex = 0
+                  Header.Columns = <                  
+                    item
+                      Position = 0
+                      Text = 'Работа'
+                      Width = 300
+                    end                  
+                    item
+                      Position = 1
+                      Text = 'Периодичность'
+                      Width = 100
+                    end                  
+                    item
+                      Position = 2
+                      Text = 'Количество'
+                    end>
+                  Header.DefaultHeight = 17
+                  Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
+                  TabOrder = 0
+                  TreeOptions.MiscOptions = [toEditable, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnDblClick]
+                  TreeOptions.PaintOptions = [toShowButtons, toShowDropmark, toShowHorzGridLines, toShowRoot, toShowVertGridLines, toThemeAware, toUseBlendedImages]
+                  TreeOptions.SelectionOptions = [toExtendedFocus]
+                  DBTable = 'buildings_service_works'
+                  DBFields.Strings = (
+                    'work'
+                    'work_full_disp'
+                    'amount_interval'
+                    'amount'
+                  )
+                  DBFieldsDisp.Strings = (
+                    ''
+                    'Работа'
+                    'Периодичность'
+                    'Количество'
+                  )
+                  DBFieldsConvTo.Strings = (
+                    ''
+                    ''
+                    'interval'
+                    ''
+                  )
+                  DBFieldsConvFrom.Strings = (
+                    ''
+                    ''
+                    'text'
+                    ''
+                  )
+                  DBMasterControls.Strings = (
+                    'ServiceCompaniesVST'
+                    'BuildingsList'
+                  )
+                  DBLinkFields.Strings = (
+                    'service'
+                    'building'
+                  )
+                  Deep = 0
+                  Key = 'null'
+                  Order = '3'
+                  Connection = Conn
+                end
+              end
+            end
+          end
+          object BuildingPersonnelTabSheet: TTabSheet
+            Caption = 'BuildingPersonnelTabSheet'
+            ClientHeight = 576
+            ClientWidth = 513
+            OnShow = BuildingPersonnelTabSheetShow
+            object PairSplitter5: TPairSplitter
+              Cursor = crVSplit
+              Left = 0
+              Height = 576
+              Top = 0
+              Width = 513
+              Align = alClient
+              Position = 400
+              SplitterType = pstVertical
+              object PairSplitterSide14: TPairSplitterSide
+                Cursor = crArrow
+                Left = 0
+                Height = 400
+                Top = 0
+                Width = 513
+                ClientWidth = 513
+                ClientHeight = 400
+                object Panel4: TPanel
+                  Left = 0
+                  Height = 400
+                  Top = 0
+                  Width = 513
+                  Align = alClient
+                  ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+                  ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+                  ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                  ClientHeight = 400
+                  ClientWidth = 513
+                  TabOrder = 0
+                  object Label9: TLabel
+                    AnchorSideLeft.Control = Panel4
+                    AnchorSideTop.Control = Panel4
+                    AnchorSideRight.Control = Splitter3
+                    Left = 1
+                    Height = 18
+                    Top = 1
+                    Width = 270
+                    Anchors = [akTop, akLeft, akRight]
+                    Caption = 'Справочник персонала'
+                    ParentColor = False
+                  end
+                  object Label10: TLabel
+                    AnchorSideLeft.Control = Splitter3
+                    AnchorSideLeft.Side = asrBottom
+                    AnchorSideTop.Control = Panel4
+                    AnchorSideRight.Control = Panel4
+                    AnchorSideRight.Side = asrBottom
+                    Left = 274
+                    Height = 18
+                    Top = 1
+                    Width = 238
+                    Anchors = [akTop, akLeft, akRight]
+                    Caption = 'Закреплены'
+                    ParentColor = False
+                  end
+                  object Splitter3: TSplitter
+                    AnchorSideLeft.Control = Panel4
+                    AnchorSideLeft.Side = asrBottom
+                    AnchorSideTop.Control = Panel4
+                    AnchorSideRight.Control = Panel4
+                    AnchorSideRight.Side = asrCenter
+                    AnchorSideBottom.Control = Panel4
+                    AnchorSideBottom.Side = asrBottom
+                    Left = 271
+                    Height = 398
+                    Top = 1
+                    Width = 3
+                    Align = alNone
+                    Anchors = [akTop, akBottom]
+                    ResizeAnchor = akRight
+                  end
+                  object ActPanel1: TPanel
+                    AnchorSideTop.Control = Label9
+                    AnchorSideTop.Side = asrBottom
+                    AnchorSideRight.Control = Splitter3
+                    AnchorSideBottom.Control = Panel4
+                    AnchorSideBottom.Side = asrBottom
+                    Left = 237
+                    Height = 380
+                    Top = 19
+                    Width = 34
+                    Anchors = [akTop, akRight, akBottom]
+                    AutoSize = True
+                    BevelOuter = bvNone
+                    ClientHeight = 380
+                    ClientWidth = 34
+                    TabOrder = 1
+                    object PersAddBtn: TBitBtn
+                      AnchorSideLeft.Control = ActPanel1
+                      AnchorSideRight.Control = ActPanel1
+                      AnchorSideRight.Side = asrBottom
+                      Left = 3
+                      Height = 29
+                      Top = 3
+                      Width = 28
+                      Anchors = [akTop, akLeft, akRight]
+                      AutoSize = True
+                      BorderSpacing.Around = 3
+                      Caption = '>'
+                      OnClick = WorkAddBtnClick
+                      TabOrder = 0
+                    end
+                    object WorkAddAllBtn1: TBitBtn
+                      AnchorSideLeft.Control = ActPanel1
+                      AnchorSideTop.Control = PersAddBtn
+                      AnchorSideTop.Side = asrBottom
+                      AnchorSideRight.Control = ActPanel1
+                      AnchorSideRight.Side = asrBottom
+                      Left = 3
+                      Height = 29
+                      Top = 35
+                      Width = 28
+                      Anchors = [akTop, akLeft, akRight]
+                      AutoSize = True
+                      BorderSpacing.Around = 3
+                      Caption = '>>'
+                      TabOrder = 1
+                      Visible = False
+                    end
+                    object PersDelBtn: TBitBtn
+                      AnchorSideLeft.Control = ActPanel1
+                      AnchorSideTop.Control = WorkAddAllBtn1
+                      AnchorSideTop.Side = asrBottom
+                      AnchorSideRight.Control = ActPanel1
+                      AnchorSideRight.Side = asrBottom
+                      Left = 3
+                      Height = 29
+                      Top = 67
+                      Width = 28
+                      Anchors = [akTop, akLeft, akRight]
+                      AutoSize = True
+                      BorderSpacing.Around = 3
+                      Caption = '<'
+                      OnClick = WorkDelBtnClick
+                      TabOrder = 2
+                    end
+                    object WorkDelAllBtn1: TBitBtn
+                      AnchorSideLeft.Control = ActPanel1
+                      AnchorSideTop.Control = PersDelBtn
+                      AnchorSideTop.Side = asrBottom
+                      AnchorSideRight.Control = ActPanel1
+                      AnchorSideRight.Side = asrBottom
+                      Left = 3
+                      Height = 29
+                      Top = 99
+                      Width = 28
+                      Anchors = [akTop, akLeft, akRight]
+                      AutoSize = True
+                      BorderSpacing.Around = 3
+                      Caption = '<<'
+                      TabOrder = 3
+                      Visible = False
+                    end
+                  end
+                  object Panel2: TPanel
+                    AnchorSideLeft.Control = Panel4
+                    AnchorSideTop.Control = Label9
+                    AnchorSideTop.Side = asrBottom
+                    AnchorSideRight.Control = ActPanel1
+                    AnchorSideBottom.Control = Panel4
+                    AnchorSideBottom.Side = asrBottom
+                    Left = 1
+                    Height = 380
+                    Top = 19
+                    Width = 236
+                    Anchors = [akTop, akLeft, akRight, akBottom]
+                    BevelOuter = bvNone
+                    ClientHeight = 380
+                    ClientWidth = 236
+                    TabOrder = 2
+                    object BuildingPersonnel: TDBVST
+                      Left = 0
+                      Height = 380
+                      Top = 0
+                      Width = 236
+                      Align = alClient
+                      DefaultText = 'Node'
+                      Header.AutoSizeIndex = 0
+                      Header.Columns = <                      
+                        item
+                          Position = 0
+                          Width = 500
+                        end>
+                      Header.DefaultHeight = 17
+                      TabOrder = 0
+                      TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
+                      TreeOptions.SelectionOptions = [toMultiSelect]
+                      OnFocusChanged = BuildingPersonnelFocusChanged
+                      DBTable = 'pers_contracts'
+                      DBFields.Strings = (
+                        'id'
+                        'disp'
+                      )
+                      DBFieldsConvTo.Strings = (
+                        ''
+                        ''
+                      )
+                      DBFieldsConvFrom.Strings = (
+                        ''
+                        ''
+                      )
+                      Deep = 0
+                      Key = 'null'
+                      Order = '3'
+                      Connection = Conn
+                    end
+                  end
+                  object Panel5: TPanel
+                    AnchorSideLeft.Control = Splitter3
+                    AnchorSideLeft.Side = asrBottom
+                    AnchorSideTop.Control = Label9
+                    AnchorSideTop.Side = asrBottom
+                    AnchorSideRight.Control = Panel4
+                    AnchorSideRight.Side = asrBottom
+                    AnchorSideBottom.Control = ActPanel1
+                    AnchorSideBottom.Side = asrBottom
+                    Left = 274
+                    Height = 380
+                    Top = 19
+                    Width = 238
+                    Anchors = [akTop, akLeft, akRight, akBottom]
+                    Caption = 'Panel5'
+                    ClientHeight = 380
+                    ClientWidth = 238
+                    TabOrder = 3
+                    object BuildingPersonnelVST: TDBVST
+                      Left = 1
+                      Height = 378
+                      Top = 1
+                      Width = 236
+                      Align = alClient
+                      DefaultText = 'Node'
+                      Header.AutoSizeIndex = 0
+                      Header.Columns = <                      
+                        item
+                          Position = 0
+                          Width = 500
+                        end>
+                      Header.DefaultHeight = 17
+                      TabOrder = 0
+                      TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
+                      TreeOptions.SelectionOptions = [toMultiSelect]
+                      OnFocusChanged = BuildingPersonnelVSTFocusChanged
+                      DBTable = 'building_staff'
+                      DBFields.Strings = (
+                        'contract'
+                        'contract_disp'
+                      )
+                      DBFieldsDisp.Strings = (
+                        ''
+                        ''
+                      )
+                      DBFieldsConvTo.Strings = (
+                        ''
+                        ''
+                      )
+                      DBFieldsConvFrom.Strings = (
+                        ''
+                        ''
+                      )
+                      DBMasterControls.Strings = (
+                        'BuildingsList'
+                      )
+                      DBLinkFields.Strings = (
+                        'building'
+                      )
+                      Deep = 0
+                      Key = 'null'
+                      Order = '3'
+                      Connection = Conn
+                    end
+                  end
+                end
+              end
+              object PairSplitterSide15: TPairSplitterSide
+                Cursor = crArrow
+                Left = 0
+                Height = 171
+                Top = 405
+                Width = 513
+                ClientWidth = 513
+                ClientHeight = 171
+                object PersonNote: TMemo
+                  Left = 0
+                  Height = 171
+                  Top = 0
+                  Width = 513
+                  Align = alClient
+                  ScrollBars = ssAutoBoth
+                  TabOrder = 0
+                end
+              end
+            end
+          end
+          object BuildingWorksTabSheet: TTabSheet
+            Caption = 'BuildingWorksTabSheet'
+            ClientHeight = 576
+            ClientWidth = 513
+            OnShow = BuildingWorksTabSheetShow
+            object BuildingWorkPeriodLabel: TLabel
+              Left = 0
+              Height = 1
+              Top = 0
+              Width = 513
+              Align = alTop
+              ParentColor = False
+            end
+            object BuildingWorkPlanFact: TDBVST
+              Left = 0
+              Height = 575
+              Top = 1
+              Width = 513
               Align = alClient
               DefaultText = 'Node'
               Header.AutoSizeIndex = 0
               Header.Columns = <              
                 item
-                  Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAutoSpring, coSmartResize, coAllowFocus]
                   Position = 0
-                  Width = 198
+                  Text = 'Работа'
+                  Width = 391
+                end              
+                item
+                  Position = 1
+                  Text = 'Периодичность'
+                end              
+                item
+                  Position = 2
+                  Text = 'Количество'
+                end              
+                item
+                  Position = 3
+                  Text = 'План'
+                end              
+                item
+                  Position = 4
+                  Text = 'Факт'
                 end>
               Header.DefaultHeight = 17
-              Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoAutoSpring]
+              Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible, hoAutoSpring]
               TabOrder = 0
-              TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toFullRowDrag]
-              TreeOptions.SelectionOptions = [toMultiSelect]
-              OnFocusChanged = WorksListFocusChanged
-              DBTable = 'works'
+              TreeOptions.MiscOptions = [toEditable, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnDblClick]
+              TreeOptions.PaintOptions = [toShowButtons, toShowDropmark, toShowHorzGridLines, toShowRoot, toShowVertGridLines, toThemeAware, toUseBlendedImages]
+              DBTable = 'works_plan_fact'
               DBFields.Strings = (
-                'id'
-                'full_disp'
+                'work'
+                'work_full_disp'
+                'contr_amount_interval'
+                'contr_amount'
+                'plan_amount'
+                'fact_amount'
               )
               DBFieldsDisp.Strings = (
                 ''
-                'Наименование'
+                'Работа'
+                ''
+                ''
+                ''
+                ''
               )
               DBFieldsConvTo.Strings = (
+                'uuid'
                 ''
-                ''
+                'daterange'
+                'numeric'
+                'numeric'
+                'numeric'
               )
               DBFieldsConvFrom.Strings = (
+                'text'
                 ''
-                ''
+                'text'
+                'text'
+                'text'
+                'text'
+              )
+              DBMasterControls.Strings = (
+                'BuildingsList'
+                'ServicesList'
+              )
+              DBLinkFields.Strings = (
+                'building'
+                'service'
               )
               Deep = 0
-              Key = 'pid'
+              Key = 'null'
               Order = '3'
               Connection = Conn
-            end
-          end
-          object PairSplitterSide11: TPairSplitterSide
-            Cursor = crArrow
-            Left = 205
-            Height = 576
-            Top = 0
-            Width = 597
-            ClientWidth = 597
-            ClientHeight = 576
-            object Panel1: TPanel
-              Left = 0
-              Height = 575
-              Top = 1
-              Width = 597
-              Align = alClient
-              BevelOuter = bvNone
-              ClientHeight = 571
-              ClientWidth = 593
-              TabOrder = 0
-              object WorkPageControl: TPageControl
-                Left = 0
-                Height = 574
-                Top = 1
-                Width = 597
-                ActivePage = MainTabSheet
-                Align = alClient
-                TabIndex = 0
-                TabOrder = 0
-                object MainTabSheet: TTabSheet
-                  Caption = 'Основное'
-                  ClientHeight = 570
-                  ClientWidth = 593
-                  OnShow = MainTabSheetShow
-                  object PairSplitter4: TPairSplitter
-                    Cursor = crVSplit
-                    Left = 0
-                    Height = 543
-                    Top = 0
-                    Width = 593
-                    Align = alClient
-                    Position = 300
-                    SplitterType = pstVertical
-                    object PairSplitterSide12: TPairSplitterSide
-                      Cursor = crArrow
-                      Left = 0
-                      Height = 300
-                      Top = 0
-                      Width = 593
-                      ClientWidth = 593
-                      ClientHeight = 300
-                      object ScrollBox3: TScrollBox
-                        Left = 0
-                        Height = 300
-                        Top = 0
-                        Width = 593
-                        HorzScrollBar.Page = 593
-                        VertScrollBar.Page = 300
-                        Align = alClient
-                        BorderStyle = bsNone
-                        ChildSizing.EnlargeHorizontal = crsScaleChilds
-                        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-                        ChildSizing.ControlsPerLine = 2
-                        ClientHeight = 300
-                        ClientWidth = 593
-                        TabOrder = 0
-                        object Label4: TLabel
-                          Left = 0
-                          Height = 75
-                          Top = 0
-                          Width = 247
-                          Caption = 'Наименование'
-                          ParentColor = False
-                        end
-                        object WorkNameEdit: TMemo
-                          Left = 247
-                          Height = 75
-                          Top = 0
-                          Width = 346
-                          ScrollBars = ssAutoBoth
-                          TabOrder = 3
-                        end
-                        object Label5: TLabel
-                          Left = 0
-                          Height = 27
-                          Top = 75
-                          Width = 247
-                          Caption = 'Код'
-                          ParentColor = False
-                        end
-                        object WorkCodeEdit: TEdit
-                          Left = 247
-                          Height = 27
-                          Top = 75
-                          Width = 346
-                          TabOrder = 0
-                        end
-                        object Label6: TLabel
-                          Left = 0
-                          Height = 27
-                          Top = 102
-                          Width = 247
-                          Caption = 'База'
-                          ParentColor = False
-                        end
-                        object BaseCB: TComboBox
-                          Left = 247
-                          Height = 27
-                          Top = 102
-                          Width = 346
-                          AutoComplete = True
-                          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
-                          ItemHeight = 0
-                          TabOrder = 2
-                        end
-                        object Label7: TLabel
-                          Left = 0
-                          Height = 27
-                          Top = 129
-                          Width = 247
-                          Caption = 'Множитель'
-                          ParentColor = False
-                        end
-                        object WorkFactorEdit: TEdit
-                          Left = 247
-                          Height = 27
-                          Top = 129
-                          Width = 346
-                          TabOrder = 1
-                        end
-                        object Label8: TLabel
-                          Left = 0
-                          Height = 75
-                          Top = 156
-                          Width = 247
-                          Caption = 'Условие'
-                          ParentColor = False
-                        end
-                        object WorkCondEdit: TMemo
-                          Left = 247
-                          Height = 75
-                          Top = 156
-                          Width = 346
-                          ScrollBars = ssAutoBoth
-                          TabOrder = 4
-                        end
-                      end
-                    end
-                    object PairSplitterSide13: TPairSplitterSide
-                      Cursor = crArrow
-                      Left = 0
-                      Height = 238
-                      Top = 305
-                      Width = 593
-                      ClientWidth = 593
-                      ClientHeight = 238
-                      object WorkNote: TMemo
-                        Left = 0
-                        Height = 238
-                        Top = 0
-                        Width = 593
-                        Align = alClient
-                        Lines.Strings = (
-                          'WorkNote'
-                        )
-                        ScrollBars = ssAutoBoth
-                        TabOrder = 0
-                      end
-                    end
-                  end
-                end
-                object WorkTabSheet: TTabSheet
-                  Caption = 'Ресурсы'
-                  ClientHeight = 570
-                  ClientWidth = 593
-                  OnShow = WorkTabSheetShow
-                  object WorkResourcesVST: TDBVST
-                    Left = 0
-                    Height = 543
-                    Top = 0
-                    Width = 593
-                    Align = alClient
-                    DefaultText = 'Node'
-                    Header.AutoSizeIndex = 0
-                    Header.Columns = <                    
-                      item
-                        Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAllowFocus, coWrapCaption]
-                        Position = 0
-                        Text = 'Код'
-                        Width = 100
-                      end                    
-                      item
-                        Position = 1
-                        Text = 'Наименование'
-                        Width = 200
-                      end                    
-                      item
-                        Position = 2
-                        Text = 'Ед. изм.'
-                        Width = 100
-                      end                    
-                      item
-                        Position = 3
-                        Text = 'Норма'
-                        Width = 100
-                      end>
-                    Header.DefaultHeight = 17
-                    Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
-                    Header.Style = hsFlatButtons
-                    ScrollBarOptions.ScrollBars = ssAutoBoth
-                    TabOrder = 0
-                    TreeOptions.AutoOptions = [toAutoDropExpand, toAutoExpand, toAutoScrollOnExpand, toAutoTristateTracking, toAutoDeleteMovedNodes]
-                    TreeOptions.MiscOptions = [toEditable, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnDblClick]
-                    TreeOptions.SelectionOptions = [toExtendedFocus]
-                    DBTable = 'work_resources'
-                    DBFields.Strings = (
-                      'id'
-                      'resource_code'
-                      'resource_disp'
-                      'measure'
-                      'amount'
-                    )
-                    DBFieldsDisp.Strings = (
-                      ''
-                      ''
-                      ''
-                      ''
-                      ''
-                    )
-                    DBFieldsConvTo.Strings = (
-                      ''
-                      'ltree'
-                      ''
-                      ''
-                      ''
-                    )
-                    DBFieldsConvFrom.Strings = (
-                      ''
-                      'text'
-                      ''
-                      ''
-                      ''
-                    )
-                    DBMasterControls.Strings = (
-                      'WorksList'
-                    )
-                    DBLinkFields.Strings = (
-                      'work'
-                    )
-                    Deep = 0
-                    Key = 'null'
-                    Order = '3'
-                    Connection = Conn
-                  end
-                end
-              end
-              object WorkLabel: TLabel
-                Left = 0
-                Height = 1
-                Top = 0
-                Width = 597
-                Align = alTop
-                ParentColor = False
-              end
-            end
-            object WorkVSTLabel: TLabel
-              Left = 0
-              Height = 1
-              Top = 0
-              Width = 597
-              Align = alTop
-              ParentColor = False
             end
           end
         end
@@ -2648,7 +2549,7 @@ object MainForm: TMainForm
     Width = 22
     left = 656
     Bitmap = {
-      4C690E0000001600000016000000FFFFFF00FFFFFF00000000070000000D0000
+      4C69160000001600000016000000FFFFFF00FFFFFF00000000070000000D0000
       000D0000000D0000000D0000000D0000000D0000000D0000000D0000000D0000
       000D0000000D0000000D0000000D0000000D0000000D0000000D00000007FFFF
       FF00FFFFFF00FFFFFF00A455A666C473C5E3CB7ECCFFCB7ECCFFCB7ECCFFCA7F
@@ -3495,7 +3396,491 @@ object MainForm: TMainForm
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-      FF00FFFFFF00FFFFFF00FFFFFF00
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00000000070000000D0000
+      000D0000000D0000000D0000000D0000000D0000000D0000000D0000000D0000
+      000D0000000D0000000D0000000D0000000D0000000D0000000D00000007FFFF
+      FF00FFFFFF00FFFFFF00C8C8C862EDEDEDE1F2F2F2FFF2F2F2FFF2F2F2FFF2F2
+      F2FFF2F2F2FFF2F2F2FFF2F2F2FFF2F2F2FFF2F2F2FFF2F2F2FFF2F2F2FFF2F2
+      F2FFF2F2F2FFF2F2F2FFF2F2F2FFF2F2F2FFEDEDEDE1C8C8C862FFFFFF000000
+      0009E9E9E9E3E8E8E8FFE5E5E5FFE5E5E5FFE5E5E5FFE5E5E5FFE5E5E5FFE5E5
+      E5FFE5E5E5FFE1E1E3FFE1E1E3FFE5E5E5FFE5E5E5FFE5E5E5FFE5E5E5FFE5E5
+      E5FFE5E5E5FFE5E5E5FFE8E8E8FFE9E9E9E30000000900000010EEEEEEFFE3E3
+      E3FFE3E3E3FFE4E4E4FFE5E5E5FFE5E5E5FFE5E5E5FFE5E5E5FFE3E3E4FF8B8B
+      D8FF8B8BD4FFE3E3E4FFE5E5E5FFE5E5E5FFE5E5E5FFE5E5E5FFE4E4E4FFE3E3
+      E3FFE3E3E3FFEEEEEEFF0000001000000011ECECECFFE2E2E2FFE3E3E3FFE4E4
+      E4FFE5E5E5FFE5E5E5FFE5E5E5FFE5E5E5FFDCDCE0FF2222D8FF2222CEFFDADA
+      DFFFE5E5E5FFE5E5E5FFE5E5E5FFE5E5E5FFE4E4E4FFE3E3E3FFE2E2E2FFECEC
+      ECFF0000001100000012EAEAEAFFE1E1E1FFE2E2E2FFE3E3E3FFE4E4E4FFE4E4
+      E4FFE4E4E4FFE4E4E4FFAAAAD8FF0000DDFF0000D0FFA9A9CFFFE3E3E4FFE4E4
+      E4FFE4E4E4FFE4E4E4FFE3E3E3FFE2E2E2FFE1E1E1FFEAEAEAFF000000120000
+      0014E8E8E8FFE0E0E0FFE1E1E1FFE2E2E2FFE3E3E3FFE3E3E3FFE3E3E3FFDFDF
+      E1FF5252D0FF0000DDFF0000D0FF5252B4FFDFDFE2FFE3E3E3FFE3E3E3FFE3E3
+      E3FFE2E2E2FFE1E1E1FFE0E0E0FFE8E8E8FF0000001400000015E6E6E6FFDEDE
+      DEFFDFDFDFFFE1E1E1FFE1E1E1FFE1E1E1FFE1E1E1FFD6D6DCFFDFDFECFF0000
+      DDFF0000D0FFB6B6D4FFD6D6DDFFE1E1E1FFE1E1E1FFE1E1E1FFE1E1E1FFDFDF
+      DFFFDEDEDEFFE6E6E6FF0000001500000016E4E4E4FFDDDDDDFFDFDFDFFFE0E0
+      E0FFD1D1D1FFD2D2D2FFE0E0E0FFCCCCD8FFEFEFF5FF0000DDFF0000D0FFBCBC
+      D7FFCCCCD7FFE0E0E0FFE0E0E0FFE0E0E0FFE0E0E0FFDFDFDFFFDDDDDDFFE4E4
+      E4FF0000001600000017E1E1E1FFCECECEFFC9C9C9FFD5D5D5FFD3D3D3FFC9C9
+      C9FFD8D8D8FFBBBBD3FF0000D7FFE2E2EEFFD0D0E2FF00009FFFBBBBCFFFDFDF
+      DFFFDFDFDFFFD3D3D3FFDDDDDDFFDDDDDDFFDBDBDBFFE1E1E1FF000000170000
+      0018D7D7D7FFC2C2C2FFBCBCBCFFC1C1C1FFCCCCCCFFCBCBCBFFCDCDCDFFB5B5
+      D3FF0000D7FFE2E2EEFFD0D0E2FF00009FFFB6B6CDFFDEDEDEFFD6D6D6FFD9D9
+      D9FFDDDDDDFFD7D7D7FFDADADAFFE0E0E0FF000000180000001AD3D3D3FFC0C0
+      C0FFBABABAFFB9B9B9FFC6C6C6FFCFCFCFFFD4D4D4FFC6C6D3FFF4F4F8FF0000
+      DDFF0000D0FFBEBED8FFC3C3D2FFDADADAFFCACACAFFCBCBCBFFD0D0D0FFC8C8
+      C8FFCDCDCDFFDBDBDBFF0000001A0000001BDADADAFFC6C6C6FFC2C2C2FFC1C1
+      C1FFC2C2C2FFCECECEFFDBDBDBFFC4C4D1FFEDEDF4FF0000DDFF0000D0FFBABA
+      D6FFC4C4D1FFDBDBDBFFD5D5D5FFCFCFCFFFCFCFCFFFCDCDCDFFCBCBCBFFD4D4
+      D4FF0000001B0000001CCACACAFFC3C3C3FFC5C5C5FFC6C6C6FFC7C7C7FFD3D3
+      D3FFD6D6D7FF9999CFFF1111D2FF0000DDFF0000D0FF1212A2FF9C9CC4FFD9D9
+      DAFFD4D4D4FFD1D1D1FFCFCFCFFFC7C7C7FFC7C7C7FFD5D5D5FF0000001C0000
+      001DC6C6C6FFADADADFFC6C6C6FFC2C2C2FFCACACAFFD3D3D3FFC0C0CEFF1111
+      D1FF1515CFFF0000DDFF0000D0FF1717A1FF1A1A9CFFC4C4CFFFCACACAFFCACA
+      CAFFC8C8C8FFC7C7C7FFC5C5C5FFC6C6C6FF0000001D0000001EC6C6C6FFBCBC
+      BCFFB5B5B5FFBDBDBDFFB8B8B8FFC9C9CBFF6363CBFF0000D4FF3E3EC7FF0000
+      DDFF0000D0FF3F3FA9FF080897FF6666B0FFC9C9CAFFC6C6C6FFAFAFAFFFC4C4
+      C4FFBBBBBBFFBCBCBCFF0000001E00000020C8C8C8FFB5B5B5FFB4B4B4FFB5B5
+      B5FFB6B6B6FFADADB4FF2323CAFF0000D4FF7171BFFF3C3CC7FF3C3CC0FF7575
+      B4FF070796FF2A2A9DFFBFBFC7FFBCBCBCFFB5B5B5FFBDBDBDFFB2B2B2FFB1B1
+      B1FF0000002000000021C6C6C6FFBCBCBCFFBEBEBEFFBFBFBFFFC0C0C0FFAEAE
+      B9FF0B0BD0FF0000D4FFA6A6C1FFB7B7C7FFB7B7C7FFA8A8C0FF070796FF1111
+      97FFACACB8FFC0C0C0FFBFBFBFFFBEBEBEFFBCBCBCFFBBBBBBFF000000210000
+      0022C7C7C7FFC6C6C6FFC8C8C8FFC8C8C8FFCBCBCBFFB3B3C1FF2020C8FF2020
+      C8FFB3B3C1FFC9C9CAFFC9C9C9FFB3B3C1FF25259BFF26269CFFB3B3C1FFCACA
+      CAFFC9C9C9FFC8C8C8FFC6C6C6FFC5C5C5FF0000002200000020ADADADEBCBCB
+      CBFFCBCBCBFFCCCCCCFFCCCCCCFFC3C3C9FF9E9EBCFF9E9EBCFFC3C3CAFFCDCD
+      CDFFCDCDCDFFC3C3C9FF9E9EBCFF9E9EBCFFC2C2C8FFCCCCCCFFCCCCCCFFCBCB
+      CBFFCBCBCBFFADADADEB00000020000000084C4C4CA2B1B1B1EDD1D1D1FFD3D3
+      D3FFD4D4D4FFD5D5D5FFD3D3D5FFD3D3D5FFD8D8D8FFD9D9D9FFD9D9D9FFD7D7
+      D7FFD4D4D6FFD2D2D4FFD5D5D5FFD4D4D4FFD3D3D3FFD1D1D1FFB1B1B1ED4C4C
+      4CA300000008FFFFFF000000002B0000007B000000A3000000A5000000A50000
+      00A5000000A5000000A5000000A5000000A5000000A5000000A5000000A50000
+      00A5000000A5000000A5000000A5000000A30000007B0000002BFFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFF
+      FF01FFFFFF01FFFFFF01FFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF0BFFFFFF21FFFFFF25FFFFFF25FFFFFF25FFFFFF26FFFFFF25FFFFFF25FFFF
+      FF25FFFFFF21FFFFFF0BFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFFFF0C22222292000000DE0000
+      00E4000000E4000000E4FFFFFF4A000000E4000000E4000000E4000000DE2222
+      2292FFFFFF0CFFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFFFF13FFFF
+      FF25FFFFFF25FFFFFF25FFFFFF34010101C7000000BF000000BD000000BD0000
+      00BDFFFFFF4A000000BD000000BD000000BD000000BF010101C7FFFFFF34FFFF
+      FF25FFFFFF25FFFFFF25FFFFFF14FFFFFF01FFFFFF25000000D8000000D80000
+      00D8000000D8000000B3000000B1000000B1000000B1000000B1FFFFFF4A0000
+      00B1000000B1000000B1000000B1000000B3000000D8000000D8000000D80000
+      00D8FFFFFF26FFFFFF01FFFFFF25000000A4000000A4000000A4000000A40000
+      00A4000000A4000000A4000000A4000000A4FFFFFF4A000000A4000000A40000
+      00A4000000A4000000A4000000A4000000A4000000A4000000A4FFFFFF26FFFF
+      FF01FFFFFF13FFFFFF66FFFFFF66FFFFFF66FFFFFF7109090993000000980000
+      00980000009800000098FFFFFF4A000000980000009800000098000000980909
+      0993FFFFFF71FFFFFF66FFFFFF66FFFFFF66FFFFFF14FFFFFF00FFFFFF01FFFF
+      FF01FFFFFF01FFFFFF01FFFFFF0C8A8A8A730A0A0A870000008B0000008B0000
+      008BFFFFFF4A0000008B0000008B0000008B0A0A0A878A8A8A73FFFFFF0CFFFF
+      FF01FFFFFF01FFFFFF01FFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF2CFFFFFF60FFFFFF66FFFFFF66FFFFFF66FFFFFF26FFFF
+      FF66FFFFFF66FFFFFF66FFFFFF60FFFFFF2CFFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFF
+      FF01FFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF01FFFF
+      FF01FFFFFF01FFFFFF01FFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0BFFFFFF21FFFFFF25FFFFFF25FFFF
+      FF25FFFFFF13FFFFFF02FFFFFF01FFFFFF01FFFFFF00FFFFFF00FFFFFF01FFFF
+      FF13FFFFFF25FFFFFF25FFFFFF14FFFFFF00FFFFFF01FFFFFF01FFFFFF01FFFF
+      FF01FFFFFF0C22222292000000DE000000E4000000E4000000E4FFFFFF38FFFF
+      FF27FFFFFF26FFFFFF22FFFFFF03FFFFFF00FFFFFF01FFFFFF25000000E40000
+      00E4FFFFFF26FFFFFF01FFFFFF13FFFFFF25FFFFFF25FFFFFF25FFFFFF340101
+      01C7000000BF000000BD000000BD000000BD000000DE000000DE000000DE0707
+      07BEFFFFFF20FFFFFF01FFFFFF01FFFFFF25000000BD000000BDFFFFFF26FFFF
+      FF01FFFFFF25000000D8000000D8000000D8000000D8000000B3000000B10000
+      00B1000000B1000000B1FFFFFF74FFFFFF68FFFFFF67FFFFFF54FFFFFF03FFFF
+      FF00FFFFFF01FFFFFF25000000B1000000B1FFFFFF26FFFFFF01FFFFFF250000
+      00A4000000A4000000A4000000A4000000A4000000A4000000A4000000A40000
+      00A4FFFFFF39FFFFFF28FFFFFF27FFFFFF23FFFFFF03FFFFFF00FFFFFF01FFFF
+      FF25000000A4000000A4FFFFFF26FFFFFF01FFFFFF13FFFFFF66FFFFFF66FFFF
+      FF66FFFFFF710909099300000098000000980000009800000098000000CC0000
+      00CC000000CC090909ADFFFFFF20FFFFFF01FFFFFF01FFFFFF25000000980000
+      0098FFFFFF26FFFFFF00FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFFFF0C8A8A
+      8A730A0A0A870000008B0000008B0000008BFFFFFF73FFFFFF67FFFFFF67FFFF
+      FF53FFFFFF03FFFFFF00FFFFFF01FFFFFF250000008B0000008BFFFFFF26FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF2CFFFFFF60FFFF
+      FF66FFFFFF66FFFFFF66FFFFFF13FFFFFF02FFFFFF01FFFFFF01FFFFFF00FFFF
+      FF00FFFFFF01FFFFFF13FFFFFF66FFFFFF66FFFFFF14FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF01FFFFFF01FFFFFF01FFFF
+      FF01FFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF01FFFFFF01FFFFFF01FFFFFF01FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF007E7E
+      7E007E7E7E00000000020000000A0000000C0000000C0000000C0000000C0000
+      000C0000000B000000037E7E7E007E7E7E007E7E7E007E7E7E007E7E7E007E7E
+      7E007E7E7E007E7E7E007E7E7E007E7E7E007E7E7E007E7E7E00000000025088
+      B0805998C3F35A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5998C3F6518B
+      B3870000000D0000000D0000000D0000000D0000000D0000000D0000000D0000
+      000C000000047E7E7E007E7E7E007E7E7E000000000D518AB1F45189B0FF5189
+      B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189
+      B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189B0FF5088AFF4487A9F870000
+      00047E7E7E00000000027B9FB25892BFD9FFA1CBE3FFA1CBE3FFA1CBE3FFA1CB
+      E3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CB
+      E3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FF92BFD9FD7B9FB258000000020000
+      000D99C3DCD78FC0DDFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BD
+      DBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BD
+      DBFF88BDDBFF88BDDBFF8FC0DDFF99C3DCD70000000C000000129CC6E0FF85BA
+      D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9
+      D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9
+      D9FF85BAD9FF9CC6E0FF000000120000001397C3DFFF81B7D8FF81B7D8FF81B7
+      D8FF81B7D8FF81B7D8FF81B7D8FF81B7D8FF81B7D7FF87BBDAFF86BBDAFF81B7
+      D7FF81B7D8FF81B7D8FF81B7D8FF81B7D8FF81B7D8FF81B7D8FF81B7D8FF97C3
+      DFFF000000130000001492C0DCFF7FB5D6FF7EB5D6FF7EB5D6FF7EB5D6FF7EB5
+      D6FF7EB5D6FF7FB5D5FF85B9D8FF5385A6FF5385A6FF85B9D9FF86BAD9FF84B8
+      D7FF7EB5D6FF7EB5D6FF7EB5D6FF7EB5D6FF7FB5D6FF92C0DCFF000000140000
+      00158DBDDBFF7CB2D5FF7BB2D5FF7BB2D5FF7BB2D5FF7BB2D5FF7CB3D5FF82B7
+      D8FF5385A6FF3E79A2FF3E79A2FF5183A5FF2E5C7AFF7FB3D3FF7BB2D5FF7BB2
+      D5FF7BB2D5FF7BB2D5FF7CB2D5FF8DBDDBFF000000150000001788B9D8FF79B0
+      D3FF78B0D3FF78B0D3FF78B0D3FF79B1D3FF7FB5D6FF5184A5FF3E79A2FF488E
+      BDFF488EBDFF3E7BA3FF407EA8FF7EB2D3FF79B0D3FF78B0D3FF78B0D3FF78B0
+      D3FF79B0D3FF88B9D8FF000000170000001883B6D6FF76AED2FF75AED2FF75AE
+      D2FF76AFD2FF7CB3D5FF5184A6FF3D79A1FF488EBDFF488EBDFF488EBDFF488E
+      BDFF468AB7FF4B7FA0FF7DB3D5FF76AED2FF75AED2FF75AED2FF76AED2FF83B6
+      D6FF00000018000000197EB3D4FF73ACD0FF72ACD0FF73ADD0FF7AB1D3FF5084
+      A6FF3D79A0FF488EBDFF488EBDFF488EBDFF488EBDFF488EBDFF488EBDFF3F7C
+      A6FF4A7E9FFF7BB1D3FF73ACD0FF72ACD0FF73ACD0FF7EB3D4FF000000190000
+      001B78AED2FF70A9CFFF6FA9CFFF76AED2FF4E82A4FF376E92FF478CBAFF488E
+      BDFF488EBDFF488EBDFF488EBDFF488EBDFF488EBDFF468BB9FF397096FF487A
+      9BFF77AED2FF6FA9CFFF70A9CFFF78AED2FF0000001B0000001C73ABCFFF6CA7
+      CDFF6CA7CDFF73ABD0FF7FB1D1FF86B5D5FF4282ADFF488EBDFF488EBDFF488E
+      BDFF488EBDFF488EBDFF488EBDFF4181ABFF8BBAD8FF81B5D5FF73ACD0FF6CA7
+      CDFF6CA7CDFF73ABCFFF0000001C0000001D6DA7CDFF69A5CCFF69A5CCFF69A5
+      CCFF6AA5CCFF72AACDFF4282ADFF488EBDFF488EBDFF488EBDFF488EBDFF488E
+      BDFF488EBDFF4181ABFF74ACD0FF69A5CCFF69A5CCFF69A5CCFF69A5CCFF6DA7
+      CDFF0000001D0000001E67A4CAFF66A3CAFF66A3CAFF66A3CAFF66A3CAFF6EA8
+      CDFF4282ADFF488EBDFF488EBDFF488EBDFF488EBDFF488EBDFF488EBDFF4181
+      ABFF71AACFFF66A3CAFF66A3CAFF66A3CAFF66A3CAFF67A4CAFF0000001E0000
+      001F63A0C9FF63A0C9FF63A0C9FF63A0C9FF63A0C9FF6DA6CCFF3E7AA2FF4181
+      ABFF4181ABFF4181ABFF4181ABFF4181ABFF4181ABFF3E79A2FF6FA8CEFF63A0
+      C9FF63A0C9FF63A0C9FF63A0C9FF63A0C9FF0000001F00000020609EC7FF609E
+      C7FF609EC7FF609EC7FF609EC7FF6AA3CAFF82B3D4FF82B3D4FF82B3D4FF82B3
+      D4FF82B3D4FF82B3D4FF82B3D4FF82B3D4FF69A4CAFF609EC7FF609EC7FF609E
+      C7FF609EC7FF609EC7FF00000020000000225E9CC6FF5D9CC6FF5D9CC6FF5D9C
+      C6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9C
+      C6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5E9C
+      C6FF00000022000000205087ABE75C9AC5FF5A99C4FF5A99C4FF5A99C4FF5A99
+      C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99
+      C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5C9AC5FF5087ABE7000000200000
+      0008213B4B9F5589ADE967A1C9FF6AA3CAFF6CA4CBFF6FA6CBFF71A7CCFF73A8
+      CDFF75AACEFF77ABCFFF77ABCFFF75AACEFF73A8CDFF71A7CCFF6FA6CBFF6CA4
+      CBFF6AA3CAFF67A1C9FF5589ADE9213B4B9F000000087E7E7E00000000300000
+      0079000000930000009300000093000000930000009300000093000000930000
+      0093000000930000009300000093000000930000009300000093000000930000
+      009300000079000000307E7E7E007E7E7E007E7E7E00000000020000000A0000
+      000C0000000C0000000C0000000C0000000C0000000B000000037E7E7E007E7E
+      7E007E7E7E007E7E7E007E7E7E007E7E7E007E7E7E007E7E7E007E7E7E007E7E
+      7E007E7E7E007E7E7E00000000025088B0805998C3F35A99C4FF5A99C4FF5A99
+      C4FF5A99C4FF5A99C4FF5998C3F6518BB3870000000D0000000D0000000D0000
+      000D0000000D0000000D0000000D0000000C000000047E7E7E007E7E7E007E7E
+      7E000000000D518AB1F45189B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189
+      B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189
+      B0FF5189B0FF5088AFF4487A9F87000000047E7E7E00000000027B9FB25892BF
+      D9FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CB
+      E3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CB
+      E3FF92BFD9FD7B9FB258000000020000000D99C3DCD78FC0DDFF88BDDBFF88BD
+      DBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BD
+      DBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF8FC0DDFF99C3
+      DCD70000000C000000129CC6E0FF85BAD9FF84B9D9FF84B9D9FF84B9D9FF84B9
+      D9FF84B9D9FF84B9D9FF8BBDDBFF92C1DDFF92C1DDFF8BBDDBFF84B9D9FF84B9
+      D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF85BAD9FF9CC6E0FF000000120000
+      001397C3DFFF81B7D8FF81B7D8FF81B7D8FF81B7D8FF81B7D8FF81B7D8FF88BB
+      DAFF72A4C2FF3D6E8EFF3D6E8EFF72A4C2FF88BBDAFF81B7D8FF81B7D8FF81B7
+      D8FF81B7D8FF81B7D8FF81B7D8FF97C3DFFF000000130000001492C0DCFF7FB5
+      D6FF7EB5D6FF7EB5D6FF7EB5D6FF7EB5D6FF7EB5D6FF8DBEDBFF417496FF78A6
+      C3FF78A6C2FF417496FF8DBEDBFF7EB5D6FF7EB5D6FF7EB5D6FF7EB5D6FF7EB5
+      D6FF7FB5D6FF92C0DCFF00000014000000158DBDDBFF7CB2D5FF7BB2D5FF7BB2
+      D5FF7BB2D5FF7BB2D5FF7BB2D5FF8CBCDAFF457FA4FF6B9CBBFF6B9CBBFF457E
+      A3FF8CBCDAFF7BB2D5FF7BB2D5FF7BB2D5FF7BB2D5FF7BB2D5FF7CB2D5FF8DBD
+      DBFF000000150000001788B9D8FF79B0D3FF78B0D3FF78B0D3FF78B0D3FF78B0
+      D3FF78B0D3FF87B9D8FF538DB3FF386F94FF397095FF538DB3FF87B9D8FF78B0
+      D3FF78B0D3FF78B0D3FF78B0D3FF78B0D3FF79B0D3FF88B9D8FF000000170000
+      001883B6D6FF76AED2FF75AED2FF75AED2FF75AED2FF75AED2FF75AED2FF88B9
+      D8FF427EA5FF568EB4FF568EB4FF407BA4FF85B6D6FF76AFD2FF75AED2FF75AE
+      D2FF75AED2FF75AED2FF76AED2FF83B6D6FF00000018000000197EB3D4FF73AC
+      D0FF72ACD0FF72ACD0FF72ACD0FF80B4D5FF87B8D7FF77AACAFF417FA9FF659B
+      BCFF659BBCFF4384B0FF6799BAFF87B8D7FF80B4D5FF72ACD0FF72ACD0FF72AC
+      D0FF73ACD0FF7EB3D4FF000000190000001B78AED2FF70A9CFFF6FA9CFFF6FA9
+      CFFF6FA9CFFF84B6D6FF2E5B7AFF316282FF4589B6FF346789FF346789FF468A
+      B8FF35698CFF2E5B7AFF84B6D6FF6FA9CFFF6FA9CFFF6FA9CFFF70A9CFFF78AE
+      D2FF0000001B0000001C73ABCFFF6CA7CDFF6CA7CDFF6CA7CDFF6CA7CDFF7BB0
+      D2FF94BFDBFF6297BAFF4784ADFF94BFDBFF94BFDBFF4784ADFF558DB3FF94BF
+      DBFF7BB0D2FF6CA7CDFF6CA7CDFF6CA7CDFF6CA7CDFF73ABCFFF0000001C0000
+      001D6DA7CDFF69A5CCFF69A5CCFF69A5CCFF69A5CCFF69A5CCFF79AFD1FF4982
+      A8FF558DB3FF78AED1FF78AED1FF558DB3FF4681A8FF7AAFD2FF69A5CCFF69A5
+      CCFF69A5CCFF69A5CCFF69A5CCFF6DA7CDFF0000001D0000001E67A4CAFF66A3
+      CAFF66A3CAFF66A3CAFF66A3CAFF66A3CAFF79AED0FF437DA4FF649ABEFF6FA8
+      CDFF6FA8CDFF649ABDFF407CA3FF79AED0FF66A3CAFF66A3CAFF66A3CAFF66A3
+      CAFF66A3CAFF67A4CAFF0000001E0000001F63A0C9FF63A0C9FF63A0C9FF63A0
+      C9FF63A0C9FF63A0C9FF78ADD0FF3E769CFF77A9CCFF66A2CAFF66A2CAFF77A9
+      CCFF4882A8FF75ABCFFF63A0C9FF63A0C9FF63A0C9FF63A0C9FF63A0C9FF63A0
+      C9FF0000001F00000020609EC7FF609EC7FF609EC7FF609EC7FF609EC7FF609E
+      C7FF73AACEFF6196B8FF76ACCFFF609EC7FF609EC7FF76ACCFFF689FC1FF6BA5
+      CBFF609EC7FF609EC7FF609EC7FF609EC7FF609EC7FF609EC7FF000000200000
+      00225E9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF63A0C8FF7CAF
+      D1FF65A1C9FF5D9CC6FF5D9CC6FF65A1C9FF75AACEFF609EC7FF5D9CC6FF5D9C
+      C6FF5D9CC6FF5D9CC6FF5D9CC6FF5E9CC6FF00000022000000205087ABE75C9A
+      C5FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99
+      C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99
+      C4FF5C9AC5FF5087ABE70000002000000008213B4B9F5589ADE967A1C9FF6AA3
+      CAFF6CA4CBFF6FA6CBFF71A7CCFF73A8CDFF75AACEFF77ABCFFF77ABCFFF75AA
+      CEFF73A8CDFF71A7CCFF6FA6CBFF6CA4CBFF6AA3CAFF67A1C9FF5589ADE9213B
+      4B9F000000087E7E7E0000000030000000790000009300000093000000930000
+      0093000000930000009300000093000000930000009300000093000000930000
+      00930000009300000093000000930000009300000079000000307E7E7E007E7E
+      7E007E7E7E00000000020000000A0000000C0000000C0000000C0000000C0000
+      000C0000000B000000037E7E7E007E7E7E007E7E7E007E7E7E007E7E7E007E7E
+      7E007E7E7E007E7E7E007E7E7E007E7E7E007E7E7E007E7E7E00000000025088
+      B0805998C3F35A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5998C3F6518B
+      B3870000000D0000000D0000000D0000000D0000000D0000000D0000000D0000
+      000C000000047E7E7E007E7E7E007E7E7E000000000D518AB1F45189B0FF5189
+      B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189
+      B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189B0FF5088AFF4487A9F870000
+      00047E7E7E00000000027B9FB25892BFD9FFA1CBE3FFA1CBE3FFA1CBE3FFA1CB
+      E3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CB
+      E3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FF92BFD9FD7B9FB258000000020000
+      000D99C3DCD78FC0DDFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BD
+      DBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BD
+      DBFF88BDDBFF88BDDBFF8FC0DDFF99C3DCD70000000C000000129CC6E0FF85BA
+      D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9
+      D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9
+      D9FF85BAD9FF9CC6E0FF000000120000001397C3DFFF81B7D8FF81B7D8FF81B7
+      D8FF81B7D8FF81B7D8FF81B7D8FF81B7D8FF8ABCDBFF93C1DEFF93C1DEFF8ABC
+      DBFF81B7D8FF81B7D8FF81B7D8FF81B7D8FF81B7D8FF81B7D8FF81B7D8FF97C3
+      DFFF000000130000001492C0DCFF7FB5D6FF7EB5D6FF7EB5D6FF7EB5D6FF80B6
+      D7FF8DBEDBFF8DBDD9FF8CBCDAFF356688FF356688FF8CBCDAFF8DBDD9FF8DBE
+      DBFF80B6D7FF7EB5D6FF7EB5D6FF7EB5D6FF7FB5D6FF92C0DCFF000000140000
+      00158DBDDBFF7CB2D5FF7BB2D5FF7BB2D5FF7BB2D5FF8BBBDAFF4F81A1FF3A6E
+      8FFF437598FF4588B6FF4588B6FF437598FF3A6E8FFF4F81A1FF8BBBDAFF7BB2
+      D5FF7BB2D5FF7BB2D5FF7CB2D5FF8DBDDBFF000000150000001788B9D8FF79B0
+      D3FF78B0D3FF78B0D3FF78B0D3FF88B9D6FF437DA0FF468BB9FF4487B3FF488E
+      BDFF488EBDFF4487B3FF468BB9FF437DA0FF88B9D6FF78B0D3FF78B0D3FF78B0
+      D3FF79B0D3FF88B9D8FF000000170000001883B6D6FF76AED2FF75AED2FF75AE
+      D2FF7FB4D5FF84B6D6FF5189B0FF488EBDFF4588B6FF5790B5FF5790B5FF4588
+      B6FF488EBDFF5189B0FF84B6D6FF7FB4D5FF75AED2FF75AED2FF76AED2FF83B6
+      D6FF00000018000000197EB3D4FF73ACD0FF72ACD0FF72ACD0FF86B8D7FF3567
+      88FF4283AFFF488EBDFF5790B5FF90BEDAFF90BEDAFF5790B5FF488EBDFF4283
+      AFFF356788FF86B8D7FF72ACD0FF72ACD0FF73ACD0FF7EB3D4FF000000190000
+      001B78AED2FF70A9CFFF6FA9CFFF6FA9CFFF83B5D6FF417EA6FF468AB8FF488E
+      BDFF4F89AEFF82B4D5FF82B4D5FF4F89AEFF488EBDFF468AB8FF417EA6FF83B5
+      D6FF6FA9CFFF6FA9CFFF70A9CFFF78AED2FF0000001B0000001C73ABCFFF6CA7
+      CDFF6CA7CDFF6CA7CDFF76ADD1FF91BCD9FF528CB3FF488EBDFF4180ABFF4477
+      99FF447799FF4180ABFF488EBDFF528CB3FF91BCD9FF76ADD1FF6CA7CDFF6CA7
+      CDFF6CA7CDFF73ABCFFF0000001C0000001D6DA7CDFF69A5CCFF69A5CCFF69A5
+      CCFF69A5CCFF7FAFD1FF4480A6FF488EBDFF488EBDFF4486B2FF4486B2FF488E
+      BDFF488EBDFF4480A6FF7FAFD1FF69A5CCFF69A5CCFF69A5CCFF69A5CCFF6DA7
+      CDFF0000001D0000001E67A4CAFF66A3CAFF66A3CAFF66A3CAFF66A3CAFF78AE
+      D0FF5A91B4FF4985AEFF508BB2FF468AB8FF468AB8FF508BB2FF4985AEFF5A91
+      B4FF78AED0FF66A3CAFF66A3CAFF66A3CAFF66A3CAFF67A4CAFF0000001E0000
+      001F63A0C9FF63A0C9FF63A0C9FF63A0C9FF63A0C9FF65A1CAFF80B2D3FF87B6
+      D4FF87B5D5FF417FA7FF417FA7FF87B5D5FF89B7D5FF80B2D3FF65A1CAFF63A0
+      C9FF63A0C9FF63A0C9FF63A0C9FF63A0C9FF0000001F00000020609EC7FF609E
+      C7FF609EC7FF609EC7FF609EC7FF609EC7FF609EC7FF629EC7FF6CA5CBFF89B8
+      D6FF89B8D6FF6CA5CBFF609EC7FF609EC7FF609EC7FF609EC7FF609EC7FF609E
+      C7FF609EC7FF609EC7FF00000020000000225E9CC6FF5D9CC6FF5D9CC6FF5D9C
+      C6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9C
+      C6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5E9C
+      C6FF00000022000000205087ABE75C9AC5FF5A99C4FF5A99C4FF5A99C4FF5A99
+      C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99
+      C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5C9AC5FF5087ABE7000000200000
+      0008213B4B9F5589ADE967A1C9FF6AA3CAFF6CA4CBFF6FA6CBFF71A7CCFF73A8
+      CDFF75AACEFF77ABCFFF77ABCFFF75AACEFF73A8CDFF71A7CCFF6FA6CBFF6CA4
+      CBFF6AA3CAFF67A1C9FF5589ADE9213B4B9F000000087E7E7E00000000300000
+      0079000000930000009300000093000000930000009300000093000000930000
+      0093000000930000009300000093000000930000009300000093000000930000
+      009300000079000000307E7E7E007E7E7E007E7E7E00000000020000000A0000
+      000C0000000C0000000C0000000C0000000C0000000B000000037E7E7E007E7E
+      7E007E7E7E007E7E7E007E7E7E007E7E7E007E7E7E007E7E7E007E7E7E007E7E
+      7E007E7E7E007E7E7E00000000025088B0805998C3F35A99C4FF5A99C4FF5A99
+      C4FF5A99C4FF5A99C4FF5998C3F6518BB3870000000D0000000D0000000D0000
+      000D0000000D0000000D0000000D0000000C000000047E7E7E007E7E7E007E7E
+      7E000000000D518AB1F45189B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189
+      B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189B0FF5189
+      B0FF5189B0FF5088AFF4487A9F87000000047E7E7E00000000027B9FB25892BF
+      D9FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CB
+      E3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CBE3FFA1CB
+      E3FF92BFD9FD7B9FB258000000020000000D99C3DCD78FC0DDFF88BDDBFF88BD
+      DBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BD
+      DBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF88BDDBFF8FC0DDFF99C3
+      DCD70000000C000000129CC6E0FF85BAD9FF84B9D9FF84B9D9FF84B9D9FF84B9
+      D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF84B9
+      D9FF84B9D9FF84B9D9FF84B9D9FF84B9D9FF85BAD9FF9CC6E0FF000000120000
+      001397C3DFFF81B7D8FF81B7D8FF81B7D8FF81B7D8FF88BBDAFF92C1DDFF93C1
+      DEFF93C1DEFF93C1DEFF93C1DEFF8EBEDCFF82B8D8FF81B7D8FF81B7D8FF81B7
+      D8FF81B7D8FF81B7D8FF81B7D8FF97C3DFFF000000130000001492C0DCFF7FB5
+      D6FF7EB5D6FF7EB5D6FF7EB5D6FF8FBFDBFF3D6F92FF346688FF346688FF3466
+      88FF36698CFF5D8FB0FF8DBDDBFF7FB6D6FF7EB5D6FF7EB5D6FF7EB5D6FF7EB5
+      D6FF7FB5D6FF92C0DCFF00000014000000158DBDDBFF7CB2D5FF7BB2D5FF7BB2
+      D5FF7BB2D5FF8EBDDBFF3F7DA6FF9FC7E1FF9FC7E0FF9FC7E1FF4486B3FF3F7C
+      A6FF5C8EB0FF8ABBDAFF7CB3D5FF7BB2D5FF7BB2D5FF7BB2D5FF7CB2D5FF8DBD
+      DBFF000000150000001788B9D8FF79B0D3FF78B0D3FF78B0D3FF78B0D3FF8BBB
+      D9FF4180AAFF8BBBD9FF78B0D3FF8BBBD9FF4486B3FF488EBDFF3F7CA6FF5B8D
+      AFFF86B8D7FF78B0D3FF78B0D3FF78B0D3FF79B0D3FF88B9D8FF000000170000
+      001883B6D6FF76AED2FF75AED2FF75AED2FF75AED2FF88B9D8FF4180AAFF88B9
+      D8FF75AED2FF88B9D8FF4283AEFF4486B3FF4486B3FF3C769DFF88B9D8FF75AE
+      D2FF75AED2FF75AED2FF76AED2FF83B6D6FF00000018000000197EB3D4FF73AC
+      D0FF72ACD0FF72ACD0FF72ACD0FF86B8D7FF4180AAFF86B8D7FF72ACD0FF7FB3
+      D4FF98C2DDFF98C2DDFF99C3DDFF4180AAFF86B8D7FF72ACD0FF72ACD0FF72AC
+      D0FF73ACD0FF7EB3D4FF000000190000001B78AED2FF70A9CFFF6FA9CFFF6FA9
+      CFFF6FA9CFFF83B5D6FF4180AAFF83B5D6FF6FA9CFFF6FA9CFFF6FA9CFFF6FA9
+      CFFF83B5D6FF4180AAFF83B5D6FF6FA9CFFF6FA9CFFF6FA9CFFF70A9CFFF78AE
+      D2FF0000001B0000001C73ABCFFF6CA7CDFF6CA7CDFF6CA7CDFF6CA7CDFF81B3
+      D4FF4180AAFF81B3D4FF6CA7CDFF6CA7CDFF6CA7CDFF6CA7CDFF81B3D4FF4180
+      AAFF81B3D4FF6CA7CDFF6CA7CDFF6CA7CDFF6CA7CDFF73ABCFFF0000001C0000
+      001D6DA7CDFF69A5CCFF69A5CCFF69A5CCFF69A5CCFF7EB2D3FF4180AAFF7EB2
+      D3FF69A5CCFF69A5CCFF69A5CCFF69A5CCFF7EB2D3FF4180AAFF7EB2D3FF69A5
+      CCFF69A5CCFF69A5CCFF69A5CCFF6DA7CDFF0000001D0000001E67A4CAFF66A3
+      CAFF66A3CAFF66A3CAFF66A3CAFF7CB0D1FF4180AAFF7DB1D2FF7CB0D1FF7CB0
+      D1FF7CB0D1FF7CB0D1FF7DB1D2FF4180AAFF7CB0D1FF66A3CAFF66A3CAFF66A3
+      CAFF66A3CAFF67A4CAFF0000001E0000001F63A0C9FF63A0C9FF63A0C9FF63A0
+      C9FF63A0C9FF78ADD0FF4B88B1FF346688FF346688FF346688FF346688FF3466
+      88FF346688FF4B88B1FF78ADD0FF63A0C9FF63A0C9FF63A0C9FF63A0C9FF63A0
+      C9FF0000001F00000020609EC7FF609EC7FF609EC7FF609EC7FF609EC7FF69A3
+      CAFF87B6D5FF8BB8D6FF8BB8D6FF8BB8D6FF8BB8D6FF8BB8D6FF8BB8D6FF87B6
+      D5FF69A3CAFF609EC7FF609EC7FF609EC7FF609EC7FF609EC7FF000000200000
+      00225E9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9C
+      C6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9CC6FF5D9C
+      C6FF5D9CC6FF5D9CC6FF5D9CC6FF5E9CC6FF00000022000000205087ABE75C9A
+      C5FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99
+      C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99C4FF5A99
+      C4FF5C9AC5FF5087ABE70000002000000008213B4B9F5589ADE967A1C9FF6AA3
+      CAFF6CA4CBFF6FA6CBFF71A7CCFF73A8CDFF75AACEFF77ABCFFF77ABCFFF75AA
+      CEFF73A8CDFF71A7CCFF6FA6CBFF6CA4CBFF6AA3CAFF67A1C9FF5589ADE9213B
+      4B9F000000087E7E7E0000000030000000790000009300000093000000930000
+      0093000000930000009300000093000000930000009300000093000000930000
+      00930000009300000093000000930000009300000079000000307E7E7E00FFFF
+      FF00FFFFFF00000000070000000D0000000D0000000D0000000D0000000D0000
+      000D0000000D0000000D0000000D0000000D0000000D0000000D0000000D0000
+      000D0000000D0000000D00000007FFFFFF00FFFFFF00FFFFFF008282CD817474
+      DFF76464DEFF8282DED87A7AAE518383DED96565DFFF6565DFFF6565DFFF6565
+      DFFF6565DFFF6565DFFF6565DFFF6565DFFF8282DED87474AB4F8080DDD86161
+      DEFF7272DEF78282CD80FFFFFF00000000097272DDF84343D6FF6161DDFF6E6E
+      926A6464642E7272956C6565DDFF3E3ED4FF3E3ED4FF3E3ED4FF3E3ED4FF3E3E
+      D4FF3E3ED4FF6464DDFF6E6E926A5050502964648A665B5BDBFF3D3DD4FF7070
+      DDF800000009000000106161DBFF3C3CD3FF5757D9FF8282CEEC63637C918484
+      CFEC5D5DDBFF4747D6FF4747D6FF4747D6FF4747D6FF4747D6FF4747D6FF5C5C
+      DAFF8282CEEC5959738D7B7BCBEA4E4ED7FF3232D1FF5C5CDAFF000000100000
+      00116161DAFF4444D2FF4D4DD5FF6161DAFF6E6EDCFF6464DBFF5454D7FF5151
+      D6FF5151D6FF5151D6FF5151D6FF5151D6FF5151D6FF5353D6FF6161DAFF6767
+      DBFF5757D7FF3F3FD1FF3636CFFF5B5BD7FF00000011000000126161D7FF4949
+      D1FF5050D3FF5555D4FF5757D5FF5858D5FF5858D5FF5858D5FF5858D5FF5858
+      D5FF5858D5FF5858D5FF5858D5FF5656D5FF5454D4FF4E4ED3FF4747D1FF3F3F
+      CFFF3939CDFF5A5AD6FF00000012000000146161D5FF4C4CD0FF5454D2FF5959
+      D3FF5B5BD4FF5C5CD4FF5C5CD4FF5C5CD4FF5C5CD4FF5C5CD4FF5C5CD4FF5C5C
+      D4FF5C5CD4FF5A5AD4FF5858D3FF5252D2FF4A4AD0FF4242CEFF3B3BCCFF5A5A
+      D4FF00000014000000156767D6FF5757D1FF5E5ED3FF6363D4FF6565D5FF6666
+      D5FF6666D5FF6666D5FF6666D5FF6666D5FF6666D5FF6666D5FF6666D5FF6464
+      D5FF6262D4FF5D5DD3FF5555D1FF4E4ECEFF4747CDFF6161D4FF000000150000
+      0016ECECECFFEAEAEAFFEBEBEBFFECECECFFECECECFFECECECFFECECECFFECEC
+      ECFFECECECFFECECECFFECECECFFECECECFFECECECFFECECECFFECECECFFEBEB
+      EBFFEAEAEAFFE9E9E9FFE9E9E9FFEBEBEBFF0000001600000017EAEAEAFFE9E9
+      E9FFEAEAEAFFEAEAEAFFEBEBEBFFEBEBEBFFEAEAEAFFEBEBEBFFEBEBEBFFEBEB
+      EBFFEBEBEBFFEBEBEBFFEBEBEBFFEBEBEBFFEAEAEAFFEAEAEAFFE9E9E9FFE8E8
+      E8FFE8E8E8FFE9E9E9FF0000001700000018E9E9E9FFE8E8E8FFE8E8E8FFE6E6
+      E6FF959595FF565656FF474747FF5C5C5CFFAEAEAEFFE9E9E9FFE9E9E9FFE3E3
+      E3FF8A8A8AFF464646FF464646FFDEDEDEFFE8E8E8FFE7E7E7FFE6E6E6FFE8E8
+      E8FF000000180000001AE9E9E9FFE7E7E7FFE7E7E7FFA4A4A4FF464646FF8484
+      84FFC1C1C1FF6E6E6EFF474747FFC4C4C4FFE8E8E8FF6A6A6AFF474747FF4646
+      46FF464646FFDDDDDDFFE7E7E7FFE7E7E7FFE6E6E6FFE8E8E8FF0000001A0000
+      001BE6E6E6FFE6E6E6FFE6E6E6FF696969FF454545FFD8D8D8FFE6E6E6FFB5B5
+      B5FF454545FF878787FFE6E6E6FFA9A9A9FFD3D3D3FF454545FF454545FFDCDC
+      DCFFE6E6E6FFE5E5E5FFE5E5E5FFE6E6E6FF0000001B0000001CE5E5E5FFE4E4
+      E4FFE4E4E4FF545454FF464646FFE4E4E4FFE4E4E4FFC3C3C3FF454545FF7272
+      72FFE4E4E4FFE4E4E4FFE4E4E4FF454545FF454545FFDADADAFFE4E4E4FFE4E4
+      E4FFE4E4E4FFE5E5E5FF0000001C0000001DE2E2E2FFE2E2E2FFE2E2E2FF5353
+      53FF454545FFE1E1E1FFE2E2E2FFC1C1C1FF444444FF717171FFE2E2E2FFE2E2
+      E2FFE2E2E2FF444444FF444444FFD8D8D8FFE2E2E2FFE2E2E2FFE2E2E2FFE2E2
+      E2FF0000001D0000001EE1E1E1FFE1E1E1FFE1E1E1FF696969FF444444FFCFCF
+      CFFFE1E1E1FFB0B0B0FF444444FF868686FFE1E1E1FFE1E1E1FFE1E1E1FF4444
+      44FF444444FFD7D7D7FFE1E1E1FFE1E1E1FFE1E1E1FFE1E1E1FF0000001E0000
+      0020E0E0E0FFE0E0E0FFE0E0E0FFA5A5A5FF444444FF7F7F7FFFB7B7B7FF6868
+      68FF454545FFC4C4C4FFE0E0E0FF999999FF929292FF444444FF444444FF8D8D
+      8DFF949494FFE0E0E0FFE0E0E0FFE0E0E0FF0000002000000021DFDFDFFFDFDF
+      DFFFDFDFDFFFDEDEDEFF989898FF595959FF494949FF616161FFAFAFAFFFDFDF
+      DFFFDFDFDFFF515151FF434343FF434343FF434343FF434343FF484848FFDFDF
+      DFFFDFDFDFFFDFDFDFFF0000002100000022DFDFDFFFDFDFDFFFDFDFDFFFDFDF
+      DFFFDFDFDFFFDFDFDFFFDFDFDFFFDFDFDFFFDFDFDFFFDFDFDFFFDFDFDFFFD6D6
+      D6FFD5D5D5FFD5D5D5FFD5D5D5FFD5D5D5FFD6D6D6FFDFDFDFFFDFDFDFFFDFDF
+      DFFF0000002200000020BFBFBFEBDFDFDFFFDEDEDEFFDEDEDEFFDEDEDEFFDEDE
+      DEFFDEDEDEFFDEDEDEFFDEDEDEFFDEDEDEFFDEDEDEFFDEDEDEFFDEDEDEFFDEDE
+      DEFFDEDEDEFFDEDEDEFFDEDEDEFFDEDEDEFFDFDFDFFFBFBFBFEB000000200000
+      0008545454A2C2C2C2EEE3E3E3FFE4E4E4FFE4E4E4FFE5E5E5FFE6E6E6FFE7E7
+      E7FFE8E8E8FFE8E8E8FFE8E8E8FFE8E8E8FFE7E7E7FFE6E6E6FFE5E5E5FFE4E4
+      E4FFE4E4E4FFE3E3E3FFC2C2C2EE545454A200000008FFFFFF000000002B0000
+      007B000000A3000000A5000000A5000000A5000000A5000000A5000000A50000
+      00A5000000A5000000A5000000A5000000A5000000A5000000A5000000A50000
+      00A30000007B0000002BFFFFFF00
     }
   end
   object IniPropStorage: TIniPropStorage

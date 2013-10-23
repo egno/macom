@@ -28,19 +28,18 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 interface
 
 uses
-  Classes, SysUtils, FileUtil, TreeFilterEdit, Forms, Controls, Graphics,
-  Dialogs, Menus, ComCtrls, ActnList, PairSplitter, StdCtrls, ExtCtrls, Buttons,
-  StdActns, DBGrids, pqconnection, fpjson, jsonparser, XMLConf, sqldb, db,
-  dbfunc, ExpandPanels, Grids, CheckLst, DbCtrls, IniPropStorage,
-  EditBtn, DBActns, Calendar, keyvalue,
-  ExtSQLQuery, DBVST, VirtualTrees;
+  Classes, SysUtils, FileUtil, TreeFilterEdit, ExtendedNotebook, Forms,
+  Controls, Graphics, Dialogs, Menus, ComCtrls, ActnList, PairSplitter,
+  StdCtrls, ExtCtrls, Buttons, StdActns, DBGrids, pqconnection, fpjson,
+  jsonparser, XMLConf, sqldb, db, dbfunc, Grids, CheckLst,
+  DbCtrls, IniPropStorage, EditBtn, DBActns, Calendar, keyvalue, ExtSQLQuery,
+  DBVST, PanelRollOut, VirtualTrees;
 
 type
 
   { TMainForm }
 
   TMainForm = class(TForm)
-    ActionPanel3: TPanel;
     ActionSave: TAction;
     ActionDisconnect: TAction;
     ActionConnect: TAction;
@@ -60,6 +59,7 @@ type
     BuildingPersonnelVST: TDBVST;
     BuildingCalcPriceEdit: TEdit;
     BuildingWorkPlanFact: TDBVST;
+    LeftTabs: TExtendedNotebook;
     Label12: TLabel;
     Label13: TLabel;
     Label14: TLabel;
@@ -67,15 +67,22 @@ type
     MainTree: TDBVST;
     Label11: TLabel;
     PairSplitter6: TPairSplitter;
+    MainSplitter: TPairSplitter;
+    PairSplitterSide1: TPairSplitterSide;
     PairSplitterSide16: TPairSplitterSide;
     PairSplitterSide17: TPairSplitterSide;
+    PairSplitterSide2: TPairSplitterSide;
     Panel10: TPanel;
-    Panel11: TPanel;
     Panel8: TPanel;
     Panel9: TPanel;
     ScrollBox4: TScrollBox;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    LeftDateTabSheet: TTabSheet;
+    BuildingServicesTabSheet: TTabSheet;
+    BuildingPersonnelTabSheet: TTabSheet;
     BuildingWorksTabSheet: TTabSheet;
-    ToolButton3: TToolButton;
     WorkDateEdit: TDateEdit;
     WorkPeriodBeginEdit: TDateEdit;
     WorkPeriodBeginEdit1: TDateEdit;
@@ -107,7 +114,6 @@ type
     DBPopupMenu: TPopupMenu;
     Splitter3: TSplitter;
     BuildingPropsTabSheet: TTabSheet;
-    BuildingPersonnelTabSheet: TTabSheet;
     WorkAddAllBtn1: TBitBtn;
     PersAddBtn: TBitBtn;
     WorkDelAllBtn1: TBitBtn;
@@ -143,14 +149,8 @@ type
     MainTabSheet: TTabSheet;
     WorkTabSheet: TTabSheet;
     BuildingMainTabSheet: TTabSheet;
-    BuildingServicesTabSheet: TTabSheet;
-    WorkPairSplitter: TPairSplitter;
-    PairSplitterSide3: TPairSplitterSide;
-    PairSplitterSide5: TPairSplitterSide;
-    PairSplitterSide6: TPairSplitterSide;
     ScrollBox2: TScrollBox;
     ServiceLabel: TLabel;
-    SrvMainSaveBtn1: TBitBtn;
     Panel3: TPanel;
     Splitter2: TSplitter;
     BuildingTabSheet: TTabSheet;
@@ -175,13 +175,9 @@ type
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
     BottomRollOut: TMyRollOut;
-    LeftRollOut: TMyRollOut;
     MainPanel: TPanel;
     ScrollBox1: TScrollBox;
     ServicePageControl: TPageControl;
-    ServicePairSplitter: TPairSplitter;
-    PairSplitterSide1: TPairSplitterSide;
-    PairSplitterSide2: TPairSplitterSide;
     ShowPwdBtn: TBitBtn;
     ConnBaseEdit: TEdit;
     ConnBaseLabel: TLabel;
@@ -194,11 +190,9 @@ type
     MainActionList: TActionList;
     MainMenu: TMainMenu;
     LogView: TMemo;
-    LeftPageControl: TPageControl;
     CenterPageControl: TPageControl;
     MainStatusBar: TStatusBar;
     MainToolBar: TToolBar;
-    LeftAllSheet: TTabSheet;
     ConnectTabSheet: TTabSheet;
     ConnScrollBox: TScrollBox;
     ActionPanel: TPanel;
@@ -218,6 +212,7 @@ type
       Column: TColumnIndex; Shift: TShiftState);
     procedure BuildingPropsTabSheetShow(Sender: TObject);
     procedure BuildingServicesTabSheetShow(Sender: TObject);
+    procedure BuildingsListDblClick(Sender: TObject);
     procedure BuildingsListFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
     procedure BuildingTabSheetShow(Sender: TObject);
@@ -227,14 +222,20 @@ type
     procedure DataSetInsertExecute(Sender: TObject);
     procedure DBPopupMenuPopup(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure LeftTabsMouseLeave(Sender: TObject);
+    procedure LeftTabsMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
     procedure MainTabSheetShow(Sender: TObject);
     procedure MainTreeDblClick(Sender: TObject);
+    procedure OpenPage(aName, aCaption: String);
+    procedure OpenPage(aName: String);
     procedure RefreshControl(C:String);
     procedure RefreshPersonNote(ids: String);
     procedure SaveWorkDate(aDate: TDateTime);
     procedure ServiceCompaniesVSTDblClick(Sender: TObject);
     procedure ServiceCompaniesVSTFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
+    procedure ServicesListDblClick(Sender: TObject);
     procedure ServicesListFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
     procedure ServicesWorksListFocusChanged(Sender: TBaseVirtualTree;
@@ -358,14 +359,22 @@ begin
   BuildingContractWorksVST.ReFill;
 end;
 
+procedure TMainForm.BuildingsListDblClick(Sender: TObject);
+begin
+  OpenPage('BuildingTabSheet');
+end;
+
 
 
 procedure TMainForm.BuildingsListFocusChanged(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Column: TColumnIndex);
 begin
   if (not Conn.Connected) then exit;
+  TabSheet2.Caption:=IntToStr(BuildingsList.SelectedCount);
+//  if not BuildingTabSheet.TabVisible then exit;
   MakeVSTLabelCaption(BuildingsList, BuildingsLabel);
-  BuildingPageControl.ActivePage.OnShow(Sender);
+  if not Assigned(CenterPageControl.ActivePage) then exit;
+  CenterPageControl.ActivePage.OnShow(Sender);
 end;
 
 procedure TMainForm.BuildingTabSheetShow(Sender: TObject);
@@ -424,6 +433,19 @@ begin
   CheckConnected();
 end;
 
+procedure TMainForm.LeftTabsMouseLeave(Sender: TObject);
+begin
+  MainSplitter.Position := LeftTabs.Width - LeftDateTabSheet.Width;
+end;
+
+procedure TMainForm.LeftTabsMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  if LeftDateTabSheet.Width < 3 then
+    MainSplitter.Position := 300;
+end;
+
+
 procedure TMainForm.MainTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
@@ -454,16 +476,30 @@ end;
 procedure TMainForm.MainTreeDblClick(Sender: TObject);
 var
   xName: String;
-  xComponent: TComponent;
 begin
   if not Conn.Connected then exit;
   xName:=ReturnStringSQL(Conn, 'select mode from app.maintree where id = '
     + MainTree.GetSQLSelectedID(sqlStringQuote)) + 'TabSheet';
-  xComponent:=CenterPageControl.FindChildControl(xName);
+  OpenPage(xName, ReturnStringSQL(Conn, 'select disp from app.maintree where id = '
+    + MainTree.GetSQLSelectedID(sqlStringQuote)));
+end;
+
+procedure TMainForm.OpenPage(aName, aCaption: String);
+var
+  xComponent: TComponent;
+begin
+  xComponent:=CenterPageControl.FindChildControl(aName);
   if not Assigned(xComponent) then exit;
   if not xComponent.ClassNameIs('TTabSheet') then exit;
   (xComponent as TTabSheet).TabVisible:=True;
+  if length(aCaption) > 0 then
+    (xComponent as TTabSheet).Caption:=aCaption;
   CenterPageControl.ActivePage:=(xComponent as TTabSheet);
+end;
+
+procedure TMainForm.OpenPage(aName: String);
+begin
+  OpenPage(aName, '');
 end;
 
 
@@ -503,6 +539,7 @@ begin
 //    Log('Расчётная дата: ' + DateToStr(aDate));
   end;
   WorkDateEdit.Date:=StrToDate(ReturnStringSQL(Conn, 'select work_date()'));
+  LeftDateTabSheet.Caption:=FormatDateTime('d.m',WorkDateEdit.Date);
 end;
 
 procedure TMainForm.ServiceCompaniesVSTDblClick(Sender: TObject);
@@ -518,11 +555,20 @@ begin
   BuildingContractWorksVST.ReFill;
 end;
 
+procedure TMainForm.ServicesListDblClick(Sender: TObject);
+begin
+  OpenPage('ServiceTabSheet');
+end;
+
 procedure TMainForm.ServicesListFocusChanged(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Column: TColumnIndex);
 begin
+  if (not Conn.Connected) then exit;
+  TabSheet3.Caption:=IntToStr(ServicesList.SelectedCount);
+//  if not ServiceTabSheet.TabVisible then exit;
   MakeVSTLabelCaption(ServicesList, ServiceLabel);
-  ServicePageControl.ActivePage.OnShow(Sender);
+  if not Assigned(CenterPageControl.ActivePage) then exit;
+  CenterPageControl.ActivePage.OnShow(Sender);
 end;
 
 procedure TMainForm.ServicesWorksListFocusChanged(Sender: TBaseVirtualTree;
@@ -542,9 +588,7 @@ end;
 procedure TMainForm.BuildingPersonnelTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
-//  if Assigned(BuildingPersonnel.GetFirst()) then exit;
   if not Assigned(BuildingPersonnel.GetFirst()) then begin
-//     Log('...получение справочника персонала');
      BuildingPersonnel.ReFill;
   end;
   BuildingPersonnelVST.ReFill;
@@ -717,17 +761,19 @@ begin
   Log('Подключено');
   ConnectTabSheet.TabVisible:=False;
 
-
   SaveWorkDate(TDateTime(0));
-  Panel11.Enabled:=True;
-
   MainTreeFill;
-  LeftRollOut.Collapsed:=False;
+  Log('Получение справочника домов...');
+  BuildingsList.ReFill();
+  Log('Получение справочника услуг...');
+  ServicesList.ReFill();
+  Log('Готово');
+
+  LeftTabs.ActivePageIndex:=0;
+  LeftTabs.Enabled:=True;
+  MainSplitter.Position:=300;
   BottomRollOut.Collapsed:=True;
-{
-  BuildingTabSheet.TabVisible:=True;
-  CenterPageControl.ActivePage:=BuildingTabSheet;
-}
+
   Cursor:=crDefault;
 end;
 
@@ -740,7 +786,8 @@ begin
     CenterPageControl.Pages[i].TabVisible:=False;
   ConnectTabSheet.TabVisible:=True;
   CenterPageControl.ActivePage:=ConnectTabSheet;
-  Panel11.Enabled:=false;
+  LeftTabs.Enabled:=false;
+  MainSplitter.Position:=0;
   BottomRollOut.Collapsed:=False;
 end;
 

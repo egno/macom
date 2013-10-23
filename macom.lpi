@@ -31,7 +31,7 @@
         <LaunchingApplication PathPlusParams="/usr/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="7">
+    <RequiredPackages Count="6">
       <Item1>
         <PackageName Value="virtualtreeview_package"/>
       </Item1>
@@ -48,11 +48,8 @@
         <PackageName Value="dbvcextended"/>
       </Item5>
       <Item6>
-        <PackageName Value="Pexpandpanels"/>
-      </Item6>
-      <Item7>
         <PackageName Value="LCL"/>
-      </Item7>
+      </Item6>
     </RequiredPackages>
     <Units Count="2">
       <Unit0>
@@ -94,7 +91,7 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="3">
+    <Exceptions Count="4">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -104,6 +101,9 @@
       <Item3>
         <Name Value="EFOpenError"/>
       </Item3>
+      <Item4>
+        <Name Value="EInterfaceCritical"/>
+      </Item4>
     </Exceptions>
   </Debugging>
 </CONFIG>
