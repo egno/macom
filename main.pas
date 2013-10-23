@@ -293,9 +293,15 @@ const
 procedure TMainForm.ActionConnectExecute(Sender: TObject);
 begin
   Cursor:=crHourGlass;
+  try
   DBConnect(Conn, ConnUserEdit.Text, ConnPwdEdit.Text,
               ConnHostEdit.Text, ConnPortEdit.Text,
               ConnBaseEdit.Text);
+  except
+    on E: Exception do begin
+      Log('Ошибка при подключении к базе данных: ' + E.Message);
+    end;
+  end;
   CheckConnected();
   Cursor:=crDefault;
 end;
@@ -442,7 +448,7 @@ end;
 procedure TMainForm.LeftTabsMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
-  if LeftDateTabSheet.Width < 3 then
+  if LeftDateTabSheet.Width < 5 then
     MainSplitter.Position := 300;
 end;
 
