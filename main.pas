@@ -40,6 +40,10 @@ type
   { TMainForm }
 
   TMainForm = class(TForm)
+    ServicesLabel: TLabel;
+    DateLabel: TLabel;
+    ShowServices: TAction;
+    ShowBuildings: TAction;
     ActionSave: TAction;
     ActionDisconnect: TAction;
     ActionConnect: TAction;
@@ -74,19 +78,20 @@ type
     PairSplitterSide17: TPairSplitterSide;
     PairSplitterSide2: TPairSplitterSide;
     Panel10: TPanel;
+    Panel11: TPanel;
     Panel8: TPanel;
     Panel9: TPanel;
     ScrollBox4: TScrollBox;
     TabSheet1: TTabSheet;
     MainBuildingsTabSheet: TTabSheet;
-    TabSheet3: TTabSheet;
-    LeftDateTabSheet: TTabSheet;
+    MainServicesTabSheet: TTabSheet;
+    MainDatesTabSheet: TTabSheet;
     BuildingServicesTabSheet: TTabSheet;
     BuildingPersonnelTabSheet: TTabSheet;
     BuildingWorksTabSheet: TTabSheet;
     WorkDateEdit: TDateEdit;
     WorkPeriodBeginEdit: TDateEdit;
-    WorkPeriodBeginEdit1: TDateEdit;
+    WorkPeriodEndEdit: TDateEdit;
     WorkVSTLabel: TLabel;
     ServiceWorks: TDBVST;
     Panel7: TPanel;
@@ -151,7 +156,6 @@ type
     WorkTabSheet: TTabSheet;
     BuildingMainTabSheet: TTabSheet;
     ScrollBox2: TScrollBox;
-    ServiceLabel: TLabel;
     Panel3: TPanel;
     Splitter2: TSplitter;
     BuildingTabSheet: TTabSheet;
@@ -203,6 +207,7 @@ type
     ToolButton2: TToolButton;
     procedure ActionConnectExecute(Sender: TObject);
     procedure ActionDisconnectExecute(Sender: TObject);
+    procedure BuildingLabelClick(Sender: TObject);
     procedure BuildingMainTabSheetShow(Sender: TObject);
     procedure BuildingPersonnelFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
@@ -217,11 +222,13 @@ type
       Node: PVirtualNode; Column: TColumnIndex);
     procedure BuildingTabSheetShow(Sender: TObject);
     procedure BuildingWorksTabSheetShow(Sender: TObject);
+    procedure CheckDepends(aControl: TControl);
     procedure CenterPageControlChange(Sender: TObject);
     procedure CenterPageControlCloseTabClicked(Sender: TObject);
-    procedure DataSave(Sender: TObject);
     procedure DataSetInsertExecute(Sender: TObject);
+    procedure DateLabelClick(Sender: TObject);
     procedure DBPopupMenuPopup(Sender: TObject);
+    procedure ForceSelect(aName: String);
     procedure FormShow(Sender: TObject);
     procedure LeftTabsMouseLeave(Sender: TObject);
     procedure LeftTabsMouseUp(Sender: TObject; Button: TMouseButton;
@@ -231,8 +238,16 @@ type
     procedure OpenPage(aName, aCaption: String);
     procedure OpenPage(aName: String);
     procedure RefreshControl(C:String);
+    procedure RefreshControlsBuildingsList(Sender: TObject);
+    procedure RefreshControlsServicesList(Sender: TObject);
     procedure RefreshPersonNote(ids: String);
     procedure SaveWorkDate(aDate: TDateTime);
+    procedure ServiceLabelClick(Sender: TObject);
+    procedure ShowBuildingsExecute(Sender: TObject);
+    procedure ShowMain();
+    procedure ShowDatesList();
+    procedure ShowBuildingsList();
+    procedure ShowServicesList();
     procedure ServiceCompaniesVSTDblClick(Sender: TObject);
     procedure ServiceCompaniesVSTFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
@@ -243,7 +258,9 @@ type
       Node: PVirtualNode; Column: TColumnIndex);
     procedure ServiceTabSheetShow(Sender: TObject);
     procedure BuildingPersonnelTabSheetShow(Sender: TObject);
+    procedure ShowServicesExecute(Sender: TObject);
     procedure SrvWorksTabSheetShow(Sender: TObject);
+    procedure TabSheetShow(Sender: TObject);
     procedure ToolButton3Click(Sender: TObject);
     procedure ToolButton4Click(Sender: TObject);
     procedure WorkAddBtnClick(Sender: TObject);
@@ -259,14 +276,13 @@ type
     procedure WorksTabSheetShow(Sender: TObject);
     procedure WorksTreeViewEnter(Sender: TObject);
     procedure WorkTabSheetShow(Sender: TObject);
-
   protected
   private
     procedure CheckConnected();
     procedure InitFormAfterConnect();
     procedure InitFormDisconnected();
     procedure Log(Note: String; Level: Integer = 0);
-    procedure MakeVSTLabelCaption(aVST: TDBVST; aLabel: TLabel);
+    procedure MakeVSTLabel(aVST: TDBVST; aLabel: TLabel; aPrefix: String = '');
     procedure MakeVSTNoteText(aVST: TDBVST; aMemo: TMemo);
     procedure MainTreeFill();
   public
@@ -309,6 +325,11 @@ procedure TMainForm.ActionDisconnectExecute(Sender: TObject);
 begin
   DBDisconnect(Conn);
   CheckConnected();
+end;
+
+procedure TMainForm.BuildingLabelClick(Sender: TObject);
+begin
+  ShowBuildingsList;
 end;
 
 procedure TMainForm.BuildingMainTabSheetShow(Sender: TObject);
@@ -361,6 +382,7 @@ end;
 procedure TMainForm.BuildingServicesTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
+  CheckDepends(Sender as TWinControl);
   ServiceCompaniesVST.ReFill;
   BuildingContractWorksVST.ReFill;
 end;
@@ -373,10 +395,7 @@ end;
 procedure TMainForm.BuildingsListFocusChanged(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Column: TColumnIndex);
 begin
-  if (not Conn.Connected) then exit;
-  MainBuildingsTabSheet.Caption:=IntToStr(BuildingsList.SelectedCount);
-  if not Assigned(CenterPageControl.ActivePage) then exit;
-  CenterPageControl.ActivePage.OnShow(Sender);
+  RefreshControlsBuildingsList(Sender);
 end;
 
 procedure TMainForm.BuildingTabSheetShow(Sender: TObject);
@@ -389,9 +408,42 @@ end;
 procedure TMainForm.BuildingWorksTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
+  CheckDepends(BuildingWorksTabSheet);
   BuildingWorkPeriodLabel.Caption:=ReturnStringSQL(Conn,
     'select to_char(work_date(),$$mm.yyyy$$)');
   BuildingWorkPlanFact.ReFill();
+end;
+
+procedure TMainForm.CheckDepends(aControl: TControl);
+var
+  i, j: Integer;
+  xComponent: TComponent;
+begin
+  if not Assigned(aControl) then exit;
+  case aControl.ClassName of
+    'TTabSheet','TPanel','TPageControl','TScrollBox','TPairSplitterSide',
+    'TPairSplitter','TDBVST': begin
+      case aControl.ClassName of
+        'TDBVST': with (aControl as TDBVST) do begin
+          for j:=0 to DBMasterControls.Count-1 do begin
+            xComponent:=Self.FindComponent(DBMasterControls.Strings[j]);
+            if not Assigned(xComponent) then break;
+            if not xComponent.ClassNameIs('TDBVST') then break;
+            if (xComponent as TDBVST).SelectedCount<1 then begin
+              ForceSelect(xComponent.Name);
+              xComponent:=nil;
+              exit;
+            end;
+            xComponent:=nil;
+          end;
+          ReFill;
+        end;
+      end;
+      for i:=0 to (aControl as TWinControl).ControlCount-1 do begin
+        CheckDepends((aControl as TWinControl).Controls[i]);
+      end;
+    end;
+  end;
 end;
 
 procedure TMainForm.CenterPageControlChange(Sender: TObject);
@@ -402,10 +454,6 @@ end;
 procedure TMainForm.CenterPageControlCloseTabClicked(Sender: TObject);
 begin
   (Sender as TTabSheet).TabVisible:=False;
-end;
-
-procedure TMainForm.DataSave(Sender: TObject);
-begin
 end;
 
 procedure TMainForm.DataSetInsertExecute(Sender: TObject);
@@ -425,13 +473,30 @@ begin
   end;
 end;
 
+procedure TMainForm.DateLabelClick(Sender: TObject);
+begin
+  ShowDatesList;
+end;
+
 procedure TMainForm.DBPopupMenuPopup(Sender: TObject);
 begin
   Log (ActiveControl.ClassName);
 //  DataSetInsert.Enabled := (ActiveControl.ClassName = 'DBVST');
 end;
 
-
+procedure TMainForm.ForceSelect(aName: String);
+begin
+  case aName of
+    'BuildingsList': begin
+      ShowBuildingsList;
+      Log('Необходимо выбрать здания');
+    end;
+    'ServicesList': begin
+      ShowServicesList;
+      Log('Необходимо выбрать услуги');
+    end;
+  end;
+end;
 
 procedure TMainForm.FormShow(Sender: TObject);
 begin
@@ -441,14 +506,13 @@ end;
 
 procedure TMainForm.LeftTabsMouseLeave(Sender: TObject);
 begin
-  MainSplitter.Position := LeftTabs.Width - LeftDateTabSheet.Width;
+  MainSplitter.Position := LeftTabs.Width - MainDatesTabSheet.Width;
 end;
 
 procedure TMainForm.LeftTabsMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
-  if LeftDateTabSheet.Width < 5 then
-    MainSplitter.Position := 300;
+  ShowMain;
 end;
 
 
@@ -521,6 +585,26 @@ begin
   (p as TControl).Cursor:=crSQLWait;
 end;
 
+procedure TMainForm.RefreshControlsBuildingsList(Sender: TObject);
+begin
+  if (not Conn.Connected) then exit;
+  MainBuildingsTabSheet.Caption:=IntToStr(BuildingsList.SelectedCount);
+  MakeVSTLabel(BuildingsList, BuildingsLabel, 'Здания: ');
+  if not Assigned(CenterPageControl.ActivePage) then exit;
+  CenterPageControl.ActivePage.OnShow(CenterPageControl.ActivePage);
+end;
+
+procedure TMainForm.RefreshControlsServicesList(Sender: TObject);
+begin
+
+  if (not Conn.Connected) then exit;
+  MainServicesTabSheet.Caption:=IntToStr(ServicesList.SelectedCount);
+
+  MakeVSTLabel(ServicesList, ServicesLabel,'Услуги: ');
+  if not Assigned(CenterPageControl.ActivePage) then exit;
+  CenterPageControl.ActivePage.OnShow(CenterPageControl.ActivePage);
+end;
+
 procedure TMainForm.RefreshPersonNote(ids: String);
 begin
   PersonNote.Clear;
@@ -545,7 +629,46 @@ begin
 //    Log('Расчётная дата: ' + DateToStr(aDate));
   end;
   WorkDateEdit.Date:=StrToDate(ReturnStringSQL(Conn, 'select work_date()'));
-  LeftDateTabSheet.Caption:=FormatDateTime('d.m',WorkDateEdit.Date);
+  MainDatesTabSheet.Caption:=FormatDateTime('d.m',WorkDateEdit.Date);
+  DateLabel.Caption:='РД: '+ FormatDateTime('dd.mm.yyyy',WorkDateEdit.Date)
+    + ' (' +FormatDateTime('dd.mm.yy',WorkPeriodBeginEdit.Date)
+    + '-' + FormatDateTime('dd.mm.yy',WorkPeriodEndEdit.Date) + ')';
+
+end;
+
+procedure TMainForm.ServiceLabelClick(Sender: TObject);
+begin
+  ShowServicesList;
+end;
+
+procedure TMainForm.ShowBuildingsExecute(Sender: TObject);
+begin
+  ShowBuildingsList;
+end;
+
+procedure TMainForm.ShowMain;
+begin
+  if MainDatesTabSheet.Width < 5 then
+  MainSplitter.Position := 300;
+  ActiveControl:=LeftTabs;
+end;
+
+procedure TMainForm.ShowDatesList;
+begin
+  ShowMain;
+  LeftTabs.ActivePage:=MainDatesTabSheet;
+end;
+
+procedure TMainForm.ShowBuildingsList;
+begin
+  ShowMain;
+  LeftTabs.ActivePage:=MainBuildingsTabSheet;
+end;
+
+procedure TMainForm.ShowServicesList;
+begin
+  ShowMain;
+  LeftTabs.ActivePage:=MainServicesTabSheet;
 end;
 
 procedure TMainForm.ServiceCompaniesVSTDblClick(Sender: TObject);
@@ -569,12 +692,7 @@ end;
 procedure TMainForm.ServicesListFocusChanged(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Column: TColumnIndex);
 begin
-  if (not Conn.Connected) then exit;
-  TabSheet3.Caption:=IntToStr(ServicesList.SelectedCount);
-//  if not ServiceTabSheet.TabVisible then exit;
-  MakeVSTLabelCaption(ServicesList, ServiceLabel);
-  if not Assigned(CenterPageControl.ActivePage) then exit;
-  CenterPageControl.ActivePage.OnShow(Sender);
+  RefreshControlsServicesList(Sender);
 end;
 
 procedure TMainForm.ServicesWorksListFocusChanged(Sender: TBaseVirtualTree;
@@ -597,7 +715,13 @@ begin
   if not Assigned(BuildingPersonnel.GetFirst()) then begin
      BuildingPersonnel.ReFill;
   end;
+  CheckDepends(Sender as TWinControl);
   BuildingPersonnelVST.ReFill;
+end;
+
+procedure TMainForm.ShowServicesExecute(Sender: TObject);
+begin
+  ShowServicesList;
 end;
 
 procedure TMainForm.SrvWorksTabSheetShow(Sender: TObject);
@@ -608,6 +732,12 @@ begin
     ServicesWorksList.ReFill;
   end;
   ServiceWorks.ReFill;
+end;
+
+procedure TMainForm.TabSheetShow(Sender: TObject);
+begin
+  if (not Conn.Connected) then exit;
+  CheckDepends(Sender as TWinControl);
 end;
 
 procedure TMainForm.ToolButton3Click(Sender: TObject);
@@ -725,7 +855,7 @@ end;
 procedure TMainForm.WorksListFocusChanged(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Column: TColumnIndex);
 begin
-  MakeVSTLabelCaption(WorksList, WorkVSTLabel);
+  MakeVSTLabel(WorksList, WorkVSTLabel);
   WorkPageControl.ActivePage.OnShow(Sender);
 end;
 
@@ -779,7 +909,8 @@ begin
   LeftTabs.Enabled:=True;
   MainSplitter.Position:=300;
   BottomRollOut.Collapsed:=True;
-
+  RefreshControlsBuildingsList(Self);
+  RefreshControlsServicesList(Self);
   Cursor:=crDefault;
 end;
 
@@ -790,6 +921,13 @@ begin
   Log('Отключено');
   for i:=0 to CenterPageControl.PageCount-1 do
     CenterPageControl.Pages[i].TabVisible:=False;
+
+  BuildingsList.Clear;
+  RefreshControlsBuildingsList(Self);
+
+  ServicesList.Clear;
+  RefreshControlsServicesList(Self);
+
   ConnectTabSheet.TabVisible:=True;
   CenterPageControl.ActivePage:=ConnectTabSheet;
   LeftTabs.Enabled:=false;
@@ -799,36 +937,27 @@ end;
 
 procedure TMainForm.Log(Note: String; Level: Integer);
 begin
-  if length(Note)>0 then
-    LogView.Lines.Append(DateTimeToStr(Now) + chr(9)+ Note);
-  LogView.SelStart:=Length(LogView.Text);
+  if length(Note)>0 then begin
+    LogView.Lines.Insert(0,'');
+    LogView.Lines.Insert(0,DateTimeToStr(Now) + chr(9)+ Note);
+  end;
+//  LogView.SelStart:=Length(LogView.Text);
   BottomRollOut.Collapsed:=False;
   Application.ProcessMessages();
 end;
 
-procedure TMainForm.MakeVSTLabelCaption(aVST: TDBVST; aLabel: TLabel);
+procedure TMainForm.MakeVSTLabel(aVST: TDBVST; aLabel: TLabel; aPrefix: String = '');
 begin
   if (not Conn.Connected) then exit;
-  if (aVST.SelectedCount > 0) then begin
-    aLabel.Caption:= ReturnStringSQL(Conn,
-      'select ' + aVST.DBFields[1] + '  from ' + aVST.DBTable + ' where ' + aVST.DBFields[0] + ' = '
-      + aVST.GetSQLSelectedID(sqlStringQuote)
-      );
-    aLabel.Font.Style:=aLabel.Font.Style-[fsBold];
-    if (aVST.SelectedCount > 1) then begin
-      aLabel.Caption:= '['
-        + ReturnStringSQL(Conn,
-        'select count(*)::text from ' + aVST.DBTable + ' where '
-        + aVST.DBFields[0] + ' in ('
-        + aVST.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
-        +')')
-        + '] '
-        + aLabel.Caption ;
-        aLabel.Font.Style:=aLabel.Font.Style+[fsBold];
-    end;
+  if aVST.SelectedCount>0 then begin
+    if aVST.SelectedCount > 1 then
+      aLabel.Caption:= aPrefix+'['+IntToStr(aVST.SelectedCount)+'] '
+        + aVST.Text[aVST.FocusedNode, 0]
+    else
+      aLabel.Caption:=aPrefix+aVST.Text[aVST.FocusedNode, 0];
   end
   else begin
-    aLabel.Caption:='';
+    aLabel.Caption:=aPrefix+dspNotAssigned;
   end;
 end;
 
