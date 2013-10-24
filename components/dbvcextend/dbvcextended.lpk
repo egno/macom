@@ -14,7 +14,7 @@
         <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
-    <Version Release="2"/>
+    <Version Release="3"/>
     <Files Count="5">
       <Item1>
         <Filename Value="dbfunc.pas"/>

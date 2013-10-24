@@ -29,7 +29,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  sqldb, extsqlquery, db, dbfunc,
+  sqldb, extsqlquery, db, dbfunc, pqconnection,
   VirtualTrees, VSTCombo;
 
 type
@@ -38,7 +38,7 @@ type
 
   TDBVMemo = class(TMemo)
   private
-    FConnection: TSQLConnection;
+    FConnection: TPQConnection;
     FDBField: String;
     FDBFieldConvFrom: String;
     FDBFieldConvTo: String;
@@ -46,7 +46,7 @@ type
     FLinkFields: TStrings;
     FMasterControls: TStrings;
     FWhere: String;
-    procedure SetConnection(AValue: TSQLConnection);
+    procedure SetConnection(AValue: TPQConnection);
     procedure SetDBField(AValue: String);
     procedure SetDBFieldConvFrom(AValue: String);
     procedure SetDBFieldConvTo(AValue: String);
@@ -56,6 +56,8 @@ type
     procedure SetWhere(AValue: String);
   public
     procedure ReFill();
+    constructor Create(TheOwner: TComponent); override;
+    destructor Destroy; override;
   published
     property DBTable: String read FDBTable write SetDBTable;
     property DBField: String read FDBField write SetDBField;
@@ -64,7 +66,7 @@ type
     property DBMasterControls: TStrings read FMasterControls write SetMasterControls;
     property DBLinkFields: TStrings read FLinkFields write SetLinkFields;
     property Where: String read FWhere write SetWhere;
-    property Connection: TSQLConnection read FConnection write SetConnection;
+    property Connection: TPQConnection read FConnection write SetConnection;
   end;
 
   { TDBVSTFilterEdit }
@@ -168,7 +170,9 @@ type
     property Connection: TSQLConnection read FConnection write SetConnection;
  end;
 
-procedure Register;
+  function FieldStringFrom(aField, aConvFrom: String):String;
+  function FieldStringTo(aVal, aConvTo: String):String;
+  procedure Register;
 
 implementation
 
@@ -176,14 +180,30 @@ const
      WrapWidth: Integer = 80;
      SearchDelimiter: String = ' ';
 
+function FieldStringFrom(aField, aConvFrom: String): String;
+begin
+  if length(aConvFrom) > 0 then
+    Result := aField+'::'+ aConvFrom
+  else
+    Result := aField;
+end;
+
+function FieldStringTo(aVal, aConvTo: String): String;
+begin
+  if length(aConvTo) > 0 then
+    Result := aVal+'::'+ aConvTo
+  else
+    Result := aVal;
+end;
+
 procedure Register;
 begin
-  RegisterComponents('Virtual Controls',[TDBVST]);
+  RegisterComponents('Virtual Controls',[TDBVST, TDBVMemo]);
 end;
 
 { TDBVMemo }
 
-procedure TDBVMemo.SetConnection(AValue: TSQLConnection);
+procedure TDBVMemo.SetConnection(AValue: TPQConnection);
 begin
   if FConnection=AValue then Exit;
   FConnection.Assign(AValue);
@@ -216,13 +236,15 @@ end;
 procedure TDBVMemo.SetLinkFields(AValue: TStrings);
 begin
   if FLinkFields=AValue then Exit;
-  FLinkFields.Assign(AValue);
+  if AValue<>nil then
+    FLinkFields.Assign(AValue);
 end;
 
 procedure TDBVMemo.SetMasterControls(AValue: TStrings);
 begin
   if FMasterControls=AValue then Exit;
-  FMasterControls.Assign(AValue);
+  if AValue<>nil then
+    FMasterControls.Assign(AValue);
 end;
 
 procedure TDBVMemo.SetWhere(AValue: String);
@@ -234,19 +256,51 @@ end;
 procedure TDBVMemo.ReFill;
 var
   xQuery: TExtSQLQuery;
+  ParentVST: TDBVST;
+  i: Integer;
 begin
   Clear;
   try
-    Query := TExtSQLQuery.Create(Self, FConnection);
-    Query.Open;
-    while not Query.Eof do begin
-      Self.Append(Query.Fields[0].AsString);
-      Query.Next;
+    xQuery := TExtSQLQuery.Create(Self, FConnection);
+    xQuery.SQL.Add(' select ' + DBField);
+    xQuery.SQL.Add(' from ' + DBTable);
+    xQuery.SQL.Add(' where true ');
+    for i:=0 to FMasterControls.Count-1 do begin
+      ParentVST:=(Owner.Owner.FindComponent(FMasterControls[i]) as TDBVST);
+      if ParentVST = nil then break;
+      xQuery.SQL.Add(' and ' + FLinkFields[i] + ' in ('
+        + ParentVST.GetSQLSelectedIDs('$$', ',') + ') ');
+    end;
+    xQuery.Open;
+    while not xQuery.Eof do begin
+      Self.Append(xQuery.Fields[0].AsString);
+      xQuery.Next;
     end;
   finally
-    Query.Free;
+    xQuery.Free;
   end;
 end;
+
+constructor TDBVMemo.Create(TheOwner: TComponent);
+begin
+  inherited Create(TheOwner);
+  FConnection:=TPQConnection.Create(Self);
+  FConnection.SetSubComponent(true);
+  FLinkFields:=TStringList.Create();
+  FMasterControls:=TStringList.Create();
+end;
+
+destructor TDBVMemo.Destroy;
+begin
+  FConnection.Free;
+  FConnection:=nil;
+  FLinkFields.Free;
+  FLinkFields:=nil;
+  FMasterControls.Free;
+  FMasterControls:=nil;
+  inherited Destroy;
+end;
+
 
 { TDBVSTFilterEdit }
 
@@ -294,6 +348,7 @@ Var
   isFound: Boolean;
 begin
   SearchList:=TStringList.Create;
+  if not Owner.ClassNameIs('TDBVST') then exit;
   with (Owner as TDBVST) do begin
     If GetFirst = nil then Exit;
     VSTNode:=nil;
@@ -322,6 +377,7 @@ begin
     Until VSTNode = GetLast();
     Refresh;
   end;
+  (Owner as TDBVST).ClearSelection;
   SearchList.Free;
   SearchList:=nil;
   VSTNode:=nil;
@@ -414,23 +470,13 @@ begin
 end;
 
 function TDBVST.GetSQLFieldStringFrom(i: Integer): String;
-var
-  res: String;
 begin
-  res:=FDBFields[i];
-  if FDBFieldsConvFrom[i] > '' then
-    res := res+'::'+ FDBFieldsConvFrom[i];
-  Result := res;
+  Result := FieldStringFrom(FDBFields[i], FDBFieldsConvFrom[i]);
 end;
 
 function TDBVST.GetSQLFieldStringTo(aVal: String; i: Integer): String;
-var
-  res: String;
 begin
-  res:=aVal;
-  if FFieldsConvTo[i] > '' then
-    res := res+'::'+ FFieldsConvTo[i];
-  Result := res;
+  Result := FieldStringTo(aVal, FFieldsConvTo[i]);
 end;
 
 procedure TDBVST.SetFocusById(newId: String);

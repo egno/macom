@@ -33,15 +33,23 @@ uses
   StdCtrls, ExtCtrls, Buttons, StdActns, DBGrids, pqconnection, fpjson,
   jsonparser, XMLConf, sqldb, db, dbfunc, Grids, CheckLst,
   DbCtrls, IniPropStorage, EditBtn, DBActns, Calendar, keyvalue, ExtSQLQuery,
-  DBVST, ExpandPanels, VirtualTrees;
+  DBVST, ExpandPanels, VirtualTrees, types;
 
 type
 
   { TMainForm }
 
   TMainForm = class(TForm)
-    ServicesLabel: TLabel;
-    DateLabel: TLabel;
+    DBVMemo1: TDBVMemo;
+    MenuSplitter: TPairSplitter;
+    PairSplitterSide3: TPairSplitterSide;
+    PairSplitterSide5: TPairSplitterSide;
+    Panel12: TPanel;
+    Panel13: TPanel;
+    Panel14: TPanel;
+    ServicesLabel: TToggleBox;
+    DateLabel: TToggleBox;
+    MenuLabel: TToggleBox;
     ShowServices: TAction;
     ShowBuildings: TAction;
     ActionSave: TAction;
@@ -58,7 +66,6 @@ type
     BuildingsList: TDBVST;
     BuildingsFilter: TEdit;
     BuildingPersonnel: TDBVST;
-    BuildingsLabel: TLabel;
     BuildingContractWorksVST: TDBVST;
     BuildingPersonnelVST: TDBVST;
     BuildingCalcPriceEdit: TEdit;
@@ -78,17 +85,21 @@ type
     PairSplitterSide17: TPairSplitterSide;
     PairSplitterSide2: TPairSplitterSide;
     Panel10: TPanel;
-    Panel11: TPanel;
+    ModesPanel: TPanel;
     Panel8: TPanel;
     Panel9: TPanel;
     ScrollBox4: TScrollBox;
-    TabSheet1: TTabSheet;
     MainBuildingsTabSheet: TTabSheet;
     MainServicesTabSheet: TTabSheet;
     MainDatesTabSheet: TTabSheet;
     BuildingServicesTabSheet: TTabSheet;
     BuildingPersonnelTabSheet: TTabSheet;
     BuildingWorksTabSheet: TTabSheet;
+    BuildingsLabel: TToggleBox;
+    StaticText1: TStaticText;
+    StaticText2: TStaticText;
+    StaticText3: TStaticText;
+    StaticText4: TStaticText;
     WorkDateEdit: TDateEdit;
     WorkPeriodBeginEdit: TDateEdit;
     WorkPeriodEndEdit: TDateEdit;
@@ -217,6 +228,10 @@ type
       Column: TColumnIndex; Shift: TShiftState);
     procedure BuildingPropsTabSheetShow(Sender: TObject);
     procedure BuildingServicesTabSheetShow(Sender: TObject);
+    procedure MainDatesTabSheetContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
+    procedure MainPanelClick(Sender: TObject);
+    procedure MainToggleClick(Sender: TObject);
     procedure BuildingsListDblClick(Sender: TObject);
     procedure BuildingsListFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
@@ -235,6 +250,8 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure MainTabSheetShow(Sender: TObject);
     procedure MainTreeDblClick(Sender: TObject);
+    procedure MenuLabelChange(Sender: TObject);
+    procedure MenuLabelClick(Sender: TObject);
     procedure OpenPage(aName, aCaption: String);
     procedure OpenPage(aName: String);
     procedure RefreshControl(C:String);
@@ -282,7 +299,7 @@ type
     procedure InitFormAfterConnect();
     procedure InitFormDisconnected();
     procedure Log(Note: String; Level: Integer = 0);
-    procedure MakeVSTLabel(aVST: TDBVST; aLabel: TLabel; aPrefix: String = '');
+    procedure MakeVSTLabel(aVST: TDBVST; aLabel: TToggleBox; aPrefix: String = '');
     procedure MakeVSTNoteText(aVST: TDBVST; aMemo: TMemo);
     procedure MainTreeFill();
   public
@@ -387,6 +404,32 @@ begin
   BuildingContractWorksVST.ReFill;
 end;
 
+procedure TMainForm.MainDatesTabSheetContextPopup(Sender: TObject;
+  MousePos: TPoint; var Handled: Boolean);
+begin
+
+end;
+
+procedure TMainForm.MainPanelClick(Sender: TObject);
+begin
+
+end;
+
+procedure TMainForm.MainToggleClick(Sender: TObject);
+begin
+  if not Sender.ClassNameIs('TTogglebox') then exit;
+  if not ((Sender as TTogglebox).Checked) then begin
+    MainSplitter.Position:=0;
+  end
+  else begin
+    case (Sender as TControl).Name of
+      'BuildingsLabel': ShowBuildingsList;
+      'ServicesLabel': ShowServicesList;
+      'DateLabel': ShowDatesList;
+    end;
+  end;
+end;
+
 procedure TMainForm.BuildingsListDblClick(Sender: TObject);
 begin
   OpenPage('BuildingTabSheet');
@@ -422,9 +465,23 @@ begin
   if not Assigned(aControl) then exit;
   case aControl.ClassName of
     'TTabSheet','TPanel','TPageControl','TScrollBox','TPairSplitterSide',
-    'TPairSplitter','TDBVST': begin
+    'TPairSplitter','TDBVST', 'TDBVMemo': begin
       case aControl.ClassName of
         'TDBVST': with (aControl as TDBVST) do begin
+          for j:=0 to DBMasterControls.Count-1 do begin
+            xComponent:=Self.FindComponent(DBMasterControls.Strings[j]);
+            if not Assigned(xComponent) then break;
+            if not xComponent.ClassNameIs('TDBVST') then break;
+            if (xComponent as TDBVST).SelectedCount<1 then begin
+              ForceSelect(xComponent.Name);
+              xComponent:=nil;
+              exit;
+            end;
+            xComponent:=nil;
+          end;
+          ReFill;
+        end;
+        'TDBVMemo': with (aControl as TDBVMemo) do begin
           for j:=0 to DBMasterControls.Count-1 do begin
             xComponent:=Self.FindComponent(DBMasterControls.Strings[j]);
             if not Assigned(xComponent) then break;
@@ -554,6 +611,20 @@ begin
     + MainTree.GetSQLSelectedID(sqlStringQuote)));
 end;
 
+procedure TMainForm.MenuLabelChange(Sender: TObject);
+begin
+  if not Sender.ClassNameIs('TTogglebox') then exit;
+  if not ((Sender as TTogglebox).Checked) then
+    MenuSplitter.Position:=0
+  else
+    MenuSplitter.Position:=200;
+end;
+
+procedure TMainForm.MenuLabelClick(Sender: TObject);
+begin
+
+end;
+
 procedure TMainForm.OpenPage(aName, aCaption: String);
 var
   xComponent: TComponent;
@@ -655,18 +726,27 @@ end;
 
 procedure TMainForm.ShowDatesList;
 begin
+  DateLabel.Checked:=True;
+  BuildingsLabel.Checked:=False;
+  ServicesLabel.Checked:=False;
   ShowMain;
   LeftTabs.ActivePage:=MainDatesTabSheet;
 end;
 
 procedure TMainForm.ShowBuildingsList;
 begin
+  DateLabel.Checked:=False;
+  BuildingsLabel.Checked:=True;
+  ServicesLabel.Checked:=False;
   ShowMain;
   LeftTabs.ActivePage:=MainBuildingsTabSheet;
 end;
 
 procedure TMainForm.ShowServicesList;
 begin
+  DateLabel.Checked:=False;
+  BuildingsLabel.Checked:=False;
+  ServicesLabel.Checked:=True;
   ShowMain;
   LeftTabs.ActivePage:=MainServicesTabSheet;
 end;
@@ -855,7 +935,7 @@ end;
 procedure TMainForm.WorksListFocusChanged(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Column: TColumnIndex);
 begin
-  MakeVSTLabel(WorksList, WorkVSTLabel);
+//  MakeVSTLabel(WorksList, WorkVSTLabel);
   WorkPageControl.ActivePage.OnShow(Sender);
 end;
 
@@ -905,13 +985,19 @@ begin
   ServicesList.ReFill();
   Log('Готово');
 
-  LeftTabs.ActivePageIndex:=0;
+  ModesPanel.Visible:=True;
+  MenuLabel.Checked:=True;
+
   LeftTabs.Enabled:=True;
-  MainSplitter.Position:=300;
+  DateLabel.Checked:=True;
+
   BottomRollOut.Collapsed:=True;
   RefreshControlsBuildingsList(Self);
   RefreshControlsServicesList(Self);
   Cursor:=crDefault;
+
+  DBVMemo1.Connection:=Conn;
+
 end;
 
 procedure TMainForm.InitFormDisconnected;
@@ -921,6 +1007,10 @@ begin
   Log('Отключено');
   for i:=0 to CenterPageControl.PageCount-1 do
     CenterPageControl.Pages[i].TabVisible:=False;
+
+  ModesPanel.Visible:=False;
+  MenuLabel.Checked:=False;
+  MenuSplitter.Position:=0;
 
   BuildingsList.Clear;
   RefreshControlsBuildingsList(Self);
@@ -946,7 +1036,7 @@ begin
   Application.ProcessMessages();
 end;
 
-procedure TMainForm.MakeVSTLabel(aVST: TDBVST; aLabel: TLabel; aPrefix: String = '');
+procedure TMainForm.MakeVSTLabel(aVST: TDBVST; aLabel: TToggleBox; aPrefix: String = '');
 begin
   if (not Conn.Connected) then exit;
   if aVST.SelectedCount>0 then begin
