@@ -46,6 +46,7 @@ type
     FLinkFields: TStrings;
     FMasterControls: TStrings;
     FWhere: String;
+    FText: String;
     procedure SetConnection(AValue: TPQConnection);
     procedure SetDBField(AValue: String);
     procedure SetDBFieldConvFrom(AValue: String);
@@ -54,8 +55,11 @@ type
     procedure SetLinkFields(AValue: TStrings);
     procedure SetMasterControls(AValue: TStrings);
     procedure SetWhere(AValue: String);
+  protected
+    procedure OnExitExecute(Sender: TObject);
   public
     procedure ReFill();
+    procedure Save();
     constructor Create(TheOwner: TComponent); override;
     destructor Destroy; override;
   published
@@ -72,6 +76,8 @@ type
 
   { TDBVTEdit }
 
+  { TDBVEdit }
+
   TDBVEdit = class(TEdit)
   private
     FConnection: TPQConnection;
@@ -82,6 +88,7 @@ type
     FLinkFields: TStrings;
     FMasterControls: TStrings;
     FWhere: String;
+    FText: String;
     procedure SetConnection(AValue: TPQConnection);
     procedure SetDBField(AValue: String);
     procedure SetDBFieldConvFrom(AValue: String);
@@ -90,8 +97,11 @@ type
     procedure SetLinkFields(AValue: TStrings);
     procedure SetMasterControls(AValue: TStrings);
     procedure SetWhere(AValue: String);
+  protected
+    procedure OnExitExecute(Sender: TObject);
   public
     procedure ReFill();
+    procedure Save();
     constructor Create(TheOwner: TComponent); override;
     destructor Destroy; override;
   published
@@ -216,6 +226,8 @@ implementation
 const
      WrapWidth: Integer = 80;
      SearchDelimiter: String = ' ';
+     sqlStringQuote = '$$';
+     sqlFieldDelimiter = ',';
 
 function FieldStringFrom(aField, aConvFrom: String): String;
 begin
@@ -290,6 +302,12 @@ begin
   FWhere:=AValue;
 end;
 
+procedure TDBVMemo.OnExitExecute(Sender: TObject);
+begin
+  if not (FText = Text) then
+    Save;
+end;
+
 procedure TDBVMemo.ReFill;
 var
   xQuery: TExtSQLQuery;
@@ -299,7 +317,7 @@ begin
   Clear;
   try
     xQuery := TExtSQLQuery.Create(Self, FConnection);
-    xQuery.SQL.Add(' select ' + DBField);
+    xQuery.SQL.Add(' select ' + FieldStringFrom(DBField, DBFieldConvFrom));
     xQuery.SQL.Add(' from ' + DBTable);
     xQuery.SQL.Add(' where true ');
     for i:=0 to FMasterControls.Count-1 do begin
@@ -308,11 +326,37 @@ begin
       xQuery.SQL.Add(' and ' + FLinkFields[i] + ' in ('
         + ParentVST.GetSQLSelectedIDs('$$', ',') + ') ');
     end;
+//    xQuery.SQL.Add(' group by ' + DBField);
     xQuery.Open;
     while not xQuery.Eof do begin
       Self.Append(xQuery.Fields[0].AsString);
       xQuery.Next;
     end;
+    FText:=Text;
+  finally
+    xQuery.Free;
+  end;
+end;
+
+procedure TDBVMemo.Save;
+var
+  xQuery: TExtSQLQuery;
+  ParentVST: TDBVST;
+  i: Integer;
+begin
+  try
+    xQuery := TExtSQLQuery.Create(Self, FConnection);
+    xQuery.SQL.Add(' update ' + DBTable);
+    xQuery.SQL.Add(' set ' + DBField + '='
+      + FieldStringTo(sqlStringQuote+trim(Text)+sqlStringQuote, DBFieldConvTo));
+    xQuery.SQL.Add(' where true ');
+    for i:=0 to FMasterControls.Count-1 do begin
+      ParentVST:=(Owner.FindComponent(FMasterControls[i]) as TDBVST);
+      if ParentVST = nil then break;
+      xQuery.SQL.Add(' and ' + FLinkFields[i] + ' in ('
+        + ParentVST.GetSQLSelectedIDs('$$', ',') + ') ');
+    end;
+    xQuery.ExecSQL;
   finally
     xQuery.Free;
   end;
@@ -325,6 +369,7 @@ begin
   FConnection.SetSubComponent(true);
   FLinkFields:=TStringList.Create();
   FMasterControls:=TStringList.Create();
+  OnExit:=@OnExitExecute;
 end;
 
 destructor TDBVMemo.Destroy;
@@ -389,6 +434,12 @@ begin
   FWhere:=AValue;
 end;
 
+procedure TDBVEdit.OnExitExecute(Sender: TObject);
+begin
+  if not (FText = Text) then
+    Save;
+end;
+
 procedure TDBVEdit.ReFill;
 var
   xQuery: TExtSQLQuery;
@@ -398,7 +449,7 @@ begin
   Clear;
   try
     xQuery := TExtSQLQuery.Create(Self, FConnection);
-    xQuery.SQL.Add(' select ' + DBField);
+    xQuery.SQL.Add(' select ' + FieldStringFrom(DBField, DBFieldConvFrom));
     xQuery.SQL.Add(' from ' + DBTable);
     xQuery.SQL.Add(' where true ');
     for i:=0 to FMasterControls.Count-1 do begin
@@ -407,11 +458,38 @@ begin
       xQuery.SQL.Add(' and ' + FLinkFields[i] + ' in ('
         + ParentVST.GetSQLSelectedIDs('$$', ',') + ') ');
     end;
+//    xQuery.SQL.Add(' group by ' + DBField);
     xQuery.Open;
     while not xQuery.Eof do begin
-      Self.Text:=Self.Text+' '+(xQuery.Fields[0].AsString);
+      if Self.Text > '' then Self.Text:=Self.Text+', ';
+      Self.Text:=Self.Text+(xQuery.Fields[0].AsString);
       xQuery.Next;
     end;
+    FText:=Self.Text;
+  finally
+    xQuery.Free;
+  end;
+end;
+
+procedure TDBVEdit.Save;
+var
+  xQuery: TExtSQLQuery;
+  ParentVST: TDBVST;
+  i: Integer;
+begin
+  try
+    xQuery := TExtSQLQuery.Create(Self, FConnection);
+    xQuery.SQL.Add(' update ' + DBTable);
+    xQuery.SQL.Add(' set ' + DBField + '='
+      + FieldStringTo(sqlStringQuote+trim(Text)+sqlStringQuote, DBFieldConvTo));
+    xQuery.SQL.Add(' where true ');
+    for i:=0 to FMasterControls.Count-1 do begin
+      ParentVST:=(Owner.FindComponent(FMasterControls[i]) as TDBVST);
+      if ParentVST = nil then break;
+      xQuery.SQL.Add(' and ' + FLinkFields[i] + ' in ('
+        + ParentVST.GetSQLSelectedIDs('$$', ',') + ') ');
+    end;
+    xQuery.ExecSQL;
   finally
     xQuery.Free;
   end;
@@ -424,6 +502,7 @@ begin
   FConnection.SetSubComponent(true);
   FLinkFields:=TStringList.Create();
   FMasterControls:=TStringList.Create();
+  OnExit:=@OnExitExecute;
 end;
 
 destructor TDBVEdit.Destroy;

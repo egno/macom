@@ -40,14 +40,35 @@ type
   { TMainForm }
 
   TMainForm = class(TForm)
-    DBVEdit1: TDBVEdit;
+    DBVEdit2: TDBVEdit;
+    DBVEdit3: TDBVEdit;
+    DBVEdit4: TDBVEdit;
+    DBVEdit5: TDBVEdit;
+    DBVEdit6: TDBVEdit;
+    DBVEdit7: TDBVEdit;
+    DBVEdit8: TDBVEdit;
     DBVMemo1: TDBVMemo;
+    DBVMemo2: TDBVMemo;
+    DBVMemo4: TDBVMemo;
+    DBVMemo5: TDBVMemo;
+    DBVST1: TDBVST;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label19: TLabel;
+    Label20: TLabel;
+    Label8: TLabel;
     MenuSplitter: TPairSplitter;
     PairSplitterSide3: TPairSplitterSide;
     PairSplitterSide5: TPairSplitterSide;
+    Panel11: TPanel;
     Panel12: TPanel;
     Panel13: TPanel;
     Panel14: TPanel;
+    Panel15: TPanel;
+    Panel16: TPanel;
+    Panel17: TPanel;
+    ScrollBox5: TScrollBox;
+    ScrollBox6: TScrollBox;
     ServicesLabel: TToggleBox;
     DateLabel: TToggleBox;
     MenuLabel: TToggleBox;
@@ -56,9 +77,7 @@ type
     ActionSave: TAction;
     ActionDisconnect: TAction;
     ActionConnect: TAction;
-    ActionPanel1: TPanel;
     ActPanel1: TPanel;
-    BaseCB: TComboBox;
     BuildingPropertiesVST: TDBVST;
     DataSetDelete: TDataSetDelete;
     DataSetEdit: TDataSetEdit;
@@ -76,7 +95,6 @@ type
     Label14: TLabel;
     BuildingWorkPeriodLabel: TLabel;
     MainTree: TDBVST;
-    Label11: TLabel;
     BottomRollOut: TMyRollOut;
     PairSplitter6: TPairSplitter;
     MainSplitter: TPairSplitter;
@@ -96,10 +114,17 @@ type
     BuildingPersonnelTabSheet: TTabSheet;
     BuildingWorksTabSheet: TTabSheet;
     BuildingsLabel: TToggleBox;
+    SpeedButton1: TSpeedButton;
+    SpeedButton4: TSpeedButton;
+    SpeedButton5: TSpeedButton;
+    SpeedButton6: TSpeedButton;
     StaticText1: TStaticText;
     StaticText2: TStaticText;
     StaticText3: TStaticText;
     StaticText4: TStaticText;
+    StaticText5: TStaticText;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
     WorkDateEdit: TDateEdit;
     WorkPeriodBeginEdit: TDateEdit;
     WorkPeriodEndEdit: TDateEdit;
@@ -118,7 +143,6 @@ type
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
-    Label8: TLabel;
     Label9: TLabel;
     MenuItem5: TMenuItem;
     MenuItem6: TMenuItem;
@@ -135,10 +159,7 @@ type
     PersAddBtn: TBitBtn;
     WorkDelAllBtn1: TBitBtn;
     PersDelBtn: TBitBtn;
-    WorkNameEdit: TMemo;
     WorkLabel: TLabel;
-    WorkCondEdit: TMemo;
-    WorkNote: TMemo;
     WorkPageControl: TPageControl;
     PairSplitter3: TPairSplitter;
     PairSplitter4: TPairSplitter;
@@ -147,8 +168,6 @@ type
     PairSplitterSide12: TPairSplitterSide;
     PairSplitterSide13: TPairSplitterSide;
     Panel1: TPanel;
-    WorkCodeEdit: TEdit;
-    WorkFactorEdit: TEdit;
     WorkResourcesVST: TDBVST;
     ServicesWorkNote: TMemo;
     PairSplitter2: TPairSplitter;
@@ -157,11 +176,7 @@ type
     BuildingBox: TGroupBox;
     MainIconList22: TImageList;
     BuildingPageControl: TPageControl;
-    PairSplitter1: TPairSplitter;
-    PairSplitterSide4: TPairSplitterSide;
-    PairSplitterSide7: TPairSplitterSide;
     ScrollBox3: TScrollBox;
-    ServiceCompaniesVST: TDBVST;
     MainTabSheet: TTabSheet;
     WorkTabSheet: TTabSheet;
     BuildingMainTabSheet: TTabSheet;
@@ -174,14 +189,12 @@ type
     WorkAddAllBtn: TBitBtn;
     WorkDelBtn: TBitBtn;
     WorkDelAllBtn: TBitBtn;
-    SrvMainSaveBtn: TBitBtn;
     ConnPortEdit: TEdit;
     ConnPortLabel: TLabel;
     ConnBtn: TBitBtn;
     Label2: TLabel;
     Label3: TLabel;
     ActPanel: TPanel;
-    SrvNameEdit: TEdit;
     FileExit: TFileExit;
     Label1: TLabel;
     MenuItem1: TMenuItem;
@@ -227,6 +240,9 @@ type
       Column: TColumnIndex; Shift: TShiftState);
     procedure BuildingPropsTabSheetShow(Sender: TObject);
     procedure BuildingServicesTabSheetShow(Sender: TObject);
+    procedure DBVEdit5Exit(Sender: TObject);
+    procedure DBVEdit8Change(Sender: TObject);
+    procedure Label17Click(Sender: TObject);
     procedure MainDatesTabSheetContextPopup(Sender: TObject; MousePos: TPoint;
       var Handled: Boolean);
     procedure MainPanelClick(Sender: TObject);
@@ -263,6 +279,7 @@ type
     procedure ShowMain();
     procedure ShowDatesList();
     procedure ShowBuildingsList();
+    procedure ShowPwdBtnClick(Sender: TObject);
     procedure ShowServicesList();
     procedure ServiceCompaniesVSTDblClick(Sender: TObject);
     procedure ServiceCompaniesVSTFocusChanged(Sender: TBaseVirtualTree;
@@ -275,6 +292,10 @@ type
     procedure ServiceTabSheetShow(Sender: TObject);
     procedure BuildingPersonnelTabSheetShow(Sender: TObject);
     procedure ShowServicesExecute(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure SpeedButton4Click(Sender: TObject);
+    procedure SpeedButton5Click(Sender: TObject);
+    procedure SpeedButton6Click(Sender: TObject);
     procedure SrvWorksTabSheetShow(Sender: TObject);
     procedure TabSheetShow(Sender: TObject);
     procedure ToolButton3Click(Sender: TObject);
@@ -383,8 +404,22 @@ procedure TMainForm.BuildingServicesTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
   CheckDepends(Sender as TWinControl);
-  ServiceCompaniesVST.ReFill;
   BuildingContractWorksVST.ReFill;
+end;
+
+procedure TMainForm.DBVEdit5Exit(Sender: TObject);
+begin
+
+end;
+
+procedure TMainForm.DBVEdit8Change(Sender: TObject);
+begin
+
+end;
+
+procedure TMainForm.Label17Click(Sender: TObject);
+begin
+
 end;
 
 procedure TMainForm.MainDatesTabSheetContextPopup(Sender: TObject;
@@ -573,28 +608,6 @@ end;
 procedure TMainForm.MainTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
-  if WorksList.GetSelectedID() = '' then exit;
-  WorkNameEdit.Text:=ReturnStringSQL(Conn,
-          'select disp from works where id = '
-          + WorksList.GetSQLSelectedID(sqlStringQuote)
-          );
-  WorkCodeEdit.Text:=ReturnStringSQL(Conn,
-          'select code::text from works where id = '
-          + WorksList.GetSQLSelectedID(sqlStringQuote)
-          );
-  BaseCB.Text:=ReturnStringSQL(Conn,
-          'select base::text from works where id = '
-          + WorksList.GetSQLSelectedID(sqlStringQuote)
-          );
-  WorkFactorEdit.Text:=ReturnStringSQL(Conn,
-          'select factor::text from works where id = '
-          + WorksList.GetSQLSelectedID(sqlStringQuote)
-          );
-  WorkCondEdit.Text:=ReturnStringSQL(Conn,
-          'select condition::text from works where id = '
-          + WorksList.GetSQLSelectedID(sqlStringQuote)
-          );
-  MakeVSTNoteText(WorksList, WorkNote);
 end;
 
 procedure TMainForm.MainTreeDblClick(Sender: TObject);
@@ -739,6 +752,11 @@ begin
   LeftTabs.ActivePage:=MainBuildingsTabSheet;
 end;
 
+procedure TMainForm.ShowPwdBtnClick(Sender: TObject);
+begin
+  ConnPwdEdit.EchoMode:=emNormal;
+end;
+
 procedure TMainForm.ShowServicesList;
 begin
   DateLabel.Checked:=False;
@@ -750,8 +768,6 @@ end;
 
 procedure TMainForm.ServiceCompaniesVSTDblClick(Sender: TObject);
 begin
-  ServiceCompaniesVST.EditNode(ServiceCompaniesVST.FocusedNode,
-    ServiceCompaniesVST.FocusedColumn);
 end;
 
 
@@ -799,6 +815,26 @@ end;
 procedure TMainForm.ShowServicesExecute(Sender: TObject);
 begin
   ShowServicesList;
+end;
+
+procedure TMainForm.SpeedButton1Click(Sender: TObject);
+begin
+  MenuLabel.Checked:=False;
+end;
+
+procedure TMainForm.SpeedButton4Click(Sender: TObject);
+begin
+  ServicesLabel.Checked:=False;
+end;
+
+procedure TMainForm.SpeedButton5Click(Sender: TObject);
+begin
+  BuildingsLabel.Checked:=False;
+end;
+
+procedure TMainForm.SpeedButton6Click(Sender: TObject);
+begin
+  DateLabel.Checked:=False;
 end;
 
 procedure TMainForm.SrvWorksTabSheetShow(Sender: TObject);
@@ -933,7 +969,8 @@ procedure TMainForm.WorksListFocusChanged(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Column: TColumnIndex);
 begin
 //  MakeVSTLabel(WorksList, WorkVSTLabel);
-  WorkPageControl.ActivePage.OnShow(Sender);
+  if not Assigned(WorkPageControl.ActivePage) then exit;
+  WorkPageControl.ActivePage.OnShow(WorkPageControl.ActivePage);
 end;
 
 procedure TMainForm.WorksTabSheetShow(Sender: TObject);
