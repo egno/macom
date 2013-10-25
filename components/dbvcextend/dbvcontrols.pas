@@ -1,108 +1,54 @@
-unit DBVST;
-
-{
-MaCom - Free/Libre Management Company Information System
-VirtualTrees mod
-
-Copyright (C) 2013 Alexandr Shelemetyev
-https://github.com/egno/macom
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see http://www.gnu.org/licenses/
-
-Текст лицензии на русском: http://rusgpl.ru/
-}
+unit DBVControls;
 
 {$mode objfpc}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  sqldb, extsqlquery, db, dbfunc, pqconnection,
-  VirtualTrees, VSTCombo;
+  Classes, SysUtils, Controls, Forms, sqldb, VirtualTrees, StdCtrls;
 
 type
 
-  { TDBVMemo }
+  { TDBVControl }
 
-  TDBVMemo = class(TMemo)
+  TDBVControl = class(TWinControl)
   private
-    FConnection: TPQConnection;
-    FDBField: String;
-    FDBFieldConvFrom: String;
-    FDBFieldConvTo: String;
-    FDBTable: String;
-    FLinkFields: TStrings;
-    FMasterControls: TStrings;
-    FWhere: String;
-    procedure SetConnection(AValue: TPQConnection);
-    procedure SetDBField(AValue: String);
-    procedure SetDBFieldConvFrom(AValue: String);
-    procedure SetDBFieldConvTo(AValue: String);
-    procedure SetDBTable(AValue: String);
-    procedure SetLinkFields(AValue: TStrings);
-    procedure SetMasterControls(AValue: TStrings);
-    procedure SetWhere(AValue: String);
+    FConnection: TSQLConnection;
+    FDBVFields: TStrings;
+    FDBVFieldsConvFrom: TStrings;
+    FDBVFieldsConvTo: TStrings;
+    FDBVLinkFields: TStrings;
+    FDBVMasterControls: TStrings;
+    FSQL: TStrings;
+    FDBVOrder: String;
+    FDBVTable: String;
+    FDBVWhere: String;
+    procedure SetConnection(AValue: TSQLConnection);
+    procedure SetDBVFields(AValue: TStrings);
+    procedure SetDBVFieldsConvFrom(AValue: TStrings);
+    procedure SetDBVFieldsConvTo(AValue: TStrings);
+    procedure SetDBVLinkFields(AValue: TStrings);
+    procedure SetDBVMasterControls(AValue: TStrings);
+    procedure SetDBVOrder(AValue: String);
+    procedure SetDBVTable(AValue: String);
+    procedure SetDBVWhere(AValue: String);
+    procedure MakeSQL();
   public
+    function GetFieldFrom(i: Integer): String;
+    function GetFieldTo(aVal: String; i: Integer): String;
     procedure ReFill();
     constructor Create(TheOwner: TComponent); override;
     destructor Destroy; override;
   published
-    property DBTable: String read FDBTable write SetDBTable;
-    property DBField: String read FDBField write SetDBField;
-    property DBFieldConvTo: String read FDBFieldConvTo write SetDBFieldConvTo;
-    property DBFieldConvFrom: String read FDBFieldConvFrom write SetDBFieldConvFrom;
-    property DBMasterControls: TStrings read FMasterControls write SetMasterControls;
-    property DBLinkFields: TStrings read FLinkFields write SetLinkFields;
-    property Where: String read FWhere write SetWhere;
-    property Connection: TPQConnection read FConnection write SetConnection;
-  end;
-
-
-  { TDBVTEdit }
-
-  TDBVEdit = class(TEdit)
-  private
-    FConnection: TPQConnection;
-    FDBField: String;
-    FDBFieldConvFrom: String;
-    FDBFieldConvTo: String;
-    FDBTable: String;
-    FLinkFields: TStrings;
-    FMasterControls: TStrings;
-    FWhere: String;
-    procedure SetConnection(AValue: TPQConnection);
-    procedure SetDBField(AValue: String);
-    procedure SetDBFieldConvFrom(AValue: String);
-    procedure SetDBFieldConvTo(AValue: String);
-    procedure SetDBTable(AValue: String);
-    procedure SetLinkFields(AValue: TStrings);
-    procedure SetMasterControls(AValue: TStrings);
-    procedure SetWhere(AValue: String);
-  public
-    procedure ReFill();
-    constructor Create(TheOwner: TComponent); override;
-    destructor Destroy; override;
-  published
-    property DBTable: String read FDBTable write SetDBTable;
-    property DBField: String read FDBField write SetDBField;
-    property DBFieldConvTo: String read FDBFieldConvTo write SetDBFieldConvTo;
-    property DBFieldConvFrom: String read FDBFieldConvFrom write SetDBFieldConvFrom;
-    property DBMasterControls: TStrings read FMasterControls write SetMasterControls;
-    property DBLinkFields: TStrings read FLinkFields write SetLinkFields;
-    property Where: String read FWhere write SetWhere;
-    property Connection: TPQConnection read FConnection write SetConnection;
+    property Connection: TSQLConnection read FConnection write SetConnection;
+    property DBVTable: String read FDBVTable write SetDBVTable;
+    property DBVFields: TStrings read FDBVFields write SetDBVFields;
+    property DBVFieldsConvTo: TStrings read FDBVFieldsConvTo write SetDBVFieldsConvTo;
+    property DBVFieldsConvFrom: TStrings read FDBVFieldsConvFrom write SetDBVFieldsConvFrom;
+    property DBVMasterControls: TStrings read FDBVMasterControls write SetDBVMasterControls;
+    property DBVLinkFields: TStrings read FDBVLinkFields write SetDBVLinkFields;
+    property DBVWhere: String read FDBVWhere write SetDBVWhere;
+    property DBVOrder: String read FDBVOrder write SetDBVOrder;
   end;
 
 
@@ -115,6 +61,7 @@ type
     constructor Create(TheOwner: TComponent); override;
     destructor Destroy; override;
   end;
+
 
   { TDBVST }
 
@@ -207,231 +154,173 @@ type
     property Connection: TSQLConnection read FConnection write SetConnection;
  end;
 
-  function FieldStringFrom(aField, aConvFrom: String):String;
-  function FieldStringTo(aVal, aConvTo: String):String;
+
+  function FieldString(aField, aConv: String):String;
+
   procedure Register;
+
 
 implementation
 
 const
-     WrapWidth: Integer = 80;
-     SearchDelimiter: String = ' ';
+  cSQLselect: String = 'select count(*) __cnt';
+  cSQLDlm: String = ', ';
+  cSQLQut: String = '$$';
+  SearchDelimiter: String = ' ';
 
-function FieldStringFrom(aField, aConvFrom: String): String;
+function FieldString(aField, aConv: String): String;
 begin
-  if length(aConvFrom) > 0 then
-    Result := aField+'::'+ aConvFrom
+  if length(aConv) > 0 then
+    Result := aField+'::'+ aConv
   else
     Result := aField;
 end;
 
-function FieldStringTo(aVal, aConvTo: String): String;
-begin
-  if length(aConvTo) > 0 then
-    Result := aVal+'::'+ aConvTo
-  else
-    Result := aVal;
-end;
-
 procedure Register;
 begin
-  RegisterComponents('Virtual Controls',[TDBVST, TDBVMemo, TDBVEdit]);
+  RegisterComponents('DB Virtual Controls',[TDBVST, TDBVMemo]);
 end;
 
-{ TDBVMemo }
 
-procedure TDBVMemo.SetConnection(AValue: TPQConnection);
+{ TDBVControl }
+
+procedure TDBVControl.SetConnection(AValue: TSQLConnection);
 begin
   if FConnection=AValue then Exit;
-  FConnection:=aValue;
+  FConnection:=AValue;
 end;
 
-procedure TDBVMemo.SetDBField(AValue: String);
+procedure TDBVControl.SetDBVFields(AValue: TStrings);
 begin
-  if FDBField=AValue then Exit;
-  FDBField:=AValue;
-end;
-
-procedure TDBVMemo.SetDBFieldConvFrom(AValue: String);
-begin
-  if FDBFieldConvFrom=AValue then Exit;
-  FDBFieldConvFrom:=AValue;
-end;
-
-procedure TDBVMemo.SetDBFieldConvTo(AValue: String);
-begin
-  if FDBFieldConvTo=AValue then Exit;
-  FDBFieldConvTo:=AValue;
-end;
-
-procedure TDBVMemo.SetDBTable(AValue: String);
-begin
-  if FDBTable=AValue then Exit;
-  FDBTable:=AValue;
-end;
-
-procedure TDBVMemo.SetLinkFields(AValue: TStrings);
-begin
-  if FLinkFields=AValue then Exit;
-  if AValue<>nil then
-    FLinkFields.Assign(AValue);
-end;
-
-procedure TDBVMemo.SetMasterControls(AValue: TStrings);
-begin
-  if FMasterControls=AValue then Exit;
-  if AValue<>nil then
-    FMasterControls.Assign(AValue);
-end;
-
-procedure TDBVMemo.SetWhere(AValue: String);
-begin
-  if FWhere=AValue then Exit;
-  FWhere:=AValue;
-end;
-
-procedure TDBVMemo.ReFill;
-var
-  xQuery: TExtSQLQuery;
-  ParentVST: TDBVST;
-  i: Integer;
-begin
-  Clear;
-  try
-    xQuery := TExtSQLQuery.Create(Self, FConnection);
-    xQuery.SQL.Add(' select ' + DBField);
-    xQuery.SQL.Add(' from ' + DBTable);
-    xQuery.SQL.Add(' where true ');
-    for i:=0 to FMasterControls.Count-1 do begin
-      ParentVST:=(Owner.FindComponent(FMasterControls[i]) as TDBVST);
-      if ParentVST = nil then break;
-      xQuery.SQL.Add(' and ' + FLinkFields[i] + ' in ('
-        + ParentVST.GetSQLSelectedIDs('$$', ',') + ') ');
-    end;
-    xQuery.Open;
-    while not xQuery.Eof do begin
-      Self.Append(xQuery.Fields[0].AsString);
-      xQuery.Next;
-    end;
-  finally
-    xQuery.Free;
+  if FDBVFields=AValue then Exit;
+  if AValue<>nil then begin
+    FDBVFields.Assign(AValue);
+    MakeSQL;
   end;
 end;
 
-constructor TDBVMemo.Create(TheOwner: TComponent);
+procedure TDBVControl.SetDBVFieldsConvFrom(AValue: TStrings);
 begin
-  inherited Create(TheOwner);
-  FConnection:=TPQConnection.Create(Self);
-  FConnection.SetSubComponent(true);
-  FLinkFields:=TStringList.Create();
-  FMasterControls:=TStringList.Create();
-end;
-
-destructor TDBVMemo.Destroy;
-begin
-  FLinkFields.Free;
-  FLinkFields:=nil;
-  FMasterControls.Free;
-  FMasterControls:=nil;
-  inherited Destroy;
-end;
-
-
-{ TDBVEdit }
-
-procedure TDBVEdit.SetConnection(AValue: TPQConnection);
-begin
-  if FConnection=AValue then Exit;
-  FConnection:=aValue;
-end;
-
-procedure TDBVEdit.SetDBField(AValue: String);
-begin
-  if FDBField=AValue then Exit;
-  FDBField:=AValue;
-end;
-
-procedure TDBVEdit.SetDBFieldConvFrom(AValue: String);
-begin
-  if FDBFieldConvFrom=AValue then Exit;
-  FDBFieldConvFrom:=AValue;
-end;
-
-procedure TDBVEdit.SetDBFieldConvTo(AValue: String);
-begin
-  if FDBFieldConvTo=AValue then Exit;
-  FDBFieldConvTo:=AValue;
-end;
-
-procedure TDBVEdit.SetDBTable(AValue: String);
-begin
-  if FDBTable=AValue then Exit;
-  FDBTable:=AValue;
-end;
-
-procedure TDBVEdit.SetLinkFields(AValue: TStrings);
-begin
-  if FLinkFields=AValue then Exit;
-  if AValue<>nil then
-    FLinkFields.Assign(AValue);
-end;
-
-procedure TDBVEdit.SetMasterControls(AValue: TStrings);
-begin
-  if FMasterControls=AValue then Exit;
-  if AValue<>nil then
-    FMasterControls.Assign(AValue);
-end;
-
-procedure TDBVEdit.SetWhere(AValue: String);
-begin
-  if FWhere=AValue then Exit;
-  FWhere:=AValue;
-end;
-
-procedure TDBVEdit.ReFill;
-var
-  xQuery: TExtSQLQuery;
-  ParentVST: TDBVST;
-  i: Integer;
-begin
-  Clear;
-  try
-    xQuery := TExtSQLQuery.Create(Self, FConnection);
-    xQuery.SQL.Add(' select ' + DBField);
-    xQuery.SQL.Add(' from ' + DBTable);
-    xQuery.SQL.Add(' where true ');
-    for i:=0 to FMasterControls.Count-1 do begin
-      ParentVST:=(Owner.FindComponent(FMasterControls[i]) as TDBVST);
-      if ParentVST = nil then break;
-      xQuery.SQL.Add(' and ' + FLinkFields[i] + ' in ('
-        + ParentVST.GetSQLSelectedIDs('$$', ',') + ') ');
-    end;
-    xQuery.Open;
-    while not xQuery.Eof do begin
-      Self.Text:=Self.Text+' '+(xQuery.Fields[0].AsString);
-      xQuery.Next;
-    end;
-  finally
-    xQuery.Free;
+  if FDBVFieldsConvFrom=AValue then Exit;
+  if AValue<>nil then begin
+     FDBVFieldsConvFrom.Assign(AValue);
+     MakeSQL;
   end;
 end;
 
-constructor TDBVEdit.Create(TheOwner: TComponent);
+procedure TDBVControl.SetDBVFieldsConvTo(AValue: TStrings);
 begin
-  inherited Create(TheOwner);
-  FConnection:=TPQConnection.Create(Self);
-  FConnection.SetSubComponent(true);
-  FLinkFields:=TStringList.Create();
-  FMasterControls:=TStringList.Create();
+  if FDBVFieldsConvTo=AValue then Exit;
+  if AValue<>nil then begin
+    FDBVFieldsConvTo.Assign(AValue);
+    MakeSQL;
+  end;
 end;
 
-destructor TDBVEdit.Destroy;
+procedure TDBVControl.SetDBVLinkFields(AValue: TStrings);
 begin
-  FLinkFields.Free;
-  FLinkFields:=nil;
-  FMasterControls.Free;
-  FMasterControls:=nil;
+  if FDBVLinkFields=AValue then Exit;
+  if AValue<>nil then begin
+    FDBVLinkFields.Assign(AValue);
+    MakeSQL;
+  end;
+end;
+
+procedure TDBVControl.SetDBVMasterControls(AValue: TStrings);
+begin
+  if FDBVMasterControls=AValue then Exit;
+  if AValue<>nil then begin
+    FDBVMasterControls.Assign(AValue);
+    MakeSQL;
+  end;
+end;
+
+procedure TDBVControl.SetDBVOrder(AValue: String);
+begin
+  if FDBVOrder=AValue then Exit;
+  FDBVOrder:=AValue;
+end;
+
+procedure TDBVControl.SetDBVTable(AValue: String);
+begin
+  if FDBVTable=AValue then Exit;
+  FDBVTable:=AValue;
+end;
+
+procedure TDBVControl.SetDBVWhere(AValue: String);
+begin
+  if Trim(AValue) = '' then AValue := 'true';
+  if FDBVWhere=AValue then Exit;
+  FDBVWhere:=AValue;
+end;
+
+procedure TDBVControl.MakeSQL;
+var
+  ParentVST: TDBVST;
+  i: Integer;
+begin
+  FSQL.Clear;
+  FSQL.Add(cSQLselect);
+  for i:=0 to DBVFields.Count-1 do begin
+    FSQL.Add(', '+ GetFieldFrom(i));
+  end;
+  FSQL.Add(' from ' + DBVTable);
+  FSQL.Add(' where ' + DBVWhere);
+  for i:=0 to DBVMasterControls.Count-1 do begin
+    try
+      ParentVST:=(Owner.FindComponent(DBVMasterControls[i]) as TDBVST);
+      if ParentVST = nil then break;
+      if i < DBVLinkFields.Count then
+        FSQL.Add(' and (' + DBVLinkFields[i] + ' in ('
+          + ParentVST.GetSQLSelectedIDs(cSQLQut, cSQLDlm) + ')) ');
+    finally
+    end;
+  end;
+end;
+
+function TDBVControl.GetFieldFrom(i: Integer): String;
+begin
+  if i < DBVFieldsConvFrom.Count then
+    Result := FieldString(DBVFields[i], DBVFieldsConvFrom[i])
+  else
+    Result := FieldString(DBVFields[i], '');
+end;
+
+function TDBVControl.GetFieldTo(aVal: String; i: Integer): String;
+begin
+  if i < DBVFieldsConvTo.Count then
+    Result := FieldString(aVal, DBVFieldsConvTo[i])
+  else
+    Result := FieldString(aVal, '');
+end;
+
+procedure TDBVControl.ReFill;
+begin
+
+end;
+
+constructor TDBVControl.Create(TheOwner: TComponent);
+begin
+  inherited Create(TheOwner);
+  FConnection:=TSQLConnection.Create(Self);
+  FConnection.SetSubComponent(true);
+  FDBVFields:=TStringList.Create();
+  FDBVFieldsConvFrom:=TStringList.Create();
+  FDBVFieldsConvTo:=TStringList.Create();
+  FDBVLinkFields:=TStringList.Create();
+  FDBVMasterControls:=TStringList.Create();
+  FSQL:=TStringList.Create();
+end;
+
+destructor TDBVControl.Destroy;
+begin
+  FreeAndNil(FConnection);
+  FreeAndNil(FSQL);
+  FreeAndNil(FDBVFields);
+  FreeAndNil(FDBVFieldsConvFrom);
+  FreeAndNil(FDBVFieldsConvTo);
+  FreeAndNil(FDBVLinkFields);
+  FreeAndNil(FDBVMasterControls);
   inherited Destroy;
 end;
 
@@ -1031,4 +920,9 @@ begin
   end;
 end;
 
+
+
+
+
 end.
+

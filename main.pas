@@ -33,13 +33,14 @@ uses
   StdCtrls, ExtCtrls, Buttons, StdActns, DBGrids, pqconnection, fpjson,
   jsonparser, XMLConf, sqldb, db, dbfunc, Grids, CheckLst,
   DbCtrls, IniPropStorage, EditBtn, DBActns, Calendar, keyvalue, ExtSQLQuery,
-  DBVST, ExpandPanels, VirtualTrees, types;
+  DBVST, ExpandPanels, VirtualTrees;
 
 type
 
   { TMainForm }
 
   TMainForm = class(TForm)
+    DBVEdit1: TDBVEdit;
     DBVMemo1: TDBVMemo;
     MenuSplitter: TPairSplitter;
     PairSplitterSide3: TPairSplitterSide;
@@ -68,7 +69,6 @@ type
     BuildingPersonnel: TDBVST;
     BuildingContractWorksVST: TDBVST;
     BuildingPersonnelVST: TDBVST;
-    BuildingCalcPriceEdit: TEdit;
     BuildingWorkPlanFact: TDBVST;
     LeftTabs: TExtendedNotebook;
     Label12: TLabel;
@@ -156,7 +156,6 @@ type
     PairSplitterSide9: TPairSplitterSide;
     BuildingBox: TGroupBox;
     MainIconList22: TImageList;
-    BuildingDetailsMemo: TMemo;
     BuildingPageControl: TPageControl;
     PairSplitter1: TPairSplitter;
     PairSplitterSide4: TPairSplitterSide;
@@ -179,7 +178,6 @@ type
     ConnPortEdit: TEdit;
     ConnPortLabel: TLabel;
     ConnBtn: TBitBtn;
-    Conn: TPQConnection;
     Label2: TLabel;
     Label3: TLabel;
     ActPanel: TPanel;
@@ -216,6 +214,7 @@ type
     SrvWorksTabSheet: TTabSheet;
     ToolButton1: TToolButton;
     ToolButton2: TToolButton;
+    Conn: TPQConnection;
     procedure ActionConnectExecute(Sender: TObject);
     procedure ActionDisconnectExecute(Sender: TObject);
     procedure BuildingLabelClick(Sender: TObject);
@@ -352,22 +351,6 @@ end;
 procedure TMainForm.BuildingMainTabSheetShow(Sender: TObject);
 begin
   if (not Conn.Connected) then exit;
-  if (BuildingsList.SelectedCount > 0) then begin
-    BuildingDetailsMemo.Text:=ReturnStringSQL(Conn,
-      'select array_to_string(array_agg(note), chr(13)||$$-------$$||chr(13)) from buildings where id in ('
-      + BuildingsList.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
-      +')');
-    BuildingCalcPriceEdit.Text:=ReturnStringSQL(Conn,
-          'select round(sum(year_price))::text '
-          + ' from c_service_price where building in ('
-          + BuildingsList.GetSQLSelectedIDs(sqlStringQuote, sqlFieldDelimiter)
-          + ') '
-          );
-  end
-  else begin
-    BuildingDetailsMemo.Clear;
-    BuildingCalcPriceEdit.Text:='';
-  end;
 end;
 
 procedure TMainForm.BuildingPersonnelFocusChanged(Sender: TBaseVirtualTree;
@@ -465,7 +448,7 @@ begin
   if not Assigned(aControl) then exit;
   case aControl.ClassName of
     'TTabSheet','TPanel','TPageControl','TScrollBox','TPairSplitterSide',
-    'TPairSplitter','TDBVST', 'TDBVMemo': begin
+    'TPairSplitter','TDBVST', 'TDBVMemo', 'TDBVEdit': begin
       case aControl.ClassName of
         'TDBVST': with (aControl as TDBVST) do begin
           for j:=0 to DBMasterControls.Count-1 do begin
@@ -482,6 +465,20 @@ begin
           ReFill;
         end;
         'TDBVMemo': with (aControl as TDBVMemo) do begin
+          for j:=0 to DBMasterControls.Count-1 do begin
+            xComponent:=Self.FindComponent(DBMasterControls.Strings[j]);
+            if not Assigned(xComponent) then break;
+            if not xComponent.ClassNameIs('TDBVST') then break;
+            if (xComponent as TDBVST).SelectedCount<1 then begin
+              ForceSelect(xComponent.Name);
+              xComponent:=nil;
+              exit;
+            end;
+            xComponent:=nil;
+          end;
+          ReFill;
+        end;
+        'TDBVEdit': with (aControl as TDBVEdit) do begin
           for j:=0 to DBMasterControls.Count-1 do begin
             xComponent:=Self.FindComponent(DBMasterControls.Strings[j]);
             if not Assigned(xComponent) then break;
@@ -974,7 +971,7 @@ procedure TMainForm.InitFormAfterConnect;
 begin
   if not Conn.Connected then Exit;
   Cursor:=crSQLWait;
-  Log('Подключено');
+  Log('Подключено: ' +Conn.UserName+'@'+Conn.HostName+'/'+Conn.DatabaseName);
   ConnectTabSheet.TabVisible:=False;
 
   SaveWorkDate(TDateTime(0));
@@ -995,8 +992,6 @@ begin
   RefreshControlsBuildingsList(Self);
   RefreshControlsServicesList(Self);
   Cursor:=crDefault;
-
-  DBVMemo1.Connection:=Conn;
 
 end;
 
