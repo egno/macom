@@ -40,6 +40,7 @@ type
   { TMainForm }
 
   TMainForm = class(TForm)
+    BuildingWorkPlanFact1: TDBVST;
     DBVEdit2: TDBVEdit;
     DBVEdit3: TDBVEdit;
     DBVEdit4: TDBVEdit;
@@ -47,6 +48,7 @@ type
     DBVEdit6: TDBVEdit;
     DBVEdit7: TDBVEdit;
     DBVEdit8: TDBVEdit;
+    BuildingWorkPers: TDBVEdit;
     DBVMemo1: TDBVMemo;
     DBVMemo2: TDBVMemo;
     DBVMemo4: TDBVMemo;
@@ -58,8 +60,11 @@ type
     Label20: TLabel;
     Label8: TLabel;
     MenuSplitter: TPairSplitter;
+    PairSplitter1: TPairSplitter;
     PairSplitterSide3: TPairSplitterSide;
+    PairSplitterSide4: TPairSplitterSide;
     PairSplitterSide5: TPairSplitterSide;
+    PairSplitterSide6: TPairSplitterSide;
     Panel11: TPanel;
     Panel12: TPanel;
     Panel13: TPanel;
@@ -67,6 +72,8 @@ type
     Panel15: TPanel;
     Panel16: TPanel;
     Panel17: TPanel;
+    Panel18: TPanel;
+    Panel19: TPanel;
     ScrollBox5: TScrollBox;
     ScrollBox6: TScrollBox;
     ServicesLabel: TToggleBox;
@@ -115,14 +122,17 @@ type
     BuildingWorksTabSheet: TTabSheet;
     BuildingsLabel: TToggleBox;
     SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
     SpeedButton4: TSpeedButton;
     SpeedButton5: TSpeedButton;
     SpeedButton6: TSpeedButton;
+    SpeedButton7: TSpeedButton;
     StaticText1: TStaticText;
     StaticText2: TStaticText;
     StaticText3: TStaticText;
     StaticText4: TStaticText;
     StaticText5: TStaticText;
+    StaticText6: TStaticText;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
     WorkDateEdit: TDateEdit;
@@ -240,6 +250,8 @@ type
       Column: TColumnIndex; Shift: TShiftState);
     procedure BuildingPropsTabSheetShow(Sender: TObject);
     procedure BuildingServicesTabSheetShow(Sender: TObject);
+    procedure BuildingWorkPlanFactFocusChanged(Sender: TBaseVirtualTree;
+      Node: PVirtualNode; Column: TColumnIndex);
     procedure DBVEdit5Exit(Sender: TObject);
     procedure DBVEdit8Change(Sender: TObject);
     procedure Label17Click(Sender: TObject);
@@ -272,8 +284,10 @@ type
     procedure RefreshControl(C:String);
     procedure RefreshControlsBuildingsList(Sender: TObject);
     procedure RefreshControlsServicesList(Sender: TObject);
+    procedure RefreshDates();
     procedure RefreshPersonNote(ids: String);
     procedure SaveWorkDate(aDate: TDateTime);
+    procedure SaveWorkPeriod(aDate1, aDate2: TDateTime);
     procedure ServiceLabelClick(Sender: TObject);
     procedure ShowBuildingsExecute(Sender: TObject);
     procedure ShowMain();
@@ -293,6 +307,7 @@ type
     procedure BuildingPersonnelTabSheetShow(Sender: TObject);
     procedure ShowServicesExecute(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
     procedure SpeedButton4Click(Sender: TObject);
     procedure SpeedButton5Click(Sender: TObject);
     procedure SpeedButton6Click(Sender: TObject);
@@ -336,8 +351,13 @@ implementation
 { TMainForm }
 
 const
+  cPanelWidth: Integer = 300;
+
   dspNotAssigned: String = '<Не указано>';
   dspDisconnected: String = 'Нет подключения';
+
+  dspBtnCaptionLeft: String = '<';
+  dspBtnCaptionRight: String = '>';
 
   sqlDateFormat: String = 'DD.MM.YYYY';
   sqlStringQuote = '$$';
@@ -407,6 +427,13 @@ begin
   BuildingContractWorksVST.ReFill;
 end;
 
+procedure TMainForm.BuildingWorkPlanFactFocusChanged(Sender: TBaseVirtualTree;
+  Node: PVirtualNode; Column: TColumnIndex);
+begin
+  BuildingWorkPlanFact1.ReFill;
+  BuildingWorkPers.ReFill;
+end;
+
 procedure TMainForm.DBVEdit5Exit(Sender: TObject);
 begin
 
@@ -438,6 +465,7 @@ begin
   if not Sender.ClassNameIs('TTogglebox') then exit;
   if not ((Sender as TTogglebox).Checked) then begin
     MainSplitter.Position:=0;
+    SpeedButton7.Caption:='X';
   end
   else begin
     case (Sender as TControl).Name of
@@ -488,8 +516,8 @@ begin
         'TDBVST': with (aControl as TDBVST) do begin
           for j:=0 to DBMasterControls.Count-1 do begin
             xComponent:=Self.FindComponent(DBMasterControls.Strings[j]);
-            if not Assigned(xComponent) then break;
-            if not xComponent.ClassNameIs('TDBVST') then break;
+            if not Assigned(xComponent) then exit;
+            if not xComponent.ClassNameIs('TDBVST') then exit;
             if (xComponent as TDBVST).SelectedCount<1 then begin
               ForceSelect(xComponent.Name);
               xComponent:=nil;
@@ -502,8 +530,8 @@ begin
         'TDBVMemo': with (aControl as TDBVMemo) do begin
           for j:=0 to DBMasterControls.Count-1 do begin
             xComponent:=Self.FindComponent(DBMasterControls.Strings[j]);
-            if not Assigned(xComponent) then break;
-            if not xComponent.ClassNameIs('TDBVST') then break;
+            if not Assigned(xComponent) then exit;
+            if not xComponent.ClassNameIs('TDBVST') then exit;
             if (xComponent as TDBVST).SelectedCount<1 then begin
               ForceSelect(xComponent.Name);
               xComponent:=nil;
@@ -516,8 +544,8 @@ begin
         'TDBVEdit': with (aControl as TDBVEdit) do begin
           for j:=0 to DBMasterControls.Count-1 do begin
             xComponent:=Self.FindComponent(DBMasterControls.Strings[j]);
-            if not Assigned(xComponent) then break;
-            if not xComponent.ClassNameIs('TDBVST') then break;
+            if not Assigned(xComponent) then exit;
+            if not xComponent.ClassNameIs('TDBVST') then exit;
             if (xComponent as TDBVST).SelectedCount<1 then begin
               ForceSelect(xComponent.Name);
               xComponent:=nil;
@@ -569,7 +597,7 @@ end;
 
 procedure TMainForm.DBPopupMenuPopup(Sender: TObject);
 begin
-  Log (ActiveControl.ClassName);
+//  Log (ActiveControl.ClassName);
 //  DataSetInsert.Enabled := (ActiveControl.ClassName = 'DBVST');
 end;
 
@@ -623,11 +651,14 @@ end;
 
 procedure TMainForm.MenuLabelChange(Sender: TObject);
 begin
-  if not Sender.ClassNameIs('TTogglebox') then exit;
-  if not ((Sender as TTogglebox).Checked) then
-    MenuSplitter.Position:=0
-  else
-    MenuSplitter.Position:=200;
+  if not (MenuLabel.Checked) then begin
+    MenuSplitter.Position:=SpeedButton1.Width;
+    SpeedButton1.Caption:=dspBtnCaptionRight;
+  end
+  else begin
+    MenuSplitter.Position:=cPanelWidth;
+    SpeedButton1.Caption:=dspBtnCaptionLeft;
+  end;
 end;
 
 procedure TMainForm.MenuLabelClick(Sender: TObject);
@@ -643,6 +674,7 @@ begin
   if not Assigned(xComponent) then exit;
   if not xComponent.ClassNameIs('TTabSheet') then exit;
   (xComponent as TTabSheet).TabVisible:=True;
+  (xComponent as TTabSheet).BringToFront;
   if length(aCaption) > 0 then
     (xComponent as TTabSheet).Caption:=aCaption;
   CenterPageControl.ActivePage:=(xComponent as TTabSheet);
@@ -686,6 +718,25 @@ begin
   CenterPageControl.ActivePage.OnShow(CenterPageControl.ActivePage);
 end;
 
+procedure TMainForm.RefreshDates;
+begin
+  WorkDateEdit.Date:=StrToDate(ReturnStringSQL(Conn, 'select work_date()'));
+  MainDatesTabSheet.Caption:=FormatDateTime('d.m',WorkDateEdit.Date);
+  DateLabel.Caption:='РД: '+ FormatDateTime('dd.mm.yyyy',WorkDateEdit.Date)
+    + ' (' +FormatDateTime('dd.mm.yy',WorkPeriodBeginEdit.Date)
+    + '-' + FormatDateTime('dd.mm.yy',WorkPeriodEndEdit.Date) + ')';
+
+  WorkPeriodBeginEdit.Date:=StrToDate(ReturnStringSQL(Conn,
+    'select lower(work_period())'));
+  WorkPeriodEndEdit.Date:=StrToDate(ReturnStringSQL(Conn,
+    'select (upper(work_period())-1)'));
+
+  DateLabel.Caption:='РД: '+ FormatDateTime('dd.mm.yyyy',WorkDateEdit.Date)
+    + ' (' +FormatDateTime('dd.mm.yy',WorkPeriodBeginEdit.Date)
+    + '-' + FormatDateTime('dd.mm.yy',WorkPeriodEndEdit.Date) + ')';
+
+end;
+
 procedure TMainForm.RefreshPersonNote(ids: String);
 begin
   PersonNote.Clear;
@@ -704,17 +755,39 @@ begin
 end;
 
 procedure TMainForm.SaveWorkDate(aDate: TDateTime);
+var
+  xDate: String;
 begin
   if QWord(aDate) > 0 then begin
-//    ExecSQL(Conn, '');
-//    Log('Расчётная дата: ' + DateToStr(aDate));
-  end;
-  WorkDateEdit.Date:=StrToDate(ReturnStringSQL(Conn, 'select work_date()'));
-  MainDatesTabSheet.Caption:=FormatDateTime('d.m',WorkDateEdit.Date);
-  DateLabel.Caption:='РД: '+ FormatDateTime('dd.mm.yyyy',WorkDateEdit.Date)
-    + ' (' +FormatDateTime('dd.mm.yy',WorkPeriodBeginEdit.Date)
-    + '-' + FormatDateTime('dd.mm.yy',WorkPeriodEndEdit.Date) + ')';
+    xDate:= ReturnStringSQL(Conn, 'select work_date($$'
+      +FormatDateTime('yyyy-mm-dd',aDate)+'$$::date)');
+  end
+  else
+    xDate:=ReturnStringSQL(Conn, 'select work_date(NULL::date)');
+//  Log('Расчётная дата: ' + xDate);
+  RefreshDates;
+end;
 
+procedure TMainForm.SaveWorkPeriod(aDate1, aDate2: TDateTime);
+var
+  xDate1, xDate2, xPeriod: String;
+begin
+
+  if QWord(aDate1) > 0 then
+    xDate1:=sqlStringQuote+FormatDateTime('yyyy-mm-dd',aDate1)+sqlStringQuote
+      + '::date'
+  else
+    xDate1:='NULL';
+  if QWord(aDate2) > 0 then
+    xDate2:=sqlStringQuote+FormatDateTime('yyyy-mm-dd',aDate2)+sqlStringQuote
+      + '::date'
+  else
+    xDate2:='NULL';
+  xPeriod:=ReturnStringSQL(Conn, 'select work_period('+xDate1
+    + ',' + xDate2
+    +')::text');
+
+  RefreshDates;
 end;
 
 procedure TMainForm.ServiceLabelClick(Sender: TObject);
@@ -729,9 +802,12 @@ end;
 
 procedure TMainForm.ShowMain;
 begin
-  if MainDatesTabSheet.Width < 5 then
-  MainSplitter.Position := 300;
-  ActiveControl:=LeftTabs;
+  if (DateLabel.Checked or BuildingsLabel.Checked
+      or ServicesLabel.Checked) then begin
+    MainSplitter.Position:=cPanelWidth;
+    SpeedButton7.Caption:='X';
+    ActiveControl:=LeftTabs;
+  end;
 end;
 
 procedure TMainForm.ShowDatesList;
@@ -819,7 +895,19 @@ end;
 
 procedure TMainForm.SpeedButton1Click(Sender: TObject);
 begin
-  MenuLabel.Checked:=False;
+  MenuLabel.Checked:= not MenuLabel.Checked;
+end;
+
+procedure TMainForm.SpeedButton2Click(Sender: TObject);
+begin
+  if SpeedButton2.Caption = dspBtnCaptionLeft then begin
+    Splitter3.Left:=SpeedButton2.Width;
+    SpeedButton2.Caption:=dspBtnCaptionRight;
+  end
+  else begin
+    Splitter3.Left:=cPanelWidth;
+    SpeedButton2.Caption:=dspBtnCaptionLeft;
+  end;
 end;
 
 procedure TMainForm.SpeedButton4Click(Sender: TObject);
@@ -835,6 +923,8 @@ end;
 procedure TMainForm.SpeedButton6Click(Sender: TObject);
 begin
   DateLabel.Checked:=False;
+  BuildingsLabel.Checked:=False;
+  ServicesLabel.Checked:=False;
 end;
 
 procedure TMainForm.SrvWorksTabSheetShow(Sender: TObject);
@@ -898,7 +988,16 @@ end;
 procedure TMainForm.WorkDateEditAcceptDate(Sender: TObject;
   var ADate: TDateTime; var AcceptDate: Boolean);
 begin
-  SaveWorkDate(ADate);
+  if not AcceptDate then begin
+     RefreshDates;
+     exit;
+  end;
+  (Sender as TDateEdit).Date:=ADate;
+  case (Sender as TDateEdit).Name of
+    'WorkDateEdit': SaveWorkDate(WorkDateEdit.Date);
+    else
+      SaveWorkPeriod(WorkPeriodBeginEdit.Date, WorkPeriodEndEdit.Date);
+  end;
 end;
 
 procedure TMainForm.WorkDateEditCustomDate(Sender: TObject; var ADate: string);
@@ -908,7 +1007,11 @@ end;
 
 procedure TMainForm.WorkDateEditEditingDone(Sender: TObject);
 begin
-  SaveWorkDate((Sender as TDateEdit).Date);
+  case (Sender as TDateEdit).Name of
+    'WorkDateEdit': SaveWorkDate(WorkDateEdit.Date);
+    else
+      SaveWorkPeriod(WorkPeriodBeginEdit.Date, WorkPeriodEndEdit.Date);
+  end;
 end;
 
 procedure TMainForm.WorkDelBtnClick(Sender: TObject);

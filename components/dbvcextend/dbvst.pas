@@ -146,6 +146,7 @@ type
     FTable: String;
     FWhere: String;
     FilterEdit: TDBVSTFilterEdit;
+    FocusedSave: String;
     procedure SetConnection(AValue: TSQLConnection);
     procedure SetDBFields(AValue: TStrings);
     procedure SetDBFieldsConvFrom(AValue: TStrings);
@@ -191,6 +192,7 @@ type
     procedure KeyPress(Sender: TObject; var Key: char);
     procedure FillNode(Node: PVirtualNode; levFull:integer);
     procedure FillNode(Node: PVirtualNode);
+    procedure SeekId(aID: String);
     procedure AddFromQuery(aQuery: String);
     procedure DelFromWhere(aQuery: String);
     procedure ReFill();
@@ -323,6 +325,7 @@ begin
     for i:=0 to FMasterControls.Count-1 do begin
       ParentVST:=(Owner.FindComponent(FMasterControls[i]) as TDBVST);
       if ParentVST = nil then break;
+      if ParentVST.SelectedCount < 1 then break;
       xQuery.SQL.Add(' and ' + FLinkFields[i] + ' in ('
         + ParentVST.GetSQLSelectedIDs('$$', ',') + ') ');
     end;
@@ -455,10 +458,12 @@ begin
     for i:=0 to FMasterControls.Count-1 do begin
       ParentVST:=(Owner.FindComponent(FMasterControls[i]) as TDBVST);
       if ParentVST = nil then break;
+      if ParentVST.SelectedCount < 1 then break;
       xQuery.SQL.Add(' and ' + FLinkFields[i] + ' in ('
         + ParentVST.GetSQLSelectedIDs('$$', ',') + ') ');
     end;
 //    xQuery.SQL.Add(' group by ' + DBField);
+// writeln(xQuery.SQL.Text);
     xQuery.Open;
     while not xQuery.Eof do begin
       if Self.Text > '' then Self.Text:=Self.Text+', ';
@@ -967,6 +972,23 @@ begin
   FillNode(Node, 1)
 end;
 
+procedure TDBVST.SeekId(aID: String);
+Var
+  VSTNode: PVirtualNode;
+begin
+  If GetFirst = nil then Exit;
+  VSTNode:=nil;
+  Repeat
+    if VSTNode = nil then VSTNode:=GetFirst Else VSTNode:=GetNext(VSTNode);
+    if GetID(VSTNode) = aID then begin
+      Self.FocusedNode:=VSTNode;
+      Self.Selected[VSTNode]:=True;
+      Refresh;
+      exit;
+    end;
+  until VSTNode=GetLast();
+end;
+
 procedure TDBVST.AddFromQuery(aQuery: String);
 var
   xSQL: String;
@@ -999,6 +1021,8 @@ var
   i: Integer;
   ParentVST: TDBVST;
 begin
+  if GetSelectedID > '' then
+     FocusedSave:=GetSelectedID;
   Clear;
   if not Connection.Connected then exit;
   isSelected:=True;
@@ -1017,6 +1041,8 @@ begin
     MakeSQL(false);
     FillNode(nil, Deep);
   end;
+  FocusedNode:=nil;
+  SeekID(FocusedSave);
 end;
 
 procedure TDBVST.Init;
