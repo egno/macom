@@ -74,6 +74,7 @@ type
     Panel17: TPanel;
     Panel18: TPanel;
     Panel19: TPanel;
+    Panel20: TPanel;
     ScrollBox5: TScrollBox;
     ScrollBox6: TScrollBox;
     ServicesLabel: TToggleBox;
@@ -123,6 +124,7 @@ type
     BuildingsLabel: TToggleBox;
     SpeedButton1: TSpeedButton;
     SpeedButton2: TSpeedButton;
+    SpeedButton3: TSpeedButton;
     SpeedButton4: TSpeedButton;
     SpeedButton5: TSpeedButton;
     SpeedButton6: TSpeedButton;
@@ -277,6 +279,8 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure MainTabSheetShow(Sender: TObject);
     procedure MainTreeDblClick(Sender: TObject);
+    procedure MainTreeFocusChanged(Sender: TBaseVirtualTree;
+      Node: PVirtualNode; Column: TColumnIndex);
     procedure MenuLabelChange(Sender: TObject);
     procedure MenuLabelClick(Sender: TObject);
     procedure OpenPage(aName, aCaption: String);
@@ -308,6 +312,7 @@ type
     procedure ShowServicesExecute(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure SpeedButton2Click(Sender: TObject);
+    procedure SpeedButton3Click(Sender: TObject);
     procedure SpeedButton4Click(Sender: TObject);
     procedure SpeedButton5Click(Sender: TObject);
     procedure SpeedButton6Click(Sender: TObject);
@@ -525,7 +530,9 @@ begin
             end;
             xComponent:=nil;
           end;
+          Cursor:=crHourGlass;
           ReFill;
+          Cursor:=crDefault;
         end;
         'TDBVMemo': with (aControl as TDBVMemo) do begin
           for j:=0 to DBMasterControls.Count-1 do begin
@@ -539,7 +546,9 @@ begin
             end;
             xComponent:=nil;
           end;
+          Cursor:=crHourGlass;
           ReFill;
+          Cursor:=crDefault;
         end;
         'TDBVEdit': with (aControl as TDBVEdit) do begin
           for j:=0 to DBMasterControls.Count-1 do begin
@@ -553,7 +562,9 @@ begin
             end;
             xComponent:=nil;
           end;
+          Cursor:=crHourGlass;
           ReFill;
+          Cursor:=crDefault;
         end;
       end;
       for i:=0 to (aControl as TWinControl).ControlCount-1 do begin
@@ -643,10 +654,16 @@ var
   xName: String;
 begin
   if not Conn.Connected then exit;
-  xName:=ReturnStringSQL(Conn, 'select mode from app.maintree where id = '
+  xName:=ReturnStringSQL(Conn, 'select mode from app_maintree where id = '
     + MainTree.GetSQLSelectedID(sqlStringQuote)) + 'TabSheet';
-  OpenPage(xName, ReturnStringSQL(Conn, 'select disp from app.maintree where id = '
+  OpenPage(xName, ReturnStringSQL(Conn, 'select disp from app_maintree where id = '
     + MainTree.GetSQLSelectedID(sqlStringQuote)));
+end;
+
+procedure TMainForm.MainTreeFocusChanged(Sender: TBaseVirtualTree;
+  Node: PVirtualNode; Column: TColumnIndex);
+begin
+  MainTreeDblClick(Sender);
 end;
 
 procedure TMainForm.MenuLabelChange(Sender: TObject);
@@ -907,6 +924,18 @@ begin
   else begin
     Splitter3.Left:=cPanelWidth;
     SpeedButton2.Caption:=dspBtnCaptionLeft;
+  end;
+end;
+
+procedure TMainForm.SpeedButton3Click(Sender: TObject);
+begin
+  if SpeedButton3.Caption = dspBtnCaptionLeft then begin
+    Splitter2.Left:=SpeedButton3.Width;
+    SpeedButton3.Caption:=dspBtnCaptionRight;
+  end
+  else begin
+    Splitter2.Left:=cPanelWidth;
+    SpeedButton3.Caption:=dspBtnCaptionLeft;
   end;
 end;
 

@@ -586,7 +586,8 @@ begin
       VSTNodeData:=GetNodeData(VSTNode);
       VSTNode^.States:=VSTNode^.States - [vsSelected];
       for i:=0 to SearchList.Count-1 do
-        isFound := isFound and (Pos(SearchList[i],VSTNodeData^[1]) > 0);
+        isFound := isFound
+          and (Pos(AnsilowerCase(SearchList[i]),AnsilowerCase(VSTNodeData^[1])) > 0);
       If isFound then begin
         VSTNode^.States:=VSTNode^.States + [vsVisible];
         SetVisibleParents(VSTNode);
@@ -594,9 +595,10 @@ begin
       else
         VSTNode^.States:=VSTNode^.States - [vsVisible];
     Until VSTNode = GetLast();
+    ClearSelection;
+    OffsetY:=0;
     Refresh;
   end;
-  (Owner as TDBVST).ClearSelection;
   SearchList.Free;
   SearchList:=nil;
   VSTNode:=nil;
@@ -733,17 +735,18 @@ begin
     if DBLinkFields.Count>0 then
       aSql.Add(', ' + ListToString(DBLinkFields,', ',''));
     aSql.Add(') ' + ' select '
-      + sqlStringQuote + Text[Node, Column] + sqlStringQuote);
+      + FieldStringTo(sqlStringQuote + Text[Node, Column] + sqlStringQuote,
+        DBFieldsConvTo[Column+1]) );
     if DBLinkFields.Count>0 then
       aSql.Add(', ' + ListToString(DBLinkFields,', ',''));
     if DBLinkFields.Count>0 then begin
       aSql.Add(' from ');
       for i:=0 to DBLinkFields.Count-1 do begin
         if i>0 then aSql.Add(', ');
-        aSql.Add(' unnest(array[');
+        aSql.Add(' unnest((array[');
         MasterComponent:=Owner.FindComponent(FMasterControls[i]);
         aSql.Add((MasterComponent as TDBVST).GetSQLSelectedIDs(sqlStringQuote, ',')
-          + ']) ' + DBLinkFields[i]);
+          + '])::uuid[]) ' + DBLinkFields[i]);
       end;
       aSql.Add(' returning ' + GetSQLFieldStringFrom(0));
     end;

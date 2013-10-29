@@ -45,6 +45,7 @@ type
     constructor Create(TheOwner: TComponent); override;
     constructor Create(TheOwner: TComponent; Conn: TSQLConnection);
     destructor Destroy; override;
+    procedure Open();
   published
     { Published declarations }
   end;
@@ -83,6 +84,12 @@ begin
   FTrans.Free;
   FTrans:=nil;
   inherited Destroy;
+end;
+
+procedure TExtSQLQuery.Open;
+begin
+//  writeln('Open query: '+SQL.Text);
+  inherited Open;
 end;
 
 end.
