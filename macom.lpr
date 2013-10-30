@@ -29,7 +29,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, lazcontrols, main, pexpandpanels, virtualtreeview_package;
+  Forms, lazcontrols, main, pexpandpanels, virtualtreeview_package, htmlreport;
 
 {$R *.res}
 

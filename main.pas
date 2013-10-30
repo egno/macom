@@ -28,18 +28,19 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 interface
 
 uses
-  Classes, SysUtils, FileUtil, TreeFilterEdit, ExtendedNotebook, Forms,
-  Controls, Graphics, Dialogs, Menus, ComCtrls, ActnList, PairSplitter,
-  StdCtrls, ExtCtrls, Buttons, StdActns, DBGrids, pqconnection, fpjson,
-  jsonparser, XMLConf, sqldb, db, dbfunc, Grids, CheckLst,
-  DbCtrls, IniPropStorage, EditBtn, DBActns, Calendar, keyvalue, ExtSQLQuery,
-  DBVST, ExpandPanels, VirtualTrees;
+  Classes, SysUtils, FileUtil, TreeFilterEdit, ExtendedNotebook, SynExportHTML,
+  SynHighlighterHTML, IpHtml, Ipfilebroker, Forms, Controls, Graphics, Dialogs,
+  Menus, ComCtrls, ActnList, PairSplitter, StdCtrls, ExtCtrls, Buttons,
+  StdActns, DBGrids, pqconnection, fpjson, jsonparser, XMLConf, sqldb, db,
+  dbfunc, Grids, CheckLst, DbCtrls, IniPropStorage, EditBtn, DBActns, Calendar,
+  keyvalue, ExtSQLQuery, DBVST, ExpandPanels, VirtualTrees, htmlreport;
 
 type
 
   { TMainForm }
 
   TMainForm = class(TForm)
+    ActionPrint: TAction;
     BuildingWorkPlanFact1: TDBVST;
     DBVEdit2: TDBVEdit;
     DBVEdit3: TDBVEdit;
@@ -137,6 +138,8 @@ type
     StaticText6: TStaticText;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
+    ReportTabSheet: TTabSheet;
+    ToolButton4: TToolButton;
     WorkDateEdit: TDateEdit;
     WorkPeriodBeginEdit: TDateEdit;
     WorkPeriodEndEdit: TDateEdit;
@@ -242,6 +245,7 @@ type
     Conn: TPQConnection;
     procedure ActionConnectExecute(Sender: TObject);
     procedure ActionDisconnectExecute(Sender: TObject);
+    procedure ActionPrintExecute(Sender: TObject);
     procedure BuildingLabelClick(Sender: TObject);
     procedure BuildingMainTabSheetShow(Sender: TObject);
     procedure BuildingPersonnelFocusChanged(Sender: TBaseVirtualTree;
@@ -328,6 +332,7 @@ type
     procedure WorkDelBtnClick(Sender: TObject);
     procedure UpdateDBTable(Table: String; Fields, Values: array of String);
     procedure FillListFromSQL(Items:TStrings ; SQL: String);
+    procedure WorksListChange(Sender: TBaseVirtualTree; Node: PVirtualNode);
     procedure WorksListFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
     procedure WorksTabSheetShow(Sender: TObject);
@@ -387,6 +392,12 @@ procedure TMainForm.ActionDisconnectExecute(Sender: TObject);
 begin
   DBDisconnect(Conn);
   CheckConnected();
+end;
+
+procedure TMainForm.ActionPrintExecute(Sender: TObject);
+begin
+  log(ActiveControl.Name);
+  ToolButton3Click(Sender);
 end;
 
 procedure TMainForm.BuildingLabelClick(Sender: TObject);
@@ -973,8 +984,23 @@ begin
 end;
 
 procedure TMainForm.ToolButton3Click(Sender: TObject);
+var
+  xHTMLPanel: TMyIpHtmlPanel;
 begin
-
+  ReportTabSheet.TabVisible:=True;
+  ReportTabSheet.BringToFront;
+  CenterPageControl.ActivePage:=ReportTabSheet;
+  xHTMLPanel:=TMyIpHtmlPanel.Create(ReportTabSheet);
+    xHTMLPanel.ShowHTML(
+     '<HTML>'
+    +'<head>'
+//    +'<link rel="stylesheet" href="fpdoc.css" type="text/css">'
+    + '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'
+    +'</head>'
+    +'<BODY>'
+    +'<h1>MaCom</h1>'
+    +'<p>Пример отчёта.</p>'
+    +'</BODY></HTML>');
 end;
 
 procedure TMainForm.ToolButton4Click(Sender: TObject);
@@ -1095,6 +1121,12 @@ begin
       Log(E.Message);
   end;
   Query.Free;
+end;
+
+procedure TMainForm.WorksListChange(Sender: TBaseVirtualTree; Node: PVirtualNode
+  );
+begin
+
 end;
 
 procedure TMainForm.WorksListFocusChanged(Sender: TBaseVirtualTree;

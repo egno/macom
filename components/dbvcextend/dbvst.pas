@@ -562,9 +562,9 @@ Var
   VSTNode: PVirtualNode;
   VSTNodeData: PDBTreeData;
   SearchList: TStringList;
-  i: Integer;
+  i, iCell: Integer;
   S: String;
-  isFound: Boolean;
+  isFound, isCellFound: Boolean;
 begin
   SearchList:=TStringList.Create;
   if not Owner.ClassNameIs('TDBVST') then exit;
@@ -581,13 +581,20 @@ begin
       end;
     until i=0;
     Repeat
-      isFound := True;
+      isFound := False;
       if VSTNode = nil then VSTNode:=GetFirst Else VSTNode:=GetNext(VSTNode);
       VSTNodeData:=GetNodeData(VSTNode);
       VSTNode^.States:=VSTNode^.States - [vsSelected];
-      for i:=0 to SearchList.Count-1 do
-        isFound := isFound
-          and (Pos(AnsilowerCase(SearchList[i]),AnsilowerCase(VSTNodeData^[1])) > 0);
+      for iCell:=1 to VSTNodeData^.Count-1 do begin
+        isCellFound := True;
+        for i:=0 to SearchList.Count-1 do
+          isCellFound := isCellFound
+            and (Pos(
+               AnsilowerCase(SearchList[i]),
+               AnsilowerCase(VSTNodeData^[iCell])
+               ) > 0);
+        isFound := isFound or isCellFound;
+      end;
       If isFound then begin
         VSTNode^.States:=VSTNode^.States + [vsVisible];
         SetVisibleParents(VSTNode);
@@ -899,6 +906,10 @@ begin
   OnInitNode:=@InitNode;
   OnKeyPress:=@KeyPress;
   OnNewText:=@NewText;
+  TreeOptions.MiscOptions:=TreeOptions.MiscOptions
+    + [toEditable, toGridExtensions];
+  TreeOptions.SelectionOptions:=TreeOptions.SelectionOptions
+    + [toExtendedFocus];
 end;
 
 destructor TDBVST.Destroy;
