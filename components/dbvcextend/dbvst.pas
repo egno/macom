@@ -520,7 +520,6 @@ begin
 end;
 
 
-
 { TDBVSTFilterEdit }
 
 procedure TDBVSTFilterEdit.KeyPress(Sender: TObject; var Key: char);

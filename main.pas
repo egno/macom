@@ -986,11 +986,13 @@ end;
 procedure TMainForm.ToolButton3Click(Sender: TObject);
 var
   xHTMLPanel: TMyIpHtmlPanel;
+  xTabSheet: TTabSheet;
 begin
-  ReportTabSheet.TabVisible:=True;
-  ReportTabSheet.BringToFront;
-  CenterPageControl.ActivePage:=ReportTabSheet;
-  xHTMLPanel:=TMyIpHtmlPanel.Create(ReportTabSheet);
+  xTabSheet := CenterPageControl.AddTabSheet;
+  xTabSheet.TabVisible:=True;
+  xTabSheet.BringToFront;
+  CenterPageControl.ActivePage:=xTabSheet;
+  xHTMLPanel:=TMyIpHtmlPanel.Create(xTabSheet);
     xHTMLPanel.ShowHTML(
      '<HTML>'
     +'<head>'
