@@ -256,6 +256,8 @@ type
       Column: TColumnIndex; Shift: TShiftState);
     procedure BuildingPropsTabSheetShow(Sender: TObject);
     procedure BuildingServicesTabSheetShow(Sender: TObject);
+    procedure BuildingWorkPlanFact1Edited(Sender: TBaseVirtualTree;
+      Node: PVirtualNode; Column: TColumnIndex);
     procedure BuildingWorkPlanFactFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
     procedure DBVEdit5Exit(Sender: TObject);
@@ -443,6 +445,13 @@ begin
   BuildingContractWorksVST.ReFill;
 end;
 
+procedure TMainForm.BuildingWorkPlanFact1Edited(Sender: TBaseVirtualTree;
+  Node: PVirtualNode; Column: TColumnIndex);
+begin
+  BuildingWorkPlanFact1.Edited(Sender, Node, Column);
+  BuildingWorkPlanFact.ReFill();
+end;
+
 procedure TMainForm.BuildingWorkPlanFactFocusChanged(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Column: TColumnIndex);
 begin
@@ -525,6 +534,7 @@ var
   xComponent: TComponent;
 begin
   if not Assigned(aControl) then exit;
+  if not aControl.Visible then exit;
   case aControl.ClassName of
     'TTabSheet','TPanel','TPageControl','TScrollBox','TPairSplitterSide',
     'TPairSplitter','TDBVST', 'TDBVMemo', 'TDBVEdit': begin
@@ -578,9 +588,12 @@ begin
           Cursor:=crDefault;
         end;
       end;
-      for i:=0 to (aControl as TWinControl).ControlCount-1 do begin
-        CheckDepends((aControl as TWinControl).Controls[i]);
-      end;
+      if aControl.ClassName = 'TPageControl' then
+        CheckDepends((aControl as TPageControl).ActivePage)
+      else
+        for i:=0 to (aControl as TWinControl).ControlCount-1 do begin
+          CheckDepends((aControl as TWinControl).Controls[i]);
+        end;
     end;
   end;
 end;

@@ -164,17 +164,6 @@ type
     function GetSQLFieldStringTo(aVal: String; i: Integer):String;
     procedure SetFocusById(newId:String);
   protected
-    procedure Edited(Sender: TBaseVirtualTree;
-      Node: PVirtualNode; Column: TColumnIndex);
-    procedure Expanding(Sender: TBaseVirtualTree;
-      Node: PVirtualNode; var Allowed: Boolean);
-    procedure Change(Sender: TBaseVirtualTree; Node: PVirtualNode);
-    procedure ColumnDblClick(
-      Sender: TBaseVirtualTree; Column: TColumnIndex; Shift: TShiftState);
-    procedure CreateEditor(Sender: TBaseVirtualTree;
-       Node: PVirtualNode; Column: TColumnIndex; out aEditLink: IVTEditLink);
-    procedure FocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
-      Column: TColumnIndex);
     procedure GetNodeDataSize(Sender: TBaseVirtualTree;
       var aNodeDataSize: Integer);
     procedure GetText(Sender: TBaseVirtualTree; Node: PVirtualNode;
@@ -190,13 +179,25 @@ type
     constructor Create(TheOwner: TComponent); override;
     destructor Destroy; override;
     procedure KeyPress(Sender: TObject; var Key: char);
-    procedure FillNode(Node: PVirtualNode; levFull:integer);
+    procedure FillNode(Node: PVirtualNode; levFull:integer; fReplace:Boolean);
     procedure FillNode(Node: PVirtualNode);
     procedure SeekId(aID: String);
     procedure AddFromQuery(aQuery: String);
     procedure DelFromWhere(aQuery: String);
     procedure ReFill();
+    procedure ReFill(aID: String);
     procedure Init();
+    procedure Edited(Sender: TBaseVirtualTree;
+      Node: PVirtualNode; Column: TColumnIndex);
+    procedure Expanding(Sender: TBaseVirtualTree;
+      Node: PVirtualNode; var Allowed: Boolean);
+    procedure Change(Sender: TBaseVirtualTree; Node: PVirtualNode);
+    procedure ColumnDblClick(
+      Sender: TBaseVirtualTree; Column: TColumnIndex; Shift: TShiftState);
+    procedure CreateEditor(Sender: TBaseVirtualTree;
+       Node: PVirtualNode; Column: TColumnIndex; out aEditLink: IVTEditLink);
+    procedure FocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
+      Column: TColumnIndex);
     function GetSelectedID(): String;
     function GetID(Node: PVirtualNode): String;
     function GetDBVST(aName: String): TDBVST;
@@ -221,6 +222,7 @@ type
 
   function FieldStringFrom(aField, aConvFrom: String):String;
   function FieldStringTo(aVal, aConvTo: String):String;
+  function SQLQuote(aVal: String):String;
   procedure Register;
 
 implementation
@@ -245,6 +247,14 @@ begin
     Result := aVal+'::'+ aConvTo
   else
     Result := aVal;
+end;
+
+function SQLQuote(aVal: String): String;
+begin
+  if length(aVal) > 0 then
+    Result:=sqlStringQuote+aVal+sqlStringQuote
+  else
+    Result:='NULL';
 end;
 
 procedure Register;
@@ -351,7 +361,7 @@ begin
     xQuery := TExtSQLQuery.Create(Self, FConnection);
     xQuery.SQL.Add(' update ' + DBTable);
     xQuery.SQL.Add(' set ' + DBField + '='
-      + FieldStringTo(sqlStringQuote+trim(Text)+sqlStringQuote, DBFieldConvTo));
+      + FieldStringTo(SQLQuote(trim(Text)), DBFieldConvTo));
     xQuery.SQL.Add(' where true ');
     for i:=0 to FMasterControls.Count-1 do begin
       ParentVST:=(Owner.FindComponent(FMasterControls[i]) as TDBVST);
@@ -452,7 +462,7 @@ begin
   Clear;
   try
     xQuery := TExtSQLQuery.Create(Self, FConnection);
-    xQuery.SQL.Add(' select ' + FieldStringFrom(DBField, DBFieldConvFrom));
+    xQuery.SQL.Add(' select distinct ' + FieldStringFrom(DBField, DBFieldConvFrom));
     xQuery.SQL.Add(' from ' + DBTable);
     xQuery.SQL.Add(' where true ');
     for i:=0 to FMasterControls.Count-1 do begin
@@ -486,7 +496,7 @@ begin
     xQuery := TExtSQLQuery.Create(Self, FConnection);
     xQuery.SQL.Add(' update ' + DBTable);
     xQuery.SQL.Add(' set ' + DBField + '='
-      + FieldStringTo(sqlStringQuote+trim(Text)+sqlStringQuote, DBFieldConvTo));
+      + FieldStringTo(SQLQuote(trim(Text)), DBFieldConvTo));
     xQuery.SQL.Add(' where true ');
     for i:=0 to FMasterControls.Count-1 do begin
       ParentVST:=(Owner.FindComponent(FMasterControls[i]) as TDBVST);
@@ -726,8 +736,6 @@ end;
 
 procedure TDBVST.Edited(Sender: TBaseVirtualTree; Node: PVirtualNode;
   Column: TColumnIndex);
-const
-  sqlStringQuote: String = '$$';
 var
   i: Integer;
   MasterComponent: TComponent;
@@ -741,7 +749,7 @@ begin
     if DBLinkFields.Count>0 then
       aSql.Add(', ' + ListToString(DBLinkFields,', ',''));
     aSql.Add(') ' + ' select '
-      + FieldStringTo(sqlStringQuote + Text[Node, Column] + sqlStringQuote,
+      + FieldStringTo(SQLQuote(Text[Node, Column]),
         DBFieldsConvTo[Column+1]) );
     if DBLinkFields.Count>0 then
       aSql.Add(', ' + ListToString(DBLinkFields,', ',''));
@@ -766,7 +774,8 @@ begin
   else begin
     aSql.Add('update ' + DBTable + ' set '
       + DBFields[Column+1]
-      + ' = ' + sqlStringQuote + Text[Node, Column] + sqlStringQuote + ' '
+      + ' = ' + FieldStringTo(SQLQuote(Text[Node, Column]),
+        DBFieldsConvTo[Column+1]) + ' '
       + ' where ' + DBFields[0] + ' = ' + GetSQLFieldStringTo(GetSQLSelectedID(sqlStringQuote), 0));
     for i:=0 to DBLinkFields.Count-1 do begin
       MasterComponent:=Owner.FindComponent(FMasterControls[i]) ;
@@ -932,7 +941,7 @@ begin
   end;
 end;
 
-procedure TDBVST.FillNode(Node: PVirtualNode; levFull:integer);
+procedure TDBVST.FillNode(Node: PVirtualNode; levFull:integer; fReplace:Boolean = true);
 var
   Query: TExtSQLQuery;
   NewNode : PVirtualNode;
@@ -940,23 +949,27 @@ var
   NodeData: TStringList;
   cnt, i: Integer;
 begin
-  if (Node <> nil) and (Node^.ChildCount > 0) then Exit;
+  if ((Node <> nil) and (Node^.ChildCount > 0)) and not fReplace then Exit;
+  if ((Node = nil) and Assigned(GetFirst())) then Exit;
   Cursor:=crSQLWait;
 //  Application.ProcessMessages;
   try
     Query := TExtSQLQuery.Create(Self, FConnection);
+    Query.SQL.Text := FSQL.Text;
+    if fReplace then
+       Query.SQL.Add(' and ' + GetSQLFieldStringFrom(0)
+         + ' = ' + GetID(Node));
     if (Node = nil) then
-       Query.SQL.Text := FSQL.Text + ' ' + ' and '
-       + FKey + ' is null '
-       + ' group by ' + ListToString(FDBFields,',','')
-       + ' order by ' + FOrder
+       Query.SQL.Add(' ' + ' and '
+       + FKey + ' is null ')
     else begin
       ParentNodeData:=Self.GetNodeData(Node);
-      Query.SQL.Text := FSQL.Text + ' ' + ' and '
-       + FKey + ' = $$' + ParentNodeData^[0] + '$$ '
-       + ' group by ' + ListToString(FDBFields,',','')
-       + ' order by ' + FOrder;
+      Query.SQL.Add(' ' + ' and '
+       + FKey + ' = $$' + ParentNodeData^[0] + '$$ ');
     end;
+    Query.SQL.Add(' group by ' + ListToString(FDBFields,',','')
+      + ' order by ' + FOrder);
+//writeln(Query.SQL.Text);
     Query.Open;
     while not Query.Eof do
     begin
@@ -972,7 +985,7 @@ begin
         NodeData.Add(Query.Fields[i].AsString);
       end;
       NewNode:=Self.InsertNode(Node, amAddChildLast, NodeData);
-      if not(levFull = 0) then FillNode(NewNode, levFull - 1);
+      if not(levFull = 0) then FillNode(NewNode, levFull - 1, fReplace);
       Query.Next;
     end;
   finally
@@ -982,7 +995,7 @@ end;
 
 procedure TDBVST.FillNode(Node: PVirtualNode);
 begin
-  FillNode(Node, 1)
+  FillNode(Node, 1, false)
 end;
 
 procedure TDBVST.SeekId(aID: String);
@@ -1052,10 +1065,29 @@ begin
   end;
   if isSelected then begin
     MakeSQL(false);
-    FillNode(nil, Deep);
+    FillNode(nil, Deep, false);
   end;
   FocusedNode:=nil;
   SeekID(FocusedSave);
+end;
+
+procedure TDBVST.ReFill(aID: String);
+Var
+  XNode: PVirtualNode;
+  Data: PDBTreeData;
+begin
+  if length(aID) = 0 then exit;
+  If GetFirst = nil then Exit;
+  XNode:=nil;
+  Repeat
+    if XNode = nil then XNode:=GetFirst Else XNode:=GetNext(XNode);
+    Data:=GetNodeData(XNode);
+    If (Data^[0] = aID) then
+    Begin
+      FillNode(XNode,0,true);
+      break;
+    End;
+  Until XNode = GetLast();
 end;
 
 procedure TDBVST.Init;
