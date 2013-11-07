@@ -74,8 +74,6 @@ type
   end;
 
 
-  { TDBVTEdit }
-
   { TDBVEdit }
 
   TDBVEdit = class(TEdit)
@@ -114,6 +112,47 @@ type
     property Where: String read FWhere write SetWhere;
     property Connection: TPQConnection read FConnection write SetConnection;
   end;
+
+
+  { TDBVCombo }
+
+  TDBVCombo = class(TComboBox)
+  private
+    FConnection: TPQConnection;
+    FDBField: String;
+    FDBFieldConvFrom: String;
+    FDBFieldConvTo: String;
+    FDBTable: String;
+    FLinkFields: TStrings;
+    FMasterControls: TStrings;
+    FWhere: String;
+    FText: String;
+    procedure SetConnection(AValue: TPQConnection);
+    procedure SetDBField(AValue: String);
+    procedure SetDBFieldConvFrom(AValue: String);
+    procedure SetDBFieldConvTo(AValue: String);
+    procedure SetDBTable(AValue: String);
+    procedure SetLinkFields(AValue: TStrings);
+    procedure SetMasterControls(AValue: TStrings);
+    procedure SetWhere(AValue: String);
+  protected
+    procedure OnExitExecute(Sender: TObject);
+  public
+    procedure ReFill();
+    procedure Save();
+    constructor Create(TheOwner: TComponent); override;
+    destructor Destroy; override;
+  published
+    property DBTable: String read FDBTable write SetDBTable;
+    property DBField: String read FDBField write SetDBField;
+    property DBFieldConvTo: String read FDBFieldConvTo write SetDBFieldConvTo;
+    property DBFieldConvFrom: String read FDBFieldConvFrom write SetDBFieldConvFrom;
+    property DBMasterControls: TStrings read FMasterControls write SetMasterControls;
+    property DBLinkFields: TStrings read FLinkFields write SetLinkFields;
+    property Where: String read FWhere write SetWhere;
+    property Connection: TPQConnection read FConnection write SetConnection;
+  end;
+
 
 
   { TDBVSTFilterEdit }
@@ -259,8 +298,143 @@ end;
 
 procedure Register;
 begin
-  RegisterComponents('Virtual Controls',[TDBVST, TDBVMemo, TDBVEdit]);
+  RegisterComponents('Virtual Controls',[TDBVST, TDBVMemo, TDBVCombo, TDBVEdit]);
 end;
+
+{ TDBVCombo }
+
+procedure TDBVCombo.SetConnection(AValue: TPQConnection);
+begin
+  if FConnection=AValue then Exit;
+  FConnection:=aValue;
+end;
+
+procedure TDBVCombo.SetDBField(AValue: String);
+begin
+  if FDBField=AValue then Exit;
+  FDBField:=AValue;
+end;
+
+procedure TDBVCombo.SetDBFieldConvFrom(AValue: String);
+begin
+  if FDBFieldConvFrom=AValue then Exit;
+  FDBFieldConvFrom:=AValue;
+end;
+
+procedure TDBVCombo.SetDBFieldConvTo(AValue: String);
+begin
+  if FDBFieldConvTo=AValue then Exit;
+  FDBFieldConvTo:=AValue;
+end;
+
+procedure TDBVCombo.SetDBTable(AValue: String);
+begin
+  if FDBTable=AValue then Exit;
+  FDBTable:=AValue;
+end;
+
+procedure TDBVCombo.SetLinkFields(AValue: TStrings);
+begin
+  if FLinkFields=AValue then Exit;
+  if AValue<>nil then
+    FLinkFields.Assign(AValue);
+end;
+
+procedure TDBVCombo.SetMasterControls(AValue: TStrings);
+begin
+  if FMasterControls=AValue then Exit;
+  if AValue<>nil then
+    FMasterControls.Assign(AValue);
+end;
+
+procedure TDBVCombo.SetWhere(AValue: String);
+begin
+  if FWhere=AValue then Exit;
+  FWhere:=AValue;
+end;
+
+procedure TDBVCombo.OnExitExecute(Sender: TObject);
+begin
+  if not (FText = Text) then
+    Save;
+end;
+
+procedure TDBVCombo.ReFill;
+var
+  xQuery: TExtSQLQuery;
+  ParentVST: TDBVST;
+  i: Integer;
+begin
+  Clear;
+  try
+    xQuery := TExtSQLQuery.Create(Self, FConnection);
+    xQuery.SQL.Add(' select distinct ' + FieldStringFrom(DBField, DBFieldConvFrom));
+    xQuery.SQL.Add(' from ' + DBTable);
+    xQuery.SQL.Add(' where true ');
+    for i:=0 to FMasterControls.Count-1 do begin
+      ParentVST:=(Owner.FindComponent(FMasterControls[i]) as TDBVST);
+      if ParentVST = nil then break;
+      if ParentVST.SelectedCount < 1 then break;
+      xQuery.SQL.Add(' and ' + FLinkFields[i] + ' in ('
+        + ParentVST.GetSQLSelectedIDs('$$', ',') + ') ');
+    end;
+//    xQuery.SQL.Add(' group by ' + DBField);
+// writeln(xQuery.SQL.Text);
+    xQuery.Open;
+    while not xQuery.Eof do begin
+      if Self.Text > '' then Self.Text:=Self.Text+', ';
+      Self.Text:=Self.Text+(xQuery.Fields[0].AsString);
+      xQuery.Next;
+    end;
+    FText:=Self.Text;
+  finally
+    xQuery.Free;
+  end;
+end;
+
+procedure TDBVCombo.Save;
+var
+  xQuery: TExtSQLQuery;
+  ParentVST: TDBVST;
+  i: Integer;
+begin
+  try
+    xQuery := TExtSQLQuery.Create(Self, FConnection);
+    xQuery.SQL.Add(' update ' + DBTable);
+    xQuery.SQL.Add(' set ' + DBField + '='
+      + FieldStringTo(SQLQuote(trim(Text)), DBFieldConvTo));
+    xQuery.SQL.Add(' where true ');
+    for i:=0 to FMasterControls.Count-1 do begin
+      ParentVST:=(Owner.FindComponent(FMasterControls[i]) as TDBVST);
+      if ParentVST = nil then break;
+      xQuery.SQL.Add(' and ' + FLinkFields[i] + ' in ('
+        + ParentVST.GetSQLSelectedIDs('$$', ',') + ') ');
+    end;
+    xQuery.ExecSQL;
+  finally
+    xQuery.Free;
+  end;
+end;
+
+constructor TDBVCombo.Create(TheOwner: TComponent);
+begin
+  inherited Create(TheOwner);
+  FConnection:=TPQConnection.Create(Self);
+  FConnection.SetSubComponent(true);
+  FLinkFields:=TStringList.Create();
+  FMasterControls:=TStringList.Create();
+  OnExit:=@OnExitExecute;
+end;
+
+destructor TDBVCombo.Destroy;
+begin
+  FLinkFields.Free;
+  FLinkFields:=nil;
+  FMasterControls.Free;
+  FMasterControls:=nil;
+  inherited Destroy;
+end;
+
 
 { TDBVMemo }
 

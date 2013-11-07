@@ -42,6 +42,8 @@ type
   TMainForm = class(TForm)
     ActionPrint: TAction;
     BuildingWorkPlanFact1: TDBVST;
+    WorksCheckBox: TCheckBox;
+    DBVCombo1: TDBVCombo;
     DBVEdit2: TDBVEdit;
     DBVEdit3: TDBVEdit;
     DBVEdit4: TDBVEdit;
@@ -334,6 +336,7 @@ type
     procedure WorkDelBtnClick(Sender: TObject);
     procedure UpdateDBTable(Table: String; Fields, Values: array of String);
     procedure FillListFromSQL(Items:TStrings ; SQL: String);
+    procedure WorksCheckBoxChange(Sender: TObject);
     procedure WorksListChange(Sender: TBaseVirtualTree; Node: PVirtualNode);
     procedure WorksListFocusChanged(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Column: TColumnIndex);
@@ -449,7 +452,7 @@ procedure TMainForm.BuildingWorkPlanFact1Edited(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Column: TColumnIndex);
 begin
   BuildingWorkPlanFact1.Edited(Sender, Node, Column);
-  BuildingWorkPlanFact.ReFill();
+//  BuildingWorkPlanFact.ReFill();
 end;
 
 procedure TMainForm.BuildingWorkPlanFactFocusChanged(Sender: TBaseVirtualTree;
@@ -537,7 +540,7 @@ begin
   if not aControl.Visible then exit;
   case aControl.ClassName of
     'TTabSheet','TPanel','TPageControl','TScrollBox','TPairSplitterSide',
-    'TPairSplitter','TDBVST', 'TDBVMemo', 'TDBVEdit': begin
+    'TPairSplitter','TDBVST', 'TDBVMemo', 'TDBVEdit', 'TDBVCombo': begin
       case aControl.ClassName of
         'TDBVST': with (aControl as TDBVST) do begin
           for j:=0 to DBMasterControls.Count-1 do begin
@@ -572,6 +575,22 @@ begin
           Cursor:=crDefault;
         end;
         'TDBVEdit': with (aControl as TDBVEdit) do begin
+          for j:=0 to DBMasterControls.Count-1 do begin
+            xComponent:=Self.FindComponent(DBMasterControls.Strings[j]);
+            if not Assigned(xComponent) then exit;
+            if not xComponent.ClassNameIs('TDBVST') then exit;
+            if (xComponent as TDBVST).SelectedCount<1 then begin
+              ForceSelect(xComponent.Name);
+              xComponent:=nil;
+              exit;
+            end;
+            xComponent:=nil;
+          end;
+          Cursor:=crHourGlass;
+          ReFill;
+          Cursor:=crDefault;
+        end;
+        'TDBVCombo': with (aControl as TDBVCombo) do begin
           for j:=0 to DBMasterControls.Count-1 do begin
             xComponent:=Self.FindComponent(DBMasterControls.Strings[j]);
             if not Assigned(xComponent) then exit;
@@ -1136,6 +1155,15 @@ begin
       Log(E.Message);
   end;
   Query.Free;
+end;
+
+procedure TMainForm.WorksCheckBoxChange(Sender: TObject);
+begin
+  if WorksCheckBox.Checked then
+    WorksList.DBTable:='works_used'
+  else
+    WorksList.DBTable:='works';
+  WorksList.Refill;
 end;
 
 procedure TMainForm.WorksListChange(Sender: TBaseVirtualTree; Node: PVirtualNode

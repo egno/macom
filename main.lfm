@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 477
+  Left = 466
   Height = 739
-  Top = 184
+  Top = 166
   Width = 1173
   Caption = 'MaCom FLOSS'
   ClientHeight = 739
@@ -99,6 +99,7 @@ object MainForm: TMainForm
           TabOrder = 0
           TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoTristateTracking, toAutoDeleteMovedNodes, toDisableAutoscrollOnFocus]
           TreeOptions.MiscOptions = [toFullRepaintOnResize, toGridExtensions, toInitOnSave, toWheelPanning]
+          TreeOptions.SelectionOptions = [toExtendedFocus]
           OnDblClick = MainTreeDblClick
           OnFocusChanged = MainTreeFocusChanged
           DBTable = 'app_maintree'
@@ -663,6 +664,7 @@ object MainForm: TMainForm
                   Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoAutoSpring]
                   TabOrder = 0
                   TreeOptions.MiscOptions = [toFullRepaintOnResize, toGridExtensions, toInitOnSave, toWheelPanning]
+                  TreeOptions.SelectionOptions = [toExtendedFocus]
                   OnFocusChanged = ServicesListFocusChanged
                   DBTable = 'services'
                   DBFields.Strings = (
@@ -801,9 +803,9 @@ object MainForm: TMainForm
               Height = 623
               Top = 0
               Width = 761
-              ActivePage = BuildingWorksTabSheet
+              ActivePage = WorksTabSheet
               Align = alClient
-              TabIndex = 6
+              TabIndex = 3
               TabOrder = 0
               OnChange = CenterPageControlChange
               OnCloseTabClicked = CenterPageControlCloseTabClicked
@@ -818,11 +820,11 @@ object MainForm: TMainForm
                   Height = 545
                   Top = 0
                   Width = 757
-                  HorzScrollBar.Page = 755
-                  VertScrollBar.Page = 543
+                  HorzScrollBar.Page = 757
+                  VertScrollBar.Page = 545
                   Align = alClient
-                  ClientHeight = 543
-                  ClientWidth = 755
+                  ClientHeight = 541
+                  ClientWidth = 753
                   TabOrder = 0
                   object ConnUserLabel: TLabel
                     AnchorSideLeft.Control = ConnScrollBox
@@ -1070,13 +1072,13 @@ object MainForm: TMainForm
                   Height = 587
                   Top = 0
                   Width = 757
-                  ActivePage = TabSheet1
+                  ActivePage = BuildingMainTabSheet
                   Align = alClient
-                  TabIndex = 2
+                  TabIndex = 0
                   TabOrder = 0
                   object BuildingMainTabSheet: TTabSheet
                     Caption = 'Основное'
-                    ClientHeight = 556
+                    ClientHeight = 583
                     ClientWidth = 753
                     OnShow = BuildingMainTabSheetShow
                     object ScrollBox2: TScrollBox
@@ -1084,11 +1086,11 @@ object MainForm: TMainForm
                       Height = 556
                       Top = 0
                       Width = 753
-                      HorzScrollBar.Page = 751
-                      VertScrollBar.Page = 554
+                      HorzScrollBar.Page = 753
+                      VertScrollBar.Page = 556
                       Align = alClient
-                      ClientHeight = 554
-                      ClientWidth = 751
+                      ClientHeight = 552
+                      ClientWidth = 749
                       TabOrder = 0
                       object PairSplitter6: TPairSplitter
                         Cursor = crVSplit
@@ -1112,15 +1114,15 @@ object MainForm: TMainForm
                             Height = 300
                             Top = 0
                             Width = 751
-                            HorzScrollBar.Page = 749
-                            VertScrollBar.Page = 298
+                            HorzScrollBar.Page = 751
+                            VertScrollBar.Page = 300
                             Align = alClient
                             ChildSizing.HorizontalSpacing = 3
                             ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
                             ChildSizing.Layout = cclLeftToRightThenTopToBottom
                             ChildSizing.ControlsPerLine = 2
-                            ClientHeight = 298
-                            ClientWidth = 749
+                            ClientHeight = 296
+                            ClientWidth = 747
                             TabOrder = 0
                             object Label16: TLabel
                               Left = 0
@@ -1183,7 +1185,7 @@ object MainForm: TMainForm
                   end
                   object BuildingPropsTabSheet: TTabSheet
                     Caption = 'Характеристики'
-                    ClientHeight = 556
+                    ClientHeight = 583
                     ClientWidth = 753
                     OnShow = BuildingPropsTabSheetShow
                     object BuildingPropertiesVST: TDBVST
@@ -1246,22 +1248,22 @@ object MainForm: TMainForm
                   end
                   object TabSheet1: TTabSheet
                     Caption = 'Расчётные показатели'
-                    ClientHeight = 556
+                    ClientHeight = 583
                     ClientWidth = 753
                     object ScrollBox5: TScrollBox
                       Left = 0
                       Height = 556
                       Top = 0
                       Width = 753
-                      HorzScrollBar.Page = 751
-                      VertScrollBar.Page = 554
+                      HorzScrollBar.Page = 753
+                      VertScrollBar.Page = 556
                       Align = alClient
                       ChildSizing.HorizontalSpacing = 3
                       ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
                       ChildSizing.Layout = cclLeftToRightThenTopToBottom
                       ChildSizing.ControlsPerLine = 2
-                      ClientHeight = 554
-                      ClientWidth = 751
+                      ClientHeight = 552
+                      ClientWidth = 749
                       TabOrder = 0
                       object Label19: TLabel
                         Left = 0
@@ -1310,15 +1312,15 @@ object MainForm: TMainForm
                   TabOrder = 0
                   object ServicePropMainTabSheet: TTabSheet
                     Caption = 'Основное'
-                    ClientHeight = 556
+                    ClientHeight = 583
                     ClientWidth = 753
                     object ScrollBox1: TScrollBox
                       Left = 0
                       Height = 556
                       Top = 0
                       Width = 753
-                      HorzScrollBar.Page = 751
-                      VertScrollBar.Page = 554
+                      HorzScrollBar.Page = 753
+                      VertScrollBar.Page = 556
                       Align = alClient
                       ChildSizing.LeftRightSpacing = 3
                       ChildSizing.TopBottomSpacing = 3
@@ -1327,8 +1329,8 @@ object MainForm: TMainForm
                       ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
                       ChildSizing.Layout = cclLeftToRightThenTopToBottom
                       ChildSizing.ControlsPerLine = 2
-                      ClientHeight = 554
-                      ClientWidth = 751
+                      ClientHeight = 552
+                      ClientWidth = 749
                       TabOrder = 0
                       object Label1: TLabel
                         Left = 3
@@ -1386,7 +1388,7 @@ object MainForm: TMainForm
                   end
                   object SrvWorksTabSheet: TTabSheet
                     Caption = 'Работы'
-                    ClientHeight = 556
+                    ClientHeight = 583
                     ClientWidth = 753
                     OnShow = SrvWorksTabSheetShow
                     object PairSplitter2: TPairSplitter
@@ -1564,6 +1566,7 @@ object MainForm: TMainForm
                                 end>
                               Header.DefaultHeight = 17
                               TabOrder = 0
+                              TreeOptions.MiscOptions = [toEditable, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
                               TreeOptions.SelectionOptions = [toMultiSelect]
                               OnFocusChanged = ServicesWorksListFocusChanged
                               DBTable = 'works'
@@ -1711,15 +1714,15 @@ object MainForm: TMainForm
                   end
                   object TabSheet2: TTabSheet
                     Caption = 'Расчётные показатели'
-                    ClientHeight = 556
+                    ClientHeight = 583
                     ClientWidth = 753
                     object ScrollBox6: TScrollBox
                       Left = 0
-                      Height = 537
+                      Height = 556
                       Top = 0
-                      Width = 484
-                      HorzScrollBar.Page = 484
-                      VertScrollBar.Page = 537
+                      Width = 753
+                      HorzScrollBar.Page = 753
+                      VertScrollBar.Page = 556
                       Align = alClient
                       ChildSizing.LeftRightSpacing = 3
                       ChildSizing.TopBottomSpacing = 3
@@ -1728,23 +1731,23 @@ object MainForm: TMainForm
                       ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
                       ChildSizing.Layout = cclLeftToRightThenTopToBottom
                       ChildSizing.ControlsPerLine = 2
-                      ClientHeight = 533
-                      ClientWidth = 480
+                      ClientHeight = 552
+                      ClientWidth = 749
                       TabOrder = 0
                       object Label20: TLabel
                         Left = 3
                         Height = 27
                         Top = 3
-                        Width = 312
+                        Width = 446
                         Caption = 'Плановая стоимость для здания'
                         ParentColor = False
                         OnClick = Label17Click
                       end
                       object DBVEdit7: TDBVEdit
-                        Left = 318
+                        Left = 452
                         Height = 27
                         Top = 3
-                        Width = 161
+                        Width = 296
                         ReadOnly = True
                         TabOrder = 0
                         Text = 'DBVEdit4'
@@ -1787,7 +1790,7 @@ object MainForm: TMainForm
                     ClientHeight = 587
                     object WorksList: TDBVST
                       Left = 0
-                      Height = 587
+                      Height = 563
                       Top = 0
                       Width = 200
                       Align = alClient
@@ -1848,6 +1851,16 @@ object MainForm: TMainForm
                       Key = 'pid'
                       Order = '3'
                       Connection = Conn
+                    end
+                    object WorksCheckBox: TCheckBox
+                      Left = 0
+                      Height = 24
+                      Top = 563
+                      Width = 200
+                      Align = alBottom
+                      Caption = 'Скрыть неиспользуемые'
+                      OnChange = WorksCheckBoxChange
+                      TabOrder = 1
                     end
                   end
                   object PairSplitterSide11: TPairSplitterSide
@@ -1916,7 +1929,7 @@ object MainForm: TMainForm
                                 TabOrder = 0
                                 object Label4: TLabel
                                   Left = 0
-                                  Height = 33
+                                  Height = 75
                                   Top = 0
                                   Width = 228
                                   Caption = 'Наименование'
@@ -1924,9 +1937,10 @@ object MainForm: TMainForm
                                 end
                                 object DBVMemo5: TDBVMemo
                                   Left = 228
-                                  Height = 33
+                                  Height = 75
                                   Top = 0
                                   Width = 320
+                                  ScrollBars = ssAutoBoth
                                   TabOrder = 3
                                   DBTable = 'works'
                                   DBField = 'disp'
@@ -1941,7 +1955,7 @@ object MainForm: TMainForm
                                 object Label5: TLabel
                                   Left = 0
                                   Height = 27
-                                  Top = 33
+                                  Top = 75
                                   Width = 228
                                   Caption = 'Код'
                                   ParentColor = False
@@ -1949,7 +1963,7 @@ object MainForm: TMainForm
                                 object DBVEdit4: TDBVEdit
                                   Left = 228
                                   Height = 27
-                                  Top = 33
+                                  Top = 75
                                   Width = 320
                                   TabOrder = 0
                                   DBTable = 'works'
@@ -1966,16 +1980,17 @@ object MainForm: TMainForm
                                 object Label6: TLabel
                                   Left = 0
                                   Height = 27
-                                  Top = 60
+                                  Top = 102
                                   Width = 228
                                   Caption = 'База'
                                   ParentColor = False
                                 end
-                                object DBVEdit5: TDBVEdit
+                                object DBVEdit5: TDBVCombo
                                   Left = 228
                                   Height = 27
-                                  Top = 60
+                                  Top = 102
                                   Width = 320
+                                  ItemHeight = 0
                                   TabOrder = 1
                                   DBTable = 'works'
                                   DBField = 'base'
@@ -1991,7 +2006,7 @@ object MainForm: TMainForm
                                 object Label7: TLabel
                                   Left = 0
                                   Height = 27
-                                  Top = 87
+                                  Top = 129
                                   Width = 228
                                   Caption = 'Множитель'
                                   ParentColor = False
@@ -1999,7 +2014,7 @@ object MainForm: TMainForm
                                 object DBVEdit8: TDBVEdit
                                   Left = 228
                                   Height = 27
-                                  Top = 87
+                                  Top = 129
                                   Width = 320
                                   OnChange = DBVEdit8Change
                                   TabOrder = 2
@@ -2016,17 +2031,18 @@ object MainForm: TMainForm
                                 end
                                 object Label8: TLabel
                                   Left = 0
-                                  Height = 33
-                                  Top = 114
+                                  Height = 75
+                                  Top = 156
                                   Width = 228
                                   Caption = 'Примечание'
                                   ParentColor = False
                                 end
                                 object DBVMemo4: TDBVMemo
                                   Left = 228
-                                  Height = 33
-                                  Top = 114
+                                  Height = 75
+                                  Top = 156
                                   Width = 320
+                                  ScrollBars = ssAutoBoth
                                   TabOrder = 4
                                   DBTable = 'works'
                                   DBField = 'note'
@@ -2060,17 +2076,19 @@ object MainForm: TMainForm
                                   item
                                     Position = 0
                                     Text = 'Характеристика'
-                                    Width = 100
+                                    Width = 150
                                   end                                
                                   item
                                     Position = 1
                                     Text = 'Условие'
+                                    Width = 100
                                   end>
                                 Header.DefaultHeight = 17
                                 Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
                                 TabOrder = 0
                                 TreeOptions.MiscOptions = [toEditable, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnDblClick]
                                 TreeOptions.PaintOptions = [toShowButtons, toShowDropmark, toShowHorzGridLines, toShowRoot, toShowVertGridLines, toThemeAware, toUseBlendedImages]
+                                TreeOptions.SelectionOptions = [toExtendedFocus]
                                 DBTable = 'work_conditions'
                                 DBFields.Strings = (
                                   'param'
@@ -2684,7 +2702,7 @@ object MainForm: TMainForm
                       TabOrder = 0
                       TreeOptions.MiscOptions = [toEditable, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toWheelPanning, toFullRowDrag, toEditOnDblClick]
                       TreeOptions.PaintOptions = [toShowButtons, toShowDropmark, toShowHorzGridLines, toShowRoot, toShowVertGridLines, toThemeAware, toUseBlendedImages]
-                      TreeOptions.SelectionOptions = [toExtendedFocus]
+                      TreeOptions.SelectionOptions = [toExtendedFocus, toMultiSelect]
                       OnFocusChanged = BuildingWorkPlanFactFocusChanged
                       DBTable = 'works_plan_fact'
                       DBFields.Strings = (
