@@ -42,6 +42,7 @@ type
   TMainForm = class(TForm)
     ActionPrint: TAction;
     BuildingWorkPlanFact1: TDBVST;
+    ToolButton3: TToolButton;
     WorksCheckBox: TCheckBox;
     DBVCombo1: TDBVCombo;
     DBVEdit2: TDBVEdit;
@@ -1019,27 +1020,241 @@ procedure TMainForm.ToolButton3Click(Sender: TObject);
 var
   xHTMLPanel: TMyIpHtmlPanel;
   xTabSheet: TTabSheet;
+  i: Integer;
+  xQuery: TExtSQLQuery;
+  xHtml: TStringList;
 begin
+  Cursor:=crSQLWait;
   xTabSheet := CenterPageControl.AddTabSheet;
   xTabSheet.TabVisible:=True;
   xTabSheet.BringToFront;
   CenterPageControl.ActivePage:=xTabSheet;
   xHTMLPanel:=TMyIpHtmlPanel.Create(xTabSheet);
-    xHTMLPanel.ShowHTML(
-     '<HTML>'
+  xHTMLPanel.Name:='HTMLPanel';
+  xHtml:=TStringList.Create;
+
+  xHtml.Add('<HTML>'
     +'<head>'
-//    +'<link rel="stylesheet" href="fpdoc.css" type="text/css">'
+    +'<link rel="stylesheet" href="reports/css/style.css" type="text/css">'
     + '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'
     +'</head>'
     +'<BODY>'
-    +'<h1>MaCom</h1>'
-    +'<p>Пример отчёта.</p>'
-    +'</BODY></HTML>');
+    +'<h1>Плановая зарплата</h1>');
+    xHtml.Add('<p>Сотрудник: '
+      +ReturnStringSQL(Conn,'select disp from personnel where id = $$'
+      +'d5ed1ccb-3d48-b6e0-7120-8a613235cbea'+'$$')+'</p>');
+    xHtml.Add('<p>Период: '
+      +ReturnStringSQL(Conn,'select to_char(lower(work_period()),$$dd.mm.yyyy$$)'
+        +'||$$-$$||to_char(upper(work_period())-1,$$dd.mm.yyyy$$)')
+      +'</p>');
+    xHtml.Add('<p>Ставка: '
+      +ReturnStringSQL(Conn,'SELECT val from all_staff_params '
+        + ' where person_id = $$d5ed1ccb-3d48-b6e0-7120-8a613235cbea$$'
+        + ' and val is not null')
+      +'</p>');
+
+    xHtml.Add('<h2>Итоги</h2>');
+    xHtml.Add('<table>');
+    xHtml.Add('<tr>');
+    xHtml.Add('<th>Начисление (удержание)</th>');
+    xHtml.Add('<th>Сумма, руб.</th>');
+    xHtml.Add('</tr>');
+    try
+      xQuery := TExtSQLQuery.Create(Self, Conn);
+      xQuery.SQL.Text := 'select '
+        +' s.note, to_char(s.amount, $$FM99999990D00$$)  '
+        +' from '
+        +' salary.parts_hlist h, '
+        +' log.salary s  '
+        +' where '
+        +' h.id = s.part '
+        +' and  '
+        +' s.amount is not null '
+        +' and person = $$d5ed1ccb-3d48-b6e0-7120-8a613235cbea$$ '
+        +' order by lev ';
+      xQuery.Open;
+      while not xQuery.Eof do
+      begin
+        xHtml.Add('<tr>');
+        for i:=0 to xQuery.FieldCount-1 do
+          xHtml.Add('<td>'+xQuery.Fields[i].AsString+'</td>');
+        xHtml.Add('</tr>');
+        xQuery.Next;
+      end;
+    finally
+      xQuery.Free;
+    end;
+    xHtml.Add('</table>');
+
+    xHtml.Add('<h2>Сдельная заработная плата</h2>');
+    xHtml.Add('<table>');
+    xHtml.Add('<tr>');
+    xHtml.Add('<th>Зарплата, руб.</th>');
+    xHtml.Add('<th>Трудозатраты, чел.-час</th>');
+    xHtml.Add('<th>Часов в месяце</th>');
+    xHtml.Add('<th>Нагрузка, %</th>');
+    xHtml.Add('</tr>');
+    try
+      xQuery := TExtSQLQuery.Create(Self, Conn);
+      xQuery.SQL.Text := 'SELECT '
+        +' to_char(sum(salary), $$FM99999990D00$$), '
+        +' to_char(sum(labour), $$FM99999990$$), '
+        +' to_char(staff.hours_in_month(work_date(),1), $$FM99999990$$), '
+        +' to_char(sum(labour)/staff.hours_in_month(work_date(),1)*100,$$FM99999990$$) '
+        +' FROM v_plan_work_salary pws  '
+        +' where person_id = $$d5ed1ccb-3d48-b6e0-7120-8a613235cbea$$   ';
+      xQuery.Open;
+      while not xQuery.Eof do
+      begin
+        xHtml.Add('<tr>');
+        for i:=0 to xQuery.FieldCount-1 do
+          xHtml.Add('<td>'+xQuery.Fields[i].AsString+'</td>');
+        xHtml.Add('</tr>');
+        xQuery.Next;
+      end;
+    finally
+      xQuery.Free;
+    end;
+    xHtml.Add('</table>');
+
+    xHtml.Add('<h2>Нагрузка</h2>');
+    xHtml.Add('<table>');
+    xHtml.Add('<tr>');
+    xHtml.Add('<th>Дата</th>');
+    xHtml.Add('<th>Трудозатраты, чел.-час.</th>');
+    xHtml.Add('<th>Рабочий день, час.</th>');
+    xHtml.Add('<th>Переработка, час.</th>');
+    xHtml.Add('</tr>');
+    try
+      xQuery := TExtSQLQuery.Create(Self, Conn);
+      xQuery.SQL.Text := 'SELECT  '
+        +' to_char(lower(plan_period),$$dd.mm.yyyy$$), '
+        +' to_char(sum(labour), $$FM99999990D0$$),  '
+        +' to_char(c.hours, $$FM99999990D0$$),  '
+        +' to_char(sum(labour) - c.hours ,$$FM99999990D0$$)  '
+        +' FROM v_plan_work_labours pws,  '
+        +' staff.calendar c  '
+        +' where person_id = $$d5ed1ccb-3d48-b6e0-7120-8a613235cbea$$ '
+        +' and c.ctype=1  '
+        +' and c.dt=lower(plan_period) '
+        +' group by lower(plan_period), c.hours  '
+        +' order by lower(plan_period)   ';
+      xQuery.Open;
+      while not xQuery.Eof do
+      begin
+        xHtml.Add('<tr>');
+        for i:=0 to xQuery.FieldCount-1 do
+          xHtml.Add('<td>'+xQuery.Fields[i].AsString+'</td>');
+        xHtml.Add('</tr>');
+        xQuery.Next;
+      end;
+    finally
+      xQuery.Free;
+    end;
+    xHtml.Add('</table>');
+
+    xHtml.Add('<h2>Сводный план работ</h2>');
+    xHtml.Add('<table>');
+    xHtml.Add('<tr>');
+    xHtml.Add('<th>Объект</th>');
+    xHtml.Add('<th>Код работы</th>');
+    xHtml.Add('<th>Работа</th>');
+    xHtml.Add('<th>Объём работ</th>');
+    xHtml.Add('<th>Нормативные трудозатраты (чел.-час)</th>');
+    xHtml.Add('<th>Количество работ по плану</th>');
+    xHtml.Add('<th>Плановые трудозатраты  (чел.-час)</th>');
+    xHtml.Add('</tr>');
+    try
+      xQuery := TExtSQLQuery.Create(Self, Conn);
+      xQuery.SQL.Text := 'SELECT '
+          + ' b.disp,'
+          + ' w.code::text,'
+          + ' w.disp,'
+          + ' to_char(pws.base_val, $$FM99999990D099$$),'
+          + ' to_char(pws.norm_amount, $$FM99999990D099$$),'
+          + ' to_char(sum(plan_amount), $$FM99999990D099$$),'
+          + ' to_char(sum(labour), $$FM99999990D0$$)'
+          + ' FROM v_plan_work_labours pws,'
+          + ' works w,'
+          + ' buildings b'
+          + ' where person_id = $$d5ed1ccb-3d48-b6e0-7120-8a613235cbea$$'
+          + ' and w.id = pws.work'
+          + ' and b.id = pws.building'
+          + ' group by b.disp, w.code,'
+          + ' w.disp, pws.base_val, pws.norm_amount'
+          + ' order by b.disp, w.code,'
+          + ' w.disp ';
+      xQuery.Open;
+      while not xQuery.Eof do
+      begin
+        xHtml.Add('<tr>');
+        for i:=0 to xQuery.FieldCount-1 do
+          xHtml.Add('<td>'+xQuery.Fields[i].AsString+'</td>');
+        xHtml.Add('</tr>');
+        xQuery.Next;
+      end;
+    finally
+      xQuery.Free;
+    end;
+    xHtml.Add('</table>');
+
+
+
+
+
+
+
+    xHtml.Add('<h2>План работ</h2>');
+    xHtml.Add('<table>');
+    xHtml.Add('<tr>');
+    xHtml.Add('<th>Дата</th>');
+    xHtml.Add('<th>Объект</th>');
+    xHtml.Add('<th>Работа</th>');
+    xHtml.Add('<th>Объём работ</th>');
+    xHtml.Add('<th>Нормативные трудозатраты (чел.-час)</th>');
+    xHtml.Add('<th>Часть объёма работ по плану</th>');
+    xHtml.Add('<th>Плановые трудозатраты  (чел.-час)</th>');
+    xHtml.Add('<th>Оплата (руб.)</th>');
+    xHtml.Add('</tr>');
+    try
+      xQuery := TExtSQLQuery.Create(Self, Conn);
+      xQuery.SQL.Text := 'SELECT  to_char(lower(plan_period),$$DD.MM.YYYY$$), '
+        +' b.disp,  w.disp,  base_val,  norm_amount,  plan_amount, '
+        + ' to_char(labour, $$FM99999990D099$$),  to_char(salary, $$FM99999990D000$$) '
+        + ' FROM v_plan_work_salary pws, macom.buildings b, macom.works w '
+        + '  where person_id = $$d5ed1ccb-3d48-b6e0-7120-8a613235cbea$$ '
+        + ' and b.id = pws.building and w.id=pws.work '
+        + ' order by lower(plan_period), b.disp ';
+      xQuery.Open;
+      while not xQuery.Eof do
+      begin
+        xHtml.Add('<tr>');
+        for i:=0 to xQuery.FieldCount-1 do
+          xHtml.Add('<td>'+xQuery.Fields[i].AsString+'</td>');
+        xHtml.Add('</tr>');
+        xQuery.Next;
+      end;
+    finally
+      xQuery.Free;
+    end;
+    xHtml.Add('</table>');
+
+    xHtml.Add('</BODY></HTML>');
+    try
+      xHtml.SaveToFile('r'+FormatDateTime('YYMMDDhhnnsszzz',now)+'.html');
+       xHTMLPanel.ShowHTML(xHtml.Text);
+    finally
+    end;
+    MainForm.Cursor:=crDefault;
 end;
 
 procedure TMainForm.ToolButton4Click(Sender: TObject);
+var
+  xControl: TControl;
 begin
-  MainForm.Cursor:=crHourGlass;
+  xControl:=CenterPageControl.ActivePage.FindChildControl('HTMLPanel');
+  if Assigned(xControl) then
+    (xControl as TMyIpHtmlPanel).PrintPreview;
 end;
 
 

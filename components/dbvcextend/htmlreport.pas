@@ -93,7 +93,7 @@ begin
   Result:=nil;
   debugln(['TMyIpHtmlDataProvider.DoGetStream ',URL]);
 
-  if URL='fpdoc.css' then begin
+//  if URL='fpdoc.css' then begin
     debugln(['TMyIpHtmlDataProvider.DoGetStream ',FileExists(URL)]);
     ms:=TMemoryStream.Create;
     try
@@ -103,7 +103,7 @@ begin
       ms.Free;
     end;
     Result:=ms;
-  end;
+//  end;
 end;
 
 constructor TMyIpHtmlDataProvider.Create(TheOwner: TComponent);
