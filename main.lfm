@@ -809,9 +809,9 @@ object MainForm: TMainForm
               Height = 623
               Top = 0
               Width = 761
-              ActivePage = BuildingServicesTabSheet
+              ActivePage = ConnectTabSheet
               Align = alClient
-              TabIndex = 4
+              TabIndex = 0
               TabOrder = 0
               OnChange = CenterPageControlChange
               OnCloseTabClicked = CenterPageControlCloseTabClicked
@@ -826,11 +826,11 @@ object MainForm: TMainForm
                   Height = 545
                   Top = 0
                   Width = 757
-                  HorzScrollBar.Page = 757
-                  VertScrollBar.Page = 545
+                  HorzScrollBar.Page = 755
+                  VertScrollBar.Page = 543
                   Align = alClient
-                  ClientHeight = 541
-                  ClientWidth = 753
+                  ClientHeight = 543
+                  ClientWidth = 755
                   TabOrder = 0
                   object ConnUserLabel: TLabel
                     AnchorSideLeft.Control = ConnScrollBox

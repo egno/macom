@@ -389,7 +389,7 @@ begin
               ConnHostEdit.Text, ConnPortEdit.Text,
               ConnBaseEdit.Text, xErrMsg);
   if xErrMsg <> '' then
-    Log(xErrMsg);
+    Log(xErrMsg, 1);
   CheckConnected();
   Cursor:=crDefault;
 end;
@@ -402,7 +402,7 @@ end;
 
 procedure TMainForm.ActionPrintExecute(Sender: TObject);
 begin
-  log(ActiveControl.Name);
+//  log(ActiveControl.Name);
   ToolButton3Click(Sender);
 end;
 
@@ -539,6 +539,7 @@ var
 begin
   if not Assigned(aControl) then exit;
   if not aControl.Visible then exit;
+  Application.ProcessMessages();
   case aControl.ClassName of
     'TTabSheet','TPanel','TPageControl','TScrollBox','TPairSplitterSide',
     'TPairSplitter','TDBVST', 'TDBVMemo', 'TDBVEdit', 'TDBVCombo': begin
@@ -557,6 +558,7 @@ begin
           end;
           Cursor:=crHourGlass;
           ReFill;
+          Log('', -1);
           Cursor:=crDefault;
         end;
         'TDBVMemo': with (aControl as TDBVMemo) do begin
@@ -589,6 +591,7 @@ begin
           end;
           Cursor:=crHourGlass;
           ReFill;
+          Log('', -1);
           Cursor:=crDefault;
         end;
         'TDBVCombo': with (aControl as TDBVCombo) do begin
@@ -605,6 +608,7 @@ begin
           end;
           Cursor:=crHourGlass;
           ReFill;
+          Log('', -1);
           Cursor:=crDefault;
         end;
       end;
@@ -612,6 +616,7 @@ begin
         CheckDepends((aControl as TPageControl).ActivePage)
       else
         for i:=0 to (aControl as TWinControl).ControlCount-1 do begin
+          Application.ProcessMessages();
           CheckDepends((aControl as TWinControl).Controls[i]);
         end;
     end;
@@ -661,11 +666,11 @@ begin
   case aName of
     'BuildingsList': begin
       ShowBuildingsList;
-      Log('Необходимо выбрать здания');
+      Log('Необходимо выбрать здания', 1);
     end;
     'ServicesList': begin
       ShowServicesList;
-      Log('Необходимо выбрать услуги');
+      Log('Необходимо выбрать услуги', 1);
     end;
   end;
 end;
@@ -1025,7 +1030,11 @@ var
   xHtml: TStringList;
 begin
   Cursor:=crSQLWait;
+  Log('Подождите...', 1);
+  Self.Enabled:=False;
+  Application.ProcessMessages();
   xTabSheet := CenterPageControl.AddTabSheet;
+  xTabSheet.Caption:='Отчёт по ЗП';
   xTabSheet.TabVisible:=True;
   xTabSheet.BringToFront;
   CenterPageControl.ActivePage:=xTabSheet;
@@ -1033,6 +1042,7 @@ begin
   xHTMLPanel.Name:='HTMLPanel';
   xHtml:=TStringList.Create;
 
+  Log('Расчёт плановой зарплаты...');
   xHtml.Add('<HTML>'
     +'<head>'
     +'<link rel="stylesheet" href="reports/css/style.css" type="text/css">'
@@ -1053,6 +1063,7 @@ begin
         + ' and val is not null')
       +'</p>');
 
+    Log('Расчёт Итогов...');
     xHtml.Add('<h2>Итоги</h2>');
     xHtml.Add('<table>');
     xHtml.Add('<tr>');
@@ -1072,9 +1083,12 @@ begin
         +' s.amount is not null '
         +' and person = $$d5ed1ccb-3d48-b6e0-7120-8a613235cbea$$ '
         +' order by lev ';
+      Application.ProcessMessages();
       xQuery.Open;
+      Application.ProcessMessages();
       while not xQuery.Eof do
       begin
+        Application.ProcessMessages();
         xHtml.Add('<tr>');
         for i:=0 to xQuery.FieldCount-1 do
           xHtml.Add('<td>'+xQuery.Fields[i].AsString+'</td>');
@@ -1084,6 +1098,7 @@ begin
     finally
       xQuery.Free;
     end;
+    Log('Расчёт Сдельной ЗП...');
     xHtml.Add('</table>');
 
     xHtml.Add('<h2>Сдельная заработная плата</h2>');
@@ -1103,9 +1118,12 @@ begin
         +' to_char(sum(labour)/staff.hours_in_month(work_date(),1)*100,$$FM99999990$$) '
         +' FROM v_plan_work_salary pws  '
         +' where person_id = $$d5ed1ccb-3d48-b6e0-7120-8a613235cbea$$   ';
+      Application.ProcessMessages();
       xQuery.Open;
+      Application.ProcessMessages();
       while not xQuery.Eof do
       begin
+        Application.ProcessMessages();
         xHtml.Add('<tr>');
         for i:=0 to xQuery.FieldCount-1 do
           xHtml.Add('<td>'+xQuery.Fields[i].AsString+'</td>');
@@ -1117,6 +1135,7 @@ begin
     end;
     xHtml.Add('</table>');
 
+    Log('Расчёт Нагрузки...');
     xHtml.Add('<h2>Нагрузка</h2>');
     xHtml.Add('<table>');
     xHtml.Add('<tr>');
@@ -1139,9 +1158,12 @@ begin
         +' and c.dt=lower(plan_period) '
         +' group by lower(plan_period), c.hours  '
         +' order by lower(plan_period)   ';
+      Application.ProcessMessages();
       xQuery.Open;
+      Application.ProcessMessages();
       while not xQuery.Eof do
       begin
+        Application.ProcessMessages();
         xHtml.Add('<tr>');
         for i:=0 to xQuery.FieldCount-1 do
           xHtml.Add('<td>'+xQuery.Fields[i].AsString+'</td>');
@@ -1151,6 +1173,7 @@ begin
     finally
       xQuery.Free;
     end;
+    Log('Расчёт Сводного плана...');
     xHtml.Add('</table>');
 
     xHtml.Add('<h2>Сводный план работ</h2>');
@@ -1184,9 +1207,12 @@ begin
           + ' w.disp, pws.base_val, pws.norm_amount'
           + ' order by b.disp, w.code,'
           + ' w.disp ';
+      Application.ProcessMessages();
       xQuery.Open;
+      Application.ProcessMessages();
       while not xQuery.Eof do
       begin
+        Application.ProcessMessages();
         xHtml.Add('<tr>');
         for i:=0 to xQuery.FieldCount-1 do
           xHtml.Add('<td>'+xQuery.Fields[i].AsString+'</td>');
@@ -1200,10 +1226,7 @@ begin
 
 
 
-
-
-
-
+    Log('Расчёт Плана работ...');
     xHtml.Add('<h2>План работ</h2>');
     xHtml.Add('<table>');
     xHtml.Add('<tr>');
@@ -1246,6 +1269,8 @@ begin
     finally
     end;
     MainForm.Cursor:=crDefault;
+    Self.Enabled:=True;
+    Log('Готово', -1);
 end;
 
 procedure TMainForm.ToolButton4Click(Sender: TObject);
@@ -1367,7 +1392,7 @@ begin
     end;
   except
     on E: Exception do
-      Log(E.Message);
+      Log(E.Message, 1);
   end;
   Query.Free;
 end;
@@ -1430,7 +1455,7 @@ procedure TMainForm.InitFormAfterConnect;
 begin
   if not Conn.Connected then Exit;
   Cursor:=crSQLWait;
-  Log('Подключено: ' +Conn.UserName+'@'+Conn.HostName+'/'+Conn.DatabaseName);
+  Log('Подключено: ' +Conn.UserName+'@'+Conn.HostName+'/'+Conn.DatabaseName, 1);
   ConnectTabSheet.TabVisible:=False;
 
   SaveWorkDate(TDateTime(0));
@@ -1439,7 +1464,7 @@ begin
   BuildingsList.ReFill();
   Log('Получение справочника услуг...');
   ServicesList.ReFill();
-  Log('Готово');
+  Log('Готово', -1);
 
   ModesPanel.Visible:=True;
   MenuLabel.Checked:=True;
@@ -1458,7 +1483,7 @@ procedure TMainForm.InitFormDisconnected;
 var i: Integer;
 begin
   if Conn.Connected then DBDisconnect(Conn);
-  Log('Отключено');
+  Log('Отключено', 1);
   for i:=0 to CenterPageControl.PageCount-1 do
     CenterPageControl.Pages[i].TabVisible:=False;
 
@@ -1479,14 +1504,18 @@ begin
   BottomRollOut.Collapsed:=False;
 end;
 
-procedure TMainForm.Log(Note: String; Level: Integer);
+procedure TMainForm.Log(Note: String; Level: Integer = 0);
 begin
   if length(Note)>0 then begin
     LogView.Lines.Insert(0,'');
     LogView.Lines.Insert(0,DateTimeToStr(Now) + chr(9)+ Note);
   end;
 //  LogView.SelStart:=Length(LogView.Text);
-  BottomRollOut.Collapsed:=False;
+  if Level > 0 then
+    BottomRollOut.Collapsed:=False;
+  if Level = -1 then
+    BottomRollOut.Collapsed:=True;
+
   Application.ProcessMessages();
 end;
 
