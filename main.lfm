@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 466
+  Left = 387
   Height = 739
-  Top = 166
+  Top = 150
   Width = 1173
   Caption = 'MaCom FLOSS'
   ClientHeight = 739
@@ -37,12 +37,6 @@ object MainForm: TMainForm
       Left = 53
       Top = 2
       Action = ActionPrint
-    end
-    object ToolButton3: TToolButton
-      Left = 79
-      Top = 2
-      Caption = 'ToolButton3'
-      OnClick = ToolButton4Click
     end
   end
   object MainStatusBar: TStatusBar
@@ -809,9 +803,9 @@ object MainForm: TMainForm
               Height = 450
               Top = 0
               Width = 761
-              ActivePage = ConnectTabSheet
+              ActivePage = Report002TabSheet
               Align = alClient
-              TabIndex = 0
+              TabIndex = 8
               TabOrder = 0
               OnChange = CenterPageControlChange
               OnCloseTabClicked = CenterPageControlCloseTabClicked
@@ -826,11 +820,11 @@ object MainForm: TMainForm
                   Height = 372
                   Top = 0
                   Width = 757
-                  HorzScrollBar.Page = 755
-                  VertScrollBar.Page = 370
+                  HorzScrollBar.Page = 757
+                  VertScrollBar.Page = 372
                   Align = alClient
-                  ClientHeight = 370
-                  ClientWidth = 755
+                  ClientHeight = 368
+                  ClientWidth = 753
                   TabOrder = 0
                   object ConnUserLabel: TLabel
                     AnchorSideLeft.Control = ConnScrollBox
@@ -848,7 +842,7 @@ object MainForm: TMainForm
                     AnchorSideTop.Control = ConnUserLabel
                     AnchorSideTop.Side = asrBottom
                     Left = 3
-                    Height = 27
+                    Height = 25
                     Top = 24
                     Width = 123
                     BorderSpacing.Around = 3
@@ -861,7 +855,7 @@ object MainForm: TMainForm
                     AnchorSideTop.Side = asrBottom
                     Left = 3
                     Height = 18
-                    Top = 57
+                    Top = 55
                     Width = 54
                     BorderSpacing.Top = 3
                     BorderSpacing.Around = 3
@@ -874,7 +868,7 @@ object MainForm: TMainForm
                     AnchorSideTop.Side = asrBottom
                     Left = 3
                     Height = 18
-                    Top = 111
+                    Top = 107
                     Width = 52
                     BorderSpacing.Top = 3
                     BorderSpacing.Around = 3
@@ -886,8 +880,8 @@ object MainForm: TMainForm
                     AnchorSideTop.Control = ConnHostLabel
                     AnchorSideTop.Side = asrBottom
                     Left = 3
-                    Height = 27
-                    Top = 132
+                    Height = 25
+                    Top = 128
                     Width = 123
                     BorderSpacing.Around = 3
                     TabOrder = 3
@@ -898,8 +892,8 @@ object MainForm: TMainForm
                     AnchorSideTop.Control = ConnBaseLabel
                     AnchorSideTop.Side = asrBottom
                     Left = 3
-                    Height = 27
-                    Top = 240
+                    Height = 25
+                    Top = 232
                     Width = 123
                     HelpType = htKeyword
                     BorderSpacing.Around = 3
@@ -912,7 +906,7 @@ object MainForm: TMainForm
                     AnchorSideTop.Side = asrBottom
                     Left = 3
                     Height = 18
-                    Top = 219
+                    Top = 211
                     Width = 90
                     BorderSpacing.Top = 3
                     BorderSpacing.Around = 3
@@ -924,8 +918,8 @@ object MainForm: TMainForm
                     AnchorSideTop.Control = ConnPwdLabel
                     AnchorSideTop.Side = asrBottom
                     Left = 3
-                    Height = 27
-                    Top = 78
+                    Height = 25
+                    Top = 76
                     Width = 123
                     BorderSpacing.Around = 3
                     EchoMode = emPassword
@@ -940,8 +934,8 @@ object MainForm: TMainForm
                     AnchorSideBottom.Control = ConnPwdEdit
                     AnchorSideBottom.Side = asrBottom
                     Left = 129
-                    Height = 27
-                    Top = 78
+                    Height = 25
+                    Top = 76
                     Width = 77
                     Anchors = [akTop, akLeft, akBottom]
                     AutoSize = True
@@ -955,7 +949,7 @@ object MainForm: TMainForm
                     AnchorSideTop.Side = asrBottom
                     Left = 3
                     Height = 18
-                    Top = 165
+                    Top = 159
                     Width = 36
                     BorderSpacing.Top = 3
                     BorderSpacing.Around = 3
@@ -967,8 +961,8 @@ object MainForm: TMainForm
                     AnchorSideTop.Control = ConnPortLabel
                     AnchorSideTop.Side = asrBottom
                     Left = 3
-                    Height = 27
-                    Top = 186
+                    Height = 25
+                    Top = 180
                     Width = 123
                     BorderSpacing.Around = 3
                     TabOrder = 4
@@ -1075,7 +1069,7 @@ object MainForm: TMainForm
                 OnShow = TabSheetShow
                 object BuildingPageControl: TPageControl
                   Left = 0
-                  Height = 587
+                  Height = 414
                   Top = 0
                   Width = 757
                   ActivePage = BuildingMainTabSheet
@@ -1084,24 +1078,24 @@ object MainForm: TMainForm
                   TabOrder = 0
                   object BuildingMainTabSheet: TTabSheet
                     Caption = 'Основное'
-                    ClientHeight = 583
+                    ClientHeight = 410
                     ClientWidth = 753
                     OnShow = BuildingMainTabSheetShow
                     object ScrollBox2: TScrollBox
                       Left = 0
-                      Height = 556
+                      Height = 383
                       Top = 0
                       Width = 753
                       HorzScrollBar.Page = 753
-                      VertScrollBar.Page = 556
+                      VertScrollBar.Page = 383
                       Align = alClient
-                      ClientHeight = 552
+                      ClientHeight = 379
                       ClientWidth = 749
                       TabOrder = 0
                       object PairSplitter6: TPairSplitter
                         Cursor = crVSplit
                         Left = 0
-                        Height = 554
+                        Height = 381
                         Top = 0
                         Width = 751
                         Align = alClient
@@ -1160,14 +1154,14 @@ object MainForm: TMainForm
                         object PairSplitterSide17: TPairSplitterSide
                           Cursor = crArrow
                           Left = 0
-                          Height = 249
+                          Height = 76
                           Top = 305
                           Width = 751
                           ClientWidth = 751
-                          ClientHeight = 249
+                          ClientHeight = 76
                           object DBVMemo1: TDBVMemo
                             Left = 0
-                            Height = 249
+                            Height = 76
                             Top = 0
                             Width = 751
                             Align = alClient
@@ -1191,7 +1185,7 @@ object MainForm: TMainForm
                   end
                   object BuildingPropsTabSheet: TTabSheet
                     Caption = 'Характеристики'
-                    ClientHeight = 583
+                    ClientHeight = 410
                     ClientWidth = 753
                     OnShow = BuildingPropsTabSheetShow
                     object BuildingPropertiesVST: TDBVST
@@ -1254,7 +1248,7 @@ object MainForm: TMainForm
                   end
                   object TabSheet1: TTabSheet
                     Caption = 'Расчётные показатели'
-                    ClientHeight = 583
+                    ClientHeight = 410
                     ClientWidth = 753
                     object ScrollBox5: TScrollBox
                       Left = 0
@@ -1309,7 +1303,7 @@ object MainForm: TMainForm
                 OnShow = TabSheetShow
                 object ServicePageControl: TPageControl
                   Left = 0
-                  Height = 587
+                  Height = 414
                   Top = 0
                   Width = 757
                   ActivePage = ServicePropMainTabSheet
@@ -1318,15 +1312,15 @@ object MainForm: TMainForm
                   TabOrder = 0
                   object ServicePropMainTabSheet: TTabSheet
                     Caption = 'Основное'
-                    ClientHeight = 583
+                    ClientHeight = 410
                     ClientWidth = 753
                     object ScrollBox1: TScrollBox
                       Left = 0
-                      Height = 556
+                      Height = 383
                       Top = 0
                       Width = 753
                       HorzScrollBar.Page = 753
-                      VertScrollBar.Page = 556
+                      VertScrollBar.Page = 383
                       Align = alClient
                       ChildSizing.LeftRightSpacing = 3
                       ChildSizing.TopBottomSpacing = 3
@@ -1335,7 +1329,7 @@ object MainForm: TMainForm
                       ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
                       ChildSizing.Layout = cclLeftToRightThenTopToBottom
                       ChildSizing.ControlsPerLine = 2
-                      ClientHeight = 552
+                      ClientHeight = 379
                       ClientWidth = 749
                       TabOrder = 0
                       object Label1: TLabel
@@ -1394,7 +1388,7 @@ object MainForm: TMainForm
                   end
                   object SrvWorksTabSheet: TTabSheet
                     Caption = 'Работы'
-                    ClientHeight = 583
+                    ClientHeight = 410
                     ClientWidth = 753
                     OnShow = SrvWorksTabSheetShow
                     object PairSplitter2: TPairSplitter
@@ -1720,7 +1714,7 @@ object MainForm: TMainForm
                   end
                   object TabSheet2: TTabSheet
                     Caption = 'Расчётные показатели'
-                    ClientHeight = 583
+                    ClientHeight = 410
                     ClientWidth = 753
                     object ScrollBox6: TScrollBox
                       Left = 0
@@ -1781,7 +1775,7 @@ object MainForm: TMainForm
                 OnShow = TabSheetShow
                 object PairSplitter3: TPairSplitter
                   Left = 0
-                  Height = 587
+                  Height = 414
                   Top = 0
                   Width = 757
                   Align = alClient
@@ -1789,14 +1783,14 @@ object MainForm: TMainForm
                   object PairSplitterSide10: TPairSplitterSide
                     Cursor = crArrow
                     Left = 0
-                    Height = 587
+                    Height = 414
                     Top = 0
                     Width = 200
                     ClientWidth = 200
-                    ClientHeight = 587
+                    ClientHeight = 414
                     object WorksList: TDBVST
                       Left = 0
-                      Height = 563
+                      Height = 390
                       Top = 0
                       Width = 200
                       Align = alClient
@@ -1861,7 +1855,7 @@ object MainForm: TMainForm
                     object WorksCheckBox: TCheckBox
                       Left = 0
                       Height = 24
-                      Top = 563
+                      Top = 390
                       Width = 200
                       Align = alBottom
                       Caption = 'Скрыть неиспользуемые'
@@ -1872,24 +1866,24 @@ object MainForm: TMainForm
                   object PairSplitterSide11: TPairSplitterSide
                     Cursor = crArrow
                     Left = 205
-                    Height = 587
+                    Height = 414
                     Top = 0
                     Width = 552
                     ClientWidth = 552
-                    ClientHeight = 587
+                    ClientHeight = 414
                     object Panel1: TPanel
                       Left = 0
-                      Height = 586
+                      Height = 413
                       Top = 1
                       Width = 552
                       Align = alClient
                       BevelOuter = bvNone
-                      ClientHeight = 582
+                      ClientHeight = 409
                       ClientWidth = 548
                       TabOrder = 0
                       object WorkPageControl: TPageControl
                         Left = 0
-                        Height = 585
+                        Height = 412
                         Top = 1
                         Width = 552
                         ActivePage = MainTabSheet
@@ -1898,13 +1892,13 @@ object MainForm: TMainForm
                         TabOrder = 0
                         object MainTabSheet: TTabSheet
                           Caption = 'Основное'
-                          ClientHeight = 581
+                          ClientHeight = 408
                           ClientWidth = 548
                           OnShow = TabSheetShow
                           object PairSplitter4: TPairSplitter
                             Cursor = crVSplit
                             Left = 0
-                            Height = 554
+                            Height = 381
                             Top = 0
                             Width = 548
                             Align = alClient
@@ -1935,7 +1929,7 @@ object MainForm: TMainForm
                                 TabOrder = 0
                                 object Label4: TLabel
                                   Left = 0
-                                  Height = 72
+                                  Height = 75
                                   Top = 0
                                   Width = 228
                                   Caption = 'Наименование'
@@ -1943,7 +1937,7 @@ object MainForm: TMainForm
                                 end
                                 object DBVMemo5: TDBVMemo
                                   Left = 228
-                                  Height = 72
+                                  Height = 75
                                   Top = 0
                                   Width = 320
                                   ScrollBars = ssAutoBoth
@@ -1960,16 +1954,16 @@ object MainForm: TMainForm
                                 end
                                 object Label5: TLabel
                                   Left = 0
-                                  Height = 25
-                                  Top = 72
+                                  Height = 27
+                                  Top = 75
                                   Width = 228
                                   Caption = 'Код'
                                   ParentColor = False
                                 end
                                 object DBVEdit4: TDBVEdit
                                   Left = 228
-                                  Height = 25
-                                  Top = 72
+                                  Height = 27
+                                  Top = 75
                                   Width = 320
                                   TabOrder = 0
                                   DBTable = 'works'
@@ -1986,7 +1980,7 @@ object MainForm: TMainForm
                                 object Label6: TLabel
                                   Left = 0
                                   Height = 27
-                                  Top = 97
+                                  Top = 102
                                   Width = 228
                                   Caption = 'База'
                                   ParentColor = False
@@ -1994,7 +1988,7 @@ object MainForm: TMainForm
                                 object DBVEdit5: TDBVCombo
                                   Left = 228
                                   Height = 27
-                                  Top = 97
+                                  Top = 102
                                   Width = 320
                                   ItemHeight = 0
                                   TabOrder = 1
@@ -2011,16 +2005,16 @@ object MainForm: TMainForm
                                 end
                                 object Label7: TLabel
                                   Left = 0
-                                  Height = 25
-                                  Top = 124
+                                  Height = 27
+                                  Top = 129
                                   Width = 228
                                   Caption = 'Множитель'
                                   ParentColor = False
                                 end
                                 object DBVEdit8: TDBVEdit
                                   Left = 228
-                                  Height = 25
-                                  Top = 124
+                                  Height = 27
+                                  Top = 129
                                   Width = 320
                                   OnChange = DBVEdit8Change
                                   TabOrder = 2
@@ -2037,16 +2031,16 @@ object MainForm: TMainForm
                                 end
                                 object Label8: TLabel
                                   Left = 0
-                                  Height = 72
-                                  Top = 149
+                                  Height = 75
+                                  Top = 156
                                   Width = 228
                                   Caption = 'Примечание'
                                   ParentColor = False
                                 end
                                 object DBVMemo4: TDBVMemo
                                   Left = 228
-                                  Height = 72
-                                  Top = 149
+                                  Height = 75
+                                  Top = 156
                                   Width = 320
                                   ScrollBars = ssAutoBoth
                                   TabOrder = 4
@@ -2065,14 +2059,14 @@ object MainForm: TMainForm
                             object PairSplitterSide13: TPairSplitterSide
                               Cursor = crArrow
                               Left = 0
-                              Height = 249
+                              Height = 76
                               Top = 305
                               Width = 548
                               ClientWidth = 548
-                              ClientHeight = 249
+                              ClientHeight = 76
                               object DBVST1: TDBVST
                                 Left = 0
-                                Height = 228
+                                Height = 55
                                 Top = 21
                                 Width = 548
                                 Align = alClient
@@ -2142,7 +2136,7 @@ object MainForm: TMainForm
                         end
                         object WorkTabSheet: TTabSheet
                           Caption = 'Ресурсы'
-                          ClientHeight = 581
+                          ClientHeight = 408
                           ClientWidth = 548
                           OnShow = TabSheetShow
                           object WorkResourcesVST: TDBVST
@@ -2253,7 +2247,7 @@ object MainForm: TMainForm
                 OnShow = TabSheetShow
                 object BuildingContractWorksVST: TDBVST
                   Left = 0
-                  Height = 587
+                  Height = 414
                   Top = 0
                   Width = 757
                   Align = alClient
@@ -2327,7 +2321,7 @@ object MainForm: TMainForm
                 object PairSplitter5: TPairSplitter
                   Cursor = crVSplit
                   Left = 0
-                  Height = 587
+                  Height = 414
                   Top = 0
                   Width = 757
                   Align = alClient
@@ -2625,14 +2619,14 @@ object MainForm: TMainForm
                   object PairSplitterSide15: TPairSplitterSide
                     Cursor = crArrow
                     Left = 0
-                    Height = 182
+                    Height = 9
                     Top = 405
                     Width = 757
                     ClientWidth = 757
-                    ClientHeight = 182
+                    ClientHeight = 9
                     object PersonNote: TMemo
                       Left = 0
-                      Height = 182
+                      Height = 33
                       Top = 0
                       Width = 757
                       Align = alClient
@@ -2658,7 +2652,7 @@ object MainForm: TMainForm
                 object PairSplitter1: TPairSplitter
                   Cursor = crVSplit
                   Left = 0
-                  Height = 586
+                  Height = 413
                   Top = 1
                   Width = 757
                   Align = alClient
@@ -2761,14 +2755,14 @@ object MainForm: TMainForm
                   object PairSplitterSide6: TPairSplitterSide
                     Cursor = crArrow
                     Left = 0
-                    Height = 281
+                    Height = 108
                     Top = 305
                     Width = 757
                     ClientWidth = 757
-                    ClientHeight = 281
+                    ClientHeight = 108
                     object BuildingWorkPlanFact1: TDBVST
                       Left = 0
-                      Height = 254
+                      Height = 81
                       Top = 27
                       Width = 757
                       Align = alClient
@@ -2863,8 +2857,13 @@ object MainForm: TMainForm
                   end
                 end
               end
-              object ReportTabSheet: TTabSheet
-                Caption = 'ReportTabSheet'
+              object Report001TabSheet: TTabSheet
+                Caption = 'Report001TabSheet'
+                OnShow = TabSheetShow
+              end
+              object Report002TabSheet: TTabSheet
+                Caption = 'Report002TabSheet'
+                OnShow = TabSheetShow
               end
             end
           end
@@ -4635,58 +4634,58 @@ object MainForm: TMainForm
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
-      00000000000000000000000000009C9C9CFF9C9C9CFF9C9C9CFF9C9C9CFF9C9C
-      9CFF9C9C9CFF9C9C9CFF9C9C9CFF9C9C9CFF9C9C9CFF9C9C9CFF9C9C9CFF9C9C
-      9CFF9C9C9CFF0000000000000000000000000000000000000000000000000000
-      0000000000009B9B9BFF00000000000000000000000000000000000000000000
-      00000000000000000000000000000000000000000000000000009B9B9BFF0000
-      0000000000000000000000000000000000000000000000000000000000009A9A
-      9AFF000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000009A9A9AFF00000000000000000000
-      00000000000000000000000000000000000000000000989898FF000000000000
+      00000000000000000000000000009B0000FF9B0000FF9B0000FF9B0000FF9B00
+      00FF9B0000FF9B0000FF9B0000FF9B0000FF9B0000FF9B0000FF9B0000FF9B00
+      00FF9B0000FF0000000000000000000000000000000000000000000000000000
+      000000000000990000FF00000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000990000FF0000
+      0000000000000000000000000000000000000000000000000000000000009900
+      00FF000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000990000FF00000000000000000000
+      00000000000000000000000000000000000000000000960000FF000000000000
       0000000000000000000000000000000000000000000000000000000000000000
-      00000000000000000000989898FF000000000000000000000000000000000000
-      0000000000000000000000000000979797FF0000000000000000000000000000
+      00000000000000000000960000FF000000000000000000000000000000000000
+      0000000000000000000000000000950000FF0000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
-      0000979797FF0000000000000000000000000000000000000000000000000000
-      000000000000959595FF00000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000959595FF0000
-      00000000000000000000000000000000000000000000999999BE989898FF9494
-      94FF949494FF949494FF999999FF9D9D9DFF9D9D9DFF9D9D9DFF9D9D9DFF9D9D
-      9DFF9D9D9DFF9D9D9DFF9D9D9DFF9D9D9DFF9D9D9DFF9D9D9DFF999999BE0000
-      00000000000000000000000000009B9B9BFF9B9B9BFF00000000929292FF0000
-      00009B9B9BFFACACACFFACACACFFACACACFFACACACFFACACACFFACACACFFACAC
-      ACFFACACACFFACACACFFACACACFFACACACFF9B9B9BFF00000000000000000000
-      0000000000009A9A9AFF9E9E9EFF9A9A9AFF9A9A9AFF9A9A9AFF9E9E9EFFABAB
-      ABFFABABABFFABABABFFABABABFFABABABFFABABABFFABABABFFABABABFFABAB
-      ABFFABABABFFABABABFF9A9A9AFF000000000000000000000000000000009898
-      98FFA9A9A9FFA9A9A9FFA9A9A9FFA9A9A9FFA9A9A9FFA9A9A9FFA9A9A9FFA9A9
-      A9FFA9A9A9FFA9A9A9FFA9A9A9FFA9A9A9FFA9A9A9FFA9A9A9FFA9A9A9FFA9A9
-      A9FF989898FF00000000000000000000000000000000979797FFA8A8A8FF9B9B
-      9BFF979797FF979797FF979797FF979797FF979797FF979797FF979797FF9797
-      97FF979797FF979797FF979797FF979797FF9B9B9BFFA8A8A8FF979797FF0000
-      0000000000000000000000000000969696FFA6A6A6FF969696FF000000000000
+      0000950000FF0000000000000000000000000000000000000000000000000000
+      000000000000930000FF00000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000930000FF0000
+      00000000000000000000000000000000000000000000980000FF960000FF9200
+      00FF920000FF920000FF980000FF9C0000FF9C0000FF9C0000FF9C0000FF9C00
+      00FF9C0000FF9C0000FF9C0000FF9C0000FF9C0000FF9C0000FF980000FF0000
+      0000000000000000000000000000990000FF990000FF00000000910000FF0000
+      0000990000FFAB0000FFAB0000FFAB0000FFAB0000FFAB0000FFAB0000FFAB00
+      00FFAB0000FFAB0000FFAB0000FFAB0000FF990000FF00000000000000000000
+      000000000000990000FF9D0000FF990000FF990000FF990000FF9D0000FFAA00
+      00FFAA0000FFAA0000FFAA0000FFAA0000FFAA0000FFAA0000FFAA0000FFAA00
+      00FFAA0000FFAA0000FF990000FF000000000000000000000000000000009600
+      00FFA70000FFA70000FFA70000FFA70000FFA70000FFA70000FFA70000FFA700
+      00FFA70000FFA70000FFA70000FFA70000FFA70000FFA70000FFA70000FFA700
+      00FF960000FF00000000000000000000000000000000950000FFA70000FF9900
+      00FF950000FF950000FF950000FF950000FF950000FF950000FF950000FF9500
+      00FF950000FF950000FF950000FF950000FF990000FFA70000FF950000FF0000
+      0000000000000000000000000000940000FFA40000FF940000FF000000000000
       0000000000000000000000000000000000000000000000000000000000000000
-      00000000000000000000969696FFA6A6A6FF969696FF00000000000000000000
-      000000000000919191BE959595FF909090FF000000008C8C8CFF8C8C8CFF8C8C
-      8CFF8C8C8CFF8C8C8CFF000000008C8C8CFF8C8C8CFF8C8C8CFF8C8C8CFF0000
-      0000919191FF959595FF919191BE000000000000000000000000000000000000
-      0000000000008B8B8BFF00000000000000000000000000000000000000000000
-      00000000000000000000000000000000000000000000000000008B8B8BFF0000
-      0000000000000000000000000000000000000000000000000000000000008A8A
-      8AFF000000008A8A8AFF8A8A8AFF8A8A8AFF8A8A8AFF8A8A8AFF8A8A8AFF8A8A
-      8AFF8A8A8AFF8A8A8AFF00000000000000008A8A8AFF00000000000000000000
-      00000000000000000000000000000000000000000000898989FF000000000000
+      00000000000000000000940000FFA40000FF940000FF00000000000000000000
+      0000000000008F0000FF930000FF8E0000FF000000008B0000FF8B0000FF8B00
+      00FF8B0000FF8B0000FF000000008B0000FF8B0000FF8B0000FF8B0000FF0000
+      00008F0000FF930000FF8F0000FF000000000000000000000000000000000000
+      0000000000008A0000FF00000000000000000000000000000000000000000000
+      00000000000000000000000000000000000000000000000000008A0000FF0000
+      0000000000000000000000000000000000000000000000000000000000008800
+      00FF00000000880000FF880000FF880000FF880000FF880000FF880000FF8800
+      00FF880000FF880000FF0000000000000000880000FF00000000000000000000
+      00000000000000000000000000000000000000000000870000FF000000000000
       0000000000000000000000000000000000000000000000000000000000000000
-      00000000000000000000898989FF000000000000000000000000000000000000
-      0000000000000000000000000000878787FF00000000878787FF878787FF8787
-      87FF878787FF878787FF878787FF878787FF878787FF878787FF878787FF0000
-      0000878787FF0000000000000000000000000000000000000000000000000000
-      000000000000868686FF00000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000868686FF0000
-      0000000000000000000000000000000000000000000000000000000000008484
-      84FF848484FF848484FF848484FF848484FF848484FF848484FF848484FF8484
-      84FF848484FF848484FF848484FF848484FF848484FF00000000000000000000
+      00000000000000000000870000FF000000000000000000000000000000000000
+      0000000000000000000000000000850000FF00000000850000FF850000FF8500
+      00FF850000FF850000FF850000FF850000FF850000FF850000FF850000FF0000
+      0000850000FF0000000000000000000000000000000000000000000000000000
+      000000000000840000FF00000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000840000FF0000
+      0000000000000000000000000000000000000000000000000000000000008300
+      00FF830000FF830000FF830000FF830000FF830000FF830000FF830000FF8300
+      00FF830000FF830000FF830000FF830000FF830000FF00000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000000000000000000000000000000000
