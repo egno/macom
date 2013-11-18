@@ -74,7 +74,7 @@ object MainForm: TMainForm
     OnClick = MainPanelClick
     object MenuSplitter: TPairSplitter
       Left = 1
-      Height = 623
+      Height = 450
       Top = 1
       Width = 1171
       Align = alClient
@@ -82,14 +82,14 @@ object MainForm: TMainForm
       object PairSplitterSide3: TPairSplitterSide
         Cursor = crArrow
         Left = 0
-        Height = 623
+        Height = 450
         Top = 0
         Width = 200
         ClientWidth = 200
-        ClientHeight = 623
+        ClientHeight = 450
         object MainTree: TDBVST
           Left = 0
-          Height = 602
+          Height = 429
           Top = 21
           Width = 200
           Align = alClient
@@ -166,14 +166,14 @@ object MainForm: TMainForm
       object PairSplitterSide5: TPairSplitterSide
         Cursor = crArrow
         Left = 205
-        Height = 623
+        Height = 450
         Top = 0
         Width = 966
         ClientWidth = 966
-        ClientHeight = 623
+        ClientHeight = 450
         object MainSplitter: TPairSplitter
           Left = 0
-          Height = 623
+          Height = 450
           Top = 0
           Width = 966
           Align = alClient
@@ -181,14 +181,14 @@ object MainForm: TMainForm
           object PairSplitterSide1: TPairSplitterSide
             Cursor = crArrow
             Left = 0
-            Height = 623
+            Height = 450
             Top = 0
             Width = 200
             ClientWidth = 200
-            ClientHeight = 623
+            ClientHeight = 450
             object LeftTabs: TExtendedNotebook
               Left = 0
-              Height = 600
+              Height = 427
               Top = 23
               Width = 200
               ActivePage = MainDatesTabSheet
@@ -203,13 +203,13 @@ object MainForm: TMainForm
                 ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
                 ChildSizing.Layout = cclLeftToRightThenTopToBottom
                 ChildSizing.ControlsPerLine = 1
-                ClientHeight = 564
+                ClientHeight = 391
                 ClientWidth = 196
                 ImageIndex = 21
                 OnContextPopup = MainDatesTabSheetContextPopup
                 object Panel14: TPanel
                   Left = 0
-                  Height = 543
+                  Height = 370
                   Top = 21
                   Width = 196
                   Align = alClient
@@ -219,7 +219,7 @@ object MainForm: TMainForm
                   ChildSizing.TopBottomSpacing = 3
                   ChildSizing.Layout = cclLeftToRightThenTopToBottom
                   ChildSizing.ControlsPerLine = 1
-                  ClientHeight = 543
+                  ClientHeight = 370
                   ClientWidth = 196
                   TabOrder = 0
                   object Panel9: TPanel
@@ -526,7 +526,7 @@ object MainForm: TMainForm
                 end
               end
               object MainBuildingsTabSheet: TTabSheet
-                ClientHeight = 564
+                ClientHeight = 391
                 ClientWidth = 196
                 ImageIndex = 17
                 object BuildingsList: TDBVST
@@ -650,7 +650,7 @@ object MainForm: TMainForm
                 end
               end
               object MainServicesTabSheet: TTabSheet
-                ClientHeight = 564
+                ClientHeight = 391
                 ClientWidth = 196
                 ImageIndex = 18
                 object ServicesList: TDBVST
@@ -799,14 +799,14 @@ object MainForm: TMainForm
           object PairSplitterSide2: TPairSplitterSide
             Cursor = crArrow
             Left = 205
-            Height = 623
+            Height = 450
             Top = 0
             Width = 761
             ClientWidth = 761
-            ClientHeight = 623
+            ClientHeight = 450
             object CenterPageControl: TPageControl
               Left = 0
-              Height = 623
+              Height = 450
               Top = 0
               Width = 761
               ActivePage = ConnectTabSheet
@@ -818,18 +818,18 @@ object MainForm: TMainForm
               Options = [nboShowCloseButtons]
               object ConnectTabSheet: TTabSheet
                 Caption = 'Подключение'
-                ClientHeight = 587
+                ClientHeight = 414
                 ClientWidth = 757
                 OnShow = TabSheetShow
                 object ConnScrollBox: TScrollBox
                   Left = 0
-                  Height = 545
+                  Height = 372
                   Top = 0
                   Width = 757
                   HorzScrollBar.Page = 755
-                  VertScrollBar.Page = 543
+                  VertScrollBar.Page = 370
                   Align = alClient
-                  ClientHeight = 543
+                  ClientHeight = 370
                   ClientWidth = 755
                   TabOrder = 0
                   object ConnUserLabel: TLabel
@@ -978,7 +978,7 @@ object MainForm: TMainForm
                 object ActionPanel: TPanel
                   Left = 0
                   Height = 42
-                  Top = 545
+                  Top = 372
                   Width = 757
                   Align = alBottom
                   AutoSize = True
@@ -1070,7 +1070,7 @@ object MainForm: TMainForm
               end
               object BuildingTabSheet: TTabSheet
                 Caption = 'Здания'
-                ClientHeight = 587
+                ClientHeight = 414
                 ClientWidth = 757
                 OnShow = TabSheetShow
                 object BuildingPageControl: TPageControl
@@ -1304,7 +1304,7 @@ object MainForm: TMainForm
               end
               object ServiceTabSheet: TTabSheet
                 Caption = 'Услуги'
-                ClientHeight = 587
+                ClientHeight = 414
                 ClientWidth = 757
                 OnShow = TabSheetShow
                 object ServicePageControl: TPageControl
@@ -1776,7 +1776,7 @@ object MainForm: TMainForm
               end
               object WorksTabSheet: TTabSheet
                 Caption = 'Работы'
-                ClientHeight = 587
+                ClientHeight = 414
                 ClientWidth = 757
                 OnShow = TabSheetShow
                 object PairSplitter3: TPairSplitter
@@ -2248,7 +2248,7 @@ object MainForm: TMainForm
               end
               object BuildingServicesTabSheet: TTabSheet
                 Caption = 'BuildingServicesTabSheet'
-                ClientHeight = 587
+                ClientHeight = 414
                 ClientWidth = 757
                 OnShow = TabSheetShow
                 object BuildingContractWorksVST: TDBVST
@@ -2321,7 +2321,7 @@ object MainForm: TMainForm
               end
               object BuildingPersonnelTabSheet: TTabSheet
                 Caption = 'BuildingPersonnelTabSheet'
-                ClientHeight = 587
+                ClientHeight = 414
                 ClientWidth = 757
                 OnShow = TabSheetShow
                 object PairSplitter5: TPairSplitter
@@ -2644,7 +2644,7 @@ object MainForm: TMainForm
               end
               object BuildingWorksTabSheet: TTabSheet
                 Caption = 'BuildingWorksTabSheet'
-                ClientHeight = 587
+                ClientHeight = 414
                 ClientWidth = 757
                 OnShow = TabSheetShow
                 object BuildingWorkPeriodLabel: TLabel
@@ -2873,12 +2873,12 @@ object MainForm: TMainForm
     end
     object BottomRollOut: TMyRollOut
       Left = 1
-      Height = 27
-      Top = 624
+      Height = 200
+      Top = 451
       Width = 1171
       Align = alBottom
       BevelOuter = bvNone
-      ClientHeight = 27
+      ClientHeight = 200
       ClientWidth = 1171
       TabOrder = 0
       ExpandedButtonColor = 16287767
@@ -2888,18 +2888,17 @@ object MainForm: TMainForm
       ButtonPosition = akLeft
       ButtonSize = 27
       Button.Left = 0
-      Button.Height = 27
+      Button.Height = 200
       Button.Top = 0
       Button.Width = 27
       Button.Anchors = [akTop, akLeft, akBottom]
       Button.Caption = '+'
-      Button.Color = clSkyBlue
+      Button.Color = 16287767
       Button.TabOrder = 0
       AnimationSpeed = 60
-      Collapsed = True
       object LogView: TMemo
         Left = 27
-        Height = 33
+        Height = 200
         Top = 0
         Width = 1144
         Align = alClient
