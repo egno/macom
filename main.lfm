@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 387
+  Left = 293
   Height = 739
-  Top = 150
+  Top = 193
   Width = 1173
   Caption = 'MaCom FLOSS'
   ClientHeight = 739
@@ -803,9 +803,9 @@ object MainForm: TMainForm
               Height = 450
               Top = 0
               Width = 761
-              ActivePage = Report002TabSheet
+              ActivePage = BuildingWorksTabSheet
               Align = alClient
-              TabIndex = 8
+              TabIndex = 6
               TabOrder = 0
               OnChange = CenterPageControlChange
               OnCloseTabClicked = CenterPageControlCloseTabClicked
@@ -2863,6 +2863,10 @@ object MainForm: TMainForm
               end
               object Report002TabSheet: TTabSheet
                 Caption = 'Report002TabSheet'
+                OnShow = TabSheetShow
+              end
+              object Report003TabSheet: TTabSheet
+                Caption = 'Report002TabSheet1'
                 OnShow = TabSheetShow
               end
             end

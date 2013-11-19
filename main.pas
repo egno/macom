@@ -43,6 +43,7 @@ type
     ActionPrint: TAction;
     BuildingWorkPlanFact1: TDBVST;
     Report002TabSheet: TTabSheet;
+    Report002TabSheet1: TTabSheet;
     WorksCheckBox: TCheckBox;
     DBVCombo1: TDBVCombo;
     DBVEdit2: TDBVEdit;
@@ -633,6 +634,7 @@ end;
 
 procedure TMainForm.CenterPageControlChange(Sender: TObject);
 begin
+  if Assigned(CenterPageControl.ActivePage) then
   ActionPrint.Enabled:=(copy(CenterPageControl.ActivePage.Name, 1,6) = 'Report');
 end;
 
@@ -1545,7 +1547,47 @@ begin
       end;
       xHtml.Add('</table>');
     end;
+
+    'Report003TabSheet': begin
+      Log('Расчёт Начислений...');
+      xHtml.Add('<p>Период: '
+        +ReturnStringSQL(Conn,'select to_char(lower(work_period()),$$dd.mm.yyyy$$)'
+          +'||$$-$$||to_char(upper(work_period())-1,$$dd.mm.yyyy$$)')
+        +'</p>');
+      xHtml.Add('<h2>Начислено сдельной ЗП</h2>');
+      xHtml.Add('<table border="1" width="300px">');
+      xHtml.Add('<tr>');
+      xHtml.Add('<th>Сотрудник</th>');
+      xHtml.Add('<th>Должность</th>');
+      xHtml.Add('<th>Сумма</th>');
+      xHtml.Add('</tr>');
+      try
+        xQuery := TExtSQLQuery.Create(Self, Conn);
+        xQuery.SQL.Text := 'select  p.staff_disp, p.person_disp, '
+          + ' to_char(s.amount, $$FM99999990D00$$) '
+          + ' from   salary.parts_hlist h,   log.salary s, pers_contracts p '
+          + ' where   h.id = s.part '
+          + ' and    s.amount is not null '
+          + ' and p.person = s.person '
+          + ' and s.part = $$6ba7b810-17eb-c7c4-a9b5-5f96587ac212$$ '
+          + ' order by 1, 2 ';
+          xQuery.Open;
+        while not xQuery.Eof do
+        begin
+          xHtml.Add('<tr>');
+          for i:=0 to xQuery.FieldCount-1 do
+            xHtml.Add('<td>'+xQuery.Fields[i].AsString+'</td>');
+          xHtml.Add('</tr>');
+          xQuery.Next;
+        end;
+      finally
+        xQuery.Free;
+      end;
+      xHtml.Add('</table>');
+    end;
   end;
+
+
   xHtml.Add('</BODY></HTML>');
   try
     xHtml.SaveToFile('r'+FormatDateTime('YYMMDDhhnnsszzz',now)+'.html');
