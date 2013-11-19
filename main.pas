@@ -1563,7 +1563,7 @@ begin
       xHtml.Add('</tr>');
       try
         xQuery := TExtSQLQuery.Create(Self, Conn);
-        xQuery.SQL.Text := 'select  p.staff_disp, p.person_disp, '
+        xQuery.SQL.Text := 'select  p.person_disp, p.staff_disp, '
           + ' to_char(s.amount, $$FM99999990D00$$) '
           + ' from   salary.parts_hlist h,   log.salary s, pers_contracts p '
           + ' where   h.id = s.part '
