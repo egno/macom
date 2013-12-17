@@ -14,6 +14,11 @@
       <EnableI18N LFM="False"/>
     </i18n>
     <VersionInfo>
+      <UseVersionInfo Value="True"/>
+      <AutoIncrementBuild Value="True"/>
+      <MinorVersionNr Value="1"/>
+      <BuildNr Value="1"/>
+      <Language Value="0419"/>
       <StringTable ProductVersion=""/>
     </VersionInfo>
     <BuildModes Count="1">
@@ -91,13 +96,6 @@
       <OtherUnitFiles Value="components/dbvcextend"/>
       <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
-    <Linking>
-      <Options>
-        <Win32>
-          <GraphicApplication Value="True"/>
-        </Win32>
-      </Options>
-    </Linking>
     <Other>
       <CompilerMessages>
         <MsgFileName Value=""/>

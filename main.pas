@@ -1297,6 +1297,8 @@ procedure TMainForm.CreateReport(aTabSheet: TTabSheet);
 var
   xHTMLPanel: TMyIpHtmlPanel;
   i: Integer;
+  oldVal: String = '';
+  oldVal1: String = '';
   xQuery: TExtSQLQuery;
   xHtml: TStringList;
 begin
@@ -1427,7 +1429,7 @@ begin
             +' to_char(sum(labour) - c.hours ,$$FM99999990D0$$)  '
             +' FROM v_plan_work_labours pws,  '
             +' staff.calendar c  '
-            +' where person_id = $$d5ed1ccb-3d48-b6e0-7120-8a613235cbea$$ '
+            +' where person = $$d5ed1ccb-3d48-b6e0-7120-8a613235cbea$$ '
             +' and c.ctype=1  '
             +' and c.dt=lower(plan_period) '
             +' group by lower(plan_period), c.hours  '
@@ -1503,41 +1505,45 @@ begin
 
     'Report001TabSheet': begin
       Log('Расчёт Плана работ...');
-      xHtml.Add('<p>Сотрудник: '
-        +ReturnStringSQL(Conn,'select disp from personnel where id = $$'
-        +'d5ed1ccb-3d48-b6e0-7120-8a613235cbea'+'$$')+'</p>');
-      xHtml.Add('<p>Период: '
-        +ReturnStringSQL(Conn,'select to_char(lower(work_period()),$$dd.mm.yyyy$$)'
-          +'||$$-$$||to_char(upper(work_period())-1,$$dd.mm.yyyy$$)')
-        +'</p>');
-      xHtml.Add('<h2>План</h2>');
-      xHtml.Add('<table border="1" width="300px">');
-      xHtml.Add('<tr>');
-      xHtml.Add('<th>Дата</th>');
-      xHtml.Add('<th>Объект</th>');
-      xHtml.Add('<th>Работа</th>');
-      xHtml.Add('<th>Объём работ</th>');
-      xHtml.Add('<th>Часть объёма работ по плану</th>');
-      xHtml.Add('<th>Часть объёма работ факт</th>');
-      xHtml.Add('<th>Уполномоченный по дому</th>');
-      xHtml.Add('<th>Мастер</th>');
-      xHtml.Add('<th>Исполнитель</th>');
-      xHtml.Add('</tr>');
       try
         xQuery := TExtSQLQuery.Create(Self, Conn);
-        xQuery.SQL.Text := 'SELECT  to_char(lower(plan_period),$$DD.MM.YYYY$$), '
-          +' b.disp,  w.disp,  base_val, '
-          + ' to_char(labour, $$FM99999990D099$$), '
+        xQuery.SQL.Text := 'SELECT  b.disp, to_char(lower(plan_period),$$DD.MM.YYYY$$), '
+          +'  w.disp,  base_val, '
+          + ' to_char(plan_amount, $$FM99999990D099$$), '
           + ' $$ $$::text, $$ $$::text, $$ $$::text, $$ $$::text '
           + ' FROM v_plan_work_labours pws, macom.buildings b, macom.works w '
-          + '  where person_id = $$d5ed1ccb-3d48-b6e0-7120-8a613235cbea$$ '
+          + '  where person = $$d5ed1ccb-3d48-b6e0-7120-8a613235cbea$$ '
           + ' and b.id = pws.building and w.id=pws.work '
-          + ' order by lower(plan_period), b.disp ';
+          + ' order by b.disp, lower(plan_period)';
         xQuery.Open;
         while not xQuery.Eof do
         begin
+          if not (oldVal=xQuery.Fields[0].AsString) then begin
+            if not(oldVal='') then
+              xHtml.Add('</table><br><p>Мастер ________________</p><hr>');
+            oldVal:=xQuery.Fields[0].AsString;
+            xHtml.Add('<p>Сотрудник: '
+              +ReturnStringSQL(Conn,'select disp from personnel where id = $$'
+              +'d5ed1ccb-3d48-b6e0-7120-8a613235cbea'+'$$')+'</p>');
+            xHtml.Add('<p>Период: '
+              +ReturnStringSQL(Conn,'select to_char(lower(work_period()),$$dd.mm.yyyy$$)'
+                +'||$$-$$||to_char(upper(work_period())-1,$$dd.mm.yyyy$$)')
+              +'</p>');
+            xHtml.Add('<h2>Объект: '+oldVal+'</h2>');
+            xHtml.Add('<table border="1" width="300px">');
+            xHtml.Add('<tr>');
+            xHtml.Add('<th>Дата</th>');
+            xHtml.Add('<th>Работа</th>');
+            xHtml.Add('<th>Объём работ (площадь)</th>');
+            xHtml.Add('<th>Часть объёма работ по плану</th>');
+            xHtml.Add('<th>Часть объёма работ факт</th>');
+            xHtml.Add('<th>Замечания</th>');
+            xHtml.Add('<th>Уполномоченный по дому</th>');
+            xHtml.Add('<th>Исполнитель</th>');
+            xHtml.Add('</tr>');
+          end;
           xHtml.Add('<tr>');
-          for i:=0 to xQuery.FieldCount-1 do
+          for i:=1 to xQuery.FieldCount-1 do
             xHtml.Add('<td>'+xQuery.Fields[i].AsString+'</td>');
           xHtml.Add('</tr>');
           xQuery.Next;
@@ -1546,6 +1552,8 @@ begin
         xQuery.Free;
       end;
       xHtml.Add('</table>');
+      xHtml.Add('<br><p>Мастер ______________</p>');
+
     end;
 
     'Report003TabSheet': begin
